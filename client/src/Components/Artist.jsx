@@ -1,9 +1,11 @@
 import React from 'react'
 
-function Artist() {
+function Artist(picture, artist, description) {
     return (
         <div>
-            This should be the artist detail
+            <img src={picture}></img>
+            <h1>{artist}</h1>
+            <h3>{description}</h3>
         </div>
     )
 }
