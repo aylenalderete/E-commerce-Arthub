@@ -40,5 +40,4 @@ const art = [
     rating: 8,
   },
 ];
-
 export default art
