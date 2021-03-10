@@ -1,0 +1,28 @@
+.container{
+    display: flex;
+    color: white;
+    justify-content: center;
+    margin-top: 10%;
+}
+.imgContainer{
+    margin-right: 2%;
+}
+.infoContainer{
+    margin-left: 2%;
+}
+.artistContainer{
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.button{
+    color:white;
+     background-color: Transparent;
+    background-repeat:no-repeat;
+    border: 1px solid white;
+    cursor:pointer;
+    padding: 10px;
+    margin-left: 40%;
+    margin-top: 20%;
+}

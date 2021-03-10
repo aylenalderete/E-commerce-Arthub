@@ -14,11 +14,11 @@ function App() {
     <div className="App">
       <Route path="/inicio" component={Home}></Route>
       <Route path="/nosotros" component={AboutUs}></Route>
-      <Route path="/colección" component={Collection}></Route>
+      <Route path="/colección" exact component={Collection}></Route>
       <Route path="/login" component={LogIn}></Route>
       <Route path="/signin" component={SignIn}></Route>
       <Route path="/artistas" component={Artists}></Route>
-      <Route path="/colección/:idArte" component={ArtPiece}></Route>
+      <Route exact path="/colección/:idArte" render={({match}) => <ArtPiece artName={match.params.idArte}></ArtPiece>}></Route>
     </div>
   );
 }

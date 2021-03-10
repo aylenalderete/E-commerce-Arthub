@@ -24,9 +24,9 @@ const art = [
     rating: 5,
   },
   {
-    name: "Cielo estrellado",
+    name: "La noche estrellada",
     pic:
-      "https://culturizando.com/wp-content/uploads/2017/03/La-noche-estrellada-Van-Gogh-2.jpg",
+      "https://tse3.mm.bing.net/th/id/OIP.Pzjf_xxyhTCtt9yky7nqfAHaF2?pid=ImgDet&rs=1",
     artist: "Vincent VanGogh",
     description: "un cielo explotando en colores",
     rating: 10,

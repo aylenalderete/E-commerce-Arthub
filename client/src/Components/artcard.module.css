@@ -1,0 +1,15 @@
+.cardContainer{
+    width: 10vmax;
+    height: 12vmax;
+    margin: 3vmax;
+}
+
+.text{
+    color: white;
+    text-decoration: none;
+}
+
+img{
+    width: 13vmax;
+    height: 16vmax;
+}
