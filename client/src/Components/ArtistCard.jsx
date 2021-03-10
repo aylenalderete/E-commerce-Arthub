@@ -8,4 +8,4 @@ function ArtistCard() {
     )
 }
 
-export default ArtistPiece
+export default ArtistCard
