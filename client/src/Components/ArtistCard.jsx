@@ -1,11 +1,12 @@
 import React from 'react'
 
-function ArtistCard() {
+function ArtistCard(picture, artist) {
     return (
         <div>
-            This should be the artist card
+            <img src={picture}></img>
+            <h1>{artist}</h1>
         </div>
     )
 }
 
-export default ArtistPiece
+export default ArtistCard

@@ -20,7 +20,7 @@ function App() {
       <Route path="/login" component={LogIn}></Route>
       <Route path="/signin" component={SignIn}></Route>
       <Route path="/artistas" component={Artists}></Route>
-      <Route path="/arte" component={ArtPiece}></Route>
+      <Route path="/colección/:idArte" component={ArtPiece}></Route>
     </div>
   );
 }
