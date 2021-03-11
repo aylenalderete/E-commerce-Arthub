@@ -1,9 +1,13 @@
 import React from 'react'
+import artists from '../fakeListArtists'
+import ArtistCard from '../Components/ArtistCard'
 
 function Artists() {
     return (
         <div>
-            We render a list of artists here
+            {artists.map(artist => (
+                <ArtistCard picture = {artist.picture} artist = {artist.artist}></ArtistCard>
+            ))}
         </div>
     )
 }
