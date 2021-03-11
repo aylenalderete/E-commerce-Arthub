@@ -3,3 +3,9 @@
     justify-content: space-around;
     margin-top: 15%;
 }
+
+.sbContainer{
+    display: flex;
+    position: relative;
+    margin-left: 79%;
+}

@@ -1,0 +1,46 @@
+
+
+.form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 15%;
+}
+
+.input{
+    margin: 10px 10px;
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid white;
+    padding: 5px 10px;
+    width: 20%;
+}
+
+.btn{
+    color:white;
+     background-color: Transparent;
+    background-repeat:no-repeat;
+    border: 1px solid white;
+    cursor:pointer;
+    padding: 10px;
+    position: relative;
+    margin-left: 15%;
+}
+
+.textContainer{
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    margin-left: 46.05%;
+}
+.pText{
+    color:white;
+      margin-left: 10px;
+    margin-right: 10px;
+}
+.link{
+    text-decoration: none;
+    color: #F427EC;
+      margin-left: 10px;
+    margin-right: 10px;
+}
