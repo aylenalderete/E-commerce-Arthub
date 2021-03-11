@@ -1,9 +1,10 @@
 import React from 'react'
+import NavBar from '../Components/NavBar'
 
 function Home() {
     return (
         <div>
-            We render the home here
+            <NavBar renderTop={true} />
         </div>
     )
 }

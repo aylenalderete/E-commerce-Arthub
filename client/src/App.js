@@ -8,6 +8,7 @@ import LogIn from './Views/LogIn';
 import SignIn from './Views/SignIn';
 import Artists from './Views/Artists';
 import ArtPiece from './Views/ArtPiece';
+import NavBar from './Components/NavBar';
 
 function App() {
   return (
