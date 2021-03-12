@@ -1,5 +1,5 @@
 const server = require('express').Router();
-const { Product, Image, Category } = require('../db.js');
+const { Product, Image, Category, User, productcategory } = require('../db.js');
 
 // Get all products 
 server.get('/', (req, res) => {
@@ -44,6 +44,131 @@ server.post('/', async function (req, res) {
 	}
 	catch (err) {
 		res.status(500).json({ message: 'Error' })
+	}
+});
+
+
+// Edit product 
+server.put("/:id", async (req, res, next) => {
+	try {
+		const productToEdit = await Product.update(
+			{
+				title: req.body.title,
+				price: req.body.price,
+				description: req.body.description,
+				stock: req.body.stock,
+			},
+			{ where: { id_product: req.params.id } }
+		);
+		await productToEdit.setCategories(req.body.categories);
+		await productToEdit.setImages(req.body.productImage);
+
+		res.status(200).json({ message: "Product Updated" });
+	} catch (e) {
+		res.status(400).json({ message: "Error" });
+	}
+});
+
+// Delete product by id
+server.delete('/:id', async (req, res) => {
+
+	try {
+
+		Product.destroy({ where: { id_product: req.params.id } })
+			.then(data => {
+				if (data == 0) {
+					res.json('The product do not exists')
+				} else {
+					res.json('Success')
+				}
+			}).catch(err => {
+				console.log(err)
+				res.json(err)
+			})
+
+	}
+	catch (err) {
+		console.log(err)
+		res.json(err)
+	}
+
+});
+
+// Search product by id
+server.get('/:id', async (req, res) => {
+
+	try {
+
+		var resultSet = {
+			id: '',
+			title: '',
+			price: '',
+			description: '',
+			stock: '',
+			categories: [],
+			images: [],
+		}
+
+		var obj = {}
+
+
+		await Product.findByPk(req.params.id, { include: [Category, Image] })
+			.then(data => {
+				resultSet.id = data.dataValues.id_product
+				resultSet.title = data.dataValues.title
+				resultSet.price = data.dataValues.price
+				resultSet.description = data.dataValues.description
+				resultSet.stock = data.dataValues.stock
+				data.categories.forEach(value => {
+					obj.id = value.dataValues.id;
+					obj.name = value.dataValues.name;
+					obj.description = value.dataValues.description;
+					resultSet.categories.push(obj)
+					obj = {};
+				});
+				data.images.forEach(value => {
+					obj.id = value.dataValues.id;
+					obj.url = value.dataValues.url;
+					resultSet.images.push(obj)
+					obj = {};
+				});
+				res.json(resultSet)
+			})
+			.catch(err => {
+				console.log(err)
+				res.json(err)
+			})
+	} catch (err) {
+		console.log(err)
+		res.json(err)
+	}
+});
+
+// Add category to product
+server.post("/:idProducto/category/:idCategorias", async (req, res) => {
+	try {
+		const productToEdit = await Product.findOne({
+			where: { id_product: req.params.idProducto },
+			include: { model: Category },
+		});
+		await productToEdit.addCategory(req.params.idCategorias);
+		res.json(productToEdit);
+	} catch {
+		res.status(400);
+	}
+});
+
+// Delete category from product
+server.delete("/:idProducto/category/:idCategorias", async (req, res) => {
+	try {
+		const productToEdit = await Product.findOne({
+			where: { id_product: req.params.idProducto },
+			include: { model: Category },
+		});
+		await productToEdit.removeCategory(req.params.idCategorias);
+		res.json(productToEdit);
+	} catch {
+		res.status(400);
 	}
 });
 
