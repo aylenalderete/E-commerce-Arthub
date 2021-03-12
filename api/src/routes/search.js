@@ -1,7 +1,7 @@
 /*-----------------Inicion Jorge Macias---------------------------------*/
 const server = require('express').Router();
 const { Product, Category, Image } = require('../db.js');
-
+const { Op } = require("sequelize");
 
 
 
@@ -13,8 +13,12 @@ server.get('/', (req, res) => {
         Product.findAll({
             include: [Category, Image],
             where: {
-                title: query
-            }
+				[Op.or]: [
+					{ title: query },
+					{ description: { [Op.like]: `%${query}%` } }
+
+				]
+			}
         })
             .then(prod => {
                 res.json(prod)
