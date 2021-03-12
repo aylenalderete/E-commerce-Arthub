@@ -3,4 +3,12 @@ body {
   background-color: black;
   font-family: 'Amiko', sans-serif;
 }
+div:focus{
+  outline: none;
+}
+.carousel-row{
+  display: flex;
+  justify-content: center;
+  align-self: center;
+}
 
