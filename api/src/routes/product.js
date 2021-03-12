@@ -47,4 +47,28 @@ server.post('/', async function (req, res) {
 	}
 });
 
+/*--------------Inicio Jorge Macias--------------------------*/
+
+//Ruta que retorma producto segun segun la categoría
+server.get('/categoria/:nombrecat', (req, res) =>{
+	try {
+		const {nombrecat} = req.params
+	Category.findAll({
+		include: [Product],
+		where: {
+			category:nombrecat
+		}
+	})
+	.then(result => {
+		res.json(result)
+	})
+
+	} catch (error) {
+		res.status(500).json({message: 'Error'})
+	}
+	
+})
+
+/*------------------Fin-----------------------------------*/
+
 module.exports = server;
