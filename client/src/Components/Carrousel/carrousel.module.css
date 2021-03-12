@@ -1,12 +1,14 @@
-.c{
-    color:white;
+.image{
+    
+    
+    max-width: 25vmax;
+    max-height:25vmax;
+    
+}
+.carouselContainer{
+    margin-left: 40px;
+    margin-top: 40px;
+    outline:  none !important ;
+
 }
 
-.container{
-    background-color: blue;
-  
-}
-
-div{
-    color: white;
-}
