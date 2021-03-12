@@ -47,31 +47,6 @@ server.post('/', async function (req, res) {
 	}
 });
 
-<<<<<<< HEAD
-/*--------------Inicio Jorge Macias--------------------------*/
-
-//Ruta que retorma producto segun segun la categoría
-server.get('/categoria/:nombrecat', (req, res) =>{
-	try {
-		const {nombrecat} = req.params
-	Category.findAll({
-		include: [Product],
-		where: {
-			category:nombrecat
-		}
-	})
-	.then(result => {
-		res.json(result)
-	})
-
-	} catch (error) {
-		res.status(500).json({message: 'Error'})
-	}
-	
-})
-
-/*------------------Fin-----------------------------------*/
-=======
 
 // Edit product 
 server.put("/:id", async (req, res, next) => {
@@ -196,6 +171,5 @@ server.delete("/:idProducto/category/:idCategorias", async (req, res) => {
 		res.status(400);
 	}
 });
->>>>>>> dev
 
 module.exports = server;
