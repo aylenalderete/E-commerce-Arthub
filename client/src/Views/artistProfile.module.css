@@ -1,0 +1,17 @@
+.container{
+    display: flex;
+    color: white;
+    justify-content: center;
+    margin-top: 10%;
+}
+.imgContainer{
+    margin-right: 2%;
+}
+.infoContainer{
+    margin-left: 2%;
+}
+.artistContainer{
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+}

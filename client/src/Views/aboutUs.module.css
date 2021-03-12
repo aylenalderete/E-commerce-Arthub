@@ -1,0 +1,14 @@
+.container{
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    color: white;
+    align-items: center;
+    justify-content: space-around;
+    /* margin : 2rem 0;  */
+}
+
+.rectangle{
+    border: solid 1px white;
+    padding : 4px 4rem;
+}
