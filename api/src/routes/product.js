@@ -172,4 +172,23 @@ server.delete("/:idProducto/category/:idCategorias", async (req, res) => {
 	}
 });
 
+server.get('/categorias/:nombrecat', (req, res) =>{
+	try {
+		const {nombrecat} = req.params
+	Category.findAll({
+		include: [Product],
+		where: {
+			name:nombrecat
+		}
+	})
+	.then(result => {
+		res.json(result)
+	})
+
+	} catch (error) {
+		res.status(500).json({ message: 'Error' })
+	}
+	
+})
+
 module.exports = server;
