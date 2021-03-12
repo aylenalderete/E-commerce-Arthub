@@ -16,12 +16,25 @@ router.post('/', async (req, res) => {
 
 });
 
+router.get('/', (req,res) => {
+    try {
+        Category.findAll()
+    .then(result => {
+        res.json(result)
+    })
+    
+    } catch (error) {
+        res.status(500).res.json({message: 'Error al obtener las categorias'})
+    }
+    
+})
+
 router.delete('/:id', async (req, res) => {
     try {
         let destroyed = await Category.destroy({
             where: {id: req.params.id},            
         });
-        res.json(destroyed);
+        res.json(`Categoria con id ${req.params.id} Eliminada`);
     } catch (error) {
         res.json('Error: ', error);
     }
@@ -37,7 +50,7 @@ router.put('/:id', async (req, res) => {
         },{
             where: {id: req.params.id},
         });
-        res.json(updated);     
+        res.json(`Categoria con id ${req.params.id} modificada`);     
     } catch (error) {
         console.log('error: ', error);
     }

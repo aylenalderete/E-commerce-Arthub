@@ -47,8 +47,8 @@ server.post('/', async function (req, res) {
 	}
 });
 
-
-// Edit product 
+//pending 1
+// Edit product
 server.put("/:id", async (req, res, next) => {
 	try {
 		const productToEdit = await Product.update(
@@ -60,8 +60,25 @@ server.put("/:id", async (req, res, next) => {
 			},
 			{ where: { id_product: req.params.id } }
 		);
-		await productToEdit.setCategories(req.body.categories);
-		await productToEdit.setImages(req.body.productImage);
+
+		const productImage = await Image.create({
+			url: req.body.image,
+		});
+		const categories = req.body.category;
+
+		await productToEdit.setCategories(categories);
+		await productToEdit.setImages(productImage);
+
+		// 	imagesToAdd = [];
+		// await req.body.image.forEach(async (imgID) => {
+		// 		const imageToAdd = await Image.create({ url: imgID });
+		// 		imagesToAdd.push(imageToAdd);
+		// 		console.log(imageToAdd)
+		// 	});
+		// 	await productToEdit.setImages(imagesToAdd);
+
+		// 	await productToEdit.setCategories(req.body.category);
+		// 	//await productToEdit.setImages(productImage);
 
 		res.status(200).json({ message: "Product Updated" });
 	} catch (e) {
@@ -93,7 +110,7 @@ server.delete('/:id', async (req, res) => {
 	}
 
 });
-
+//pending 2
 // Search product by id
 server.get('/:id', async (req, res) => {
 
@@ -143,7 +160,7 @@ server.get('/:id', async (req, res) => {
 		res.json(err)
 	}
 });
-
+//pending 3
 // Add category to product
 server.post("/:idProducto/category/:idCategorias", async (req, res) => {
 	try {
@@ -157,7 +174,7 @@ server.post("/:idProducto/category/:idCategorias", async (req, res) => {
 		res.status(400);
 	}
 });
-
+//pending 4
 // Delete category from product
 server.delete("/:idProducto/category/:idCategorias", async (req, res) => {
 	try {
@@ -171,24 +188,24 @@ server.delete("/:idProducto/category/:idCategorias", async (req, res) => {
 		res.status(400);
 	}
 });
-
-server.get('/categorias/:nombrecat', (req, res) =>{
+//pending 5
+server.get('/categorias/:nombrecat', (req, res) => {
 	try {
-		const {nombrecat} = req.params
-	Category.findAll({
-		include: [Product],
-		where: {
-			name:nombrecat
-		}
-	})
-	.then(result => {
-		res.json(result)
-	})
+		const { nombrecat } = req.params
+		Category.findAll({
+			include: [Product],
+			where: {
+				name: nombrecat
+			}
+		})
+			.then(result => {
+				res.json(result)
+			})
 
 	} catch (error) {
 		res.status(500).json({ message: 'Error' })
 	}
-	
+
 })
 
 module.exports = server;
