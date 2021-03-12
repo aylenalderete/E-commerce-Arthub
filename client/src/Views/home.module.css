@@ -1,0 +1,17 @@
+.titleContainer{
+    width:fit-content;
+    margin:0
+   
+}
+
+.title{
+    font-size: 6rem;
+    margin:0;
+    letter-spacing: -0.06em;
+    line-height: 7.5rem;
+    border-bottom: 2px solid #F427EC;
+}
+
+.subtitle{
+    font-size: 2rem;
+}
