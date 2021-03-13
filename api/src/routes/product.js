@@ -169,7 +169,15 @@ server.get('/categorias/:nombrecat', (req, res) => {
 	Category.findAll({ where: { name: nombrecat } })
 		.then(categoria => {return categoria[0].dataValues.id})
 		.then(catId => Product.findAll({
-			include: [{model: Category, where: {id: catId}}]
+			include: [
+				{
+					model: Category,
+					where: {id: catId}
+				},
+				{
+					model: Image
+				}
+			]
 		}))
 		.then(products => res.json(products))
 		.catch(err => {
