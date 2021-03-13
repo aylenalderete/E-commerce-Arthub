@@ -9,7 +9,7 @@ import SignIn from './Views/SignIn';
 import Artists from './Views/Artists';
 import ArtPiece from './Views/ArtPiece';
 import ArtistProfile from './Views/ArtistProfile';
-import CreateCategory from './Views/CreateCatgory';
+import CreateCatgory from './Views/CreateCatgory';
 
 function App() {
   return (
@@ -19,7 +19,7 @@ function App() {
       <Route path="/colección" exact component={Collection}></Route>
       <Route path="/login" component={LogIn}></Route>
       <Route path="/signin" component={SignIn}></Route>
-      <Route path="/artistas" component={Artists}></Route>
+      <Route path="/artistas" exact component={Artists}></Route>
       <Route path="/artistas/:artistId" 
       render={({match}) => (
         <ArtistProfile artistId={match.params.artistId}></ArtistProfile>
@@ -31,9 +31,11 @@ function App() {
           <ArtPiece artId={match.params.idArte}></ArtPiece>
         )}
       ></Route>
-      <Route path="/crearCategorías" component={CreateCategory}></Route>
+      <Route path="/crearCategorías" component={CreateCatgory}></Route>
     </div>
   );
 }
+
+export default App;
 
 export default App;
