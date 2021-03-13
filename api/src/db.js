@@ -51,8 +51,8 @@ Image.belongsTo(Product);
 Product.belongsToMany(Category, { through: "productcategory" });
 Category.belongsToMany(Product, { through: "productcategory" });
 
-User.hasMany(Product); //jorge
-Product.belongsTo(User); //jorge
+User.hasMany(Product, { foreignKey: { allowNull: false }, onDelete: 'CASCADE' }); 
+Product.belongsTo(User, { foreignKey: { allowNull: false }, onDelete: 'CASCADE' });
 
 module.exports = {
 	...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');
