@@ -10,13 +10,12 @@ import Artists from './Views/Artists';
 import ArtPiece from './Views/ArtPiece';
 import NavBar from './Components/NavBar';
 
-
 function App() {
   return (
     <div className="App">
       <Route path="/inicio" component={Home}></Route>
       <Route path="/nosotros" component={AboutUs}></Route>
-      <Route path="/colección" exact component={Collection}></Route>
+      <Route path="/coleccion" exact component={Collection}></Route>
       <Route path="/login" component={LogIn}></Route>
       <Route path="/signin" component={SignIn}></Route>
       <Route path="/artistas" component={Artists}></Route>

@@ -26,7 +26,7 @@ function SearchBar({getProductsByName}) {
     return (
         <div className={Styles.mainContainer}>
             <form onSubmit={handleSubmit} className={Styles.formStyle}>
-                <input type='text' onChange={handleInputChange} className={Styles.inpt} placeholder='Buscar...'></input>
+                <input type='text' onChange={handleInputChange} className={Styles.inpt} placeholder='buscar...'></input>
                 <button className={Styles.btn}>
                     <img className={Styles.searchIcon} src={SearchIcon} alt='search icon' />
                 </button>
