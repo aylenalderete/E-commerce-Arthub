@@ -47,7 +47,7 @@ server.post('/', async function (req, res) {
 	}
 });
 
-//pending 1
+
 // Edit product
 server.put("/:id", async (req, res, next) => {
 	try {
