@@ -8,11 +8,11 @@ function ArtCard({name, pic, artist}) {
         <div className={style.imgContainer}>
           <img className={style.cardImg} alt="artpic" src={pic}></img>
         </div>
-        <div>
-          <Link to={`/colección/${name}`}>
+        <div className={style.linksArtCard}>
+          <Link className={style.linksA} to={`/colección/${name}`}>
             <h5 className={style.text}>{name}</h5>
           </Link>
-          <Link to={`/artists/${artist}`}>
+          <Link  className={style.linksA} to={`/artists/${artist}`}>
             <h5 className={style.text}>{artist}</h5>
           </Link>
         </div>
