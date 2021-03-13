@@ -1,7 +1,11 @@
+.navContainer{
+    display: flex;
+    flex-direction: row;
+    height: 100vh;   
+}
 .container{
     display: flex;
-    color: white;
-    justify-content: center;
+    
     margin-top: 10%;
 }
 .imgContainer{

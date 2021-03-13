@@ -8,12 +8,12 @@ import LogIn from './Views/LogIn';
 import SignIn from './Views/SignIn';
 import Artists from './Views/Artists';
 import ArtPiece from './Views/ArtPiece';
-import ArtistProfile from './Views/ArtistProfile'
-
+import ArtistProfile from './Views/ArtistProfile';
+import CreateCategory from './Views/CreateCatgory';
 
 function App() {
   return (
-    <div className="App">
+    <div >
       <Route path="/inicio" component={Home}></Route>
       <Route path="/nosotros" component={AboutUs}></Route>
       <Route path="/colección" exact component={Collection}></Route>
@@ -31,6 +31,7 @@ function App() {
           <ArtPiece artId={match.params.idArte}></ArtPiece>
         )}
       ></Route>
+      <Route path="/crearCategorías" component={CreateCategory}></Route>
     </div>
   );
 }
