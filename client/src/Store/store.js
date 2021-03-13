@@ -7,7 +7,8 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 
 // estado inicial 
 const initialState = {
-    products: []
+    products: [],
+   
 }
 
 //reducer 

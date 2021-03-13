@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import Styles from './searchBar.module.css';
 import SearchIcon from '../Images/search.svg';
-import {getProducts} from '../Actions/getActions';
+import getProductsByName from '../Actions/getActions';
 
-function SearchBar({getProducts}) {
+function SearchBar({getProductsByName}) {
 
     //hooks
     const [input, setInput] = useState('');
@@ -19,7 +19,7 @@ function SearchBar({getProducts}) {
 
     function handleSubmit(e){
         e.preventDefault();
-        getProducts(input);
+        getProductsByName(input);
     }
     
 
@@ -38,7 +38,7 @@ function SearchBar({getProducts}) {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        getProducts: search => dispatch(getProducts(search))
+        getProductsByName: search => dispatch(getProductsByName(search))
     }
 }
 
