@@ -51,40 +51,31 @@ server.post('/', async function (req, res) {
 // Edit product
 server.put("/:id", async (req, res, next) => {
 	try {
-		const productToEdit = await Product.update(
-			{
-				title: req.body.title,
-				price: req.body.price,
-				description: req.body.description,
-				stock: req.body.stock,
-			},
-			{ where: { id_product: req.params.id } }
-		);
+		const productToEdit = await Product.findByPk(req.params.id);
+		productToEdit.title = req.body.title;
+		productToEdit.price = req.body.price;
+		productToEdit.description = req.body.description;
+		productToEdit.stock = req.body.stock;
 
 		const productImage = await Image.create({
 			url: req.body.image,
 		});
-		const categories = req.body.category;
 
-		await productToEdit.setCategories(categories);
 		await productToEdit.setImages(productImage);
+		const categoryToAdd = await Category.findByPk(req.body.categories);
+		await productToEdit.setCategories(categoryToAdd);
 
-		// 	imagesToAdd = [];
-		// await req.body.image.forEach(async (imgID) => {
-		// 		const imageToAdd = await Image.create({ url: imgID });
-		// 		imagesToAdd.push(imageToAdd);
-		// 		console.log(imageToAdd)
-		// 	});
-		// 	await productToEdit.setImages(imagesToAdd);
+		await productToEdit.save();
+		const productToReturn = await productToEdit.reload();
+		console.log(productToReturn);
 
-		// 	await productToEdit.setCategories(req.body.category);
-		// 	//await productToEdit.setImages(productImage);
-
-		res.status(200).json({ message: "Product Updated" });
+		res.status(200).json(productToReturn);
 	} catch (e) {
+		console.log(e);
 		res.status(400).json({ message: "Error" });
 	}
 });
+
 
 // Delete product by id
 server.delete('/:id', async (req, res) => {
@@ -110,7 +101,7 @@ server.delete('/:id', async (req, res) => {
 	}
 
 });
-//pending 2
+
 // Search product by id
 server.get('/:id', async (req, res) => {
 
@@ -188,9 +179,26 @@ server.delete("/:idProducto/category/:idCategorias", async (req, res) => {
 		res.status(400);
 	}
 });
-//pending 5
+
 server.get('/categorias/:nombrecat', (req, res) => {
 	try {
+
+		var resultSet = {
+			id: '',
+			title: '',
+			price: '',
+			description: '',
+			stock: '',
+			categories: [],
+			images: [],
+		}
+		var arrayResult = [];
+		var arrayCategories = [];
+		var arrayImages = [];
+		var obj = {}
+
+
+
 		const { nombrecat } = req.params
 		Category.findAll({
 			include: [Product],
@@ -199,8 +207,59 @@ server.get('/categorias/:nombrecat', (req, res) => {
 			}
 		})
 			.then(result => {
-				res.json(result)
+				result[0].products.forEach(elem => {
+					//console.log(elem.dataValues.id_product)
+					Product.findByPk(elem.dataValues.id_product, {
+						include: [Category, Image]
+					})
+						.then(data => {
+
+							resultSet.id = data.dataValues.id_product
+							resultSet.title = data.dataValues.title
+							resultSet.price = data.dataValues.price
+							resultSet.description = data.dataValues.description
+							resultSet.stock = data.dataValues.stock
+
+							data.dataValues.categories.forEach(value => {
+
+								obj.id = value.dataValues.id;
+								obj.name = value.dataValues.name;
+								obj.description = value.dataValues.description;
+
+								arrayCategories.push(obj)
+								obj = {};
+							});
+
+							resultSet.categories = arrayCategories
+
+							arrayCategories = [];
+
+							data.dataValues.images.forEach(value => {
+
+								obj.url = value.dataValues.url;
+								arrayImages.push(obj)
+								obj={}
+							})
+
+							resultSet.images = arrayImages;
+							arrayImages = [];
+
+							arrayResult.push(resultSet)
+							resultSet = {}
+
+							//console.log(resultSet)
+							//console.log(data)
+						})
+						.then(result => {
+							res.json(arrayResult)
+						})
+						.catch(error => {
+							res.status(500).json({message: 'Error'})
+							console.log(error)
+						})
+				})
 			})
+
 
 	} catch (error) {
 		res.status(500).json({ message: 'Error' })
