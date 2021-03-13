@@ -4,7 +4,7 @@ const arrayOfProducts = [
         price: 100,
         description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed viverra efficitur magna, eu venenatis neque pharetra vel. Nam feugiat arcu neque, eu condimentum nunc tincidunt quis.",
         stock: 3,
-        images: ["https://i.imgur.com/HYCjNmD.png"],
+        images: ["https://i.imgur.com/HYCjNmD.png", "https://i.imgur.com/HYCjNmD.png"],
         category: [2, 3]
     },
     {
