@@ -1,4 +1,4 @@
-const arrayOfProducts = require("./ProductsList.js");
+const arrayOfProducts = require("./products.js");
 
 const arrayOfUsers = [
 	{
@@ -62,4 +62,5 @@ const arrayOfUsers = [
 		products: arrayOfProducts,
 	},
 ];
+
 module.exports = arrayOfUsers;

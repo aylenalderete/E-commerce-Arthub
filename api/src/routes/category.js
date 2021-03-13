@@ -9,9 +9,9 @@ router.post('/', async (req, res) => {
             name: req.body.name,
             description: req.body.description,
         });
-        res.json(newCategory);
+        res.json('Category succesfully created');
     } catch (error) {
-        res.json('Error: la categoria ya existe');
+        res.json('Error: Category already exists');
     }
 
 });
@@ -24,7 +24,7 @@ router.get('/', (req,res) => {
     })
     
     } catch (error) {
-        res.status(500).res.json({message: 'Error al obtener las categorias'})
+        res.status(500).res.json({message: 'Could not get categories'})
     }
     
 })
@@ -34,7 +34,7 @@ router.delete('/:id', async (req, res) => {
         let destroyed = await Category.destroy({
             where: {id: req.params.id},            
         });
-        res.json(`Categoria con id ${req.params.id} Eliminada`);
+        res.json(`Category with id ${req.params.id} succesfully deleted`);
     } catch (error) {
         res.json('Error: ', error);
     }
@@ -47,10 +47,11 @@ router.put('/:id', async (req, res) => {
         let updated = await Category.update({
             name: req.body.name,
             description: req.body.description,
-        },{
+        },
+        {
             where: {id: req.params.id},
         });
-        res.json(`Categoria con id ${req.params.id} modificada`);     
+        res.json(`Category with id ${req.params.id} succesfully modified`);     
     } catch (error) {
         console.log('error: ', error);
     }
