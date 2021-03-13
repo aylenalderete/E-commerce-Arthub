@@ -1,15 +1,33 @@
 .cardContainer{
-    width: 10vmax;
-    height: 12vmax;
-    margin: 3vmax;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width:30%;  
+    margin-bottom: 50px;
+    border:1px solid white;
+   
+    
 }
 
 .text{
     color: white;
+    text-align: center;
+    
+}
+
+.linksArtCard{
+    align-self: center;
+
+}
+
+.linksA{
     text-decoration: none;
+    color:white;
 }
 
 .cardImg{
-    width: 13vmax;
-    height: 16vmax;
+    width: 18vmax;
+    height: 25vmax;
+    margin-top:40px;
+    
 }

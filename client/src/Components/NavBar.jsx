@@ -5,7 +5,7 @@ import Styles from "./navBar.module.css"
 function NavBar({renderTop}) {
 
     return (
-        <div>
+        <div className={ renderTop === true ? Styles.navMain : Styles.navMain2}>
             { renderTop === true ?
                 <div className={Styles.navContainer}>
                     <div className={Styles.navContainerSecciones}>
@@ -22,9 +22,9 @@ function NavBar({renderTop}) {
                 </div>
                 :
                 <div className={Styles.navContainer2}>
-                    <div className={Styles.line}>
+                    
                         <p className={Styles.tituloNavbar2}>arthub</p>  
-                    </div>
+                  
                     <div className= {Styles.navContainerSecciones2}>
                         <Link className={Styles.link2} to="/colección">
                             <p className={Styles.secciones2}>colección</p>

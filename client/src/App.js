@@ -10,6 +10,7 @@ import Artists from './Views/Artists';
 import ArtPiece from './Views/ArtPiece';
 import NavBar from './Components/NavBar';
 
+
 function App() {
   return (
     <div className="App">

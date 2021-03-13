@@ -1,6 +1,12 @@
 .artists{
     display: flex;
+    flex-direction: column;
     flex-wrap: wrap;
     justify-content: flex-end;
     margin-left: 12rem;
+}
+
+.mainContainerArtist{
+    display:flex;
+    flex-direction: row;
 }

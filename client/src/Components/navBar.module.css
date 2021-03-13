@@ -28,40 +28,15 @@
 }
 
 
-.navContainer2 {
-    position: fixed;
-    width: 190px;
-    flex-direction: column;
-    background-color: black;
-}
-
-.tituloNavbar2 {
-    font-size: 4rem;
-    font-family: 'Amiko', sans-serif;
-    font-weight: 600;
-    color: white;
-    letter-spacing: -0.06em;
-}
-
-.secciones2 {
-    font-size: 2rem;
-    font-family: 'Amiko', sans-serif;
-    font-weight: 600;
-    color: white;
-    letter-spacing: -0.06em;
-} 
 
 .seccionMicuenta {
-    font-size: 2rem;
+    font-size: 1.5rem;
     font-family: 'Amiko', sans-serif;
     font-weight: 600;
     color: white;
     letter-spacing: -0.06em;
 }
 
-.link2 {
-    text-decoration: none;  
-}
 
 .line {
     width: fit-content;
@@ -70,9 +45,96 @@
     margin-bottom: 50px;
 }
 
+
+/*----------------------------- NAV VERTICAL LATERAL--------------------------- */
+
 .line2 {
 
     border-top: 2px solid #F427EC;
     height: 80px;
     margin-bottom: 50px;
+}
+
+.navContainer2{
+    display: flex;
+    flex-direction: column;
+    color:white;
+    margin-right: 20px;
+    margin-left: 20px;
+    
+}
+
+.tituloNavbar2{
+    font-size: 3.8rem;
+    line-height: 1.5em;
+    border-bottom: 2px solid #F427EC;
+    height: fit-content;
+    margin:0;
+    margin-top: 50px;
+    letter-spacing: -0.06em;
+
+}
+
+
+.secciones2{
+    font-size: 1.5rem;
+    margin: 0;
+    letter-spacing: -0.06em;
+
+}
+
+
+
+.navContainerSecciones2{
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+
+.link2{
+    text-decoration: none;
+    color:white
+}
+
+.navMain2{
+    border-right: 2px solid white;
+}
+
+
+/*Responsive screen*/
+@media only screen and (max-width: 480px){
+
+    .tituloNavbar2{
+        font-size: 2rem;
+        line-height: 1.5em;
+        border-bottom: 2px solid #F427EC;
+        height: fit-content;
+        margin:0;
+        margin-top: 50px;
+        letter-spacing: -0.06em;
+    
+    }
+
+    .secciones2{
+        font-size: 1rem;
+        margin: 0;
+        letter-spacing: -0.06em;
+    
+    }
+
+    .navContainerSecciones2{
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+
+    .seccionMicuenta {
+        font-size: 1rem;
+        font-family: 'Amiko', sans-serif;
+        font-weight: 600;
+        color: white;
+        letter-spacing: -0.06em;
+    }
+    
+    
+    /*falta agregar pop up para abrir menu superior, solo se tiene que ver el logo ..*/
+    
 }

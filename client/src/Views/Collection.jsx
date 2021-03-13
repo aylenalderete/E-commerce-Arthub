@@ -3,12 +3,15 @@ import art from '../fakeList'
 import ArtCard from '../Components/ArtCard'
 import SearchBar from '../Components/SearchBar'
 import style from './collection.module.css'
+import NavBar from '../Components/NavBar';
 
 function Collection() {
-    return (
-      <div>
+  return (
+    <div className={style.mainContainer}>
+      <NavBar renderTop={false} />
+      <div className={style.secondContainer}>
         <div className={style.sbContainer}>
-          <SearchBar></SearchBar>
+        <SearchBar></SearchBar>
         </div>
         <div className={style.container}>
           {art.map((piece) => (
@@ -20,7 +23,8 @@ function Collection() {
           ))}
         </div>
       </div>
-    );
+    </div>
+  );
 }
 
 export default Collection
