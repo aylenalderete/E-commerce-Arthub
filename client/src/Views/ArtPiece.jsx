@@ -7,7 +7,7 @@ function ArtPiece({artName}) {
     var pieceFinder = art.find(x => x.name === artName)
     return (
       <div className={style.container}>
-        <div className={style.imgContainer}>
+        {/* <div className={style.imgContainer}>
           <img className={style.img} alt="artpic" src={pieceFinder.pic}></img>
         </div>
         <div className={style.infoContainer}>
@@ -22,7 +22,7 @@ function ArtPiece({artName}) {
             <p>{pieceFinder.description}</p>
             <button className={style.button}>añadir a mi compra</button>
           </div>
-        </div>
+        </div> */}
       </div>
     );
 }
