@@ -1,12 +1,32 @@
-.artists{
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    justify-content: flex-end;
-    margin-left: 12rem;
-}
-
 .mainContainerArtist{
     display:flex;
-    flex-direction: row;
+}
+
+.sbContainer{
+   
+    display: flex;
+    justify-content: center;
+    margin-top: 60px;
+}
+
+.secondContainer{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.artists{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+
+}
+
+/*Responsive screen*/
+@media only screen and (max-width: 480px){
+    .mainContainerArtist{
+        display: flex;
+        flex-direction: column;
+    }
+    
 }
