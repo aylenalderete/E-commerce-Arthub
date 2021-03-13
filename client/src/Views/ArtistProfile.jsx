@@ -2,9 +2,9 @@ import React from 'react'
 import artists from '../fakeListArtists'
 import style from './artpiece.module.css'
 
-function ArtistProfile({artistName}) {
+function ArtistProfile({artistId}) {
 
-    var artistFinder = artists.find(x => x.artist === artistName)
+    var artistFinder = artists.find(x => x.artist === artistId)
     return (
         <div className={style.container}>
             <div>

@@ -19,24 +19,6 @@ function Collection() {
 
   }, [])
 
-  //hooks filtros
-  const [filter, setFilter] = useState(false);
-
-  const showFilters = () => {
-    filter === false ?
-      setFilter(true) :
-      setFilter(false);
-  }
-
-  const [order, setOrder] = useState(false);
-  
-  const showOrder = () => {
-    order === false ?
-      setOrder(true) :
-      setOrder(false);
-  }
-
-  console.log(products)
   return (
     <div className={style.mainContainer}>
       <NavBar renderTop={false} />
@@ -57,6 +39,8 @@ function Collection() {
               name={piece.title}
               pic={piece.images[0].url}
               artist="Lore ipsum dolor"
+              id={piece.id_product}
+              key={piece.id_product}
             ></ArtCard>
           ))}
         </div>

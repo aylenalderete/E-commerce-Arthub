@@ -20,15 +20,14 @@
 
 
 const server = require('./src/app.js');
-const { conn, Product, Category, Image } = require('./src/db.js');
+const { conn, Product, Category, Image, User } = require('./src/db.js');
 
-// Productos y categorias
+// Categorias
 const arrayCategories = require('./src/seeders/categories.js');
+// Productos
 const arrayProducts = require('./src/seeders/products.js');
-
 // Usuarios
-// const UsersList = require("./src/seeders/userslist");
-// const createNewUser = require("./src/seeders/seeder");
+const arrayOfUsers = require('./src/seeders/users.js');
 
 // Syncing all the models at once.
 conn.sync({ force: true }).then(() => {
@@ -36,12 +35,13 @@ conn.sync({ force: true }).then(() => {
     console.log('%s listening at 3001'); // eslint-disable-line no-console
   });
 
-  // UsersList.map(async function (newUser) {
-  //   await createNewUser(newUser);
-  // });
-
-  // Creacion de categorias
-  Category.bulkCreate(arrayCategories)
+  // Creacion de usuarios
+  User.bulkCreate(arrayOfUsers)
+  .then(async() => {
+    console.log('Users created')
+    // Creacion de categorias
+    return Category.bulkCreate(arrayCategories)
+  })
     .then(async () => {
       console.log('Categories successfully created')
       // Creacion de productos

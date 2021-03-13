@@ -31,13 +31,14 @@ server.get('/', (req, res) => {
 
 // 2: Create a new product
 server.post('/', async function (req, res) {
-	const { title, price, description, stock, images, categories } = req.body;
+	const { title, price, description, stock, images, categories, userId } = req.body;
 	try {
 		const newProduct = await Product.create({
 			title,
 			price,
 			description,
-			stock
+			stock,
+			userId
 		})
 		const img = images.map(url => ({url}))
 		const productImage = await Image.bulkCreate(img)
@@ -169,13 +170,35 @@ server.get('/categorias/:nombrecat', (req, res) => {
 	Category.findAll({ where: { name: nombrecat } })
 		.then(categoria => {return categoria[0].dataValues.id})
 		.then(catId => Product.findAll({
-			include: [{model: Category, where: {id: catId}}]
+			include: [
+				{
+					model: Category,
+					where: {id: catId}
+				},
+				{
+					model: Image
+				}
+			]
 		}))
 		.then(products => res.json(products))
 		.catch(err => {
 			console.log(err)
 			res.json(err)
 		})
+
+})
+
+// 9: Get products by user id
+server.get('/user/:id', (req, res) => {
+
+	const { id } = req.params
+	Product.findAll({
+		include : [Category, Image],
+		where : {userId : id}
+	})
+	.then(result => {
+		res.json(result)
+	})
 
 })
 

@@ -8,18 +8,29 @@ import LogIn from './Views/LogIn';
 import SignIn from './Views/SignIn';
 import Artists from './Views/Artists';
 import ArtPiece from './Views/ArtPiece';
-import NavBar from './Components/NavBar';
+
 
 function App() {
   return (
-    <div className="App">
+    <div >
       <Route path="/inicio" component={Home}></Route>
       <Route path="/nosotros" component={AboutUs}></Route>
       <Route path="/coleccion" exact component={Collection}></Route>
       <Route path="/login" component={LogIn}></Route>
       <Route path="/signin" component={SignIn}></Route>
       <Route path="/artistas" component={Artists}></Route>
-      <Route exact path="/colección/:idArte" render={({match}) => <ArtPiece artName={match.params.idArte}></ArtPiece>}></Route>
+      <Route path="/artistas/:artistId" 
+      render={({match}) => (
+        <ArtistProfile artistId={match.params.artistId}></ArtistProfile>
+      )}></Route>
+      <Route
+        exact
+        path="/colección/:idArte"
+        render={({ match }) => (
+          <ArtPiece artId={match.params.idArte}></ArtPiece>
+        )}
+      ></Route>
+      <Route path="/crearCategorías" component={CreateCategory}></Route>
     </div>
   );
 }

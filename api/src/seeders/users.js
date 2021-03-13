@@ -1,5 +1,3 @@
-const arrayOfProducts = require("./products.js");
-
 const arrayOfUsers = [
 	{
 		username: "andres12",
@@ -9,7 +7,6 @@ const arrayOfUsers = [
 		password: "SSKsods#!#d323",
 		birth: 12121976,
 		type: "admin",
-		products: arrayOfProducts,
 	},
 	{
 		username: "carlos33",
@@ -19,7 +16,6 @@ const arrayOfUsers = [
 		password: "SSKsods#!djjd323",
 		birth: 10121970,
 		type: "user",
-		products: arrayOfProducts,
 	},
 	{
 		username: "mati54",
@@ -29,7 +25,6 @@ const arrayOfUsers = [
 		password: "Sjdj$$$//djdj7",
 		birth: 21021999,
 		type: "user",
-		products: arrayOfProducts,
 	},
 	{
 		username: "martin7887",
@@ -39,7 +34,6 @@ const arrayOfUsers = [
 		password: "Gsksek#$%jd7jd#m%4",
 		birth: 12121976,
 		type: "user",
-		products: arrayOfProducts,
 	},
 	{
 		username: "pepe78",
@@ -49,7 +43,6 @@ const arrayOfUsers = [
 		password: "alsdlasd&%ma2332M",
 		birth: 17011978,
 		type: "user",
-		products: arrayOfProducts,
 	},
 	{
 		username: "manuu55",
@@ -59,7 +52,15 @@ const arrayOfUsers = [
 		password: "KlK738j%$%/(dasd",
 		birth: 02072001,
 		type: "user",
-		products: arrayOfProducts,
+	},
+	{
+		username: "jose1234",
+		name: "Jose",
+		lastname: "Fernandez",
+		email: "mansdfsdfu44@gmail.com",
+		password: "KlK738j%$%/(dasd",
+		birth: 26061993,
+		type: "user",
 	},
 ];
 
