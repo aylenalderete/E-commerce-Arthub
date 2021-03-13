@@ -8,7 +8,7 @@ function ArtPiece({artName}) {
     return (
       <div className={style.container}>
         <div className={style.imgContainer}>
-          <img alt="artpic" src={pieceFinder.pic}></img>
+          <img className={style.img} alt="artpic" src={pieceFinder.pic}></img>
         </div>
         <div className={style.infoContainer}>
           <div className={style.artistContainer}>
