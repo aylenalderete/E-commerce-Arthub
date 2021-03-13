@@ -13,15 +13,20 @@ const initialState = {
 //reducer 
 const reducer = function (state = initialState, action) {
     switch (action.type) {
-        //aca crear los switch cases de cada action 
+      //aca crear los switch cases de cada action
 
-        case 'GET_PRODUCTS':
-            return{
-                ...state, 
-                products: action.payload
-            }
+      case "GET_PRODUCTS":
+        return {
+          ...state,
+          products: action.payload,
+        };
+      case "GET_INITIAL_PRODUCTS":
+        return {
+          ...state,
+          products: action.payload,
+        };
 
-        default :
+      default:
         return state;
     }
 }
