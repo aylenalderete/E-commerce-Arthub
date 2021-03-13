@@ -4,7 +4,7 @@ import NavBar from '../Components/NavBar'
 
 function CreateCatgory() {
     return (
-        <div className = {style.mainContainerForm}>
+        <div >
             <NavBar renderTop={false} />  
             <FormCategories />
         </div>
