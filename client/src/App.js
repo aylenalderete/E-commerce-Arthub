@@ -8,7 +8,7 @@ import LogIn from './Views/LogIn';
 import SignIn from './Views/SignIn';
 import Artists from './Views/Artists';
 import ArtPiece from './Views/ArtPiece';
-import NavBar from './Components/NavBar';
+import ArtistProfile from './Views/ArtistProfile'
 
 
 function App() {
@@ -20,7 +20,17 @@ function App() {
       <Route path="/login" component={LogIn}></Route>
       <Route path="/signin" component={SignIn}></Route>
       <Route path="/artistas" component={Artists}></Route>
-      <Route exact path="/colección/:idArte" render={({match}) => <ArtPiece artName={match.params.idArte}></ArtPiece>}></Route>
+      <Route path="/artistas/:artistId" 
+      render={({match}) => (
+        <ArtistProfile artistId={match.params.artistId}></ArtistProfile>
+      )}></Route>
+      <Route
+        exact
+        path="/colección/:idArte"
+        render={({ match }) => (
+          <ArtPiece artId={match.params.idArte}></ArtPiece>
+        )}
+      ></Route>
     </div>
   );
 }

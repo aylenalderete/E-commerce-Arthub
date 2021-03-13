@@ -17,7 +17,7 @@ dispatch(getInitialProducts());
 
 }, [])
 
-console.log(products)
+
   return (
     <div className={style.mainContainer}>
       <NavBar renderTop={false} />
@@ -31,6 +31,8 @@ console.log(products)
               name={piece.title}
               pic={piece.images[0].url}
               artist="Lore ipsum dolor"
+              id={piece.id_product}
+              key={piece.id_product}
             ></ArtCard>
           ))}
         </div>
