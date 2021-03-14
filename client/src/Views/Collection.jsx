@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from 'react'
-import ArtCard from '../Components/ArtCard'
-import SearchBar from '../Components/SearchBar'
-import style from './collection.module.css'
+import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router';
+import { Link } from 'react-router-dom';
+import ArtCard from '../Components/ArtCard';
+import SearchBar from '../Components/SearchBar';
+import style from './collection.module.css';
 import NavBar from '../Components/NavBar';
 import { useDispatch, useSelector } from 'react-redux';
 import getInitialProducts from '../Actions/getInitialProducts';
@@ -14,6 +16,7 @@ function Collection() {
   const isOpenFilters = useSelector(state => state.isOpenFilters)
   const filteredProducts = useSelector(state => state.filteredProducts)
   const dispatch = useDispatch();
+  const history = useHistory()
 
   useEffect(() => {
     dispatch(getInitialProducts());
@@ -26,8 +29,19 @@ function Collection() {
       dispatch(showFilters(false))
   }
 
-  function displayProducts(array) {
+  function handleRefresh(){
+    history.go(0)
+  }
 
+  function displayProducts(array) {
+    if(typeof array[0] === 'string') {
+      return (
+          <div>
+          <p>No existen productos para esta categoría</p>
+          <p className={style.linkRefresh} onClick={handleRefresh}>Volver</p>
+          </div>
+      )
+  }
     return array.map((piece) => {
       return (
         <ArtCard
