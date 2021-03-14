@@ -10,6 +10,9 @@ const initialState = {
     products: [],
     categories: [],
     isOpenFilters: false,
+    users: [],
+    filteredProducts: []
+
 
 }
 
@@ -36,15 +39,11 @@ const reducer = function (state = initialState, action) {
 
         case 'SET_FILTERS':
 
-            return {
-                ...state,
-                products: [
-                    ...state.products.filter((products) =>
-                        products.categories && products.categories.find(c => c.name == action.payload)
-
-                    ),
-                ],
-            }
+                return {
+                    ...state,
+                    filteredProducts: action.payload
+                }
+            
 
         case 'SHOW_FILTERS':
 
@@ -52,6 +51,20 @@ const reducer = function (state = initialState, action) {
                 ...state,
                 isOpenFilters: action.payload
             }
+
+        case 'GET_USERS_ARTISTS':
+
+            return {
+                ...state,
+                users: action.payload
+            }
+
+        case 'GET_USER_PRODUCTS':
+            return {
+                ...state,
+                products: action.payload
+            }
+
 
 
         default:
