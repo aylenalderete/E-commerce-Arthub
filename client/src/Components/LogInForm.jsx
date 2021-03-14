@@ -4,7 +4,7 @@ import style from './logInForm.module.css'
 
 function LogIn() {
     return (
-      <div>
+      <div className={style.mainContainer}>
         <div>
           <form className={style.form}>
             <input
@@ -19,9 +19,11 @@ function LogIn() {
               name="password"
               placeholder="Contraseña..."
             ></input>
-            <button className={style.btn} type="submit">
-              Iniciar sesión
-            </button>
+            <Link to="/perfilAdmin">
+              <button className={style.btn} type="submit">
+                Iniciar sesión
+              </button>
+            </Link>
           </form>
           <div className={style.textContainer}>
             <p className={style.pText}>¿No tienes sesión?</p>

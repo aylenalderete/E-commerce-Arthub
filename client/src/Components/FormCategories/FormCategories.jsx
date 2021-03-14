@@ -40,11 +40,13 @@ function FormCategories() {
     return (
         <div className={style.create}>
             <h1>crea una nueva categoría</h1>
-            <form onSubmit={handleSubmit} className={style.createForm}>
+            <form onSubmit={handleSubmit} className={style.create}>
 
-                <input onChange={handleChange} type='text' required='required' placeholder='nombre*' name='name' value={input.name} />
-                <input onChange={handleChange} type='text' required='required' placeholder='descripción*' name='description' value={input.description} />
-                <input className='button' type='submit' />
+                <input className={style.input} onChange={handleChange} type='text' required='required' placeholder='nombre*' name='name' value={input.name} />
+                <input className={style.input} onChange={handleChange} type='text' required='required' placeholder='descripción*' name='description' value={input.description} />
+                <button className={style.btn} type='submit'>
+                    crear
+                </button>
 
             </form>
 

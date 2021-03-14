@@ -1,7 +1,11 @@
+.navContainer{
+    display: flex;
+    flex-direction: row;
+    height: 100vh;   
+}
 .container{
     display: flex;
-    color: white;
-    justify-content: center;
+    
     margin-top: 10%;
 }
 .imgContainer{
@@ -30,4 +34,23 @@
     padding: 10px;
     margin-left: 40%;
     margin-top: 20%;
+}
+
+.borderContainer{
+    display: flex;
+    flex-direction: row;
+    border: 1px solid white;
+    width: 50%;
+    height: fit-content;
+    margin-left: 25%;
+}
+
+.button:hover{
+    background-color: white;
+    cursor:pointer;
+    color: black;
+}
+.categoriesContainer{
+    display: flex;
+    justify-content: space-around;
 }
