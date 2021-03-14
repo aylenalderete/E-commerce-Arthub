@@ -29,19 +29,19 @@ function Collection() {
       dispatch(showFilters(false))
   }
 
-  function handleRefresh(){
+  function handleRefresh() {
     history.go(0)
   }
 
   function displayProducts(array) {
-    if(typeof array[0] === 'string') {
+    if (typeof array[0] === 'string') {
       return (
-          <div>
+        <div>
           <p>No existen productos para esta categoría</p>
           <p className={style.linkRefresh} onClick={handleRefresh}>Volver</p>
-          </div>
+        </div>
       )
-  }
+    }
     return array.map((piece) => {
       return (
         <ArtCard
@@ -53,29 +53,29 @@ function Collection() {
         />
       )
     })
-
   }
 
 
 
-  return (
-    <div className={style.mainContainer}>
-      <NavBar renderTop={false} />
-      <div className={style.secondContainer}>
-        {isOpenFilters === true ? <PopUp></PopUp> : <></>}
 
-        <div className={style.sbContainer}>
+return (
+  <div className={style.mainContainer}>
+    <NavBar renderTop={false} />
+    <div className={style.secondContainer}>
+      {isOpenFilters === true ? <PopUp></PopUp> : <></>}
 
-          <button className={style.btnFilters} onClick={handleClick}>filtrar</button>
-          <SearchBar></SearchBar>
-        </div>
+      <div className={style.sbContainer}>
 
-        <div className={style.container}>
-          {filteredProducts[0] ? displayProducts(filteredProducts) : displayProducts(products)}
-        </div>
+        <button className={style.btnFilters} onClick={handleClick}>filtrar</button>
+        <SearchBar></SearchBar>
+      </div>
+
+      <div className={style.container}>
+        {filteredProducts[0] ? displayProducts(filteredProducts) : displayProducts(products)}
       </div>
     </div>
-  );
-}
+  </div>
+);
 
+}
 export default Collection

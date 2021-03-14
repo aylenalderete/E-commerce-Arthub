@@ -48,6 +48,7 @@ server.post('/', async function (req, res) {
 		res.json('New product added')
 	}
 	catch (err) {
+		console.log(err);
 		res.status(500).json({ message: err })
 	}
 });

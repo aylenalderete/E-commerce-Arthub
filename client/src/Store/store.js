@@ -8,17 +8,18 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 // estado inicial 
 const initialState = {
     products: [],
+    urlImages: [],
     categories: [],
     isOpenFilters: false,
     users: [],
     filteredProducts: []
-
 
 }
 
 //reducer 
 const reducer = function (state = initialState, action) {
     switch (action.type) {
+
         //aca crear los switch cases de cada action
 
         case "GET_PRODUCTS":
@@ -26,11 +27,20 @@ const reducer = function (state = initialState, action) {
                 ...state,
                 products: action.payload,
             };
+
         case "GET_INITIAL_PRODUCTS":
             return {
                 ...state,
                 products: action.payload,
             };
+
+        case 'SET_URL_IMAGES':
+      
+            return{
+                ...state,
+                urlImages: action.payload
+            }
+
         case 'GET_CATEGORIES':
             return {
                 ...state,
@@ -69,6 +79,7 @@ const reducer = function (state = initialState, action) {
 
         default:
             return state;
+
     }
 }
 
