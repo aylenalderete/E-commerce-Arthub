@@ -19,20 +19,38 @@ function Collection() {
 
   }, [])
 
+
+  const [filter, setFilter] = useState(false);
+
+  const showFilters = () => {
+    filter === false ?
+      setFilter(true) :
+      setFilter(false);
+  }
+
+  const [order, setOrder] = useState(false);
+  const showOrder = () => {
+    order === false ?
+      setOrder(true) :
+      setOrder(false);
+  }
+
+ 
+
   return (
     <div className={style.mainContainer}>
       <NavBar renderTop={false} />
       <div className={style.secondContainer}>
-      {filter === true ? <PopUp  /> : <></>}
-      {order === true ? <PopUpSort order={true} /> : <></>}
-      
+        {filter === true ? <PopUp /> : <></>}
+        {order === true ? <PopUpSort order={true} /> : <></>}
+
         <div className={style.sbContainer}>
-          
+
           <button className={style.btnFilters} onClick={showFilters}>filtrar</button>
           <button className={style.btnFilters} onClick={showOrder}>ordenar</button>
           <SearchBar></SearchBar>
         </div>
-        
+
         <div className={style.container}>
           {products.map((piece) => (
             <ArtCard
