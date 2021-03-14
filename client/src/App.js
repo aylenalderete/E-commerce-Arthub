@@ -9,7 +9,6 @@ import SignIn from './Views/SignIn';
 import Artists from './Views/Artists';
 import ArtPiece from './Views/ArtPiece';
 import ArtistProfile from './Views/ArtistProfile';
-import CreateCatgory from './Views/CreateCatgory';
 
 
 function App() {
@@ -32,7 +31,7 @@ function App() {
           <ArtPiece artId={match.params.idArte}></ArtPiece>
         )}
       ></Route>
-      <Route path="/crearCategorías" component={CreateCatgory}></Route>
+
     </div>
   );
 }

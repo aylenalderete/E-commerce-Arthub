@@ -1,0 +1,35 @@
+.mainContainer{
+    display: flex;
+    flex-direction: row;
+    height: 100vh;
+}
+
+.adminContainer{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: 30%;
+}
+
+.img{
+    border-radius: 50%;
+}
+
+.div{
+    color:white;
+     background-color: Transparent;
+    background-repeat:no-repeat;
+    border: 1px solid white;
+    cursor:pointer;
+    width: 50vh;
+    height: 5vh;
+    text-align: center;
+    margin: 10px;
+    font-size: larger;
+}
+
+.div:hover{
+    background-color: white;
+    color: black;
+    
+}
