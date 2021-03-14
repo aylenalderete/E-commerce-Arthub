@@ -1,0 +1,58 @@
+.form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.input{
+    color: white;
+    margin: 10px 10px;
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid white;
+    padding: 5px 10px;
+    width: 20%;
+}
+
+.btn{
+    color:white;
+    background-color: Transparent;
+    background-repeat:no-repeat;
+    border: 1px solid white;
+    cursor:pointer;
+    padding: 10px;
+    position: relative;
+    margin-left: 15%;
+    margin-right: 15%;
+} 
+
+.btnFile {
+   color:white;
+   background-color: Transparent;
+   background-repeat:no-repeat;
+   border: 1px solid white;
+   cursor:pointer;
+   padding: 10px;
+   position: relative;
+   margin-left: 15%;
+}
+
+.file {
+    margin-top: 2%;
+    margin-right: 83px;
+}
+
+.btnProduct {
+    display: flex;
+    justify-content: center;
+    margin: 15px;
+    margin-top: 2%;
+}
+
+.divTitle {
+    margin-top: 8%;
+    color: white;
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+}
