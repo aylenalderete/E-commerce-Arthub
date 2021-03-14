@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import getCategories from '../../Actions/filter';
 import setFilters from '../../Actions/setFilters';
+import showFilters from '../../Actions/showFilters';
 import Styles from './popUp.module.css';
 
 
 import { connect } from 'react-redux';
 
-function Filters({ categories, getCategories, setFilters }) {
+function Filters({ categories, getCategories, setFilters, showFilters }) {
     //get all the categories once the component mounts
     useEffect(() => {
 
@@ -27,14 +28,25 @@ function Filters({ categories, getCategories, setFilters }) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        //set filters and show results 
         setFilters(select);
+        //close popUp
+        showFilters(false);
        
     }
 
     return (
         <div className={Styles.mainDivPopUp}>
             <form className={Styles.formFilter} onSubmit={handleSubmit}>
+                
                 <label className={Styles.formLabel}>categoría</label>
+                <select className={Styles.selectCategory} onChange={handleCategoryChange}>
+                    {categories.map(c =>
+                        <option className={Styles.option} value={c.name}>{c.name}</option>
+                    )}
+                </select>
+                
+                <label className={Styles.formLabel}>artista</label>
                 <select className={Styles.selectCategory} onChange={handleCategoryChange}>
                     {categories.map(c =>
                         <option className={Styles.option} value={c.name}>{c.name}</option>
@@ -48,7 +60,8 @@ function Filters({ categories, getCategories, setFilters }) {
 
 const mapStateToProps = (state) => {
     return {
-        categories: state.categories
+        categories: state.categories,
+        
     }
 }
 
@@ -56,6 +69,7 @@ const mapDispatchToProps = (dispatch) => {
     return {
         getCategories: () => dispatch(getCategories()),
         setFilters: (category) => dispatch(setFilters(category)),
+        showFilters: (condition) => dispatch(showFilters(condition))
     }
 }
 

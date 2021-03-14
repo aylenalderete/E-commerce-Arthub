@@ -8,7 +8,9 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 // estado inicial 
 const initialState = {
     products: [],
-    categories: []
+    categories: [],
+    isOpenFilters: false,
+
 }
 
 //reducer 
@@ -33,19 +35,24 @@ const reducer = function (state = initialState, action) {
             }
 
         case 'SET_FILTERS':
-           var result = state.products.filter((products)=>
-           products.categories && products.categories.find(c => c.name == action.payload)
-           );
-           console.log(result);
+
             return {
                 ...state,
                 products: [
                     ...state.products.filter((products) =>
                         products.categories && products.categories.find(c => c.name == action.payload)
-           
-                 ),
+
+                    ),
                 ],
             }
+
+        case 'SHOW_FILTERS':
+
+            return {
+                ...state,
+                isOpenFilters: action.payload
+            }
+
 
         default:
             return state;
