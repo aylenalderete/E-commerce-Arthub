@@ -9,7 +9,7 @@ import SignIn from './Views/SignIn';
 import Artists from './Views/Artists';
 import ArtPiece from './Views/ArtPiece';
 import ArtistProfile from './Views/ArtistProfile';
-
+import AdminUser from './Views/AdminUser'
 
 function App() {
   return (
@@ -31,6 +31,7 @@ function App() {
           <ArtPiece artId={match.params.idArte}></ArtPiece>
         )}
       ></Route>
+      <Route path="/perfilAdmin" component={AdminUser}></Route>
 
     </div>
   );
