@@ -8,10 +8,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import getInitialProducts from '../Actions/getInitialProducts';
 import PopUp from '../Components/PopUpFilters/PopUp';
 import PopUpSort from '../Components/PopUpSort/popUpSort';
+import showFilters from '../Actions/showFilters';
 
 function Collection() {
 
   const products = useSelector(state => state.products);
+  const isOpenFilters = useSelector(state => state.isOpenFilters)
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -19,21 +21,11 @@ function Collection() {
 
   }, [])
 
-
-  const [filter, setFilter] = useState(false);
-
-  const showFilters = () => {
-    filter === false ?
-      setFilter(true) :
-      setFilter(false);
-  }
-
-  const [order, setOrder] = useState(false);
-  const showOrder = () => {
-    order === false ?
-      setOrder(true) :
-      setOrder(false);
-  }
+ function handleClick (){
+   isOpenFilters === false? 
+   dispatch(showFilters(true)):
+   dispatch(showFilters(false))
+ }
 
  
 
@@ -41,13 +33,12 @@ function Collection() {
     <div className={style.mainContainer}>
       <NavBar renderTop={false} />
       <div className={style.secondContainer}>
-        {filter === true ? <PopUp /> : <></>}
-        {order === true ? <PopUpSort order={true} /> : <></>}
+       {isOpenFilters === true ? <PopUp></PopUp> : <></>}
 
         <div className={style.sbContainer}>
 
-          <button className={style.btnFilters} onClick={showFilters}>filtrar</button>
-          <button className={style.btnFilters} onClick={showOrder}>ordenar</button>
+          <button className={style.btnFilters} onClick={handleClick}>filtrar</button>
+          <button className={style.btnFilters} >ordenar</button>
           <SearchBar></SearchBar>
         </div>
 
