@@ -1,11 +1,20 @@
-import React from 'react'
-import artists from '../fakeListArtists'
+import React, {useState, useEffect} from 'react'
 import ArtistCard from '../Components/ArtistCard'
 import SearchBar from '../Components/SearchBar'
 import NavBar from '../Components/NavBar'
 import style from './artists.module.css'
+import {useDispatch, useSelector} from 'react-redux'
+import getUsersArtists from '../Actions/getUsersArtists'
 
 function Artists() {
+
+    const usersArtists = useSelector(state =>state.usersArtists)
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(getUsersArtists());
+    }, [])
+
     return (
         <div className = {style.mainContainerArtist}>
             <NavBar renderTop={false} />                
@@ -15,8 +24,10 @@ function Artists() {
                 </div>
             
                 <div className={style.artists}>
-                {artists.map(artist => (
-                    <ArtistCard picture = {artist.picture} artist = {artist.artist}></ArtistCard>
+                {usersArtists&&usersArtists.map((artist) => (
+                    <ArtistCard 
+                        artist = {artist.username}
+                        ></ArtistCard>
                     ))}
                 </div>
             </div>

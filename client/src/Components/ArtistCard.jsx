@@ -9,7 +9,7 @@ function ArtistCard({picture, artist}) {
                 <img className={style.imgArtist} src={picture} alt = 'Artist' ></img>
             </div>
             <div>
-                <Link to = {`/artistas/${artist}`}>
+                <Link to = {`/artistas/:artistId`}>
                     <h3 className={style.text}>{artist}</h3>
                 </Link>
             </div>
