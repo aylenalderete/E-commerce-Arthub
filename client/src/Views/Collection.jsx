@@ -27,8 +27,9 @@ function Collection() {
   }
 
   function displayProducts(array) {
+    if(array)
 
-    return array.map((piece) => {
+   { return array.map((piece) => {
       return (
         <ArtCard
           name={piece.title}
@@ -39,7 +40,7 @@ function Collection() {
         />
       )
     })
-
+}
   }
 
 

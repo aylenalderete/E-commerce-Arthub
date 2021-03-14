@@ -6,9 +6,7 @@ function ArtCard({name, pic, artist, id}) {
     return (
       <div className={style.cardContainer}>
         <div className={style.imgContainer}>
-          {pic.map((p) => (
-          <img className={style.cardImg} alt="artpic" src={p.url}></img>            
-          ))}
+          <img className={style.cardImg} alt="artpic" src={pic}></img>            
         </div>
         <div className={style.linksArtCard}>
           <Link className={style.linksA} to={`/colección/${id}`}>
