@@ -23,9 +23,6 @@ function ArtistProfile({artistId}) {
         <div className={style.navContainer}>
             <NavBar renderTop={false}></NavBar>
             <div className={style.container}>
-                <h4 href = '/artistas'>Volver</h4>
-            </div>
-            <div className={style.infoContainer}>
                 <h1>{artistDetails.name}</h1>
             </div>
         </div>
