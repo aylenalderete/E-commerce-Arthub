@@ -8,27 +8,47 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 // estado inicial 
 const initialState = {
     products: [],
-   
+    categories: []
 }
 
 //reducer 
 const reducer = function (state = initialState, action) {
     switch (action.type) {
-      //aca crear los switch cases de cada action
+        //aca crear los switch cases de cada action
 
-      case "GET_PRODUCTS":
-        return {
-          ...state,
-          products: action.payload,
-        };
-      case "GET_INITIAL_PRODUCTS":
-        return {
-          ...state,
-          products: action.payload,
-        };
+        case "GET_PRODUCTS":
+            return {
+                ...state,
+                products: action.payload,
+            };
+        case "GET_INITIAL_PRODUCTS":
+            return {
+                ...state,
+                products: action.payload,
+            };
+        case 'GET_CATEGORIES':
+            return {
+                ...state,
+                categories: action.payload,
+            }
 
-      default:
-        return state;
+        case 'SET_FILTERS':
+           var result = state.products.filter((products)=>
+           products.categories && products.categories.find(c => c.name == action.payload)
+           );
+           console.log(result);
+            return {
+                ...state,
+                products: [
+                    ...state.products.filter((products) =>
+                        products.categories && products.categories.find(c => c.name == action.payload)
+           
+                 ),
+                ],
+            }
+
+        default:
+            return state;
     }
 }
 
