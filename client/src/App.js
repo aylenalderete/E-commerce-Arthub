@@ -9,7 +9,8 @@ import SignIn from './Views/SignIn';
 import Artists from './Views/Artists';
 import ArtPiece from './Views/ArtPiece';
 import NavBar from './Components/NavBar';
-
+import ArtistAdminDashboard from './Views/ArtistAdminDashboard';
+import CreateProduct from './Components/CreateProduct';
 
 function App() {
   return (
@@ -21,6 +22,8 @@ function App() {
       <Route path="/signin" component={SignIn}></Route>
       <Route path="/artistas" component={Artists}></Route>
       <Route exact path="/colección/:idArte" render={({match}) => <ArtPiece artName={match.params.idArte}></ArtPiece>}></Route>
+      <Route exact path="/admindashboard" component={ArtistAdminDashboard}></Route>
+      <Route exact path="/crearproducto" component= {CreateProduct}></Route> 
     </div>
   );
 }
