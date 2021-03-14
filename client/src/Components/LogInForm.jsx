@@ -19,7 +19,7 @@ function LogIn() {
               name="password"
               placeholder="Contraseña..."
             ></input>
-            <Link to="/perfiladmin">
+            <Link to="/perfilAdmin">
               <button className={style.btn} type="submit">
                 Iniciar sesión
               </button>
