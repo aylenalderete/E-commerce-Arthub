@@ -2,37 +2,45 @@ import React, { useEffect, useState } from 'react';
 import getCategories from '../../Actions/filter';
 import setFilters from '../../Actions/setFilters';
 import showFilters from '../../Actions/showFilters';
+import getUsersArtists from '../../Actions/getUsersArtists';
 import Styles from './popUp.module.css';
+import getUserProducts from '../../Actions/getUserProducts';
 
 
 import { connect } from 'react-redux';
 
-function Filters({ categories, getCategories, setFilters, showFilters }) {
+function Filters({ categories, getCategories, setFilters, showFilters, getUsersArtists, users, getUserProducts }) {
     //get all the categories once the component mounts
     useEffect(() => {
 
         getCategories();
+        getUsersArtists();
     }, []);
 
-    //hooks for select input change
+    //hooks for select category change
 
-    const [select, setSelect] = useState('')
+    const [select, setSelect] = useState({
+        category: '',
+        user: ''
+    })
 
-    //handle category select state
-    const handleCategoryChange = (e) => {
-        e.preventDefault();
-        setSelect(e.target.value);
+    //handle input change
+    const handleInputChange = (e) => {
+        setSelect({
+            ...select,
+            [e.target.name]: e.target.value
+          });
     }
+    
 
     //handle submit
 
     const handleSubmit = (e) => {
-        e.preventDefault();
-        //set filters and show results 
-        setFilters(select);
-        //close popUp
-        showFilters(false);
-       
+         e.preventDefault();
+         setFilters(select.category);
+         showFilters(false);
+         
+         
     }
 
     return (
@@ -40,18 +48,12 @@ function Filters({ categories, getCategories, setFilters, showFilters }) {
             <form className={Styles.formFilter} onSubmit={handleSubmit}>
                 
                 <label className={Styles.formLabel}>categoría</label>
-                <select className={Styles.selectCategory} onChange={handleCategoryChange}>
+                <select className={Styles.selectCategory} name="category" onChange={handleInputChange}>
                     {categories.map(c =>
                         <option className={Styles.option} value={c.name}>{c.name}</option>
                     )}
                 </select>
                 
-                <label className={Styles.formLabel}>artista</label>
-                <select className={Styles.selectCategory} onChange={handleCategoryChange}>
-                    {categories.map(c =>
-                        <option className={Styles.option} value={c.name}>{c.name}</option>
-                    )}
-                </select>
                 <button className={Styles.btn}>filtrar</button>
             </form>
         </div>
@@ -61,7 +63,7 @@ function Filters({ categories, getCategories, setFilters, showFilters }) {
 const mapStateToProps = (state) => {
     return {
         categories: state.categories,
-        
+        users: state.users  
     }
 }
 
@@ -69,7 +71,9 @@ const mapDispatchToProps = (dispatch) => {
     return {
         getCategories: () => dispatch(getCategories()),
         setFilters: (category) => dispatch(setFilters(category)),
-        showFilters: (condition) => dispatch(showFilters(condition))
+        showFilters: (condition) => dispatch(showFilters(condition)),
+        getUsersArtists: () => dispatch(getUsersArtists()),
+        getUserProducts: (id) => dispatch(getUserProducts(id))
     }
 }
 

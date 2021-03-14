@@ -6,7 +6,7 @@ import style from './artists.module.css'
 import {useDispatch, useSelector} from 'react-redux'
 import getUsersArtists from '../Actions/getUsersArtists'
 import PopUp from '../Components/PopUpFilters/PopUp';
-import PopUpSort from '../Components/PopUpSort/popUpSort';
+
 
 
 function Artists() {
@@ -26,23 +26,16 @@ function Artists() {
         setFilter(false);
     }
   
-    const [order, setOrder] = useState(false);
-    const showOrder = () => {
-      order === false ?
-        setOrder(true) :
-        setOrder(false);
-    }
+   
 
     return (
         <div className = {style.mainContainerArtist}>
             <NavBar renderTop={false} />                
             <div className={style.secondContainer}>
                 {filter === true ? <PopUp /> : <></>}
-                {order === true ? <PopUpSort order={true} /> : <></>}
                 
                 <div className={style.sbContainer}>
                     <button className={style.btnFilters} onClick={showFilters}>filtrar</button>
-                    <button className={style.btnFilters} onClick={showOrder}>ordenar</button>
                     <SearchBar />
                 </div>
             
