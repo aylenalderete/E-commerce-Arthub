@@ -5,28 +5,28 @@ import style from './logInForm.module.css'
 function LogIn() {
     return (
       <div className={style.mainContainer}>
-        <div>
+        <div className={style.alignForm}>
           <form className={style.form}>
             <input
               className={style.input}
               type="text"
               name="user"
-              placeholder="Usuario..."
+              placeholder="usuario..."
             ></input>
             <input
               className={style.input}
               type="text"
               name="password"
-              placeholder="Contraseña..."
+              placeholder="contraseña..."
             ></input>
             <Link to="/perfilAdmin">
               <button className={style.btn} type="submit">
-                Iniciar sesión
+                iniciar sesión
               </button>
             </Link>
           </form>
           <div className={style.textContainer}>
-            <p className={style.pText}>¿No tienes sesión?</p>
+            <p className={style.pText}>¿Aún no tienes cuenta?</p>
             <Link className={style.link} to="/signup">
               Registrate
             </Link>

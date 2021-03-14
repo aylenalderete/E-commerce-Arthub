@@ -1,58 +1,115 @@
-
-
-.form{
+.mainContainer{
     display: flex;
     flex-direction: column;
+    width: 100%;
+    height: 100vh;
+    justify-content: center;
     align-items: center;
-    margin-top: 15%;
-    height: fit-content;
+}
+
+.form{
+    width:100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.alignForm{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    width: 50%;
 }
 
 .input{
-    color:white;
-    margin: 10px 10px;
-    background-color: transparent;
-    border: none;
-    border-bottom: 1px solid white;
-    padding: 5px 10px;
-    width: 20%;
+width: 100%;
+box-sizing: border-box;
+background-color: transparent;
+border: none;
+border-bottom: 2px solid white;
+font-size: 1.2rem;
+line-height: 40px;
+margin-bottom: 30px;
+color:white
 }
 
-.btn{
-    color:white;
-     background-color: Transparent;
-    background-repeat:no-repeat;
-    border: 1px solid white;
-    cursor:pointer;
-    padding: 10px;
-    position: relative;
-    margin-left: 30%;
+.input:focus{
+    outline: none;
+}
+
+.input::placeholder{
+    color: white;
 }
 
 .textContainer{
     display: flex;
     align-items: center;
-    flex-direction: row;
-    margin-left: 46.05%;
-}
-.pText{
-    color:white;
-      margin-left: 10px;
-    margin-right: 10px;
-}
-.link{
-    text-decoration: none;
-    color: #F427EC;
-      margin-left: 10px;
-    margin-right: 10px;
+    width:100%;
+    justify-content: flex-end;
+    margin-top:20px;
 }
 
-.mainContainer{
-    width: 100%;
-    height: 100%;
+.pText{
+    margin-right: 8px;
+    font-size: 1.2rem;
+    
+}
+
+.link{
+    color: #F427EC;
+    font-size:1.2rem
+}
+
+.btn{
+    padding-top: 15px;
+    padding-bottom: 15px;
+    padding-right: 40px;
+    padding-left:40px;
+    margin-top:20px;
+    background-color: transparent;
+    color: white;
+    font-size:1.2rem;
+    border:2px solid white;
+    cursor: pointer;
 }
 
 .btn:hover{
-    background-color: white;
-    color: black;
+    animation: color 1s infinite;
+    
 }
+
+.btn:focus{
+    outline: none;
+}
+
+/*Key Frames*/
+
+@keyframes color {
+    0% {
+          background-color: #f427ed78; 
+    }
+
+    20% {
+        background-color: #f427ed8a; 
+    }
+
+    40%{
+        background-color: #f427eda2; 
+        border-color:rgba(255, 255, 255, 0.657)
+    }
+
+    60%{
+        background-color: #f427edc4; 
+        border-color:rgba(255, 255, 255, 0.445)
+    }
+
+    80%{
+        background-color: #f427ede5; 
+        border-color:rgba(255, 255, 255, 0)
+    }
+  
+    100% {
+        background-color: #f427ed; 
+        border-color:rgba(255, 255, 255, 0)
+    }
+  }

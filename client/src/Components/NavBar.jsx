@@ -37,7 +37,9 @@ function NavBar({renderTop}) {
                         </Link>
                     </div>
                     <div className= {Styles.line2}>
+                    <Link className={Styles.link2} to="/login">
                         <p className={Styles.seccionMicuenta}>mi cuenta</p>
+                        </Link>
                     </div>
                 </div>                
             }
