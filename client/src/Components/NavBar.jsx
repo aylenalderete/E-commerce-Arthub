@@ -1,8 +1,14 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-import Styles from "./navBar.module.css"
+import React from 'react';
+import { Link } from 'react-router-dom';
+import Styles from "./navBar.module.css";
+import { useHistory } from "react-router-dom";
 
 function NavBar({renderTop}) {
+    const history = useHistory();
+    function handleGoBack() {
+        history.push('/')
+      }
+    
 
     return (
         <div className={ renderTop === true ? Styles.navMain : Styles.navMain2}>
@@ -23,7 +29,7 @@ function NavBar({renderTop}) {
                 :
                 <div className={Styles.navContainer2}>
                     
-                        <p className={Styles.tituloNavbar2}>arthub</p>  
+                        <p onClick={handleGoBack} className={Styles.tituloNavbar2}>arthub</p>  
                   
                     <div className= {Styles.navContainerSecciones2}>
                         <Link className={Styles.link2} to="/coleccion">
