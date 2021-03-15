@@ -14,7 +14,7 @@ import CreateProduct from './Components/CreateProduct';
 import ArtistProfile from './Views/ArtistProfile';
 import AdminUser from './Views/AdminUser'
 import ArtistsProducts from './Views/ArtistsProducts';
-import CreateCatgory from './Views/CreateCategory';
+import CreateCategory from './Views/CreateCategory';
 
 
 function App() {
