@@ -86,16 +86,16 @@ function CreateProduct(props) {
 
     const sendProduct = () => {
         // console.log(product, urlImages);
-        if(product.title.length >= 40){
+        if (product.title.length >= 40) {
             alert('El titulo no puede tener mas de 40 caracteres');
         }
         else if (urlImages.length === 0) {
             alert('Debe agregar por lo menos una imagen');
 
-        }else if(product.categories.length === 0){
+        } else if (product.categories.length === 0) {
             alert('Debe agregar por lo menos una categoria');
-        }else{
-            
+        } else {
+
             axios
                 .post(`http://localhost:3001/products`, { ...product, images: urlImages })
                 .then((res) => {
@@ -107,24 +107,24 @@ function CreateProduct(props) {
                     console.log(error);
                 });
             props.clearUrlImage();
-        } 
+        }
     };
-    
+
     const handleSubmit = (e) => e.preventDefault();
 
     // ---------- Select de categorias ----------
     const [categories, setCategories] = useState([]);
     const [selectedCat, setSelectedCat] = useState("");
 
-    useEffect( () => {
+    useEffect(() => {
 
-        async function request(){
+        async function request() {
             let cat = (await axios.get("http://localhost:3001/products/category")).data;
             setCategories(cat);
         }
 
         request();
-        
+
     }, []);
 
     function handleChangeCat(ev) {
@@ -163,6 +163,38 @@ function CreateProduct(props) {
                     <div className={Styles.divTitle}>
                         <p>crear producto</p>
                     </div>
+                    <form
+                        className={Styles.formCategory}
+                        onSubmit={handleSubmitCat}
+                    >
+                        <div className={Styles.alignForm}>
+                            <select
+                                className={Styles.selectCategory}
+                                onChange={handleChangeCat}
+                                name="categories"
+                                value={selectedCat}
+                            >
+                                {categories.map((c) => (
+                                    <option
+                                        className={Styles.options}
+                                        value={c.id}
+                                        key={c.id}
+                                    >
+                                        {c.name}
+                                    </option>
+                                ))}
+                            </select>
+                            <button className={Styles.btnCategory} type="submit">
+                                Agregar
+                    </button>
+                        </div>
+                        <div className={Styles.alignSelectedCat}>
+                            {getNames(product.categories).map((c) => (
+                                <p className={Styles.showCategory}>{c}</p>
+                            ))}
+                        </div>
+                    </form>
+
                     <form className={Styles.containerForm2} onSubmit={handleSubmit}>
                         <input
                             className={Styles.input}
@@ -219,37 +251,6 @@ function CreateProduct(props) {
                                         ))}
                                 </div>
 
-                                <form
-                                    className={Styles.formCategory}
-                                    onSubmit={handleSubmitCat}
-                                >
-                                    <div className={Styles.alignForm}>
-                                        <select
-                                            className={Styles.selectCategory}
-                                            onChange={handleChangeCat}
-                                            name="categories"
-                                            value={selectedCat}
-                                        >
-                                            {categories.map((c) => (
-                                                <option
-                                                    className={Styles.options}
-                                                    value={c.id}
-                                                    key={c.id}
-                                                >
-                                                    {c.name}
-                                                </option>
-                                            ))}
-                                        </select>
-                                        <button className={Styles.btnCategory} type="submit">
-                                            Agregar
-                    </button>
-                                    </div>
-                                    <div className={Styles.alignSelectedCat}>
-                                        {getNames(product.categories).map((c) => (
-                                            <p className={Styles.showCategory}>{c}</p>
-                                        ))}
-                                    </div>
-                                </form>
 
                                 <div className={Styles.container3}>
                                     <label className={Styles.label2} for="files">
