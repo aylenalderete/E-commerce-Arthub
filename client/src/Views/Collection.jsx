@@ -48,6 +48,7 @@ function Collection() {
           name={piece.title}
           pic={piece.images[0].url}
           artist={piece.user.name + ' ' + piece.user.lastname}
+          idArtist={piece.user.id}
           id={piece.id_product}
           key={piece.id_product}
         />
