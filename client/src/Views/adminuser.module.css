@@ -1,26 +1,26 @@
-.mainContainer{
+.mainContainer {
     display: flex;
     flex-direction: row;
     height: 100vh;
 }
 
-.adminContainer{
+.adminContainer {
     display: flex;
     flex-direction: column;
     justify-content: center;
     margin-left: 30%;
 }
 
-.img{
+.img {
     border-radius: 50%;
 }
 
-.div{
-    color:white;
-     background-color: Transparent;
-    background-repeat:no-repeat;
+.div {
+    color: white;
+    background-color: Transparent;
+    background-repeat: no-repeat;
     border: 1px solid white;
-    cursor:pointer;
+    cursor: pointer;
     width: 50vh;
     height: 5vh;
     text-align: center;
@@ -28,8 +28,11 @@
     font-size: larger;
 }
 
-.div:hover{
+.div:hover {
     background-color: white;
     color: black;
-    
+}
+.link {
+    text-decoration: none;
+    color: white;
 }
