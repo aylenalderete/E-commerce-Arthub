@@ -9,10 +9,10 @@ function ArtCard({name, pic, artist, id}) {
           <img className={style.cardImg} alt="artpic" src={pic}></img>            
         </div>
         <div className={style.linksArtCard}>
-          <Link className={style.linksA} to={`/colección/${id}`}>
+          <Link className={style.linksA} to={`/coleccion/${id}`}>
             <h5 className={style.text}>{name}</h5>
           </Link>
-          <Link  className={style.linksA} to={`/artists/${artist}`}>
+          <Link  className={style.linksA} to={`/artistas/${artist}`}>
             <h5 className={style.text}>{artist}</h5>
           </Link>
         </div>

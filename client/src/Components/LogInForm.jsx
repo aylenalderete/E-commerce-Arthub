@@ -27,7 +27,7 @@ function LogIn() {
           </form>
           <div className={style.textContainer}>
             <p className={style.pText}>¿Aún no tienes cuenta?</p>
-            <Link className={style.link} to="/signup">
+            <Link className={style.link} to="/registrarse">
               Registrate
             </Link>
           </div>

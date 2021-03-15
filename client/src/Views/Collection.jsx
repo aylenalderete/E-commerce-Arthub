@@ -47,7 +47,7 @@ function Collection() {
         <ArtCard
           name={piece.title}
           pic={piece.images[0].url}
-          artist="Lore ipsum dolor"
+          artist="Lorem ipsum dolor"
           id={piece.id_product}
           key={piece.id_product}
         />

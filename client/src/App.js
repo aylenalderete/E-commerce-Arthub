@@ -22,9 +22,9 @@ function App() {
     <div >
       <Route path="/inicio" component={Home}></Route>
       <Route path="/nosotros" component={AboutUs}></Route>
-      <Route path="/colección" exact component={Collection}></Route>
-      <Route path="/login" component={LogIn}></Route>
-      <Route path="/signin" component={SignIn}></Route>
+      <Route path="/coleccion" exact component={Collection}></Route>
+      <Route path="/ingresar" component={LogIn}></Route>
+      <Route path="/registrarse" component={SignIn}></Route>
       <Route exact path="/admindashboard" component={ArtistAdminDashboard}></Route>
       <Route exact path="/crearproducto" component= {CreateProduct}></Route> 
       <Route path="/artistas" exact component={Artists}></Route>
@@ -34,14 +34,14 @@ function App() {
       )}></Route>
       <Route
         exact
-        path="/colección/:idArte"
+        path="/coleccion/:idArte"
         render={({ match }) => (
           <ArtPiece artId={match.params.idArte}></ArtPiece>
         )}
       ></Route>
-      <Route path="/perfilAdmin" component={AdminUser}></Route>
+      <Route path="/perfiladmin" component={AdminUser}></Route>
       <Route path="/misproductos" component={ArtistsProducts}></Route>
-      <Route path="/crearCategorías" component={CreateCatgory}></Route>
+      <Route path="/crearcategorías" component={CreateCatgory}></Route>
 
     </div>
   );
