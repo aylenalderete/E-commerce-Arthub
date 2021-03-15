@@ -1,3 +1,14 @@
+.images{
+    display: flex;
+    justify-content: space-between;
+    background-color: red;
+}
+
+.images img{
+    width: 100px;
+    height: 100px;
+}
+
 .cardContainer{
     display: flex;
     flex-direction: column;
@@ -8,7 +19,7 @@
    
     
 }
-
+/* 
 .text{
     color: white;
     text-align: center;
@@ -30,4 +41,4 @@
     height: 25vmax;
     margin-top:40px;
     
-}
+} */

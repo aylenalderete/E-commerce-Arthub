@@ -15,6 +15,7 @@ import ArtistProfile from './Views/ArtistProfile';
 import AdminUser from './Views/AdminUser'
 import ArtistsProducts from './Views/ArtistsProducts';
 import CreateCategory from './Views/CreateCategory';
+import EditProduct from './Components/EditProduct';
 
 
 function App() {
@@ -28,6 +29,10 @@ function App() {
       <Route exact path="/admindashboard" component={ArtistAdminDashboard}></Route>
       <Route exact path="/crearproducto" component= {CreateProduct}></Route> 
       <Route path="/artistas" exact component={Artists}></Route>
+      <Route path="/editarproducto/:id" 
+      render={({match}) => (
+        <EditProduct id={match.params.id}/>
+      )}></Route>
       <Route path="/artistas/:artistId" 
       render={({match}) => (
         <ArtistProfile artistId={match.params.artistId}></ArtistProfile>
