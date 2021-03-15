@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Styles from './EditProduct.module.css';
 import axios from 'axios';
+import NavBar from '../Components/NavBar';
 import firebase from 'firebase';
 
 // const firebaseConfig = {
@@ -158,15 +159,15 @@ function EditProduct({ id }) {
 
     async function handleSubmit(e) {
         e.preventDefault();
-        if(input.title.length >= 40){
+        if (input.title.length >= 40) {
             alert('El titulo no puede tener mas de 40 caracteres');
         }
         else if (input.images.length === 0) {
             alert('Debe agregar por lo menos una imagen');
 
-        }else if(input.categories.length === 0){
+        } else if (input.categories.length === 0) {
             alert('Debe agregar por lo menos una categoria');
-        } 
+        }
         else {
 
             let res = await fetch(`http://localhost:3001/products/${id}`, {
@@ -193,34 +194,44 @@ function EditProduct({ id }) {
 
 
     return (
-        <div>
-            <div className={Styles.divTitle}>
-                <p>Editar producto</p>
-            </div>
-            <div className='formcontainer'>
-                <p>Categorias</p>
-                {
-                    input.categories.map(cat => (
-                        categories.find(category => category.id === cat) &&
-                        <div >
-                            <p>{getNames([cat])}</p> {/* la funcion get names me trae el nombre pero recibe array asi que por eso está asi */}
-                            <button onClick={handleClickCat} value={cat}>x</button>
-                        </div>
-                    ))
-                }
-                <form className='form-bottom' onSubmit={handleSubmitCat}>
-                    <select required onChange={handleChangeCat} name="categories" value={selectedCat}  >
-                        <option value='' ></option>
+        <div className={Styles.navBaralign}>
+            <NavBar renderTop={false}></NavBar>
+
+
+            <div className={Styles.mainContainer}>
+                <div className={Styles.divTitle}>
+                    <p className={Styles.divTitle}>Editar producto</p>
+                </div>
+                
+               
+                <form className={Styles.formCategory} onSubmit={handleSubmitCat}>
+                <p className={Styles.text}>Categorias</p>
+                <div className={Styles.alignForm}>
+                    <select className={Styles.selectCategory}  onChange={handleChangeCat} name="categories" value={selectedCat}  >
+                        <option className={Styles.options} value='' >seleccionar</option>
                         {
 
                             categories.map((c) => (
 
-                                <option value={c.id} key={c.id}>{c.name}</option>
+                                <option className={Styles.options} value={c.id} key={c.id}>{c.name}</option>
                             ))
                         }
 
                     </select>
-                    <button type='submit'>Agregar</button>
+                    <button className={Styles.btnCategory} type='submit'>Agregar</button>
+                    </div>
+                    <div className={Styles.alignSelectedCat}>
+                    {
+
+                    input.categories.map(cat => (
+                        categories.find(category => category.id === cat) &&
+                        <div className={Styles.alignCatSelected}>
+                            <p className={Styles.showCategory}>{getNames([cat])}</p> {/* la funcion get names me trae el nombre pero recibe array asi que por eso está asi */}
+                            <button className={Styles.btnDelete} onClick={handleClickCat} value={cat}>x</button>
+                        </div>
+                    ))
+                }
+                </div>
                     {/* <div>
                         {
                             getNames(input.categories).map((c) => <p>{c}</p>)
@@ -228,33 +239,40 @@ function EditProduct({ id }) {
                     </div> */}
                 </form>
 
-                <form onSubmit={handleSubmit} className='form'>
-                    <p>Titulo</p>
-                    <input name="title"
+                <form className={Styles.containerForm2} onSubmit={handleSubmit} >
+                    <p className={Styles.text}>Titulo</p>
+                    <input  className={Styles.input}
+                        name="title"
                         type="text"
                         value={input.title}
                         placeholder="Titulo"
                         onChange={handleChange}
                         required />
                     <br />
-                    <p>Descripcion</p>
-                    <textarea name="description"
+                    <p className={Styles.text}>Descripcion</p>
+                    <textarea
+                    className={Styles.input2}
+                     name="description"
                         type="text"
                         value={input.description}
                         placeholder="Descripcion"
                         onChange={handleChange}
                         required />
                     <br />
-                    <p>Precio</p>
-                    <input name="price"
+                    <p className={Styles.text}>Precio</p>
+                    <input
+                        className={Styles.input} 
+                        name="price"
                         type="number"
                         value={input.price}
                         placeholder="Precio"
                         onChange={handleChange}
                         required />
                     <br />
-                    <p>Stock</p>
-                    <input name="stock"
+                    <p className={Styles.text}>Stock</p>
+                    <input 
+                        className={Styles.input}
+                        name="stock"
                         type="number"
                         value={input.stock}
                         placeholder="Stock"
@@ -264,8 +282,10 @@ function EditProduct({ id }) {
 
 
                     <br />
-                    <p>Imagenes</p>
-                    <div className={Styles.imgContainer}>
+                    <p className={Styles.text}>Imagenes</p>
+                    <div  className={Styles.file} >
+                    <div className={Styles.containerImgs}>
+                    <div className={Styles.container2}>
                         {
                             input.images.map(img =>
                                 // <div className={Styles.images}>
@@ -276,27 +296,29 @@ function EditProduct({ id }) {
                                     <div className={Styles.containerArtImage}>
                                         <img width='100' height='100' src={img.url} />
                                     </div>
-                                    <button onClick={onDelete} value={img.url}>x</button>
+                                    <button  className={Styles.btnDelete2} onClick={onDelete} value={img.url}>x</button>
                                 </div>
                             )
                         }
-                        <div className={Styles.pictureAdd}>
-                            <label for='files' >
+                        </div>
+                        <div className={Styles.container3}>
+                            <label className={Styles.label2} for='files' >
                                 <div className={Styles.containerArtImage}>
                                     Seleccionar imagen
                                         </div>
                                 <div className={Styles.progressBar}>
                                     <progress value={upload.process} ></progress>
                                 </div>
+                                <div onChange={handleUpload}className={Styles.btnSelect}>seleccionar</div>
                             </label>
                             {/*  <div className='inputFile'> */}
-                            <input className={Styles.inputFile} type='file' id='files' onChange={handleUpload} />
+                            <input  className={Styles.inpt} type='file' id='files' onChange={handleUpload} />
                             {/* </div> */}
                         </div>
                     </div>
-
-                    <button type="submit" value="Editar" className='button'
-                    >EDITAR</button>
+                    </div>
+                    <button type="submit" value="Editar" className={Styles.btn}
+                    >Editar</button>
                 </form>
 
             </div>
@@ -304,6 +326,7 @@ function EditProduct({ id }) {
                 <button className={Styles.btn} >Editar producto</button>
             </div> */}
         </div>
+
     )
 }
 
