@@ -10,7 +10,7 @@ function Home() {
             <NavBar renderTop={true} />
             <div className={Styles.titleContainer}>
                 <h1 className={Styles.title}>arthub</h1>
-                <p className={Styles.subtitle}>art on the spotlight and stuff</p>
+                <p className={Styles.subtitle}>arte en su máxima expresión</p>
             </div>
             <Carrousel></Carrousel>
         </div>
