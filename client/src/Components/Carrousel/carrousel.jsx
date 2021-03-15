@@ -2,7 +2,6 @@ import React from 'react';
 import Slider from 'infinite-react-carousel';
 import Styles from './carrousel.module.css';
 import art from '../../fakeList'
-import {Link} from 'react-router-dom';
 
 
 

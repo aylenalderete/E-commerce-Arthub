@@ -9,7 +9,7 @@ function NavBar({renderTop}) {
             { renderTop === true ?
                 <div className={Styles.navContainer}>
                     <div className={Styles.navContainerSecciones}>
-                        <Link className={Styles.link} to="/colección">
+                        <Link className={Styles.link} to="/coleccion">
                             <p className={Styles.secciones}>colección</p>
                         </Link>
                         <Link className={Styles.link} to="/artistas">
@@ -26,7 +26,7 @@ function NavBar({renderTop}) {
                         <p className={Styles.tituloNavbar2}>arthub</p>  
                   
                     <div className= {Styles.navContainerSecciones2}>
-                        <Link className={Styles.link2} to="/colección">
+                        <Link className={Styles.link2} to="/coleccion">
                             <p className={Styles.secciones2}>colección</p>
                         </Link>
                         <Link className={Styles.link2} to="/artistas">
@@ -37,7 +37,7 @@ function NavBar({renderTop}) {
                         </Link>
                     </div>
                     <div className= {Styles.line2}>
-                    <Link className={Styles.link2} to="/login">
+                    <Link className={Styles.link2} to="/ingresar">
                         <p className={Styles.seccionMicuenta}>mi cuenta</p>
                         </Link>
                     </div>
