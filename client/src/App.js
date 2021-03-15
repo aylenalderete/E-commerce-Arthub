@@ -16,6 +16,7 @@ import AdminUser from './Views/AdminUser'
 import ArtistsProducts from './Views/ArtistsProducts';
 import CreateCategory from './Views/CreateCategory';
 import EditProduct from './Components/EditProduct';
+import EditCategory from './Views/EditCategories';
 
 
 function App() {
@@ -47,6 +48,7 @@ function App() {
       <Route path="/perfiladmin" component={AdminUser}></Route>
       <Route path="/misproductos" component={ArtistsProducts}></Route>
       <Route path="/crearcategorias" component={CreateCategory}></Route>
+      <Route path="/editarcategorias" component={EditCategory}></Route>
 
     </div>
   );
