@@ -21,7 +21,7 @@ server.get('/', (req, res) => {
 				{
 					model: User,
 					// required: true
-				}
+				} 
 			]
 		}
 	)
