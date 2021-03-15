@@ -10,7 +10,7 @@ function ArtistAdminDashboard() {
 
     useEffect(() => {
         axios
-            .get(`http://localhost:3001/products/user/${1}`)
+            .get(`http://localhost:3001/products/user/1`)
             .then((res) => {
                 setAdminProducts(res.data);
             })
@@ -25,10 +25,10 @@ function ArtistAdminDashboard() {
             <div className={style.secondContainer}>
                 <p>Admin-artist dashboard</p>
                 <p>Mis productos:</p>
-                {console.log(AdminProducts)}
                 <div className={style.cards}>
+                    {console.log(AdminProducts)}
                     {AdminProducts.map((p) => (
-                        <ArtCard pic={p.images} name={p.title} id={p.id_product} />
+                        <ArtCard pic={p.images[0]?.url} name={p.title} id={p.id_product} admin={true}/>
                     ))}
                 </div>
                 <Link to="/crearproducto">

@@ -221,7 +221,7 @@ function EditProduct({ id }) {
                         required />
                     <br />
                     <p>Descripcion</p>
-                    <input name="description"
+                    <textarea name="description"
                         type="text"
                         value={input.description}
                         placeholder="Descripcion"
