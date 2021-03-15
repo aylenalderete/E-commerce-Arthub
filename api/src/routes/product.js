@@ -57,6 +57,9 @@ server.post('/', async function (req, res) {
 server.put("/:id", async (req, res) => {
 
 	try {
+
+		await Image.destroy({ where: { productIdProduct: req.params.id }});
+
 		const productToEdit = await Product.findByPk(parseInt(req.params.id));
 		productToEdit.title = req.body.title;
 		productToEdit.price = req.body.price;
@@ -71,7 +74,7 @@ server.put("/:id", async (req, res) => {
 			})
 				.then(image => {
 					// Agrega imagenes a los productos
-					productToEdit.setImages(image[0].id)
+					productToEdit.addImages(image[0].dataValues.id)
 				})
 		})
 
