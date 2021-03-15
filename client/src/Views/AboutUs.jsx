@@ -4,8 +4,8 @@ import style from './aboutUs.module.css'
 
 function AboutUs() {
     return (
-        <div>
-            <NavBar />
+        <div className={style.mainContainer}>
+            <NavBar renderTop={false} />
         <div className = {style.container}>
             <div className = {style.title}>
                 <h1>nosotros</h1>
