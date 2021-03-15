@@ -34,18 +34,18 @@ return (
           ></img>
         </div>
         <div className={style.infoContainer}>
-          <div className={style.artistContainer}>
-            {/* <h3>{detailed.artist}</h3> */}
-            <h4>{`$` + `${detailed.price}`}</h4>
-          </div>
           <div>
             <h1>{detailed.title}</h1>
           </div>
           <div>
             <div className={style.categoriesContainer}>
-              {detailed.categories &&
-                detailed.categories.map((x) => <span>{x.name}</span>)}
+              <h4>Categoria/s: {detailed.categories &&
+                detailed.categories.map((x) => <h4>{x.name}</h4>)}</h4>
             </div>
+          <div className={style.artistContainer}>
+            {/* <h3>{detailed.artist}</h3> */}
+            <h4>{`Precio: $` + `${detailed.price}`}</h4>
+          </div>
             <p>{detailed.description}</p>
             <button className={style.button}>añadir a mi compra</button>
           </div>
