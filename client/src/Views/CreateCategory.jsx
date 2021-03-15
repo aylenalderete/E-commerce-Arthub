@@ -3,7 +3,7 @@ import FormCategories from '../Components/FormCategories/FormCategories'
 import NavBar from '../Components/NavBar'
 
 
-function CreateCatgory() {
+function CreateCategory() {
     return (
         <div>
             <NavBar />
@@ -12,4 +12,4 @@ function CreateCatgory() {
     )
 }
 
-export default CreateCatgory
+export default CreateCategory

@@ -14,13 +14,13 @@ import CreateProduct from './Components/CreateProduct';
 import ArtistProfile from './Views/ArtistProfile';
 import AdminUser from './Views/AdminUser'
 import ArtistsProducts from './Views/ArtistsProducts';
-import CreateCatgory from './Views/CreateCatgory';
+import CreateCatgory from './Views/CreateCategory';
 
 
 function App() {
   return (
     <div >
-      <Route path="/inicio" component={Home}></Route>
+      <Route exact path="/" component={Home}></Route>
       <Route path="/nosotros" component={AboutUs}></Route>
       <Route path="/coleccion" exact component={Collection}></Route>
       <Route path="/ingresar" component={LogIn}></Route>
@@ -41,7 +41,7 @@ function App() {
       ></Route>
       <Route path="/perfiladmin" component={AdminUser}></Route>
       <Route path="/misproductos" component={ArtistsProducts}></Route>
-      <Route path="/crearcategorías" component={CreateCatgory}></Route>
+      <Route path="/crearcategorias" component={CreateCategory}></Route>
 
     </div>
   );
