@@ -54,7 +54,7 @@ function EditProduct({ id }) {
                     // setRefresh([1, 2])
                     setInput({
                         ...input,
-                        images: [...input.images, {url: urlImg}]
+                        images: [...input.images, { url: urlImg }]
                     });
 
                 });
@@ -121,7 +121,7 @@ function EditProduct({ id }) {
         }
     }
 
-    function handleClickCat(ev){
+    function handleClickCat(ev) {
         console.log('handleClickCat');
         setInput({
             ...input,
@@ -158,24 +158,39 @@ function EditProduct({ id }) {
 
     async function handleSubmit(e) {
         e.preventDefault();
-        let res = await fetch(`http://localhost:3001/products/${id}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(input) // pasar la info de esta forma categories debe ser array de numeros y images debe ser array de obj con prop url
-        })
-        console.log(res);
-        console.log(input);
+        if(input.title.length >= 40){
+            alert('El titulo no puede tener mas de 40 caracteres');
+        }
+        else if (input.images.length === 0) {
+            alert('Debe agregar por lo menos una imagen');
+
+        }else if(input.categories.length === 0){
+            alert('Debe agregar por lo menos una categoria');
+        } 
+        else {
+
+            let res = await fetch(`http://localhost:3001/products/${id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(input) // pasar la info de esta forma categories debe ser array de numeros y images debe ser array de obj con prop url
+            })
+            console.log(res);
+            console.log(input);
+        }
+
     }
 
     // ----- borrar imagenes ---
     function onDelete(ev) {
+
         setInput({
             ...input,
             images: [...input.images.filter(img => img.url !== ev.target.value)]
         });
     }
+
 
     return (
         <div>
@@ -186,7 +201,7 @@ function EditProduct({ id }) {
                 <p>Categorias</p>
                 {
                     input.categories.map(cat => (
-                        categories.find(category => category.id === cat) && 
+                        categories.find(category => category.id === cat) &&
                         <div >
                             <p>{getNames([cat])}</p> {/* la funcion get names me trae el nombre pero recibe array asi que por eso está asi */}
                             <button onClick={handleClickCat} value={cat}>x</button>
@@ -194,8 +209,10 @@ function EditProduct({ id }) {
                     ))
                 }
                 <form className='form-bottom' onSubmit={handleSubmitCat}>
-                    <select onChange={handleChangeCat} name="categories" value={selectedCat}  >
+                    <select required onChange={handleChangeCat} name="categories" value={selectedCat}  >
+                        <option value='' ></option>
                         {
+
                             categories.map((c) => (
 
                                 <option value={c.id} key={c.id}>{c.name}</option>
@@ -230,7 +247,7 @@ function EditProduct({ id }) {
                     <br />
                     <p>Precio</p>
                     <input name="price"
-                        type="text"
+                        type="number"
                         value={input.price}
                         placeholder="Precio"
                         onChange={handleChange}
@@ -238,7 +255,7 @@ function EditProduct({ id }) {
                     <br />
                     <p>Stock</p>
                     <input name="stock"
-                        type="text"
+                        type="number"
                         value={input.stock}
                         placeholder="Stock"
                         onChange={handleChange}

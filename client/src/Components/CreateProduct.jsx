@@ -3,6 +3,7 @@ import Styles from "./CreateProduct.module.css";
 import firebase from "firebase";
 import axios from "axios";
 import { setUrlImages } from "../Actions/setUrlImage.js";
+import { clearUrlImage } from "../Actions/clearUrlImage";
 import { connect, useSelector } from "react-redux";
 import NavBar from "../Components/NavBar";
 
@@ -84,28 +85,46 @@ function CreateProduct(props) {
     };
 
     const sendProduct = () => {
-        console.log(product, urlImages);
-        axios
-            .post(`http://localhost:3001/products`, { ...product, images: urlImages })
-            .then((res) => {
-                alert("Producto creado");
-                console.log(res.data);
-            })
-            .catch((error) => {
-                alert("No se pudo crear el producto");
-                console.log(error);
-            });
-    };
+        // console.log(product, urlImages);
+        if(product.title.length >= 40){
+            alert('El titulo no puede tener mas de 40 caracteres');
+        }
+        else if (urlImages.length === 0) {
+            alert('Debe agregar por lo menos una imagen');
 
+        }else if(product.categories.length === 0){
+            alert('Debe agregar por lo menos una categoria');
+        }else{
+            
+            axios
+                .post(`http://localhost:3001/products`, { ...product, images: urlImages })
+                .then((res) => {
+                    alert("Producto creado");
+                    console.log(res.data);
+                })
+                .catch((error) => {
+                    alert("No se pudo crear el producto");
+                    console.log(error);
+                });
+            props.clearUrlImage();
+        } 
+    };
+    
     const handleSubmit = (e) => e.preventDefault();
 
     // ---------- Select de categorias ----------
     const [categories, setCategories] = useState([]);
     const [selectedCat, setSelectedCat] = useState("");
 
-    useEffect(async () => {
-        let cat = (await axios.get("http://localhost:3001/products/category")).data;
-        setCategories(cat);
+    useEffect( () => {
+
+        async function request(){
+            let cat = (await axios.get("http://localhost:3001/products/category")).data;
+            setCategories(cat);
+        }
+
+        request();
+        
     }, []);
 
     function handleChangeCat(ev) {
@@ -151,6 +170,7 @@ function CreateProduct(props) {
                             name="title"
                             onChange={handleChange}
                             placeholder="título"
+                            required
                         ></input>
                         <input
                             className={Styles.input}
@@ -158,6 +178,7 @@ function CreateProduct(props) {
                             name="description"
                             onChange={handleChange}
                             placeholder="descripción"
+                            required
                         ></input>
                         <input
                             className={Styles.input}
@@ -165,6 +186,9 @@ function CreateProduct(props) {
                             name="price"
                             onChange={handleChange}
                             placeholder="precio"
+                            required
+                            type='number'
+
                         ></input>
                         <input
                             className={Styles.input}
@@ -172,6 +196,8 @@ function CreateProduct(props) {
                             name="stock"
                             onChange={handleChange}
                             placeholder="stock"
+                            required
+                            type='number'
                         ></input>
 
                         <div className={Styles.file}>
@@ -267,6 +293,8 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return {
         setUrlImages: (urlImages) => dispatch(setUrlImages(urlImages)), //Firebase
+        clearUrlImage: () => dispatch(clearUrlImage()), //Firebase
+
     };
 }
 

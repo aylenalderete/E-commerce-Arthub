@@ -90,6 +90,12 @@ const reducer = function (state = initialState, action) {
                 artistsProducts: action.payload
             }
 
+        case 'CLEAR_URL_IMAGES':
+            return{
+                ...state,
+                urlImages: []
+            }
+
 
 
         default:
