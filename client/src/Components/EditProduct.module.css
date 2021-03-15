@@ -56,3 +56,36 @@
     display: flex;
     justify-content: center;
 }
+
+.imgContainer{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    width: 50%;
+}
+
+.pictureAdd{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.containerArtImage{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 13px;
+    color: white;
+    height: 40px;
+    width: 200px;
+    border: 1px solid white;
+    cursor: pointer;
+}
+
+.progressBar{
+    display: flex;
+    width: 110px;
+}
+.inputFile{
+    display:none;
+}
