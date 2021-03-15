@@ -43,6 +43,7 @@ function Artists() {
                 {usersArtists&&usersArtists.map((artist) => (
                     <ArtistCard 
                         name = {artist.username}
+                        artistId = {artist.id}
                         ></ArtistCard>
                     ))}
                 </div>
