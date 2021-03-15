@@ -17,7 +17,11 @@ server.get('/', (req, res) => {
 				{
 					model: Category,
 					// required: true
-				}
+				},
+				{
+					model: User,
+					// required: true
+				} 
 			]
 		}
 	)
