@@ -23,17 +23,17 @@ function ArtistAdminDashboard() {
         <div className={style.mainContainer}>
             <NavBar renderTop={false} />
             <div className={style.secondContainer}>
-                <p>Admin-artist dashboard</p>
-                <p>Mis productos:</p>
+                <p className={style.adminTitle}>Admin-artist dashboard</p>
+                <Link to="/crearproducto">
+                    <button className={style.btn}>Crear producto</button>
+                </Link>  
+                <p className={style.adminTitle2}>Mis productos:</p>              
                 <div className={style.cards}>
                     {console.log(AdminProducts)}
                     {AdminProducts.map((p) => (
                         <ArtCard pic={p.images[0]?.url} name={p.title} id={p.id_product} admin={true}/>
                     ))}
                 </div>
-                <Link to="/crearproducto">
-                    <button>Crear producto</button>
-                </Link>
             </div>
         </div>
     );
