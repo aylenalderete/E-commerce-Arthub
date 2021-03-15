@@ -44,6 +44,7 @@ function Artists() {
                     <ArtistCard 
                         name = {artist.username}
                         artistId = {artist.id}
+                        key = {artist.id}
                         ></ArtistCard>
                     ))}
                 </div>
