@@ -1,10 +1,15 @@
+.mainContainer{
+    display: flex;
+    flex-direction: row;
+}
 .container{
     display: flex;
     flex-direction: column;
     height: 100vh;
     color: white;
     align-items: center;
-    justify-content: space-around;
+    justify-content: center;
+    width: 100%;
     /* margin : 2rem 0;  */
 }
 
