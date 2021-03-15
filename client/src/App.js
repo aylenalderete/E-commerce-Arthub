@@ -20,7 +20,7 @@ import CreateCatgory from './Views/CreateCatgory';
 function App() {
   return (
     <div >
-      <Route path="/inicio" component={Home}></Route>
+      <Route exact path="/" component={Home}></Route>
       <Route path="/nosotros" component={AboutUs}></Route>
       <Route path="/coleccion" exact component={Collection}></Route>
       <Route path="/ingresar" component={LogIn}></Route>
