@@ -2,15 +2,12 @@ import React from 'react'
 import {Link} from 'react-router-dom'
 import style from './artistCard.module.css'
 
-function ArtistCard({picture, artist}) {
+function ArtistCard({name, artistId}) {
     return (
         <div className = {style.cardContainer}>
             <div className = {style.imgContainer}>
-                <img className={style.imgArtist} src={picture} alt = 'Artist' ></img>
-            </div>
-            <div>
-                <Link to = {`/artistas/:artistId`}>
-                    <h3 className={style.text}>{artist}</h3>
+                <Link to = {`/artistas/${artistId}`}>
+                    <h3 className={style.text}>{name}</h3>
                 </Link>
             </div>
         </div>
