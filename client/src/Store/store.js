@@ -13,7 +13,8 @@ const initialState = {
     isOpenFilters: false,
     // users: [],
     filteredProducts: [],
-    usersArtists : []
+    usersArtists : [],
+    artistsProducts: []
 
 
 }
@@ -81,6 +82,12 @@ const reducer = function (state = initialState, action) {
             return {
                 ...state,
                 usersArtists: action.payload
+            }
+
+        case 'GET_ARTISTS_PRODUCTS':
+            return {
+                ...state,
+                artistsProducts: action.payload
             }
 
 

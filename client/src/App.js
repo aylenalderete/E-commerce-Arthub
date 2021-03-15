@@ -13,6 +13,8 @@ import ArtistAdminDashboard from './Views/ArtistAdminDashboard';
 import CreateProduct from './Components/CreateProduct';
 import ArtistProfile from './Views/ArtistProfile';
 import AdminUser from './Views/AdminUser'
+import ArtistsProducts from './Views/ArtistsProducts';
+import CreateCatgory from './Views/CreateCatgory';
 
 
 function App() {
@@ -38,6 +40,8 @@ function App() {
         )}
       ></Route>
       <Route path="/perfilAdmin" component={AdminUser}></Route>
+      <Route path="/misproductos" component={ArtistsProducts}></Route>
+      <Route path="/crearCategorías" component={CreateCatgory}></Route>
 
     </div>
   );
