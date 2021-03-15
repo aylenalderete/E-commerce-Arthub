@@ -18,6 +18,11 @@ function AdminUser() {
           </Link>
         </div>
         <div className={style.div}>
+          <Link className={style.link} to="/editarcategorias">
+            Editar/eliminar categoría
+          </Link>
+        </div>
+        <div className={style.div}>
           <Link className={style.link} to="/admindashboard">
             Mis productos
           </Link>

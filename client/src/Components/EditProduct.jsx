@@ -76,16 +76,18 @@ function EditProduct({ id }) {
 
     // useEffect para traer los datos de un producto por id
     // const [prod, setProd] = useState({});
-    useEffect(async () => {
-        let prod = (await axios.get(`http://localhost:3001/products/${id}`)).data;
-        console.log(prod);
+    useEffect(() => {
 
-        // setProd(prod);
-        setInput({
-            ...prod,
-            categories: prod.categories.map(cat => cat.id),
-            images: prod.images.map(img => ({ url: img.url }))
-        });
+        async function prod() {
+            let setProd = (await axios.get(`http://localhost:3001/products/${id}`)).data;
+            setInput({
+                ...setProd,
+                categories: setProd.categories.map(cat => cat.id),
+                images: setProd.images.map(img => ({ url: img.url }))
+            });
+        }
+
+        prod();
     }, [])
 
 
@@ -94,11 +96,12 @@ function EditProduct({ id }) {
     const [selectedCat, setSelectedCat] = useState('');
 
 
-    useEffect(async () => {
-        let cat = (await axios.get('http://localhost:3001/products/category')).data;
-        // console.log('Estas categorias vienen de la base de datos: ', cat)
-
-        setCategories(cat);
+    useEffect(() => {
+        async function cat() {
+            let setCat = (await axios.get('http://localhost:3001/products/category')).data;
+            setCategories(setCat);
+        }    // console.log('Estas categorias vienen de la base de datos: ', cat)
+        cat();
     }, [])
 
     function handleChangeCat(ev) {
@@ -202,36 +205,36 @@ function EditProduct({ id }) {
                 <div className={Styles.divTitle}>
                     <p className={Styles.divTitle}>Editar producto</p>
                 </div>
-                
-               
+
+
                 <form className={Styles.formCategory} onSubmit={handleSubmitCat}>
-                <p className={Styles.text}>Categorias</p>
-                <div className={Styles.alignForm}>
-                    <select className={Styles.selectCategory}  onChange={handleChangeCat} name="categories" value={selectedCat}  >
-                        <option className={Styles.options} value='' >seleccionar</option>
-                        {
+                    <p className={Styles.text}>Categorias</p>
+                    <div className={Styles.alignForm}>
+                        <select className={Styles.selectCategory} onChange={handleChangeCat} name="categories" value={selectedCat}  >
+                            <option className={Styles.options} value='' >seleccionar</option>
+                            {
 
-                            categories.map((c) => (
+                                categories.map((c) => (
 
-                                <option className={Styles.options} value={c.id} key={c.id}>{c.name}</option>
-                            ))
-                        }
+                                    <option className={Styles.options} value={c.id} key={c.id}>{c.name}</option>
+                                ))
+                            }
 
-                    </select>
-                    <button className={Styles.btnCategory} type='submit'>Agregar</button>
+                        </select>
+                        <button className={Styles.btnCategory} type='submit'>Agregar</button>
                     </div>
                     <div className={Styles.alignSelectedCat}>
-                    {
+                        {
 
-                    input.categories.map(cat => (
-                        categories.find(category => category.id === cat) &&
-                        <div className={Styles.alignCatSelected}>
-                            <p className={Styles.showCategory}>{getNames([cat])}</p> {/* la funcion get names me trae el nombre pero recibe array asi que por eso está asi */}
-                            <button className={Styles.btnDelete} onClick={handleClickCat} value={cat}>x</button>
-                        </div>
-                    ))
-                }
-                </div>
+                            input.categories.map(cat => (
+                                categories.find(category => category.id === cat) &&
+                                <div className={Styles.alignCatSelected}>
+                                    <p className={Styles.showCategory}>{getNames([cat])}</p> {/* la funcion get names me trae el nombre pero recibe array asi que por eso está asi */}
+                                    <button className={Styles.btnDelete} onClick={handleClickCat} value={cat}>x</button>
+                                </div>
+                            ))
+                        }
+                    </div>
                     {/* <div>
                         {
                             getNames(input.categories).map((c) => <p>{c}</p>)
@@ -241,7 +244,7 @@ function EditProduct({ id }) {
 
                 <form className={Styles.containerForm2} onSubmit={handleSubmit} >
                     <p className={Styles.text}>Titulo</p>
-                    <input  className={Styles.input}
+                    <input className={Styles.input}
                         name="title"
                         type="text"
                         value={input.title}
@@ -251,8 +254,8 @@ function EditProduct({ id }) {
                     <br />
                     <p className={Styles.text}>Descripcion</p>
                     <textarea
-                    className={Styles.input2}
-                     name="description"
+                        className={Styles.input2}
+                        name="description"
                         type="text"
                         value={input.description}
                         placeholder="Descripcion"
@@ -261,7 +264,7 @@ function EditProduct({ id }) {
                     <br />
                     <p className={Styles.text}>Precio</p>
                     <input
-                        className={Styles.input} 
+                        className={Styles.input}
                         name="price"
                         type="number"
                         value={input.price}
@@ -270,7 +273,7 @@ function EditProduct({ id }) {
                         required />
                     <br />
                     <p className={Styles.text}>Stock</p>
-                    <input 
+                    <input
                         className={Styles.input}
                         name="stock"
                         type="number"
@@ -283,39 +286,39 @@ function EditProduct({ id }) {
 
                     <br />
                     <p className={Styles.text}>Imagenes</p>
-                    <div  className={Styles.file} >
-                    <div className={Styles.containerImgs}>
-                    <div className={Styles.container2}>
-                        {
-                            input.images.map(img =>
-                                // <div className={Styles.images}>
-                                //     <img src={img.url} />
-                                //     <button onClick={onDelete} value={img.url}>X</button>
-                                // </div>
-                                <div className={Styles.pictureAdd}>
-                                    <div className={Styles.containerArtImage}>
-                                        <img width='100' height='100' src={img.url} />
-                                    </div>
-                                    <button  className={Styles.btnDelete2} onClick={onDelete} value={img.url}>x</button>
-                                </div>
-                            )
-                        }
-                        </div>
-                        <div className={Styles.container3}>
-                            <label className={Styles.label2} for='files' >
-                                <div className={Styles.containerArtImage}>
-                                    Seleccionar imagen
+                    <div className={Styles.file} >
+                        <div className={Styles.containerImgs}>
+                            <div className={Styles.container2}>
+                                {
+                                    input.images.map(img =>
+                                        // <div className={Styles.images}>
+                                        //     <img src={img.url} />
+                                        //     <button onClick={onDelete} value={img.url}>X</button>
+                                        // </div>
+                                        <div className={Styles.pictureAdd}>
+                                            <div className={Styles.containerArtImage}>
+                                                <img width='100' height='100' src={img.url} />
+                                            </div>
+                                            <button className={Styles.btnDelete2} onClick={onDelete} value={img.url}>x</button>
                                         </div>
-                                <div className={Styles.progressBar}>
-                                    <progress value={upload.process} ></progress>
-                                </div>
-                                <div onChange={handleUpload}className={Styles.btnSelect}>seleccionar</div>
-                            </label>
-                            {/*  <div className='inputFile'> */}
-                            <input  className={Styles.inpt} type='file' id='files' onChange={handleUpload} />
-                            {/* </div> */}
+                                    )
+                                }
+                            </div>
+                            <div className={Styles.container3}>
+                                <label className={Styles.label2} for='files' >
+                                    <div className={Styles.containerArtImage}>
+                                        Seleccionar imagen
+                                        </div>
+                                    <div className={Styles.progressBar}>
+                                        <progress value={upload.process} ></progress>
+                                    </div>
+                                    <div onChange={handleUpload} className={Styles.btnSelect}>seleccionar</div>
+                                </label>
+                                {/*  <div className='inputFile'> */}
+                                <input className={Styles.inpt} type='file' id='files' onChange={handleUpload} />
+                                {/* </div> */}
+                            </div>
                         </div>
-                    </div>
                     </div>
                     <button type="submit" value="Editar" className={Styles.btn}
                     >Editar</button>
