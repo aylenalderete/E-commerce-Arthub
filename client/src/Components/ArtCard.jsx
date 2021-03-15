@@ -2,7 +2,7 @@ import React from 'react'
 import style from './artcard.module.css'
 import { Link } from 'react-router-dom'
 
-function ArtCard({ name, pic, artist, id, idArtist }) {
+function ArtCard({ name, pic, artist, id, idArtist, admin }) {
   return (
     <div className={style.cardContainer}>
       <div className={style.imgContainer}>
@@ -15,6 +15,9 @@ function ArtCard({ name, pic, artist, id, idArtist }) {
         <Link className={style.linksA} to={`/artistas/${idArtist}`}>
           <h5 className={style.text}>{artist}</h5>
         </Link>
+        {
+          admin && <Link to={`editarproducto/${id}`}>Editar</Link>
+        }
       </div>
     </div>
   );
