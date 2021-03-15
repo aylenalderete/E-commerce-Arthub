@@ -29,7 +29,7 @@ function ArtistsProducts() {
                     <ArtCard
                     name={piece.title}
                     pic={piece.images[0].url}
-                    artist="Lorem ipsum dolor"
+                    artist={piece.user.name + ' ' + piece.user.lastname}
                     id={piece.id_product}
                     userId={piece.userId}
                     key={piece.id_product}

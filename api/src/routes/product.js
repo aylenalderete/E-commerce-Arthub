@@ -184,6 +184,9 @@ server.get('/categorias/:nombrecat', (req, res) => {
 				},
 				{
 					model: Image
+				},
+				{
+					model: User
 				}
 			]
 		}))
