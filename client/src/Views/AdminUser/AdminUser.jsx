@@ -3,6 +3,7 @@ import NavBar from "../../Components/NavBar/NavBar.jsx";
 import style from "./adminuser.module.css";
 import { Link } from "react-router-dom";
 import { BrownserRouter as Router, useHistory } from "react-router-dom";
+import userPic from '../../Images/elcapitan.jpg';
 function AdminUser() {
   const history = useHistory();
   const handleHistory = () => {
@@ -10,28 +11,27 @@ function AdminUser() {
   };
   return (
     <div className={style.mainContainer}>
-      <NavBar renderTop={false}></NavBar>
-      <div className={style.adminContainer}>
-        <div className={style.div}>
-          <Link className={style.link} to="/crearcategorias">
-            Crear categoria
-          </Link>
+      <NavBar renderTop={false} />
+      <div className={style.secondContainer}>
+        <div className={style.userDesc}>
+
+          <div className={style.userInfo}>
+            <h1 className={style.name} >Ricky Fort</h1>
+            <p className={style.rol}>Rol: El comandante</p>
+
+            <button className={style.logOut} onClick={() => handleHistory()}>
+              Cerrar sesion
+        </button>
+
+          </div>
+          <div className={style.containerPic}>
+            <img className={style.userPic} src={userPic} alt='User Pic' />
+          </div>
         </div>
-        <div className={style.div}>
-          <Link className={style.link} to="/editarcategorias">
-            Editar/eliminar categoría
-          </Link>
-        </div>
-        <div className={style.div}>
-          <Link className={style.link} to="/admindashboard">
-            Mis productos
-          </Link>
-        </div>
-        <div className={style.div}>Mis estadisticas</div>
-        <div className={style.div} onClick={() => handleHistory()}>
-          Cerrar sesion
-        </div>
+        {/* componente carousel categorias; boton ver todas */}
+        {/*componente estadisticas, boton ver todas */}
       </div>
+
     </div>
   );
 }

@@ -1,38 +1,70 @@
 .mainContainer {
     display: flex;
     flex-direction: row;
-    height: 100vh;
+    min-height: 100vh;
 }
 
-.adminContainer {
+.secondContainer{
     display: flex;
     flex-direction: column;
+    width: 100%;
+    margin-top: 50px;
+    align-items: center;
+   
+}
+
+.userDesc{
+    display: flex;
+    width:90%;
+   
+    
+}
+.userInfo{
+    display:flex;
+    width:50%;
+    flex-direction: column;
+    align-self: flex-start;
+    margin-left: 40px;
+    margin-top:10px;
     justify-content: center;
-    margin-left: 30%;
 }
 
-.img {
+.containerPic{
+    display: flex;
+    justify-content: flex-end;
+    width:50%;
+    margin-right: 40px;
+    margin-top:10px;
+    margin-bottom: 10px;
+    
+}
+
+.userPic{
+    width: 220px;
+    height: 220px;
     border-radius: 50%;
+    border: 3px solid white;
+
 }
 
-.div {
-    color: white;
-    background-color: Transparent;
-    background-repeat: no-repeat;
+.name{
+    font-size: 3rem;
+    line-height: 1.7em;
+    margin:0;
+    margin-bottom: 10px;
+    border-bottom: 2px solid white;
+}
+
+.rol{
+    font-size: 1.2rem;
+}
+
+.logOut{
+    background-color: transparent;
     border: 1px solid white;
-    cursor: pointer;
-    width: 50vh;
-    height: 5vh;
-    text-align: center;
-    margin: 10px;
-    font-size: larger;
-}
-
-.div:hover {
-    background-color: white;
-    color: black;
-}
-.link {
-    text-decoration: none;
-    color: white;
+    color:white;
+    padding:10px;
+    width:30%;
+    font-size: 1rem;
+    justify-content: flex-end;
 }
