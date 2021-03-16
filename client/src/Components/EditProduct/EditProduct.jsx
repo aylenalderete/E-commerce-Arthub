@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Styles from './EditProduct.module.css';
 import axios from 'axios';
-import NavBar from '../Components/NavBar';
+import NavBar from '../NavBar/NavBar.jsx';
 import firebase from 'firebase';
 
 // const firebaseConfig = {

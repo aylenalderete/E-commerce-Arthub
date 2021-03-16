@@ -1,7 +1,7 @@
 import React from 'react'
-import LogInForm from '../Components/LogInForm'
+import LogInForm from '../../Components/LogIn/LogInForm.jsx'
 import style from './login.module.css'
-import NavBar from '../Components/NavBar'
+import NavBar from '../../Components/NavBar/NavBar.jsx'
 function LogIn() {
     return (
       

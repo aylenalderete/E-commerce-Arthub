@@ -1,11 +1,11 @@
 import React, {useState, useEffect} from 'react'
-import ArtistCard from '../Components/ArtistCard'
-import SearchBar from '../Components/SearchBar'
-import NavBar from '../Components/NavBar'
+import ArtistCard from '../../Components/Artist/ArtistCard'
+import SearchBar from '../../Components/SearchBar/SearchBar.jsx'
+import NavBar from '../../Components/NavBar/NavBar.jsx'
 import style from './artists.module.css'
 import {useDispatch, useSelector} from 'react-redux'
-import getUsersArtists from '../Actions/getUsersArtists'
-import PopUp from '../Components/PopUpFilters/PopUp';
+import getUsersArtists from '../../Actions/getUsersArtists'
+import PopUp from '../../Components/PopUpFilters/PopUp';
 
 
 

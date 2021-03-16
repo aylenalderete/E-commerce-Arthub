@@ -2,10 +2,10 @@ import React, { useState, useEffect } from "react";
 import Styles from "./CreateProduct.module.css";
 import firebase from "firebase";
 import axios from "axios";
-import { setUrlImages } from "../Actions/setUrlImage.js";
-import { clearUrlImage } from "../Actions/clearUrlImage";
+import { setUrlImages } from "../../Actions/setUrlImage.js";
+import { clearUrlImage } from "../../Actions/clearUrlImage";
 import { connect, useSelector } from "react-redux";
-import NavBar from "../Components/NavBar";
+import NavBar from "../NavBar/NavBar.jsx";
 
 const firebaseConfig = {
     apiKey: "AIzaSyDJ5J7_0pkNGDhDo1mIkVB0Gyrzvyk7J5U",

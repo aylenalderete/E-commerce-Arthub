@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import Styles from './searchBar.module.css';
-import SearchIcon from '../Images/search.svg';
-import getProductsByName from '../Actions/getActions';
+import SearchIcon from '../../Images/search.svg';
+import getProductsByName from '../../Actions/getActions';
 
 function SearchBar({getProductsByName}) {
 

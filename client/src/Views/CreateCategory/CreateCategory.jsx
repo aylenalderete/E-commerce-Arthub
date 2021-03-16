@@ -1,6 +1,6 @@
 import React from 'react'
-import FormCategories from '../Components/FormCategories/FormCategories'
-import NavBar from '../Components/NavBar'
+import FormCategories from '../../Components/FormCategories/FormCategories'
+import NavBar from '../../Components/NavBar/NavBar.jsx'
 import Styles from './createCategory.module.css'
 
 

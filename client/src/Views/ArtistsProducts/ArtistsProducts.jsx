@@ -1,9 +1,9 @@
 import React, {useEffect} from 'react'
-import NavBar from '../Components/NavBar'
+import NavBar from '../../Components/NavBar/NavBar.jsx'
 import style from './artistsProducts.module.css'
 import {useSelector, useDispatch} from 'react-redux'
-import ArtCard from '../Components/ArtCard'
-import getArtistsProducts from '../Actions/getArtistsProducts'
+import ArtCard from '../../Components/Art/ArtCard.jsx'
+import getArtistsProducts from '../../Actions/getArtistsProducts'
 
 
 function ArtistsProducts() {

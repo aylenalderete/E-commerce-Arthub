@@ -1,6 +1,6 @@
 import React from 'react'
-import EditCategories from '../Components/EditCategories/EditCategories.jsx'
-import NavBar from '../Components/NavBar'
+import EditCategories from '../../Components/EditCategories/EditCategories.jsx'
+import NavBar from '../../Components/NavBar/NavBar.jsx'
 import style from './editCategories.module.css'
 
 

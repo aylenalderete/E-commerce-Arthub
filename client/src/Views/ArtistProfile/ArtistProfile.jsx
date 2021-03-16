@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
-import NavBar from '../Components/NavBar';
-import style from './artpiece.module.css'
+import NavBar from '../../Components/NavBar/NavBar.jsx';
+import style from './artistProfile.module.css'
 
 function ArtistProfile({ artistId }) {
 

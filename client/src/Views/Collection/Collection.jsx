@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router';
 import { Link } from 'react-router-dom';
-import ArtCard from '../Components/ArtCard';
-import SearchBar from '../Components/SearchBar';
+import ArtCard from '../../Components/Art/ArtCard.jsx';
+import SearchBar from '../../Components/SearchBar/SearchBar.jsx';
 import style from './collection.module.css';
-import NavBar from '../Components/NavBar';
+import NavBar from '../../Components/NavBar/NavBar.jsx';
 import { useDispatch, useSelector } from 'react-redux';
-import getInitialProducts from '../Actions/getInitialProducts';
-import PopUp from '../Components/PopUpFilters/PopUp';
-import showFilters from '../Actions/showFilters';
+import getInitialProducts from '../../Actions/getInitialProducts';
+import PopUp from '../../Components/PopUpFilters/PopUp';
+import showFilters from '../../Actions/showFilters';
 
 function Collection() {
 

@@ -1,22 +1,22 @@
 import React from 'react';
 import './App.css';
 import {Route} from 'react-router-dom'
-import Home from './Views/Home';
-import AboutUs from './Views/AboutUs';
-import Collection from './Views/Collection';
-import LogIn from './Views/LogIn';
-import SignIn from './Views/SignIn';
-import Artists from './Views/Artists';
-import ArtPiece from './Views/ArtPiece';
+import Home from './Views/Home/Home.jsx';
+import AboutUs from './Views/AboutUs/AboutUs.jsx';
+import Collection from './Views/Collection/Collection.jsx';
+import LogIn from './Views/LogIn/LogIn.jsx';
+import SignIn from './Views/SignIn/SignIn.jsx';
+import Artists from './Views/Artists/Artists.jsx';
+import ArtPiece from './Views/ArtPiece/ArtPiece.jsx';
 
-import ArtistAdminDashboard from './Views/ArtistAdminDashboard';
-import CreateProduct from './Components/CreateProduct';
-import ArtistProfile from './Views/ArtistProfile';
-import AdminUser from './Views/AdminUser'
-import ArtistsProducts from './Views/ArtistsProducts';
-import CreateCategory from './Views/CreateCategory';
-import EditProduct from './Components/EditProduct';
-import EditCategory from './Views/EditCategories';
+import ArtistAdminDashboard from './Views/ArtistAdmin/ArtistAdminDashboard.jsx';
+import CreateProduct from './Components/CreateProducts/CreateProduct.jsx';
+import ArtistProfile from './Views/ArtistProfile/ArtistProfile.jsx';
+import AdminUser from './Views/AdminUser/AdminUser.jsx'
+import ArtistsProducts from './Views/ArtistsProducts/ArtistsProducts.jsx';
+import CreateCategory from './Views/CreateCategory/CreateCategory.jsx';
+import EditProduct from './Components/EditProduct/EditProduct.jsx';
+import EditCategory from './Views/EditCategories/EditCategories.jsx';
 
 
 function App() {

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, {useEffect, useState} from 'react'
-import NavBar from '../Components/NavBar';
+import NavBar from '../../Components/NavBar/NavBar.jsx';
 import style from './artpiece.module.css'
 
 

@@ -1,9 +1,9 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import ArtCard from "../Components/ArtCard";
+import ArtCard from "../../Components/Art/ArtCard.jsx";
 import style from "./ArtistAdminDashboard.module.css";
-import NavBar from "../../src/Components/NavBar";
+import NavBar from "../../Components/NavBar/NavBar.jsx";
 
 function ArtistAdminDashboard() {
     const [AdminProducts, setAdminProducts] = useState([]);
