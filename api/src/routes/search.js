@@ -5,23 +5,27 @@ const Op = Sequelize.Op;
 
 // Return products by keyword
 server.get('/', (req, res) => {
-	try {
-		const { query } = req.query
-		Product.findAll({
-			include: [Category, Image, User],
-			where: {
-				[Op.or]: [
-					{ title: { [Op.iLike]: `%${query}%` } },
-					{ description: { [Op.iLike]: `%${query}%` } }
-				]
+
+	const { query } = req.query
+	Product.findAll({
+		include: [Category, Image, User],
+		where: {
+			[Op.or]: [
+				{ title: { [Op.iLike]: `%${query}%` } },
+				{ description: { [Op.iLike]: `%${query}%` } }
+			]
+		}
+	})
+		.then(products => {
+			if (products.length > 0) {
+				res.json(products)
+			} else {
+				res.json('No products found')
 			}
 		})
-			.then(prod => {
-				res.json(prod)
-			})
-	} catch (error) {
-		res.status(500).json({ message: 'Error' })
-	}
+		.catch((err) => {
+			console.error(err);
+		});
 });
 
 module.exports = server;
