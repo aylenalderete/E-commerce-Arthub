@@ -5,12 +5,13 @@ import showFilters from '../../Actions/showFilters';
 import getUsersArtists from '../../Actions/getUsersArtists';
 import Styles from './popUp.module.css';
 import searchFilters from '../../Actions/searchFilters';
+import activeFilters from '../../Actions/activeFilters';
 
 
 
 import { connect } from 'react-redux';
 
-function Filters({ categories, getCategories, setFilters, showFilters, getUsersArtists, search, searchFilters }) {
+function Filters({ categories, getCategories, setFilters, showFilters, getUsersArtists, search, searchFilters , activeFilters, isActiveFilters}) {
     //get all the categories once the component mounts
     useEffect(() => {
 
@@ -39,10 +40,12 @@ function Filters({ categories, getCategories, setFilters, showFilters, getUsersA
     const handleSubmit = (e) => {
          e.preventDefault();
          if(search[0]){
-             console.log('entro componente')
+             
+             activeFilters(true)
              searchFilters(select.category);
          }
          else{
+            activeFilters(true)
          setFilters(select.category);}
          showFilters(false);
          
@@ -59,7 +62,7 @@ function Filters({ categories, getCategories, setFilters, showFilters, getUsersA
                         <option className={Styles.option} value={c.name}>{c.name}</option>
                     )}
                 </select>
-                
+                {isActiveFilters? <div>Filtros activados</div> : <div>Filtros desactivados</div>}
                 <button className={Styles.btn}>filtrar</button>
             </form>
         </div>
@@ -69,7 +72,8 @@ function Filters({ categories, getCategories, setFilters, showFilters, getUsersA
 const mapStateToProps = (state) => {
     return {
         categories: state.categories,
-        search: state.search
+        search: state.search,
+        isActiveFilters: state.isActiveFilters,
     }
 }
 
@@ -79,7 +83,9 @@ const mapDispatchToProps = (dispatch) => {
         setFilters: (category) => dispatch(setFilters(category)),
         showFilters: (condition) => dispatch(showFilters(condition)),
         getUsersArtists: () => dispatch(getUsersArtists()),
-        searchFilters: (category) => dispatch(searchFilters(category))
+        searchFilters: (category) => dispatch(searchFilters(category)),
+        activeFilters: (condition) => dispatch(activeFilters(condition))
+        
         
     }
 }
