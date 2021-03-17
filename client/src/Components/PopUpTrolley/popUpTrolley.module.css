@@ -1,0 +1,27 @@
+.mainContainer {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    width: 80vh;
+}
+
+.myTrolley {
+    display: flex;
+    justify-content: center;
+    margin: 5vh
+}
+
+.tableHead{
+    display: flex;
+    justify-content: space-around;
+}
+
+
+.btnContainer {
+    display: flex;
+    justify-content: center;
+}
+
+.btnPay {
+    width: 20vh;
+}

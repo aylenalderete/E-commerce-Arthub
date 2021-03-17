@@ -27,7 +27,7 @@ function App() {
       <Route path="/coleccion" exact component={Collection}></Route>
       <Route path="/ingresar" component={LogIn}></Route>
       <Route path="/registrarse" component={SignIn}></Route>
-      <Route exact path="/admindashboard" component={ArtistAdminDashboard}></Route>
+      <Route exact path="/tableroadmin" component={ArtistAdminDashboard}></Route>
       <Route exact path="/crearproducto" component= {CreateProduct}></Route> 
       <Route path="/artistas" exact component={Artists}></Route>
       <Route path="/editarproducto/:id" 
@@ -49,6 +49,8 @@ function App() {
       <Route path="/misproductos" component={ArtistsProducts}></Route>
       <Route path="/crearcategorias" component={CreateCategory}></Route>
       <Route path="/editarcategorias" component={EditCategory}></Route>
+
+
 
     </div>
   );
