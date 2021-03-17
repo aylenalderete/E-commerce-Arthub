@@ -1,0 +1,15 @@
+.mainContainer{
+    display: flex;
+    height: 100vh;
+
+}
+
+.formContainer{
+    align-self: center;
+    margin-left: 24%;
+
+}
+
+.formContainer h1 {
+    margin-left: 2%;
+}
