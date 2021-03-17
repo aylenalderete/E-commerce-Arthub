@@ -12,9 +12,11 @@ import showFilters from '../../Actions/showFilters';
 
 function Collection() {
 
-  const products = useSelector(state => state.products);
+  const search = useSelector(state => state.search);
   const isOpenFilters = useSelector(state => state.isOpenFilters)
   const filteredProducts = useSelector(state => state.filteredProducts)
+  const products = useSelector(state => state.products)
+
   const dispatch = useDispatch();
   const history = useHistory()
 
@@ -34,7 +36,25 @@ function Collection() {
   }
 
   function displayProducts(array) {
-    if (typeof array[0] === 'string') {
+
+
+    if (array === 'void') {
+      return (
+        <div>
+          <p>No encontramos ningún producto relacionado a tu búsqueda</p>
+          <p className={style.linkRefresh} onClick={handleRefresh}>Volver</p>
+        </div>
+      )
+    }
+    if (array === 'No products found') {
+      return (
+        <div>
+          <p>No encontramos ningún producto relacionado a tu búsqueda</p>
+          <p className={style.linkRefresh} onClick={handleRefresh}>Volver</p>
+        </div>
+      )
+    }
+    if (array === 'No categories found') {
       return (
         <div>
           <p>No existen productos para esta categoría</p>
@@ -42,6 +62,7 @@ function Collection() {
         </div>
       )
     }
+
     return array.map((piece) => {
       return (
         <ArtCard
@@ -56,27 +77,27 @@ function Collection() {
     })
   }
 
+  return (
+    <div className={style.mainContainer}>
+      <NavBar renderTop={false} />
+      <div className={style.secondContainer}>
+        {isOpenFilters === true ? <PopUp></PopUp> : <></>}
 
+        <div className={style.sbContainer}>
 
+          <button className={style.btnFilters} onClick={handleClick}>filtrar</button>
+          <SearchBar></SearchBar>
+        </div>
 
-return (
-  <div className={style.mainContainer}>
-    <NavBar renderTop={false} />
-    <div className={style.secondContainer}>
-      {isOpenFilters === true ? <PopUp></PopUp> : <></>}
-
-      <div className={style.sbContainer}>
-
-        <button className={style.btnFilters} onClick={handleClick}>filtrar</button>
-        <SearchBar></SearchBar>
-      </div>
-
-      <div className={style.container}>
-        {filteredProducts[0] ? displayProducts(filteredProducts) : displayProducts(products)}
+        <div className={style.container}>
+          {!filteredProducts[0] && !search[0] ? displayProducts(products) : <></>}
+          {filteredProducts[0] && search[0] ? displayProducts(search) : <></>}
+          {filteredProducts[0] && !search[0] ? displayProducts(filteredProducts) : <></>}
+          {!filteredProducts[0] && search[0] ? displayProducts(search) : <></>}
+        </div>
       </div>
     </div>
-  </div>
-);
+  );
 
 }
 export default Collection

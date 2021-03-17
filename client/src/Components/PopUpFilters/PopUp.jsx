@@ -4,12 +4,13 @@ import setFilters from '../../Actions/setFilters';
 import showFilters from '../../Actions/showFilters';
 import getUsersArtists from '../../Actions/getUsersArtists';
 import Styles from './popUp.module.css';
-import getUserProducts from '../../Actions/getUserProducts';
+import searchFilters from '../../Actions/searchFilters';
+
 
 
 import { connect } from 'react-redux';
 
-function Filters({ categories, getCategories, setFilters, showFilters, getUsersArtists, users, getUserProducts }) {
+function Filters({ categories, getCategories, setFilters, showFilters, getUsersArtists, search, searchFilters }) {
     //get all the categories once the component mounts
     useEffect(() => {
 
@@ -37,7 +38,12 @@ function Filters({ categories, getCategories, setFilters, showFilters, getUsersA
 
     const handleSubmit = (e) => {
          e.preventDefault();
-         setFilters(select.category);
+         if(search[0]){
+             console.log('entro componente')
+             searchFilters(select.category);
+         }
+         else{
+         setFilters(select.category);}
          showFilters(false);
          
          
@@ -63,7 +69,7 @@ function Filters({ categories, getCategories, setFilters, showFilters, getUsersA
 const mapStateToProps = (state) => {
     return {
         categories: state.categories,
-        users: state.users  
+        search: state.search
     }
 }
 
@@ -73,7 +79,8 @@ const mapDispatchToProps = (dispatch) => {
         setFilters: (category) => dispatch(setFilters(category)),
         showFilters: (condition) => dispatch(showFilters(condition)),
         getUsersArtists: () => dispatch(getUsersArtists()),
-        getUserProducts: (id) => dispatch(getUserProducts(id))
+        searchFilters: (category) => dispatch(searchFilters(category))
+        
     }
 }
 

@@ -194,7 +194,7 @@ server.get('/categorias/:nombrecat', (req, res) => {
 			if (products.length > 0) {
 				res.json(products)
 			} else {
-				res.json('No products found')
+				res.json('No categories found')
 			}
 		})
 		.catch(err => {

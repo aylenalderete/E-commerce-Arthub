@@ -3,8 +3,9 @@ import { connect } from 'react-redux';
 import Styles from './searchBar.module.css';
 import SearchIcon from '../../Images/search.svg';
 import getProductsByName from '../../Actions/getActions';
+import searchFilters from '../../Actions/searchFilters';
 
-function SearchBar({getProductsByName}) {
+function SearchBar({getProductsByName, search , searchFilters}) {
 
     //hooks
     const [input, setInput] = useState('');
@@ -19,7 +20,12 @@ function SearchBar({getProductsByName}) {
 
     function handleSubmit(e){
         e.preventDefault();
-        getProductsByName(input);
+
+        if (!search[0]){
+        getProductsByName(input);}
+        else{
+            searchFilters(input)
+        }
     }
     
 
@@ -35,12 +41,18 @@ function SearchBar({getProductsByName}) {
     )
 }
 
-
-const mapDispatchToProps = (dispatch) => {
+const mapStateToProps = (state) => {
     return {
-        getProductsByName: search => dispatch(getProductsByName(search))
+        search: state.search
     }
 }
 
-export default connect(null, mapDispatchToProps)(SearchBar);
+const mapDispatchToProps = (dispatch) => {
+    return {
+        getProductsByName: search => dispatch(getProductsByName(search)),
+        searchFilters: category => dispatch(searchFilters(category))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SearchBar);
 

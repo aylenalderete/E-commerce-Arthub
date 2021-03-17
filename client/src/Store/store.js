@@ -8,14 +8,13 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 // estado inicial 
 const initialState = {
     products: [],
+    search:[],
     urlImages: [],
     categories: [],
     isOpenFilters: false,
-    // users: [],
     filteredProducts: [],
     usersArtists : [],
-    artistsProducts: []
-
+    artistsProducts: [],
 
 }
 
@@ -26,9 +25,17 @@ const reducer = function (state = initialState, action) {
         //aca crear los switch cases de cada action
 
         case "GET_PRODUCTS":
+            
+            
+            if ( state.filteredProducts.length>0 && !state.search[0]){
+               return{
+                   ...state, 
+                   filteredProducts: action.payload
+               }
+            }
             return {
                 ...state,
-                products: action.payload,
+                search: action.payload,
             };
 
         case "GET_INITIAL_PRODUCTS":
@@ -94,6 +101,15 @@ const reducer = function (state = initialState, action) {
             return{
                 ...state,
                 urlImages: []
+            }
+        case 'SEARCH_FILTERS':
+            let searchF = state.search.filter(f => f.categories.find(x => x.name === action.payload))
+            if (!searchF[0]){
+                searchF = 'void'
+            }
+            return{
+                 ...state,
+                 search: searchF
             }
 
 
