@@ -17,6 +17,7 @@ import ArtistsProducts from './Views/ArtistsProducts/ArtistsProducts.jsx';
 import CreateCategory from './Views/CreateCategory/CreateCategory.jsx';
 import EditProduct from './Components/EditProduct/EditProduct.jsx';
 import EditCategory from './Views/EditCategories/EditCategories.jsx';
+import AllCategories from './Views/AllCategories/AllCategories';
 
 
 function App() {
