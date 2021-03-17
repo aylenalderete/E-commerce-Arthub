@@ -24,8 +24,7 @@
     width:50%;
     flex-direction: column;
     align-self: flex-start;
-    margin-left: 40px;
-    margin-top:10px;
+   
     justify-content: center;
 }
 
@@ -33,9 +32,7 @@
     display: flex;
     justify-content: flex-end;
     width:50%;
-    margin-right: 40px;
-    margin-top:10px;
-    margin-bottom: 10px;
+    
     
 }
 
@@ -67,4 +64,16 @@
     width:30%;
     font-size: 1rem;
     justify-content: flex-end;
+}
+.categories{
+    width:90%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    height: auto;
+    border-top: 1px solid white;
+    margin:50px;
+}
+.title{
+    font-size:2rem;
 }

@@ -16,6 +16,7 @@ const initialState = {
     usersArtists : [],
     artistsProducts: [],
     isActiveFilters: false,
+    carouselActive: 1,
 
 }
 
@@ -118,6 +119,33 @@ const reducer = function (state = initialState, action) {
                 ...state,
                 isActiveFilters: action.payload
             }
+        case 'MOVE_CAROUSEL':
+            if(action.payload === 'next' && state.carouselActive < 3){
+                  return{
+                      ...state,
+                      carouselActive: state.carouselActive + 1
+                  }
+            } 
+            
+            if(action.payload === 'prev' && state.carouselActive > 1){
+                return{
+                    ...state,
+                   carouselActive: state.carouselActive - 1           
+                }
+          } 
+           if (action.payload === 'next' && state.carouselActive === 3){
+               return{
+                   ...state, 
+                   carouselActive: 1
+               }
+           }
+           
+           if (action.payload === 'prev' && state.carouselActive === 1){
+            return{
+                ...state, 
+                carouselActive: 3
+            }
+        }
 
 
 
