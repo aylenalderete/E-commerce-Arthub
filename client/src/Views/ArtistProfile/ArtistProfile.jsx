@@ -15,7 +15,7 @@ function ArtistProfile({ artistId }) {
 
     useEffect(() => {
         axios
-            .get(`http://localhost:3001/user/${artistId}`)
+            .get(`http://localhost:3001/users/${artistId}`)
             .then((result) => setArtistDetails(result.data[0]));
     }, [])
 
