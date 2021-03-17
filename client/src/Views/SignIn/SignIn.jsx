@@ -59,7 +59,7 @@ function SignIn() {
                             value={input.password}
                             name="password"
                             onChange={handleChange}
-                            placeholder="Contraseña"
+                            placeholder="Contraseña (debe contener por lo menos una mayuscula y un numero)"
                             required
                         />
                         <input
@@ -116,7 +116,7 @@ function SignIn() {
                             required
                         />
                         <label for="type">comprador</label>
-                        <input type="submit" value='Crear' />
+                        <input className={Styles.btn} type="submit" value='Crear' />
                     </form>
                 </div>
             </div>
