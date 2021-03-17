@@ -2,58 +2,53 @@ const { DataTypes } = require("sequelize");
 // Exportamos una funcion que define el modelo
 // Luego le injectamos la conexion a sequelize.
 
-//CAMBIO REALIZADO POR ANDRES
 module.exports = (sequelize) => {
     // defino el modelo
-    sequelize.define(
-        "user",
-        {
-            username: {
-                type: DataTypes.STRING,
-                allowNull: false,
-                unique: true,
-            },
-            name: {
-                type: DataTypes.STRING,
-                allowNull: false,
-            },
-            lastname: {
-                type: DataTypes.STRING,
-                allowNull: false,
-            },
-            email: {
-                type: DataTypes.STRING,
-                allowNull: false,
-                unique: true,
-                validate: {
-                    isEmail: true,
-                },
-            },
-            password: {
-                type: DataTypes.STRING,
-                allowNull: false,
-                validate: {
-                    is: {
-                        args: [
-                            "(?=.*[a-z])(?=.*[A-Z])(?=.*d)(?=.*[-+_!@#$%^&*.,?]).+",
-                        ],
-                        msg:
-                            "La contraseña debe contener al menos una mayúscula, minúscula, número y carácter especial",
-                    },
-                },
-            },
-            birth: {
-                type: DataTypes.INTEGER,
-                allowNull: false,
-            },
-            type: {
-                type: DataTypes.STRING,
-                allowNull: false,
-            },
-            state: {
-                type: DataTypes.STRING,
-            },
+    sequelize.define("user", {
+        username: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            unique: true,
         },
-        { timestamps: false }
-    );
+        name: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
+        lastname: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
+        email: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            unique: true,
+            validate: {
+                isEmail: true
+            }
+        },
+        password: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            validate: {
+                is: {
+                    args: ["(?=.*[0-9])(?=.*[0-9])"],
+                    msg: "Password must contain at least 1 uppercase alphabetical character and 1 numeric character"
+                }
+            }
+        },
+        birth: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+        },
+        type: {
+            type: DataTypes.ENUM(['artist', 'user', 'admin']),
+            allowNull: false,
+        },
+        state: {
+            type: DataTypes.ENUM(['approved', 'rejected', 'pending']),
+            allowNull: false
+        }
+    }, {
+        timestamps: false
+    });
 };
