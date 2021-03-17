@@ -37,7 +37,7 @@ module.exports = (sequelize) => {
             }
         },
         birth: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.STRING,
             allowNull: false,
         },
         type: {

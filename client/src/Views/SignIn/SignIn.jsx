@@ -2,6 +2,7 @@ import React from 'react'
 import NavBar from '../../Components/NavBar/NavBar'
 import Styles from "./Signin.module.css";
 import { useState } from 'react';
+import axios from 'axios';
 
 function SignIn() {
 
@@ -15,12 +16,25 @@ function SignIn() {
         type: ""
     });
 
-    function handleChange(){
-
+    function handleChange(e) {
+        const { name, value } = e.target;
+        setInput({
+            ...input,
+            [name]: value
+        });
     }
 
-    function handleSubmit(){
-        
+    function handleSubmit(e) {
+        e.preventDefault();
+        axios.post(`http://localhost:3001/users`,  input )
+            .then((res) => {
+                alert("Cuenta registrada");
+                console.log(res.data);
+            })
+            .catch((error) => {
+                alert("No se pudo crear la cuenta");
+                console.log(error);
+            });
     }
 
     return (
@@ -79,17 +93,30 @@ function SignIn() {
                             onChange={handleChange}
                             placeholder="Fecha de nacimiento"
                             type='date'
-                            required                          
+                            required
                         />
                         <input
                             className={Styles.input}
-                            value={input.birth}
-                            name="birth"
+                            id="type"
+                            name="type"
                             onChange={handleChange}
-                            placeholder="Fecha de nacimiento"
-                            type='radio'
-                            required                          
+                            value="artist"
+                            type="radio"
+                            required
                         />
+                        <label for="type">artista</label>
+
+                        <input
+                            className={Styles.input}
+                            id="type"
+                            name="type"
+                            onChange={handleChange}
+                            value="user"
+                            type="radio"
+                            required
+                        />
+                        <label for="type">comprador</label>
+                        <input type="submit" value='Crear' />
                     </form>
                 </div>
             </div>
