@@ -26,7 +26,7 @@ function SignIn() {
 
     function handleSubmit(e) {
         e.preventDefault();
-        axios.post(`http://localhost:3001/users`,  input )
+        axios.post(`http://localhost:3001/users`, input)
             .then((res) => {
                 alert("Cuenta registrada");
                 console.log(res.data);
@@ -87,7 +87,7 @@ function SignIn() {
                             required
                         />
                         <input
-                            className={Styles.input}
+                            className={Styles.date}
                             value={input.birth}
                             name="birth"
                             onChange={handleChange}
@@ -95,27 +95,34 @@ function SignIn() {
                             type='date'
                             required
                         />
-                        <input
-                            className={Styles.input}
-                            id="type"
-                            name="type"
-                            onChange={handleChange}
-                            value="artist"
-                            type="radio"
-                            required
-                        />
-                        <label for="type">artista</label>
+                        <div className={Styles.contRadio}>
+                            <div className={Styles.radio}>
+                                <input
+                                    // className={Styles.input}
+                                    id="type"
+                                    name="type"
+                                    onChange={handleChange}
+                                    value="artist"
+                                    type="radio"
+                                    required
+                                />
+                                <label for="type">artista</label>
+                            </div>
 
-                        <input
-                            className={Styles.input}
-                            id="type"
-                            name="type"
-                            onChange={handleChange}
-                            value="user"
-                            type="radio"
-                            required
-                        />
-                        <label for="type">comprador</label>
+                            <div className={Styles.radio}>
+                                <input
+                                    // className={Styles.input}
+                                    id="type"
+                                    name="type"
+                                    onChange={handleChange}
+                                    value="user"
+                                    type="radio"
+                                    required
+                                />
+                                <label for="type">comprador</label>
+                            </div>
+                        </div>
+
                         <input className={Styles.btn} type="submit" value='Crear' />
                     </form>
                 </div>
