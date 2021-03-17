@@ -3,19 +3,21 @@ import { Link } from "react-router-dom"
 import React, { useState, useEffect } from 'react'
 import NavBar from "../../Components/NavBar/NavBar"
 import Styles from "./AllCategories.module.css"
+import getCategories from '../../Actions/filter'
+import {useSelector, useDispatch} from 'react-redux'
+import DeleteCategories from '../../Components/DeleteCategories/DeleteCategories.jsx'
+
 
 function AllCategories() {
-    const [AllCategories, setAllCategories] = useState([])
+    const categories = useSelector(state => state.categories)
+
+    const dispatch = useDispatch()
 
     useEffect(() => {
-        axios.get('http://localhost:3001/products/category')
-        .then((res) => {
-            setAllCategories(res.data)
-        })
-        .catch((error) => {
-            console.log(error)
-        })
-    }, [])
+
+        dispatch(getCategories());
+
+    }, []);
 
     return (
         <div className={Styles.mainContainer}>
@@ -28,12 +30,17 @@ function AllCategories() {
                         </th>
                     </tr>
                     {
-                        AllCategories.map((p) => (
+                        categories.map((p) => (
                         <tr className={Styles.tr}>
                             <td>{p.name}</td>
+                            <td>{p.description}</td>
                             <th className={Styles.th}>
-                                <Link to="/editarcategorias"><button className={Styles.btn}>Editar</button></Link>
-                                <button className={Styles.btn}>Eliminar</button>
+                                <Link to={`/editarcategorias/${p.id}`}>
+                                    <button className={Styles.btn}>Editar</button>
+                                </Link>
+                                <Link to={`/eliminarcategorias/${p.id}`}>    
+                                    <button className={Styles.btn}>Eliminar</button>
+                                </Link>
                             </th>
                         </tr>
                         ))                        
