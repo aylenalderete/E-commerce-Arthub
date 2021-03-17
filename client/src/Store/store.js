@@ -15,6 +15,7 @@ const initialState = {
     filteredProducts: [],
     usersArtists : [],
     artistsProducts: [],
+    isActiveFilters: false,
 
 }
 
@@ -110,6 +111,12 @@ const reducer = function (state = initialState, action) {
             return{
                  ...state,
                  search: searchF
+            }
+
+        case 'ACTIVE_FILTERS':
+            return{
+                ...state,
+                isActiveFilters: action.payload
             }
 
 
