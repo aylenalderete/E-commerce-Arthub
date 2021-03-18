@@ -1,7 +1,7 @@
 .container{
     display: flex;
     flex-direction: row;
-    margin-top: 15%;
+    margin-top: 20px;
     height: auto;
     flex-wrap: wrap;
     justify-content: space-around;
@@ -23,6 +23,7 @@
 .secondContainer{
     display: flex;
     flex-direction: column;
+    
     width: 100%;
 }
 
