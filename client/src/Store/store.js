@@ -17,6 +17,8 @@ const initialState = {
     artistsProducts: [],
     isActiveFilters: false,
     carouselActive: 1,
+    isOpenCategory: false,
+    isOpenDeleteCat: false,
 
 }
 
@@ -147,6 +149,17 @@ const reducer = function (state = initialState, action) {
             }
         }
 
+        case 'POP_UP_CATEGORY' :
+            return{
+                ...state,
+                isOpenCategory: action.payload
+            }
+
+        case 'POP_UP_DELETE_CATEGORY' :
+            return{
+                ...state,
+                isOpenDeleteCat: action.payload
+            }
 
 
         default:

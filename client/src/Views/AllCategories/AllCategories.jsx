@@ -6,6 +6,10 @@ import Styles from "./AllCategories.module.css"
 import getCategories from '../../Actions/filter'
 import {useSelector, useDispatch} from 'react-redux'
 import DeleteCategories from '../../Components/DeleteCategories/DeleteCategories.jsx'
+import opencategory from '../../Actions/opencategory'
+import PopUp from '../../Components/EditCategories/EditCategories.jsx'
+import deletecategory from '../../Actions/deletecategory'
+
 
 
 function AllCategories() {
@@ -13,16 +17,34 @@ function AllCategories() {
 
     const dispatch = useDispatch()
 
+    const isOpenCategory = useSelector(state => state.isOpenCategory)
+
+    const isOpenDeleteCat = useSelector(state => state.isOpenDeleteCat)
+
+    const [categoryId, setCategoryId] = useState()
+
     useEffect(() => {
 
         dispatch(getCategories());
 
     }, []);
 
+    function handleClick(id){
+        isOpenCategory === false ? dispatch(opencategory(true)) : dispatch(opencategory(false));
+        setCategoryId(id)
+    }
+
+    function handleDeleteClick(id){
+        isOpenDeleteCat === false ? dispatch(deletecategory(true)) : dispatch(deletecategory(false));
+        setCategoryId(id)
+    }
+
     return (
         <div className={Styles.mainContainer}>
             <NavBar renderTop={false} />
             <div className={Styles.container}>
+                {isOpenCategory === true && <PopUp categoryId = {categoryId} />}
+                {isOpenDeleteCat === true && <DeleteCategories category = {categoryId} />}
                 <table className={Styles.table}>
                     <tr>
                         <th className={Styles.th}>Categorías:</th>
@@ -35,12 +57,10 @@ function AllCategories() {
                             <td>{p.name}</td>
                             <td>{p.description}</td>
                             <th className={Styles.th}>
-                                <Link to={`/editarcategorias/${p.id}`}>
-                                    <button className={Styles.btn}>Editar</button>
-                                </Link>
-                                <Link to={`/eliminarcategorias/${p.id}`}>    
-                                    <button className={Styles.btn}>Eliminar</button>
-                                </Link>
+
+                                <button className={Styles.btn} onClick ={() => handleClick(p.id)}>Editar</button>
+
+                                <button className={Styles.btn} onClick ={() => handleDeleteClick(p)}>Eliminar</button>
                             </th>
                         </tr>
                         ))                        
