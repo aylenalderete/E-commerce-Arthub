@@ -20,11 +20,9 @@ import EditProduct from './Components/EditProduct/EditProduct.jsx';
 
 
 
-import EditCategory from './Views/EditCategories/EditCategories.jsx';
 import signInUsers from './Actions/signInUsers';
 import {useDispatch} from 'react-redux'
 import AllCategories from './Views/AllCategories/AllCategories';
-import PopUpDeleteCategory from './Views/DeleteCategories/PopUpDeleteCategory.jsx';
 import Carrito from './Components/PopUpTrolley/PopUpTrolley.jsx';
 
 
