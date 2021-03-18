@@ -21,15 +21,31 @@ const initialState = {
     artistsProducts: [],
     //carousel states
     isActiveFilters: false,
+
+    userData: {
+        id: 0,
+        username: "",
+        name: "",
+        lastname: "",
+        email: "",
+        birth: "",
+        type: "",
+        state: ""
+    
+    },
+   
+
     carouselActive: 1,
     //log states
     isUserLogged: false,
+
 
 }
 
 //reducer 
 const reducer = function (state = initialState, action) {
     switch (action.type) {
+
 
         //aca crear los switch cases de cada action
 
@@ -125,6 +141,24 @@ const reducer = function (state = initialState, action) {
                 isActiveFilters: action.payload
             }
 
+        case "SIGN_IN":
+        if (action.payload.auth === true)
+          return {
+            ...state,
+            userData: action.payload.user,
+            
+          };
+        else
+          return {
+            ...state,
+          };
+         case "SIGN_IN_REFRESH":
+         return {
+            ...state,
+            userData: action.payload,
+            
+
+          }
         case 'MOVE_CAROUSEL':
             if (action.payload === 'next' && state.carouselActive < 3) {
                 return {
@@ -162,6 +196,7 @@ const reducer = function (state = initialState, action) {
 
         default:
             return state;
+
 
     }
 }

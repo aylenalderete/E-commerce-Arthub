@@ -1,4 +1,8 @@
-const server = require("express").Router();
+
+const server = require('express').Router();
+const jwt = require('jsonwebtoken')
+const verifyToken = require('./verifyToken')
+
 const {
 	User,
 	Category,
@@ -7,6 +11,7 @@ const {
 	Lineorder,
 	Product,
 } = require("../db.js");
+
 
 // 1: Get all users
 // No password
@@ -17,6 +22,7 @@ server.get("/", (req, res) => {
 			"username",
 			"name",
 			"lastname",
+			"profilepic",
 			"birth",
 			"email",
 			"type",
@@ -33,6 +39,7 @@ server.post("/", async function (req, res) {
 		username,
 		name,
 		lastname,
+		profilepic,
 		email,
 		password,
 		birth,
@@ -56,11 +63,19 @@ server.post("/", async function (req, res) {
 			username,
 			name,
 			lastname,
+			profilepic,
 			email,
 			password,
 			birth,
 			type,
 			state: newState,
+		}).then((newuser) => {
+			const token = jwt.sign({ id: newuser.id }, "secret_key", {
+				expiresIn: 60 * 60 * 24,
+			});
+			let obj = { user: newuser, auth: true, token };
+			console.log(obj)
+			res.json(obj);
 		});
 		// const img = images.map(url => ({ url }))
 		// const userImage = await Image.bulkCreate(img)
@@ -84,6 +99,7 @@ server.get("/:id", (req, res) => {
 			"username",
 			"name",
 			"lastname",
+			"profilepic",
 			"birth",
 			"email",
 			"type",
@@ -104,6 +120,7 @@ server.put("/:id", async (req, res) => {
 				username: req.body.username,
 				name: req.body.name,
 				lastname: req.body.lastname,
+				profilepic: req.body.profilepic,
 				email: req.body.email,
 				birth: req.body.birth,
 				type: req.body.type,
@@ -182,6 +199,11 @@ server.post("/:idUser/cart", async (req, res) => {
 	const { idUser: userId } = req.params;
 	const { productId, quantity } = req.body;
 
+
+
+
+
+
 	try {
 		//Chequeamos que el usuario exista por ID para avisar en caso contrario
 		const userExists = await User.findByPk(userId);
@@ -241,6 +263,55 @@ server.put("/:idUser/cart", async (req, res) => {
 	}
 });
 
+server.post('/signin/algo', (req, res, next) => {
+
+	const { username, password } = req.body;
+
+	User.findOne({
+		where: { username: username } //Verify if username is correct
+	})
+		.then(user => {
+			if (user) {
+				if (user.password === password) { //Verify if password is correct
+
+					//create token
+					let token = jwt.sign({ id: user.id }, 'secret_key', {
+						expiresIn: 60 * 60 * 24
+					})
+					user.password = '';
+					res.json({
+						user: user,
+						auth: true,
+						token
+					})
+				} else {
+					res.json('incorrect password')
+				}
+			} else {
+				res.json('user does not exist')
+			}
+		})
+		.catch(err => {
+			console.log(err)
+			res.json(err)
+		})
+
+})
+
+server.post("/userdata/token", verifyToken, (req, res, next) => {
+
+	User.findByPk(req.userId)
+		.then((user) => {
+			user.password = 0;
+			res.json(user);
+		})
+		.catch((err) => {
+			console.log(err);
+			res.json(err);
+		});
+
+})
+
 // 9: Retorna todas las ordenes de usuario (id) pasado por params 
 server.get("/:id/orders", async (req, res) => {
 	const { id } = req.params;
@@ -265,6 +336,8 @@ server.get("/:id/orders", async (req, res) => {
 			res.json(err);
 		};
 	}
+
 });
 
 module.exports = server;
+

@@ -1,4 +1,5 @@
-import React from 'react';
+import React, {useEffect} from 'react';
+import axios from 'axios'
 import './App.css';
 import {Route} from 'react-router-dom'
 import Home from './Views/Home/Home.jsx';
@@ -17,11 +18,36 @@ import ArtistsProducts from './Views/ArtistsProducts/ArtistsProducts.jsx';
 import CreateCategory from './Views/CreateCategory/CreateCategory.jsx';
 import EditProduct from './Components/EditProduct/EditProduct.jsx';
 import EditCategory from './Views/EditCategories/EditCategories.jsx';
+import signInUsers from './Actions/signInUsers';
+import {useDispatch} from 'react-redux'
 import AllCategories from './Views/AllCategories/AllCategories';
 import PopUpDeleteCategory from './Views/DeleteCategories/PopUpDeleteCategory.jsx';
 import Carrito from './Components/PopUpTrolley/PopUpTrolley.jsx';
 
+
 function App() {
+  const dispatch = useDispatch();
+useEffect(() => {
+  var token = localStorage.getItem('token')
+    async function request(){
+    if(!localStorage.getItem('token')){
+      return
+    }
+    else {
+     axios
+        .post("http://localhost:3001/users/userdata/token", {
+          headers: {
+            "Authorization": `${token}`,
+          },
+        })
+        .then((result) => dispatch(signInUsers(result.data)));
+    }
+
+  }
+  request()
+}, [])
+
+
   return (
     <div >
       <Route exact path="/" component={Home}></Route>
