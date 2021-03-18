@@ -35,6 +35,10 @@ const initialState = {
     },
 
     carouselActive: 1,
+
+    isOpenCategory: false,
+    isOpenDeleteCat: false,
+
     //log states
     isUserLogged: false,
 
@@ -165,6 +169,9 @@ const reducer = function (state = initialState, action) {
                 }
             }
 
+
+       
+
             if (action.payload === 'prev' && state.carouselActive > 1) {
                 return {
                     ...state,
@@ -189,7 +196,19 @@ const reducer = function (state = initialState, action) {
         case 'IS_USER_LOGGED':
             return {
                 ...state,
-                isUserLogged: action.payload
+                isUserLogged: action.payload}
+
+              
+               case 'POP_UP_CATEGORY' :
+            return{
+                ...state,
+                isOpenCategory: action.payload
+            }
+
+        case 'POP_UP_DELETE_CATEGORY' :
+            return{
+                ...state,
+                isOpenDeleteCat: action.payload
             }
 
 
