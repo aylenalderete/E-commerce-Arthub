@@ -36,6 +36,15 @@
     color: white;
     letter-spacing: -0.06em;
 }
+.cerrarSesion{
+    font-size: 1.5rem;
+    font-family: 'Amiko', sans-serif;
+    font-weight: 600;
+    color: white;
+    letter-spacing: -0.06em;
+    cursor: pointer;
+
+}
 
 
 .line {
