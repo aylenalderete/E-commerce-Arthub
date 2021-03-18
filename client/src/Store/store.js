@@ -31,14 +31,12 @@ const initialState = {
         birth: "",
         type: "",
         state: ""
-    
+
     },
-   
 
     carouselActive: 1,
     //log states
     isUserLogged: false,
-
 
 }
 
@@ -142,23 +140,23 @@ const reducer = function (state = initialState, action) {
             }
 
         case "SIGN_IN":
-        if (action.payload.auth === true)
-          return {
-            ...state,
-            userData: action.payload.user,
-            
-          };
-        else
-          return {
-            ...state,
-          };
-         case "SIGN_IN_REFRESH":
-         return {
-            ...state,
-            userData: action.payload,
-            
+            if (action.payload.auth === true)
+                return {
+                    ...state,
+                    userData: action.payload.user,
 
-          }
+                };
+            else
+                return {
+                    ...state,
+                };
+
+        case "SIGN_IN_REFRESH":
+            return {
+                ...state,
+                userData: action.payload,
+            }
+
         case 'MOVE_CAROUSEL':
             if (action.payload === 'next' && state.carouselActive < 3) {
                 return {
@@ -173,6 +171,7 @@ const reducer = function (state = initialState, action) {
                     carouselActive: state.carouselActive - 1
                 }
             }
+
             if (action.payload === 'next' && state.carouselActive === 3) {
                 return {
                     ...state,
