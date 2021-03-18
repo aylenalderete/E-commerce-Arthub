@@ -6,6 +6,7 @@
     width:30%;  
     margin-bottom: 50px;
     border:1px solid white;
+    height: auto;
    
     
 }
@@ -30,5 +31,15 @@
     width: 18vmax;
     height: 25vmax;
     margin-top:40px;
+    
+}
+
+.btn{
+    background-color: transparent;
+    border: 1px solid white;
+    text-decoration: none;
+    margin:40px;
+    line-height: 2em;
+    
     
 }
