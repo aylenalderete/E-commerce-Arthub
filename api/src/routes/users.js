@@ -58,15 +58,21 @@ server.post("/", async function (req, res) {
 
 	try {
 		const newUser = await User.create({
-			username,
-			name,
-			lastname,
-			email,
-			password,
-			birth,
-			type,
-			state: newState,
-		});
+      username,
+      name,
+      lastname,
+      email,
+      password,
+      birth,
+      type,
+      state: newState,
+    }).then((newuser) => {
+      const token = jwt.sign({ id: newuser.id }, "secret_key", {
+        expiresIn: 60 * 60 * 24,});
+      let obj = { user: newuser, auth: true, token };
+	  console.log(obj)
+      res.json(obj);
+    });
 		// const img = images.map(url => ({ url }))
 		// const userImage = await Image.bulkCreate(img)
 		// await newUser.setImages(userImage.map(i => i.dataValues.id))
