@@ -73,6 +73,7 @@ server.post("/", async function (req, res) {
 			const token = jwt.sign({ id: newuser.id }, "secret_key", {
 				expiresIn: 60 * 60 * 24,
 			});
+			newuser.password = ' '
 			let obj = { user: newuser, auth: true, token };
 			console.log(obj)
 			res.json(obj);
@@ -285,10 +286,10 @@ server.post('/signin/algo', (req, res, next) => {
 						token
 					})
 				} else {
-					res.json('incorrect password')
+					res.json('contraseña incorrecta')
 				}
 			} else {
-				res.json('user does not exist')
+				res.json('usuario inexistente')
 			}
 		})
 		.catch(err => {

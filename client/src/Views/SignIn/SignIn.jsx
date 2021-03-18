@@ -3,9 +3,14 @@ import NavBar from '../../Components/NavBar/NavBar'
 import Styles from "./Signin.module.css";
 import { useState } from 'react';
 import axios from 'axios';
+import signInUsers from '../../Actions/signInUsers'
+import {useDispatch} from 'react-redux'
+import {Redirect} from 'react-router-dom'
 
 function SignIn() {
 
+    const dispatch = useDispatch();
+    const [redirect, setRedirect] = useState(false);
     const [input, setInput] = useState({
         username: "",
         password: "",
@@ -28,14 +33,21 @@ function SignIn() {
         e.preventDefault();
         axios.post(`http://localhost:3001/users`, input)
             .then((res) => {
+                
+                dispatch(signInUsers(res.data.user))
                 alert("Cuenta registrada");
-                console.log(res.data);
+                console.log(res)
+                if(res.data.auth === true){
+                    localStorage.setItem('token', res.data.token)
+                    setRedirect(true)
+                };
             })
             .catch((error) => {
                 alert("No se pudo crear la cuenta");
                 console.log(error);
             });
     }
+    if(redirect) return <Redirect to="/coleccion"></Redirect>
 
     return (
         <div className={Styles.navBaralign}>
@@ -55,6 +67,7 @@ function SignIn() {
                             required
                         />
                         <input
+                            type="password"
                             className={Styles.input}
                             value={input.password}
                             name="password"

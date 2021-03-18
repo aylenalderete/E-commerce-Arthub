@@ -96,12 +96,21 @@ const reducer = function (state = initialState, action) {
                 isOpenFilters: action.payload
             }
 
-        // case 'GET_USERS_ARTISTS':
+        case 'SIGN_OUT':
 
-        //     return {
-        //         ...state,
-        //         users: action.payload
-        //     }
+            return {
+              ...state,
+              userData: {
+                id: 0,
+                username: "",
+                name: "",
+                lastname: "",
+                email: "",
+                birth: "",
+                type: "",
+                state: "",
+              }
+            };
 
         case 'GET_USER_PRODUCTS':
             return {
