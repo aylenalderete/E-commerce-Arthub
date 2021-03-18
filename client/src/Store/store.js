@@ -35,12 +35,15 @@ const initialState = {
     },
 
     carouselActive: 1,
-
+    //PopUp categories states
     isOpenCategory: false,
     isOpenDeleteCat: false,
 
     //log states
     isUserLogged: false,
+
+    //Delete product state
+    isOpenDeleteProd: false
 
 }
 
@@ -210,6 +213,12 @@ const reducer = function (state = initialState, action) {
                 ...state,
                 isOpenDeleteCat: action.payload
             }
+        case 'POP_UP_DELETE_PRODUCT' :
+            return{
+                ...state,
+                isOpenDeleteProd: action.payload
+            }
+
 
 
         default:

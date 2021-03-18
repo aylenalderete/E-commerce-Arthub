@@ -43,7 +43,7 @@ function EditCategories(props) {
                 })
             })
             .then((res) => res.json())
-            .then(response => alert('Categoria editada'))
+            .then(response => props.flag(true))
 
         } catch (error) {
             console.log(error);
