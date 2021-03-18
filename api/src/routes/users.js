@@ -1,5 +1,7 @@
 const server = require('express').Router();
 const { User, Category, Image } = require('../db.js');
+const jwt = require('jsonwebtoken')
+const verifyToken = require('./verifyToken')
 
 // 1: Get all users
 // No password 
@@ -89,4 +91,52 @@ server.put('/:id', async (req, res) => {
 	}
 });
 
+//Post singin	#################################################
+
+server.post('/signin/algo', (req, res, next) => {
+
+	const {username,password} = req.body;
+
+	User.findOne({
+		where:{username:username } //Verify if username is correct
+		})
+		.then(user => {
+			if(user){
+				if(user.password === password){ //Verify if password is correct
+
+					//create token
+					let token = jwt.sign({id:user.id},'secret_key',{
+						expiresIn:60 * 60 * 24
+					})
+					user.password = '';
+					res.json({user: user,
+						      auth: true, 
+						      token})
+				}else{
+					res.json('incorrect password')
+				}
+			}else{
+				res.json('user does not exist')
+			}
+		})
+		.catch(err => {
+			console.log(err)
+			res.json(err)
+		})
+
+})
+
+server.post("/userdata/token", verifyToken, (req, res, next) => {
+
+  User.findByPk(req.userId)
+    .then((user) => {
+      user.password = 0;
+      res.json(user);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.json(err);
+    });
+
+});
 module.exports = server;
