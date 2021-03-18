@@ -25,9 +25,18 @@ function ArtCard({ name, pic, artist, id, idArtist, admin, price, stock }) {
           <Link className={style.linksA} to={`/artistas/${idArtist}`}>
             <h5 className={style.text}>{artist}</h5>
           </Link>
-          <Link className={style.linksA} to='/carrito'>
+          {
+            stock === 0 &&
+          <Link className={style.linksA} onClick={() => alert("Producto no disponible")}>
             <p className={style.btn}>Añadir al carrito</p>
           </Link>
+          }
+          {
+            stock > 0 &&
+            <Link className={style.linksA} to='/carrito'>
+              <p className={style.btn}>Añadir al carrito</p>
+            </Link>
+          }
         </div>
       </div>
     );
