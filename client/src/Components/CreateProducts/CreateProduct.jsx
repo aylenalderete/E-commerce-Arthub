@@ -24,7 +24,7 @@ export const validate = (product) => {
     let errors = {};
     if (!product.title) {
         errors.title = 'el título es obligatorio';
-    }else if(product.title.length > 40){
+    } else if (product.title.length > 40) {
         errors.title = 'el título debe tener menos de 40 caracteres';
 
     }
@@ -33,21 +33,26 @@ export const validate = (product) => {
         errors.description = 'la descripción es obligatoria';
     }
 
-    if (!product.price) {   
+    if (!product.price) {
         errors.price = 'el precio es obligatorio';
-    }else if(!/^\d+(\.\d+)?$/.test(product.price)){
+    } else if (!/^\d+(\.\d+)?$/.test(product.price)) {
         errors.price = 'el precio es invalido';
     }
 
     if (!product.stock) {
         errors.stock = 'el stock es obligatorio';
-    }else if(!/((\+|-)?([0-9]+)(\.[0-9]+)?)|((\+|-)?\.?[0-9]+)/.test(product.price)){
-        errors.price = 'el precio es invalido';
+    } else if (!/^\d+$/.test(product.stock)) {
+        errors.stock = 'el stock es invalido';
     }
 
+    if (product.categories.length === 0) {
+        errors.categories = 'debe seleccionar por lo menos una categoria';
+    }
 
+    // if (urlImages.length === 0) {
+    //     errors.images = 'debe cargar por lo menos una imagen'
+    // }
     return errors;
-
 };
 
 function CreateProduct(props) {
@@ -59,6 +64,7 @@ function CreateProduct(props) {
         categories: [],
     });
     const [errors, setErrors] = useState({});
+    const [touched, setTouched] = useState({});
 
     const { urlImages } = useSelector((state) => state);
     //carga de imagenes
@@ -121,16 +127,24 @@ function CreateProduct(props) {
         }));
     };
 
+    function onFocus(ev) {
+        setTouched({
+            ...touched,
+            [ev.target.name]: true
+        })
+    }
+
     const sendProduct = () => {
         // console.log(product, urlImages);
-        if (product.title.length >= 40) {
-            alert('El titulo no puede tener mas de 40 caracteres');
+        // if (product.title.length >= 40) {
+        //     alert('El titulo no puede tener mas de 40 caracteres');
+        // }
+        if (product.categories.length === 0) {
+            alert('Debe seleccionar por lo menos una categoria');
         }
         else if (urlImages.length === 0) {
             alert('Debe agregar por lo menos una imagen');
 
-        } else if (product.categories.length === 0) {
-            alert('Debe agregar por lo menos una categoria');
         } else {
 
             axios
@@ -166,6 +180,10 @@ function CreateProduct(props) {
 
     function handleChangeCat(ev) {
         setSelectedCat(ev.target.value);
+        setErrors(validate({
+            ...product,
+            [ev.target.name]: ev.target.value
+        }));
     }
 
     function handleSubmitCat(ev) {
@@ -210,9 +228,10 @@ function CreateProduct(props) {
                                 onChange={handleChangeCat}
                                 name="categories"
                                 value={selectedCat}
-                            >
+                                >
                                 {categories.map((c) => (
                                     <option
+                                        onFocus={onFocus}
                                         className={Styles.options}
                                         value={c.id}
                                         key={c.id}
@@ -230,6 +249,9 @@ function CreateProduct(props) {
                                 <p className={Styles.showCategory}>{c}</p>
                             ))}
                         </div>
+                        {
+                            errors.categories && touched.categories && <p>{errors.categories}</p>
+                        }
                     </form>
 
                     <form className={Styles.containerForm2} onSubmit={handleSubmit}>
@@ -240,7 +262,11 @@ function CreateProduct(props) {
                             onChange={handleChange}
                             placeholder="título"
                             required
+                            onFocus={onFocus}
                         ></input>
+                        {
+                            errors.title && touched.title && <p>{errors.title}</p>
+                        }
                         <input
                             className={Styles.input}
                             value={product.description}
@@ -248,7 +274,11 @@ function CreateProduct(props) {
                             onChange={handleChange}
                             placeholder="descripción"
                             required
+                            onFocus={onFocus}
                         ></input>
+                        {
+                            errors.description && touched.description && <p>{errors.description}</p>
+                        }
                         <input
                             className={Styles.input}
                             value={product.price}
@@ -256,10 +286,10 @@ function CreateProduct(props) {
                             onChange={handleChange}
                             placeholder="precio"
                             required
-
+                            onFocus={onFocus}
                         ></input>
                         {
-                            errors.price && <p>{errors.price}</p>
+                            errors.price && touched.price && <p>{errors.price}</p>
                         }
                         <input
                             className={Styles.input}
@@ -268,7 +298,11 @@ function CreateProduct(props) {
                             onChange={handleChange}
                             placeholder="stock"
                             required
+                            onFocus={onFocus}
                         ></input>
+                        {
+                            errors.stock && touched.stock && <p>{errors.stock}</p>
+                        }
 
                         <div className={Styles.file}>
                             <div className={Styles.containerImgs}>
