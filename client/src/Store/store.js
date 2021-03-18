@@ -148,62 +148,6 @@ const reducer = function (state = initialState, action) {
             
 
           }
-       
-  
-
-
-        case 'SHOW_FILTERS':
-
-            return {
-                ...state,
-                isOpenFilters: action.payload
-            }
-
-        // case 'GET_USERS_ARTISTS':
-
-        //     return {
-        //         ...state,
-        //         users: action.payload
-        //     }
-
-        case 'GET_USER_PRODUCTS':
-            return {
-                ...state,
-                products: action.payload
-            }
-
-        case 'GET_USERS_ARTISTS':
-            return {
-                ...state,
-                usersArtists: action.payload
-            }
-
-        case 'GET_ARTISTS_PRODUCTS':
-            return {
-                ...state,
-                artistsProducts: action.payload
-            }
-
-        case 'CLEAR_URL_IMAGES':
-            return{
-                ...state,
-                urlImages: []
-            }
-        case 'SEARCH_FILTERS':
-            let searchF = state.search.filter(f => f.categories.find(x => x.name === action.payload))
-            if (!searchF[0]){
-                searchF = 'void'
-            }
-            return{
-                 ...state,
-                 search: searchF
-            }
-
-        case 'ACTIVE_FILTERS':
-            return{
-                ...state,
-                isActiveFilters: action.payload
-            }
         case 'MOVE_CAROUSEL':
             if(action.payload === 'next' && state.carouselActive < 3){
                   return{
