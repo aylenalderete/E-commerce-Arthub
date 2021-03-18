@@ -77,3 +77,9 @@
 .title{
     font-size:2rem;
 }
+.link{
+    margin-top:20px;
+    align-self: flex-end;
+    font-size: 1.2rem;
+    color:#F427EC
+}
