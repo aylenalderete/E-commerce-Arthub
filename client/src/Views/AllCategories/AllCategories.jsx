@@ -23,11 +23,14 @@ function AllCategories() {
 
     const [categoryId, setCategoryId] = useState()
 
+    const [flag, setFlag] = useState(false)
+
     useEffect(() => {
 
         dispatch(getCategories());
+        setFlag(false)
 
-    }, []);
+    }, [flag]);
 
     function handleClick(id){
         isOpenCategory === false ? dispatch(opencategory(true)) : dispatch(opencategory(false));
@@ -43,8 +46,8 @@ function AllCategories() {
         <div className={Styles.mainContainer}>
             <NavBar renderTop={false} />
             <div className={Styles.container}>
-                {isOpenCategory === true && <PopUp categoryId = {categoryId} />}
-                {isOpenDeleteCat === true && <DeleteCategories category = {categoryId} />}
+                {isOpenCategory === true && <PopUp categoryId = {categoryId} flag={setFlag} />}
+                {isOpenDeleteCat === true && <DeleteCategories category = {categoryId} flag={setFlag} />}
                 <table className={Styles.table}>
                     <tr>
                         <th className={Styles.th}>Categorías:</th>

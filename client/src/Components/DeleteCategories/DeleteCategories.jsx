@@ -33,7 +33,8 @@ function DeleteCategories(props) {
                 method: 'DELETE',
             })
             .then((res) => res.json())
-            .then(response => alert('Categoria eliminada'))
+            .then(response => props.flag(true))
+
 
         } catch (error) {
             console.log(error);
