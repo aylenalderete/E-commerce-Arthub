@@ -13,7 +13,7 @@ import ArtPiece from './Views/ArtPiece/ArtPiece.jsx';
 import ArtistAdminDashboard from './Views/ArtistAdmin/ArtistAdminDashboard.jsx';
 import CreateProduct from './Components/CreateProducts/CreateProduct.jsx';
 import ArtistProfile from './Views/ArtistProfile/ArtistProfile.jsx';
-import AdminUser from './Views/AdminUser/AdminUser.jsx'
+import MyProfile from './Views/MyProfile/myProfile';
 import ArtistsProducts from './Views/ArtistsProducts/ArtistsProducts.jsx';
 import CreateCategory from './Views/CreateCategory/CreateCategory.jsx';
 import EditProduct from './Components/EditProduct/EditProduct.jsx';
@@ -74,7 +74,7 @@ useEffect(() => {
           <ArtPiece artId={match.params.idArte}></ArtPiece>
         )}
       ></Route>
-      <Route path="/perfiladmin" component={AdminUser}></Route>
+      <Route path="/miperfil" component={MyProfile}></Route>
       <Route path="/misproductos" component={ArtistsProducts}></Route>
       <Route path="/crearcategorias" component={CreateCategory}></Route>
       <Route path="/categorias" component={AllCategories}></Route>

@@ -43,7 +43,7 @@ export default function Carrousel() {
         }
 
         else if (active === 3) {
-            newArr = array.slice(5, 8)
+            newArr = array.slice(6, 9)
         }
         return newArr.map(obj => (
             <div className={Styles.cardContainer} key={obj.id}>

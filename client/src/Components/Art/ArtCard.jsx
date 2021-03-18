@@ -18,12 +18,12 @@ function ArtCard({ name, pic, artist, id, idArtist, price, stock }) {
         </div>
         <div className={style.linksArtCard}>
           <Link className={style.linksA} to={`/coleccion/${id}`}>
-            <h5 className={style.text}>{name}</h5>
+            <h5 className={style.text}>Pieza: {name}</h5>
           </Link>
-          <h5 className={style.text}>{"$ " + price}</h5>
+          <h5 className={style.text}>Precio: {"$ " + price}</h5>
           <h5 className={style.text}>{stock > 0 ? `Stock: ${stock}` : "Producto no disponible"}</h5>
           <Link className={style.linksA} to={`/artistas/${idArtist}`}>
-            <h5 className={style.text}>{artist}</h5>
+            <h5 className={style.text}>Artista: {artist}</h5>
           </Link>
           <Link className={style.linksA} to='/carrito'>
             <p className={style.btn}>Añadir al carrito</p>

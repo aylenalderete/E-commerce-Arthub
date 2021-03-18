@@ -1,10 +1,10 @@
 import React from "react";
-import NavBar from "../../Components/NavBar/NavBar.jsx";
+import NavBar from "../NavBar/NavBar.jsx";
 import style from "./adminuser.module.css";
 import { Link } from "react-router-dom";
 import { BrownserRouter as Router, useHistory } from "react-router-dom";
 import userPic from '../../Images/elcapitan.jpg';
-import CarouselCategories from '../../Components/CarouselCategories/carouselCategories'
+import CarouselCategories from '../CarouselCategories/carouselCategories'
 
 function AdminUser() {
   const history = useHistory();
