@@ -18,6 +18,7 @@ export const validate = (input) => {
 function FormCategories() {
 
     const [input, setInput] = useState({ name: '', description: '' });
+    const [touched, setTouched] = useState({});
     const [errors, setErrors] = useState({});
 
 
@@ -52,6 +53,13 @@ function FormCategories() {
         }));
     }
 
+    function onFocus(ev){
+        setTouched({
+            ...touched,
+            [ev.target.name] : true
+        })
+    }
+
     return (
         <div className={style.create}>
             <h1>crea una nueva categoría</h1>
@@ -59,14 +67,14 @@ function FormCategories() {
 
                 {/* <div> */}
 
-                <input className={style.input} onChange={handleChange} type='text' required='required' placeholder='nombre*' name='name' value={input.name} />
-                {errors.name && (
+                <input onFocus={onFocus} className={style.input} onChange={handleChange} type='text' required='required' placeholder='nombre*' name='name' value={input.name} />
+                {errors.name && touched.name && (
                     <p>{errors.name}</p>
                 )}
 
                 {/* </div> */}
-                <input className={style.input} onChange={handleChange} type='text' required='required' placeholder='descripción*' name='description' value={input.description} />
-                {errors.description && (
+                <input onFocus={onFocus} className={style.input} onChange={handleChange} type='text' required='required' placeholder='descripción*' name='description' value={input.description} />
+                {errors.description && touched.description && (
                     <p>{errors.description}</p>
                 )}
                 <button className={style.btn} type='submit'>

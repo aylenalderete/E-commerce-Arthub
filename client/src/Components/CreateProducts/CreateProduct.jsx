@@ -19,6 +19,37 @@ const firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 
+export const validate = (product) => {
+
+    let errors = {};
+    if (!product.title) {
+        errors.title = 'el título es obligatorio';
+    }else if(product.title.length > 40){
+        errors.title = 'el título debe tener menos de 40 caracteres';
+
+    }
+
+    if (!product.description) {
+        errors.description = 'la descripción es obligatoria';
+    }
+
+    if (!product.price) {   
+        errors.price = 'el precio es obligatorio';
+    }else if(!/^\d+(\.\d+)?$/.test(product.price)){
+        errors.price = 'el precio es invalido';
+    }
+
+    if (!product.stock) {
+        errors.stock = 'el stock es obligatorio';
+    }else if(!/((\+|-)?([0-9]+)(\.[0-9]+)?)|((\+|-)?\.?[0-9]+)/.test(product.price)){
+        errors.price = 'el precio es invalido';
+    }
+
+
+    return errors;
+
+};
+
 function CreateProduct(props) {
     const [product, setProduct] = useState({
         title: "",
@@ -27,6 +58,8 @@ function CreateProduct(props) {
         stock: "",
         categories: [],
     });
+    const [errors, setErrors] = useState({});
+
     const { urlImages } = useSelector((state) => state);
     //carga de imagenes
     const [upload, setUpload] = React.useState({
@@ -82,6 +115,10 @@ function CreateProduct(props) {
     const handleChange = (e) => {
         const { name, value } = e.target;
         setProduct({ ...product, [name]: value, userId: 3 });
+        setErrors(validate({
+            ...product,
+            [name]: value
+        }));
     };
 
     const sendProduct = () => {
@@ -219,9 +256,11 @@ function CreateProduct(props) {
                             onChange={handleChange}
                             placeholder="precio"
                             required
-                            type='number'
 
                         ></input>
+                        {
+                            errors.price && <p>{errors.price}</p>
+                        }
                         <input
                             className={Styles.input}
                             value={product.stock}
@@ -229,7 +268,6 @@ function CreateProduct(props) {
                             onChange={handleChange}
                             placeholder="stock"
                             required
-                            type='number'
                         ></input>
 
                         <div className={Styles.file}>
