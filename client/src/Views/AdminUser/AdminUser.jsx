@@ -4,6 +4,8 @@ import style from "./adminuser.module.css";
 import { Link } from "react-router-dom";
 import { BrownserRouter as Router, useHistory } from "react-router-dom";
 import userPic from '../../Images/elcapitan.jpg';
+import CarouselCategories from '../../Components/CarouselCategories/carouselCategories'
+
 function AdminUser() {
   const history = useHistory();
   const handleHistory = () => {
@@ -28,7 +30,10 @@ function AdminUser() {
             <img className={style.userPic} src={userPic} alt='User Pic' />
           </div>
         </div>
-        {/* componente carousel categorias; boton ver todas */}
+        <div  className={style.categories}>
+          <h2 className={style.title}>Categorias</h2>
+        <CarouselCategories/>
+        </div>
         {/*componente estadisticas, boton ver todas */}
       </div>
 

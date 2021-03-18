@@ -1,34 +1,59 @@
+
 const server = require('express').Router();
-const { User, Category, Image } = require('../db.js');
 const jwt = require('jsonwebtoken')
 const verifyToken = require('./verifyToken')
 
+const {
+	User,
+	Category,
+	Image,
+	Shoppingcart,
+	Lineorder,
+	Product,
+} = require("../db.js");
+
+
 // 1: Get all users
-// No password 
-server.get('/', (req, res) => {
-
+// No password
+server.get("/", (req, res) => {
 	User.findAll({
-		attributes: ['id', 'username', 'name', 'lastname', 'birth', 'email', 'type', 'state']
-	})
-		.then(result => {
-			res.json(result)
-		})
-
-})
+		attributes: [
+			"id",
+			"username",
+			"name",
+			"lastname",
+			"birth",
+			"email",
+			"type",
+			"state",
+		],
+	}).then((result) => {
+		res.json(result);
+	});
+});
 
 // 2: Create new user
-server.post('/', async function (req, res) {
-	let { username, name, lastname, email, password, birth, type, state } = req.body;
+server.post("/", async function (req, res) {
+	let {
+		username,
+		name,
+		lastname,
+		email,
+		password,
+		birth,
+		type,
+		state,
+	} = req.body;
 
-	let newState = ''
-	if (type === 'artist') {
-		newState = 'pending'
+	let newState = "";
+	if (type === "artist") {
+		newState = "pending";
 	}
-	if (type === 'user') {
-		newState = 'approved'
+	if (type === "user") {
+		newState = "approved";
 	}
-	if (type === 'admin') {
-		newState = 'approved'
+	if (type === "admin") {
+		newState = "approved";
 	}
 
 	try {
@@ -40,59 +65,190 @@ server.post('/', async function (req, res) {
 			password,
 			birth,
 			type,
-			state: newState
-		})
+			state: newState,
+		});
 		// const img = images.map(url => ({ url }))
 		// const userImage = await Image.bulkCreate(img)
 		// await newUser.setImages(userImage.map(i => i.dataValues.id))
 		// console.log(newUser)
-		console.log('User successfully created')
-		res.json('User successfully created')
-	}
-	catch (err) {
+		console.log("User successfully created");
+		res.json("User successfully created");
+	} catch (err) {
 		console.log(err);
-		res.status(500).json({ message: err })
+		res.status(500).json({ message: err });
 	}
 });
 
 // 3: Get user by id
 // No password
-server.get('/:id', (req, res) => {
-
+server.get("/:id", (req, res) => {
 	User.findAll({
 		where: { id: req.params.id },
-		attributes: ['id', 'username', 'name', 'lastname', 'birth', 'email', 'type', 'state']
-	})
-		.then(result => {
-			res.json(result)
-		})
-})
+		attributes: [
+			"id",
+			"username",
+			"name",
+			"lastname",
+			"birth",
+			"email",
+			"type",
+			"state",
+		],
+	}).then((result) => {
+		res.json(result);
+	});
+});
 
 // 4: Modify user by id
 // To be used by the common user/artist
-// No password (new route) 
-server.put('/:id', async (req, res) => {
-
+// No password (new route)
+server.put("/:id", async (req, res) => {
 	try {
-		let updated = await User.update({
-			username: req.body.username,
-			name: req.body.name,
-			lastname: req.body.lastname,
-			email: req.body.email,
-			birth: req.body.birth,
-			type: req.body.type
-		},
+		let updated = await User.update(
+			{
+				username: req.body.username,
+				name: req.body.name,
+				lastname: req.body.lastname,
+				email: req.body.email,
+				birth: req.body.birth,
+				type: req.body.type,
+			},
 			{
 				where: { id: req.params.id },
-			});
-		res.json('User succesfully modified');
+			}
+		);
+		res.json("User succesfully modified");
 	} catch (err) {
 		console.log(err);
 	}
 });
+// "GET /users/:idUser/cart
 
-//Post singin	#################################################
+// El carrito de un usuario va a ser la última ORDEN abierta que tenga el usuario.
+// Cuando el usuario haga el checkout, esa orden se cerrará y se creará una nueva orden vacía que este abierta."
 
+server.get("/:idUser/cart", (req, res) => {
+	Shoppingcart.findOne({
+		where: { userId: req.params.idUser, state: "pending" },
+		include: [
+			{
+				model: Lineorder,
+				include: [{ model: Product, include: [{ model: Image }] }],
+			},
+		],
+	})
+		.then((result) => {
+			if (result === null) {
+				return res.json({
+					message: "Could not find specified ShoppingCart",
+				});
+			}
+			res.json(result);
+		})
+		.catch((err) => {
+			console.log(err);
+			res.json(err);
+		});
+});
+// DELETE /users/:idUser/cart/
+// Esta ruta vacia el carrito, osea que elimina los lineorders
+// que tenga y setea el precio a cero
+server.delete("/:idUser/cart", async (req, res) => {
+	try {
+		const cartToEmpty = await Shoppingcart.findOne({
+			where: { userId: req.params.idUser, state: "pending" },
+			include: [
+				{
+					model: Lineorder,
+					include: [{ model: Product }],
+				},
+			],
+		});
+		if (cartToEmpty === null) {
+			return res.json({
+				message: "Could not find specified ShoppingCart",
+			});
+		}
+		console.log(cartToEmpty.lineorders);
+		await cartToEmpty.removeLineorders(cartToEmpty.lineorders);
+		cartToEmpty.total_price = 0;
+		await cartToEmpty.save();
+		await cartToEmpty.reload();
+		res.json(cartToEmpty);
+	} catch {
+		(err) => {
+			console.log(err);
+			res.json(err);
+		};
+	}
+});
+//Create Route to add Item to Cart
+server.post("/:idUser/cart", async (req, res) => {
+	const { idUser: userId } = req.params;
+	const { productId, quantity } = req.body;
+
+
+
+
+
+
+	try {
+		//Chequeamos que el usuario exista por ID para avisar en caso contrario
+		const userExists = await User.findByPk(userId);
+		if (!userExists) {
+			res.json({ message: "Could not find user" });
+		}
+		const productToAdd = await Product.findByPk(parseInt(productId));
+		const newLineorder = await Lineorder.create({
+			quantity,
+			unit_price: productToAdd.dataValues.price,
+		});
+		const newCart = await Shoppingcart.create({
+			state: "pending",
+			total_price:
+				newLineorder.dataValues.unit_price *
+				newLineorder.dataValues.quantity,
+			userId,
+		});
+		await productToAdd.setLineorder(newLineorder);
+		await newCart.setLineorders(newLineorder);
+		res.json({ message: "Shoppingcart created" });
+	} catch (error) {
+		res.status(500).send("Error");
+	}
+});
+// PUT /users/:idUser/cart
+server.put("/:idUser/cart", async (req, res) => {
+	const { idUser: userId } = req.params;
+	const { lineOrderId, quantity } = req.body;
+
+	try {
+		const cartToEdit = await Shoppingcart.findOne({
+			where: { userId, state: "pending" },
+			include: [
+				{
+					model: Lineorder,
+					where: { id_line: lineOrderId },
+				},
+			],
+		});
+		const quantityId = cartToEdit.lineorders[0].id_line;
+		const lineOrderToEdit = await Lineorder.findOne({
+			where: { id_line: quantityId },
+		});
+		lineOrderToEdit.quantity = quantity;
+		await lineOrderToEdit.save();
+		await cartToEdit.reload();
+		await console.log(cartToEdit.lineorders);
+
+		res.json({
+			message: "Quantity Updated",
+		});
+	} catch (error) {
+		console.log(error);
+		res.status(500).send("Error");
+	}
+});
 server.post('/signin/algo', (req, res, next) => {
 
 	const {username,password} = req.body;
@@ -139,4 +295,6 @@ server.post("/userdata/token", verifyToken, (req, res, next) => {
     });
 
 });
+
 module.exports = server;
+
