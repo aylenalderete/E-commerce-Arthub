@@ -77,6 +77,7 @@ function Collection() {
           id={piece.id_product}
           key={piece.id_product}
           price={piece.price}
+          stock={piece.stock}
         />
       )
     })

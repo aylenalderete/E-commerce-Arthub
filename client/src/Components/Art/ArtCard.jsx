@@ -6,7 +6,7 @@ import editPiece from '../../Images/edit.svg';
 import deletePiece from '../../Images/delete.svg';
 
 
-function ArtCard({ name, pic, artist, id, idArtist, admin, price }) {
+function ArtCard({ name, pic, artist, id, idArtist, admin, price, stock }) {
   const userType = useSelector(state => state.userData.type);
 
  // if user is unlogged or buyer type
@@ -21,6 +21,7 @@ function ArtCard({ name, pic, artist, id, idArtist, admin, price }) {
             <h5 className={style.text}>{name}</h5>
           </Link>
           <h5 className={style.text}>{"$ " + price}</h5>
+          <h5 className={style.text}>{stock > 0 ? `Stock: ${stock}` : "Producto no disponible"}</h5>
           <Link className={style.linksA} to={`/artistas/${idArtist}`}>
             <h5 className={style.text}>{artist}</h5>
           </Link>
@@ -49,6 +50,7 @@ function ArtCard({ name, pic, artist, id, idArtist, admin, price }) {
           <Link className={style.linksA} to={`/coleccion/${id}`}>
             <h5 className={style.pieceName}>Pieza: {name}</h5>
           </Link>
+          <h5 className={style.text}>{stock > 0 ? `Stock: ${stock}` : "Producto no disponible"}</h5>
           <h5 className={style.text}>Precio: {"$ " + price}</h5>
           <Link className={style.linksA} to={`/artistas/${idArtist}`}>
             <h5 className={style.text}>Artista: {artist}</h5>
