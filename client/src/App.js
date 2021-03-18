@@ -21,7 +21,8 @@ import EditCategory from './Views/EditCategories/EditCategories.jsx';
 import signInUsers from './Actions/signInUsers';
 import {useDispatch} from 'react-redux'
 import AllCategories from './Views/AllCategories/AllCategories';
-import PopUpDeleteCategory from './Views/DeleteCategories/PopUpDeleteCategory.jsx'
+import PopUpDeleteCategory from './Views/DeleteCategories/PopUpDeleteCategory.jsx';
+import Carrito from './Components/PopUpTrolley/PopUpTrolley.jsx';
 
 
 function App() {
@@ -78,7 +79,7 @@ useEffect(() => {
       <Route path="/editarcategorias/:idCategory" render={({match}) => (<EditCategory categoryId ={match.params.idCategory} />)}></Route>
       <Route path="/categorias" component={AllCategories}></Route>
       <Route path="/eliminarcategorias/:idCategory" render={({match}) => (<PopUpDeleteCategory categoryId ={match.params.idCategory} />)}></Route>
-
+      <Route path= '/carrito' component={Carrito}/>
 
 
     </div>
