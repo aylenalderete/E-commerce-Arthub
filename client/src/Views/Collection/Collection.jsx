@@ -14,9 +14,12 @@ import shoppingCartImg from '../../Images/shopping-cart.svg';
 function Collection() {
 
   const search = useSelector(state => state.search);
-  const isOpenFilters = useSelector(state => state.isOpenFilters)
-  const filteredProducts = useSelector(state => state.filteredProducts)
-  const products = useSelector(state => state.products)
+  const isOpenFilters = useSelector(state => state.isOpenFilters);
+  const filteredProducts = useSelector(state => state.filteredProducts);
+  const products = useSelector(state => state.products);
+
+  const userType = useSelector(state => state.userData.type);
+
 
   const dispatch = useDispatch();
   const history = useHistory()
@@ -74,10 +77,12 @@ function Collection() {
           id={piece.id_product}
           key={piece.id_product}
           price={piece.price}
+          stock={piece.stock}
         />
       )
     })
   }
+
 
   return (
     <div className={style.mainContainer}>
@@ -89,9 +94,12 @@ function Collection() {
 
           <button className={style.btnFilters} onClick={handleClick}>filtrar</button>
           <SearchBar></SearchBar>
-          <Link className={style.shContainer} to='/carrito'>
-          <img className={style.shoppingCartImg} src={shoppingCartImg} alt='my shopping cart'/>
-          </Link>
+          { userType !== 'artist' ?
+            <Link className={style.shContainer} to='/carrito'>
+              <img className={style.shoppingCartImg} src={shoppingCartImg} alt='my shopping cart' />
+            </Link>:
+            <></>}
+
         </div>
 
         <div className={style.container}>

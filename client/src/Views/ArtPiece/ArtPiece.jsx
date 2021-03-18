@@ -39,6 +39,7 @@ return (
           </div>
           <div>
             <div className={style.categoriesContainer}>
+            <h4>{detailed.stock > 0 ? `Stock: ${detailed.stock}` : "Producto no disponible"}</h4>
               <h4>Categoria/s: {detailed.categories &&
                 detailed.categories.map((x) => <h4>{x.name}</h4>)}</h4>
             </div>
