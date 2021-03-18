@@ -1,12 +1,25 @@
 import React, { useState } from 'react'
 import style from './formCategories.module.css'
 
+
+export const validate = (input) => {
+    let errors = {};
+    if (!input.name) {
+        errors.name = 'nombre es obligatorio';
+    }
+
+
+    if (!input.description) {
+        errors.description = 'la descripcion es obligatoria';
+    }
+    return errors;
+
+};
 function FormCategories() {
 
     const [input, setInput] = useState({ name: '', description: '' });
-    // const [errors, setErrors] = useState({}); ---> Hacer despues 
+    const [errors, setErrors] = useState({});
 
-    // function validate(){} ---> Hacer despues
 
     function handleSubmit(ev) {
         ev.preventDefault();
@@ -19,8 +32,8 @@ function FormCategories() {
                 },
                 body: JSON.stringify(input)
             })
-            .then((res) => res.json())
-            .then(response => alert('Categoria creada'))
+                .then((res) => res.json())
+                .then(response => alert('Categoria creada'))
 
         } catch (error) {
             console.log(error);
@@ -34,7 +47,9 @@ function FormCategories() {
             [ev.target.name]: ev.target.value
         });
 
-        // setErrors(validate()) ---> Hacer despues
+        setErrors(validate({
+            ...input, [ev.target.name]: ev.target.value
+        }));
     }
 
     return (
@@ -42,8 +57,18 @@ function FormCategories() {
             <h1>crea una nueva categoría</h1>
             <form onSubmit={handleSubmit} >
 
+                {/* <div> */}
+
                 <input className={style.input} onChange={handleChange} type='text' required='required' placeholder='nombre*' name='name' value={input.name} />
+                {errors.name && (
+                    <p>{errors.name}</p>
+                )}
+
+                {/* </div> */}
                 <input className={style.input} onChange={handleChange} type='text' required='required' placeholder='descripción*' name='description' value={input.description} />
+                {errors.description && (
+                    <p>{errors.description}</p>
+                )}
                 <button className={style.btn} type='submit'>
                     crear
                 </button>
