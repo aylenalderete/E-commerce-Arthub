@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import style from './editCategories.module.css'
 import {useSelector, useDispatch} from 'react-redux'
 import getCategories from '../../Actions/filter'
+import opencategory from '../../Actions/opencategory'
 
 function EditCategories(props) {
 
@@ -26,20 +27,6 @@ function EditCategories(props) {
         setTheCategory(categories.filter((element) => element.id == props.categoryId)[0])
     }, [categories])
 
-
-    // const [category, setCategory] = useState({
-    //     category: '',
-    // })
-
-    // const handleInputChange = (e) => {
-    //     setCategory({
-    //         ...category,
-    //         category: e.target.value
-    //       });
-    // }
-
-    // console.log(category)
-
     function handleSubmit(ev) {
 
         ev.preventDefault();
@@ -62,6 +49,8 @@ function EditCategories(props) {
             console.log(error);
             alert('No se pudo editar la categoria')
         }
+
+        dispatch(opencategory(false))
     }
 
     function handleChange(ev) {
@@ -76,9 +65,9 @@ function EditCategories(props) {
     // console.log(category)
 
     return (
-        <div className={style.create}>
+        <div className={style.mainDivPopUp}>
             <h1>edita una categoría</h1>
-            <form onSubmit={handleSubmit} >
+            <form className={style.formLabel} onSubmit={handleSubmit} >
 
                 <input className={style.input} onChange={handleChange} type='text' required='required' placeholder='nombre*' name='name' value={theCategory?.name} />
                 <input className={style.input} onChange={handleChange} type='text' required='required' placeholder='descripción*' name='description' value={theCategory?.description} />

@@ -17,6 +17,9 @@ import AdminUser from './Views/AdminUser/AdminUser.jsx'
 import ArtistsProducts from './Views/ArtistsProducts/ArtistsProducts.jsx';
 import CreateCategory from './Views/CreateCategory/CreateCategory.jsx';
 import EditProduct from './Components/EditProduct/EditProduct.jsx';
+
+
+
 import EditCategory from './Views/EditCategories/EditCategories.jsx';
 import signInUsers from './Actions/signInUsers';
 import {useDispatch} from 'react-redux'
@@ -76,10 +79,9 @@ useEffect(() => {
       <Route path="/perfiladmin" component={AdminUser}></Route>
       <Route path="/misproductos" component={ArtistsProducts}></Route>
       <Route path="/crearcategorias" component={CreateCategory}></Route>
-      <Route path="/editarcategorias/:idCategory" render={({match}) => (<EditCategory categoryId ={match.params.idCategory} />)}></Route>
       <Route path="/categorias" component={AllCategories}></Route>
-      <Route path="/eliminarcategorias/:idCategory" render={({match}) => (<PopUpDeleteCategory categoryId ={match.params.idCategory} />)}></Route>
       <Route path= '/carrito' component={Carrito}/>
+
 
 
     </div>

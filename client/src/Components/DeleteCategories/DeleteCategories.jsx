@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import style from './deleteCategories.module.css';
 import {useSelector, useDispatch} from 'react-redux'
 import getCategories from '../../Actions/filter'
+import deletecategory from '../../Actions/deletecategory'
 
 
 function DeleteCategories(props) {
@@ -11,25 +12,24 @@ function DeleteCategories(props) {
 
     // function validate(){} ---> Hacer despues
 
-    const categories = useSelector(state => state.categories)
-
     const [theCategory, setTheCategory] = useState()
+
+    const categories = useSelector(state => state.categories)
 
     const dispatch = useDispatch()
 
     useEffect(() => {
-
         dispatch(getCategories());
     }, []);
     
     useEffect(() => {
-        setTheCategory(categories.filter((element) => element.id == props.categoryId)[0])
+        setTheCategory(categories.filter((element) => element.id == props.category.id)[0])
     }, [categories])
 
 
-    function deleteCategory() {
+    function handleSubmit() {
         try {
-            fetch(`http://localhost:3001/products/category/${theCategory.id}`, {
+            fetch(`http://localhost:3001/products/category/${props.category.id}`, {
                 method: 'DELETE',
             })
             .then((res) => res.json())
@@ -39,39 +39,21 @@ function DeleteCategories(props) {
             console.log(error);
             alert('No se pudo eliminar la categoria')
         }
-    }
 
-        function handleChange(ev) {
-            setTheCategory({
-                ...theCategory,
-                [ev.target.name]: ev.target.value
-            });
-    
-
+        dispatch(deletecategory(false))
     }
-    
+ 
 
     return (
-        <div className={style.create}>
-            <h1>elimina una categoría</h1>
-            <form >
-
-                <input className={style.input} onChange={handleChange} type='text' required='required' placeholder='nombre*' name='name' value={theCategory?.name} />
-                <input className={style.input} onChange={handleChange} type='text' required='required' placeholder='descripción*' name='description' value={theCategory?.description} />
-                
-                <div className = {style.btnSelect}>
-
-                <button className={style.btn} onClick = {() => deleteCategory()}>
+        <div className={style.mainDivPopUp}>
+            <div className={style.formLabel}>
+                estás seguro de querer eliminar la categoría {props.category.name} ?
+            </div>        
+            <div className = {style.btnSelect}>
+                <button className={style.btn} onClick = {() => handleSubmit()}>
                     eliminar
                 </button>
-
-                </div>
-
-
-            </form>
-
-
-
+            </div>
         </div>
     )
 }
