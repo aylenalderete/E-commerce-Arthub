@@ -15,11 +15,14 @@ export default function buyUser() {
 
                         <button className={style.logOut}>
                             Cerrar sesion </button>
-
                     </div>
                     <div className={style.containerPic}>
                         <img className={style.userPic} src={userPic} alt='User Pic' />
                     </div>
+
+                    {/* aca van las ordenes del usuario , redirige a pagina todas las ordenes
+                    se pueden añadir tambien sus metodos de pago o direcciones registradas */}
+
                 </div>
             </div>
 
