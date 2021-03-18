@@ -16,6 +16,7 @@
     height: 300px;
     margin:0;
     position:relative;
+    border-bottom: 1px solid white;
 }
 
 .text{
@@ -57,7 +58,7 @@
     background-color: transparent;
     border: 1px solid white;
     text-decoration: none;
-    margin:40px;
+    width:fit-content;
     line-height: 2em;
     
     
