@@ -93,8 +93,8 @@ function Collection() {
         <div className={style.sbContainer}>
 
           <button className={style.btnFilters} onClick={handleClick}>filtrar</button>
-          <SearchBar></SearchBar>
-          {userType === 'artist'? <></> : <Link className={style.shContainer} to='/carrito'>
+          <SearchBar></SearchBar> 
+          {userType && userType !== 'artist' && <Link className={style.shContainer} to='/carrito'>
           <img className={style.shoppingCartImg} src={shoppingCartImg} alt='my shopping cart'/>
           </Link>}
           
