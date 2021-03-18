@@ -6,11 +6,11 @@ import editPiece from '../../Images/edit.svg';
 import deletePiece from '../../Images/delete.svg';
 
 
-function ArtCard({ name, pic, artist, id, idArtist, admin, price, stock }) {
+function ArtCard({ name, pic, artist, id, idArtist, price, stock }) {
   const userType = useSelector(state => state.userData.type);
 
  // if user is unlogged or buyer type
-  if (!userType || userType === 'user') {
+  if (!userType || userType === 'user' ) {
     return (
       <div className={style.cardContainer}>
         <div className={style.imgContainer}>
@@ -34,7 +34,7 @@ function ArtCard({ name, pic, artist, id, idArtist, admin, price, stock }) {
   }
 
 // if user is artist type 
-  else if (userType === 'artist'){
+  else if (userType === 'artist' || userType === 'admin'){
     return (
       <div className={style.cardContainer}>
         <div className={style.imgContainer}>
