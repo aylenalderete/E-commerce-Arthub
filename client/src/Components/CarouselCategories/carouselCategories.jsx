@@ -47,8 +47,11 @@ export default function Carrousel() {
         }
         return newArr.map(obj => (
             <div className={Styles.cardContainer} key={obj.id}>
+               
+                <div className={Styles.imgContainer}>
+                <img className={Styles.img} src={obj.image} alt={obj.name}/>
+                </div>
                 <p className={Styles.name}>{obj.name}</p>
-                <span className={Styles.description}>{obj.description} </span>
             </div>
         ));
     }

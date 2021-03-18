@@ -122,10 +122,9 @@ server.put("/:id", async (req, res) => {
 		console.log(err);
 	}
 });
-// "GET /users/:idUser/cart
 
-// El carrito de un usuario va a ser la última ORDEN abierta que tenga el usuario.
-// Cuando el usuario haga el checkout, esa orden se cerrará y se creará una nueva orden vacía que este abierta."
+// 5: Trae a última ORDEN abierta que tenga el usuario.
+// Cuando el usuario haga el checkout, esa orden se cerrará y se creará una nueva orden vacía que este abierta.
 
 server.get("/:idUser/cart", (req, res) => {
 	Shoppingcart.findOne({
@@ -140,7 +139,7 @@ server.get("/:idUser/cart", (req, res) => {
 		.then((result) => {
 			if (result === null) {
 				return res.json({
-					message: "Could not find specified ShoppingCart",
+					message: "Could not find specified shopping cart",
 				});
 			}
 			res.json(result);
@@ -150,8 +149,8 @@ server.get("/:idUser/cart", (req, res) => {
 			res.json(err);
 		});
 });
-// DELETE /users/:idUser/cart/
-// Esta ruta vacia el carrito, osea que elimina los lineorders
+
+// 6: Vacia el carrito: elimina los lineorders
 // que tenga y setea el precio a cero
 server.delete("/:idUser/cart", async (req, res) => {
 	try {
@@ -182,7 +181,8 @@ server.delete("/:idUser/cart", async (req, res) => {
 		};
 	}
 });
-//Create Route to add Item to Cart
+
+// 7: Agrega item a carrito 
 server.post("/:idUser/cart", async (req, res) => {
 	const { idUser: userId } = req.params;
 	const { productId, quantity } = req.body;
@@ -217,7 +217,8 @@ server.post("/:idUser/cart", async (req, res) => {
 		res.status(500).send("Error");
 	}
 });
-// PUT /users/:idUser/cart
+
+// 8: Edita linea de orden
 server.put("/:idUser/cart", async (req, res) => {
 	const { idUser: userId } = req.params;
 	const { lineOrderId, quantity } = req.body;
@@ -242,13 +243,14 @@ server.put("/:idUser/cart", async (req, res) => {
 		await console.log(cartToEdit.lineorders);
 
 		res.json({
-			message: "Quantity Updated",
+			message: "Quantity updated",
 		});
 	} catch (error) {
 		console.log(error);
 		res.status(500).send("Error");
 	}
 });
+
 server.post('/signin/algo', (req, res, next) => {
 
 	const {username,password} = req.body;
@@ -293,6 +295,33 @@ server.post("/userdata/token", verifyToken, (req, res, next) => {
       console.log(err);
       res.json(err);
     });
+
+})
+
+// 9: Retorna todas las ordenes de usuario (id) pasado por params 
+server.get("/:id/orders", async (req, res) => {
+	const { id } = req.params;
+
+	try {
+		const orderToReturn = await Shoppingcart.findAll({
+			where: { userId: id },
+			include: [
+				{
+					model: Lineorder,
+					include: [{ model: Product }],
+				},
+			],
+		});
+		if (orderToReturn.length > 0) {
+			res.json(orderToReturn);
+		}
+		res.json({ message: `Could not find order associated with user id: ${id}` });
+	} catch {
+		(err) => {
+			console.log(err);
+			res.json(err);
+		};
+	}
 
 });
 
