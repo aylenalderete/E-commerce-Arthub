@@ -33,6 +33,7 @@ function AdminUser() {
         <div  className={style.categories}>
           <h2 className={style.title}>Categorias</h2>
         <CarouselCategories/>
+        <Link className={style.link} to='/categorias'>Ver todas</Link>
         </div>
         {/*componente estadisticas, boton ver todas */}
       </div>
