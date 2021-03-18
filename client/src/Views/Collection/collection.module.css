@@ -47,6 +47,17 @@
     text-decoration: underline;
     color: #F427EC
 }
+.shoppingCartImg{
+    width:100%;
+    height:100%;
+    object-fit: contain;
+}
+
+.shContainer{
+    width:40px;
+    height:100%;
+    margin-left: 10px;
+}
 
 /*Responsive screen*/
 @media only screen and (max-width: 480px){

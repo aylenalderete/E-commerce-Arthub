@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import getInitialProducts from '../../Actions/getInitialProducts';
 import PopUp from '../../Components/PopUpFilters/PopUp';
 import showFilters from '../../Actions/showFilters';
+import shoppingCartImg from '../../Images/shopping-cart.svg';
 
 function Collection() {
 
@@ -72,6 +73,7 @@ function Collection() {
           idArtist={piece.user.id}
           id={piece.id_product}
           key={piece.id_product}
+          price={piece.price}
         />
       )
     })
@@ -87,6 +89,9 @@ function Collection() {
 
           <button className={style.btnFilters} onClick={handleClick}>filtrar</button>
           <SearchBar></SearchBar>
+          <Link className={style.shContainer} to='/carrito'>
+          <img className={style.shoppingCartImg} src={shoppingCartImg} alt='my shopping cart'/>
+          </Link>
         </div>
 
         <div className={style.container}>
