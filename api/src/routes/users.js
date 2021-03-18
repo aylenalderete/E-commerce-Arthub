@@ -22,6 +22,7 @@ server.get("/", (req, res) => {
 			"username",
 			"name",
 			"lastname",
+			"profilepic",
 			"birth",
 			"email",
 			"type",
@@ -38,6 +39,7 @@ server.post("/", async function (req, res) {
 		username,
 		name,
 		lastname,
+		profilepic,
 		email,
 		password,
 		birth,
@@ -58,21 +60,23 @@ server.post("/", async function (req, res) {
 
 	try {
 		const newUser = await User.create({
-      username,
-      name,
-      lastname,
-      email,
-      password,
-      birth,
-      type,
-      state: newState,
-    }).then((newuser) => {
-      const token = jwt.sign({ id: newuser.id }, "secret_key", {
-        expiresIn: 60 * 60 * 24,});
-      let obj = { user: newuser, auth: true, token };
-	  console.log(obj)
-      res.json(obj);
-    });
+			username,
+			name,
+			lastname,
+			profilepic,
+			email,
+			password,
+			birth,
+			type,
+			state: newState,
+		}).then((newuser) => {
+			const token = jwt.sign({ id: newuser.id }, "secret_key", {
+				expiresIn: 60 * 60 * 24,
+			});
+			let obj = { user: newuser, auth: true, token };
+			console.log(obj)
+			res.json(obj);
+		});
 		// const img = images.map(url => ({ url }))
 		// const userImage = await Image.bulkCreate(img)
 		// await newUser.setImages(userImage.map(i => i.dataValues.id))
@@ -95,6 +99,7 @@ server.get("/:id", (req, res) => {
 			"username",
 			"name",
 			"lastname",
+			"profilepic",
 			"birth",
 			"email",
 			"type",
@@ -115,6 +120,7 @@ server.put("/:id", async (req, res) => {
 				username: req.body.username,
 				name: req.body.name,
 				lastname: req.body.lastname,
+				profilepic: req.body.profilepic,
 				email: req.body.email,
 				birth: req.body.birth,
 				type: req.body.type,
@@ -259,27 +265,29 @@ server.put("/:idUser/cart", async (req, res) => {
 
 server.post('/signin/algo', (req, res, next) => {
 
-	const {username,password} = req.body;
+	const { username, password } = req.body;
 
 	User.findOne({
-		where:{username:username } //Verify if username is correct
-		})
+		where: { username: username } //Verify if username is correct
+	})
 		.then(user => {
-			if(user){
-				if(user.password === password){ //Verify if password is correct
+			if (user) {
+				if (user.password === password) { //Verify if password is correct
 
 					//create token
-					let token = jwt.sign({id:user.id},'secret_key',{
-						expiresIn:60 * 60 * 24
+					let token = jwt.sign({ id: user.id }, 'secret_key', {
+						expiresIn: 60 * 60 * 24
 					})
 					user.password = '';
-					res.json({user: user,
-						      auth: true, 
-						      token})
-				}else{
+					res.json({
+						user: user,
+						auth: true,
+						token
+					})
+				} else {
 					res.json('incorrect password')
 				}
-			}else{
+			} else {
 				res.json('user does not exist')
 			}
 		})
@@ -292,15 +300,15 @@ server.post('/signin/algo', (req, res, next) => {
 
 server.post("/userdata/token", verifyToken, (req, res, next) => {
 
-  User.findByPk(req.userId)
-    .then((user) => {
-      user.password = 0;
-      res.json(user);
-    })
-    .catch((err) => {
-      console.log(err);
-      res.json(err);
-    });
+	User.findByPk(req.userId)
+		.then((user) => {
+			user.password = 0;
+			res.json(user);
+		})
+		.catch((err) => {
+			console.log(err);
+			res.json(err);
+		});
 
 })
 
