@@ -1,33 +1,71 @@
-import React from 'react'
-import fakeList from "../../fakeList"
+import axios from 'axios'
+import React, { useEffect, useState } from 'react'
+import { Link } from "react-router-dom"
 import Styles from "./OrderTable.module.css"
 
 function OrderTable() {
+    const [status, setStatus] = useState("")
+    const [filterStatus, setfilterStatus] = useState([])
+
+    const ChangeState = (e) => {
+        setStatus(e.target.value)
+    }
+
+    //Le paso el estado del select, para que me traiga las ordenes que coincidan con esa opcion
+    useEffect(() => {
+        axios.get(`http://localhost:3001/orders/?status=${status}`)
+        .then((res) => {
+            setfilterStatus(res.data)
+        })
+        .catch((error) => {
+            console.log(error)
+        })
+    }, [status])
+
     return (
         <div className={Styles.mainContainer}>
             <div>
                 <p className={Styles.p}>Ordenes</p>
+            </div>
+            <div>
+                <form>
+                <label>Filtrar por estado</label>
+                <select onChange={ChangeState} name="filtroEstado">
+                    <option value=""></option>
+                    <option value="activa">activa</option>
+                    <option value="cancelada">cancelada</option>
+                    <option value="pendiente">pendiente</option>
+                </select>
+                <label>Filtrar por Fecha</label>
+                <select name="filtroFecha">
+                    <option value=""></option>
+                    <option value="Hoy">Hoy</option>
+                    <option value="Ayer">Ayer</option>
+                </select>
+                </form>
             </div>
             <table className={Styles.table}>
                 <tr className={Styles.tr}>
                     <th className={Styles.th}>N° orden</th>
                     <th className={Styles.th}>Fecha</th>
                     <th className={Styles.th}>Estado</th>
-                    <th className={Styles.th}>Productos</th>
-                    <th className={Styles.th}>Nombre del cliente</th>
+                    {/* <th className={Styles.th}>Cantidad de items</th> */}
+                    <th className={Styles.th}>ID cliente</th>
                     <th className={Styles.th}>Precio total</th>
                     <th className={Styles.th}></th>                    
                 </tr>
                 {
-                    fakeList.map((p) => (
+                    filterStatus.map((p) => (
                         <tr className={Styles.tr}>
-                            <th className={Styles.th}>1</th>
+                            <th className={Styles.th}>{p.id_order}</th>
                             <th className={Styles.th}>17/3/2021</th>
-                            <th className={Styles.th}>Pendiente</th>
-                            <th className={Styles.th}>1 cuadro {p.name}</th>
-                            <th className={Styles.th}>{p.artist}</th>
-                            <th className={Styles.th}>$2000</th>
-                            <button className={Styles.btn}>Ver más</button>
+                            <th className={Styles.th}>{p.state}</th>
+                            {/* <th className={Styles.th}>{p.lineorders.products}</th> */}
+                            <th className={Styles.th}>{p.userId}</th>
+                            <th className={Styles.th}>${p.total_price}</th>
+                            <Link to={`/ordenes/${p.id_order}`}>
+                                <button className={Styles.btn}>Ver más</button>
+                            </Link>
                         </tr>
                     ))
                 }
