@@ -2,6 +2,7 @@ import React from 'react';
 import { Redirect } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import AdminUser from '../../Components/AdminUser/AdminUser';
+import BuyerUser from '../../Components/BuyUser/buyUser';
 
 export default function MyProfile() {
     const userType = useSelector(state => state.userData.type);
@@ -16,7 +17,7 @@ export default function MyProfile() {
     }
     else if (userType === 'user') {
         return (
-            <div>loguado como comprador</div>
+            <BuyerUser/>
         )
     }
 }
