@@ -65,7 +65,7 @@ server.post("/", async function (req, res) {
 		}
 
 		const hashPass = await crypter(password)
-	
+
 		const newUser = await User.create({
 			username,
 			name,
@@ -142,7 +142,7 @@ server.put("/:id", async (req, res) => {
 	}
 });
 
-// 5: Trae a última ORDEN abierta que tenga el usuario.
+// 5: Trae la última ORDEN abierta que tenga el usuario.
 // Cuando el usuario haga el checkout, esa orden se cerrará y se creará una nueva orden vacía que este abierta.
 
 server.get("/:idUser/cart", (req, res) => {
@@ -271,22 +271,22 @@ server.put("/:idUser/cart", async (req, res) => {
 });
 
 server.post('/signin/algo', async (req, res, next) => {
-	
+
 	const { username, password } = req.body;
-	
+
 	const compare = async (password, passwordDataBase) => {
-    return bcrypt.compare(password, passwordDataBase);
-  };
-	
+		return bcrypt.compare(password, passwordDataBase);
+	};
 
 
-		User.findOne({
+
+	User.findOne({
 		where: { username: username } //Verify if username is correct
 	})
 		.then(async user => {
 			if (user) {
 				const comparer = await compare(password, user.password)
-				
+
 				if (comparer) { //Verify if password is correct
 
 					//create token
@@ -352,6 +352,39 @@ server.get("/:id/orders", async (req, res) => {
 		};
 	}
 
+});
+
+// 10: Elimina lineorder de shopping cart y actualiza precio total de order 
+server.delete("/order/:idorder/lineorder/:idlineorder", async (req, res) => {
+
+	try {
+
+		await Lineorder.destroy({ where: { id_line: req.params.idlineorder } })
+
+		const cart = await Shoppingcart.findOne({
+			where: { id_order: req.params.idorder },
+			include: [{ model: Lineorder }]
+		}
+		)
+		let newTotal = 0;
+		cart.dataValues.lineorders.forEach(element => {
+			newTotal += element.dataValues.unit_price * element.dataValues.quantity
+		});
+
+		Shoppingcart.update({
+			total_price: newTotal
+		}, {
+			where: { id_order: req.params.idorder }
+		});
+
+		res.send(`Line order with id ${req.params.idlineorder} was deleted`);
+
+	} catch {
+		(err) => {
+			console.log(err);
+			res.json(err);
+		};
+	}
 });
 
 module.exports = server;
