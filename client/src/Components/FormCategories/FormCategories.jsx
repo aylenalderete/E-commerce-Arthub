@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import style from './formCategories.module.css'
+import firebase from 'firebase';
 
 
 export const validate = (input) => {
@@ -15,12 +16,49 @@ export const validate = (input) => {
     return errors;
 
 };
+
 function FormCategories() {
 
     const [input, setInput] = useState({ name: '', description: '' });
     const [touched, setTouched] = useState({});
     const [errors, setErrors] = useState({});
 
+    // Firebase
+
+    const [upload, setUpload] = React.useState({
+        process: 0,
+        picture: ''
+    });
+
+    const [refresh, setRefresh] = React.useState([])
+
+    function handleUpload(event) {
+
+        const file = event.target.files[0];
+
+        if (event.target.files.length) {
+            const storageRef = firebase.storage().ref(`/images/${file.name}`)
+            const task = storageRef.put(file)
+
+            task.on('state_changed', snapshot => {
+                let percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+                console.log(percentage)
+                setUpload({
+                    process: percentage
+                })
+            },
+                error => {
+                    console.log(error.message)
+                }, () => {
+                    storageRef.getDownloadURL().then(url => {
+                        setUpload({ picture: url })
+                        setInput({ ...input, image: url })
+                    });
+                })
+        }
+    }
+
+    // Firebase end
 
     function handleSubmit(ev) {
         ev.preventDefault();
@@ -53,10 +91,10 @@ function FormCategories() {
         }));
     }
 
-    function onFocus(ev){
+    function onFocus(ev) {
         setTouched({
             ...touched,
-            [ev.target.name] : true
+            [ev.target.name]: true
         })
     }
 
@@ -77,6 +115,22 @@ function FormCategories() {
                 {errors.description && touched.description && (
                     <p>{errors.description}</p>
                 )}
+                <div className={style.radio}>
+                    <label for='files' >
+                        <div className={style.containerCatPic}>
+                            {upload.picture ? <img width='100' height='100' src={upload.picture} /> : <div className={style.containerProfilePic}>
+                                Push to add
+                                        </div>}
+
+                        </div>
+
+                        <div className={style.progressBar}>
+                            <progress value={upload.process} ></progress>
+                        </div>
+                    </label>
+
+                    <input className={style.inputFile} type='file' id='files' onChange={handleUpload} />
+                </div>
                 <button className={style.btn} type='submit'>
                     crear
                 </button>
