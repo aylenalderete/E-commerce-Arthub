@@ -43,7 +43,8 @@ const initialState = {
     isUserLogged: false,
 
     //Delete product state
-    isOpenDeleteProd: false
+    isOpenDeleteProd: false,
+    productId:0,
 
 }
 
@@ -226,6 +227,12 @@ const reducer = function (state = initialState, action) {
             return{
                 ...state,
                 isOpenDeleteProd: action.payload
+            }
+
+        case "PRODUCT_ID" :
+            return {
+                ...state,
+                productId: action.payload
             }
 
 
