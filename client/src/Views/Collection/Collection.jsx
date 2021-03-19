@@ -20,6 +20,8 @@ function Collection() {
 
   const userType = useSelector(state => state.userData.type);
 
+  const [flag, setFlag] = useState(false)
+
 
   const dispatch = useDispatch();
   const history = useHistory()
@@ -27,7 +29,11 @@ function Collection() {
   useEffect(() => {
     dispatch(getInitialProducts());
 
-  }, [])
+    if(flag === true) {
+      setFlag(false)
+    }
+  
+  }, [flag])
 
   function handleClick() {
     isOpenFilters === false ?
@@ -78,6 +84,7 @@ function Collection() {
           key={piece.id_product}
           price={piece.price}
           stock={piece.stock}
+          setFlag = {setFlag}
         />
       )
     })
