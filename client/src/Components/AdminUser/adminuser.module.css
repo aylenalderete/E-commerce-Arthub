@@ -10,14 +10,14 @@
     width: 100%;
     margin-top: 50px;
     align-items: center;
+    min-height: 100vh;
    
 }
 
 .userDesc{
     display: flex;
     width:90%;
-   
-    
+    justify-content: space-between;
 }
 .userInfo{
     display:flex;
@@ -29,19 +29,23 @@
 }
 
 .containerPic{
+    width: 220px;
+    height: 220px;
     display: flex;
-    justify-content: flex-end;
-    width:50%;
-    
+    justify-content: center;
+    position:relative;
+    border-radius: 50%;
+    align-items: center;
+
     
 }
 
 .userPic{
     width: 220px;
     height: 220px;
+    object-fit: contain;
     border-radius: 50%;
-    border: 3px solid white;
-
+    
 }
 
 .name{
@@ -82,4 +86,44 @@
     align-self: flex-end;
     font-size: 1.2rem;
     color:#F427EC
+}
+
+.editBtn{
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
+    background-color: rgba(0, 0, 0, 0.863);
+    display: none;
+    justify-content: center;
+    border:1px solid white;
+    position: absolute;
+    border-radius: 50%;
+    transform:translate(100%,100%);
+    cursor:pointer;
+    
+}
+
+.containerPic:hover button{
+        display: flex;
+        transform:translate(0,0)
+}
+
+.editBtn:focus{
+    outline: none;
+}
+
+.edit{
+    align-self: center;
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+}
+
+.containerProducts{
+    width:90%;
+    height: auto;
+    background-color: transparent;
+    margin-top: 50px;
+    border-top:2px solid  white;
+    margin-bottom: 50px;
 }

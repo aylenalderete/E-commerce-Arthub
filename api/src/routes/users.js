@@ -337,7 +337,7 @@ server.get("/:id/orders", async (req, res) => {
 			include: [
 				{
 					model: Lineorder,
-					include: [{ model: Product }],
+					include: [{ model: Product, include: [{ model: Image }] }],
 				},
 			],
 		});

@@ -46,6 +46,9 @@ const initialState = {
     isOpenDeleteProd: false,
     productId:0,
 
+    //user orders state
+    userOrders:[]
+
 }
 
 //reducer 
@@ -235,6 +238,11 @@ const reducer = function (state = initialState, action) {
                 productId: action.payload
             }
 
+        case 'GET_USER_ORDERS':
+            return{
+                ...state,
+                userOrders: action.payload
+            }
 
 
         default:
