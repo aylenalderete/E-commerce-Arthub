@@ -1,11 +1,12 @@
-import React from 'react'
-import NavBar from '../../Components/NavBar/NavBar'
+import React from 'react';
+import NavBar from '../../Components/NavBar/NavBar';
 import Styles from "./Signin.module.css";
 import { useState } from 'react';
 import axios from 'axios';
 import signInUsers from '../../Actions/signInUsers'
 import { useDispatch } from 'react-redux'
 import { Redirect } from 'react-router-dom'
+import firebase from 'firebase';
 
 export const validate = (input) => {
 
@@ -46,10 +47,6 @@ export const validate = (input) => {
         errors.type = 'el tipo es obligatorio';
     }
 
-
-    // if (urlImages.length === 0) {
-    //     errors.images = 'debe cargar por lo menos una imagen'
-    // }
     return errors;
 };
 
@@ -63,6 +60,7 @@ function SignIn() {
         password: "",
         name: "",
         lastname: "",
+        profilepic: "",
         email: "",
         birth: "",
         type: ""
@@ -76,6 +74,43 @@ function SignIn() {
             [ev.target.name]: true
         })
     }
+
+    // Firebase
+
+    const [upload, setUpload] = React.useState({
+        process: 0,
+        picture: ''
+    });
+
+    const [refresh, setRefresh] = React.useState([])
+
+    function handleUpload(event) {
+
+        const file = event.target.files[0];
+
+        if (event.target.files.length) {
+            const storageRef = firebase.storage().ref(`/images/${file.name}`)
+            const task = storageRef.put(file)
+
+            task.on('state_changed', snapshot => {
+                let percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+                console.log(percentage)
+                setUpload({
+                    process: percentage
+                })
+            },
+                error => {
+                    console.log(error.message)
+                }, () => {
+                    storageRef.getDownloadURL().then(url => {
+                        setUpload({ picture: url })
+                        setInput({ ...input, profilepic: url })
+                    });
+                })
+        }
+    }
+
+    // Firebase end
 
     function handleChange(e) {
         const { name, value } = e.target;
@@ -91,9 +126,10 @@ function SignIn() {
 
     function handleSubmit(e) {
         e.preventDefault();
+        // setInput({...input, profilepic: upload.picture})
+        console.log(input)
         axios.post(`http://localhost:3001/users`, input)
             .then((res) => {
-
                 dispatch(signInUsers(res.data.user))
                 alert("Cuenta registrada");
                 console.log(res)
@@ -189,13 +225,9 @@ function SignIn() {
                             onFocus={onFocus}
                             required
                         />
-                        {/* {
-                            errors.birth && touched.birth && <p>{errors.birth}</p>
-                        } */}
                         <div className={Styles.contRadio}>
                             <div className={Styles.radio}>
                                 <input
-                                    // className={Styles.input}
                                     id="type"
                                     name="type"
                                     onChange={handleChange}
@@ -209,7 +241,6 @@ function SignIn() {
 
                             <div className={Styles.radio}>
                                 <input
-                                    // className={Styles.input}
                                     id="type"
                                     name="type"
                                     onChange={handleChange}
@@ -219,6 +250,22 @@ function SignIn() {
                                     required
                                 />
                                 <label for="type">comprador</label>
+                            </div>
+                            <div className={Styles.radio}>
+                                <label for='files' >
+                                    <div className={Styles.containerProfilePic}>
+                                        {upload.picture ? <img width='100' height='100' src={upload.picture} /> : <div className={Styles.containerProfilePic}>
+                                            Push to add
+                                        </div>}
+
+                                    </div>
+
+                                    <div className={Styles.progressBar}>
+                                        <progress value={upload.process} ></progress>
+                                    </div>
+                                </label>
+
+                                <input className={Styles.inputFile} type='file' id='files' onChange={handleUpload} />
                             </div>
                         </div>
                         {
