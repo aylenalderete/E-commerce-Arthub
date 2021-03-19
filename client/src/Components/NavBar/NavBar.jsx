@@ -55,6 +55,9 @@ if(redirect) return <Redirect to="/ingresar"></Redirect>
               </Link>
             </div>
             <div className={Styles.line2}>
+                <div>
+                {loggedUser.id > 0 ? (<h1>{loggedUser.name}</h1>) : null}
+                </div>
               {loggedUser.id > 0 ? (
                 <Link className={Styles.link2} to="/miperfil">
                   <p className={Styles.seccionMicuenta}>mi cuenta</p>

@@ -67,7 +67,7 @@ return (
         <input
           required
           className={style.input}
-          type="text"
+          type="password"
           name="password"
           value={input.password}
           placeholder="contraseña..."
