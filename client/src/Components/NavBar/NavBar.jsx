@@ -4,6 +4,7 @@ import Styles from "./navBar.module.css";
 import { useHistory } from "react-router-dom";
 import {useSelector, useDispatch} from 'react-redux';
 import signOutUsers from '../../Actions/signOutUsers'
+import profPic from '../Assets/profPic.jpg'
 
 function NavBar({renderTop}) {
     const loggedUser = useSelector(state => state.userData);
@@ -55,6 +56,24 @@ if(redirect) return <Redirect to="/ingresar"></Redirect>
               </Link>
             </div>
             <div className={Styles.line2}>
+              {loggedUser.id > 0 ? (
+                <div>
+                  {loggedUser.id > 0 && loggedUser.profilepic ? (
+                    <img
+                      className={Styles.profPic}
+                      src={loggedUser.profilepic}
+                    ></img>
+                  ) : (
+                    <img className={Styles.profPic} src={profPic}></img>
+                  )}
+                  {loggedUser.id > 0 ? (
+                    <h1 className={Styles.profInfo}>{loggedUser.name}</h1>
+                  ) : null}
+                  {loggedUser.id > 0 && loggedUser.type !== "user" ? (
+                    <h3 className={Styles.profInfoType}>{loggedUser.type}</h3>
+                  ) : null}
+                </div>
+              ) : null}
               {loggedUser.id > 0 ? (
                 <Link className={Styles.link2} to="/miperfil">
                   <p className={Styles.seccionMicuenta}>mi cuenta</p>

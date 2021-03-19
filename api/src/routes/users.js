@@ -2,7 +2,7 @@
 const server = require('express').Router();
 const jwt = require('jsonwebtoken')
 const verifyToken = require('./verifyToken')
-
+const bcrypt = require('bcryptjs')
 const {
 	User,
 	Category,
@@ -59,13 +59,20 @@ server.post("/", async function (req, res) {
 	}
 
 	try {
+		const crypter = async password => {
+			const salt = await bcrypt.genSalt(10)
+			return bcrypt.hash(password, salt)
+		}
+
+		const hashPass = await crypter(password)
+	
 		const newUser = await User.create({
 			username,
 			name,
 			lastname,
 			profilepic,
 			email,
-			password,
+			password: hashPass,
 			birth,
 			type,
 			state: newState,
@@ -83,7 +90,6 @@ server.post("/", async function (req, res) {
 		// await newUser.setImages(userImage.map(i => i.dataValues.id))
 		// console.log(newUser)
 		console.log("User successfully created");
-		res.json("User successfully created");
 	} catch (err) {
 		console.log(err);
 		res.status(500).json({ message: err });
@@ -264,16 +270,24 @@ server.put("/:idUser/cart", async (req, res) => {
 	}
 });
 
-server.post('/signin/algo', (req, res, next) => {
-
+server.post('/signin/algo', async (req, res, next) => {
+	
 	const { username, password } = req.body;
+	
+	const compare = async (password, passwordDataBase) => {
+    return bcrypt.compare(password, passwordDataBase);
+  };
+	
 
-	User.findOne({
+
+		User.findOne({
 		where: { username: username } //Verify if username is correct
 	})
-		.then(user => {
+		.then(async user => {
 			if (user) {
-				if (user.password === password) { //Verify if password is correct
+				const comparer = await compare(password, user.password)
+				
+				if (comparer) { //Verify if password is correct
 
 					//create token
 					let token = jwt.sign({ id: user.id }, 'secret_key', {

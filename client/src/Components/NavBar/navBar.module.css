@@ -56,7 +56,25 @@
 
 
 /*----------------------------- NAV VERTICAL LATERAL--------------------------- */
+.profPic{
+    width: 120px;
+    height: 120px;
+    border: 1px solid #F427EC;
+    border-radius: 50%;
+    align-self: center;
+    margin-left: 14px;
+    margin-top: 20px;
+    object-fit: cover;
+}
 
+.profInfo
+{
+    margin-left: 19px;
+}
+.profInfoType
+{
+    margin-left: 45.5px;
+}
 .line2 {
 
     border-top: 2px solid #F427EC;
