@@ -1,15 +1,16 @@
-import React from "react";
-import { useSelector } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import NavBar from "../NavBar/NavBar.jsx";
 import style from "./adminuser.module.css";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import userPic from '../../Images/elcapitan.jpg';
 import CarouselCategories from '../CarouselCategories/carouselCategories';
 import Edit from '../../Images/edit.svg'
 
 function AdminUser() {
-  const userData = useSelector(state => state.userData);
 
+  const userData = useSelector(state => state.userData);
+  let history = useHistory()
 
   return (
     <div className={style.mainContainer}>
@@ -21,9 +22,8 @@ function AdminUser() {
             <h1 className={style.name} >{userData.name}</h1>
             <p className={style.rol}>Rol:{userData.type} </p>
 
-            <button className={style.logOut} >
-              Cerrar sesion
-        </button>
+            <button className={style.logOut} onClick={() => history.push(`/editarperfil/`)}>
+              Editar perfil </button>
 
           </div>
           <div className={style.containerPic}>
@@ -38,7 +38,6 @@ function AdminUser() {
           <CarouselCategories />
           <Link className={style.link} to='/categorias'>Ver todas</Link>
         </div>
-        {/*componente estadisticas, boton ver todas */}
       </div>
 
     </div>
