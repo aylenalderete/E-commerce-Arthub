@@ -62,14 +62,7 @@ function ArtCard({ name, pic, artist, id, idArtist, price, stock, setFlag }) {
             <h5 className={style.artist}>Artista: {artist}</h5>
           </Link>
 
-          {stock === 0 && (
-            <Link
-              className={style.linksA}
-              onClick={() => alert("Producto no disponible")}
-            >
-              <p className={style.btn}>Añadir al carrito</p>
-            </Link>
-          )}
+         
           {/* {
             stock > 0 &&
             <Link className={style.linksA} >
@@ -81,12 +74,7 @@ function ArtCard({ name, pic, artist, id, idArtist, price, stock, setFlag }) {
           { */}
           {stock > 0 && (
             <Link className={style.cartCont} to="/carrito">
-              <button
-                onClick={() => handlePostUserOrder(userData.id, id)}
-                className={style.btn}
-              >
-                <img className={style.cart} src={cart}></img>
-              </button>
+                <img onClick={() => handlePostUserOrder(userData.id, id)} className={style.cart} src={cart}></img>
             </Link>
           )}
         </div>
@@ -106,23 +94,15 @@ function ArtCard({ name, pic, artist, id, idArtist, price, stock, setFlag }) {
         )}
         <div className={style.imgContainer}>
           <img className={style.cardImg} alt="artpic" src={pic}></img>
-          <Link to={`/editarproducto/${id}`} className={style.btnEdit}>
+        </div>
+
+        <div className={style.linksArtCard}>
+        <Link to={`/editarproducto/${id}`} className={style.btnEdit}>
             <img className={style.icon} src={editPiece} alt="edit item" />
           </Link>
-          <Link to={`/editarproducto/${id}`} className={style.btnDelete}>
-            <img className={style.icon} src={deletePiece} alt="delete item" />
-          </Link>
-
           <div className={style.btnDelete}>
-            <img
-              className={style.icon}
-              src={deletePiece}
-              alt="delete item"
-              onClick={() => handleDeleteClick(id)}
-            />
+            <img className={style.icon} src={deletePiece} alt="delete item"  onClick={() => handleDeleteClick(id)}  />
           </div>
-        </div>
-        <div className={style.linksArtCard}>
           <Link className={style.linksA} to={`/coleccion/${id}`}>
             <h5 className={style.pieceName}>Pieza: {name}</h5>
           </Link>
