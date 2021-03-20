@@ -105,14 +105,17 @@ conn.sync({ force: true }).then(() => {
                 arrayOfShoppingcart[i].lineorder[0].productIdProduct
               );
               // console.log(productToAdd);
-              await productToAdd.setLineorder(m);
+              await productToAdd.addLineorder(m);
             });
 
             const userToAdd = await User.findByPk(
               arrayOfShoppingcart[i].userId
             );
-            cart.setLineorders(arrayLine.map((i) => i.dataValues.id_line));
+            await cart.setLineorders(
+              arrayLine.map((i) => i.dataValues.id_line)
+            );
             cart.setUser(userToAdd.dataValues.id);
+            cart.save();
           })
 
           .catch((err) => {
@@ -122,5 +125,6 @@ conn.sync({ force: true }).then(() => {
     });
     //------------------------FIN------------------------------------
   };
+  // Descomentar la siguiente linea para llenar la db por primera vez
   seeder();
 });
