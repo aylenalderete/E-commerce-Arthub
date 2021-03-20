@@ -18,8 +18,8 @@ function AdminUser() {
         <div className={style.userDesc}>
 
           <div className={style.userInfo}>
-            <h1 className={style.name} >{userData[0].name}</h1>
-            <p className={style.rol}>Rol:{userData[0].type} </p>
+            <h1 className={style.name} >{userData.name}</h1>
+            <p className={style.rol}>Rol:{userData.type} </p>
 
             <button className={style.logOut} >
               Cerrar sesion
@@ -27,7 +27,7 @@ function AdminUser() {
 
           </div>
           <div className={style.containerPic}>
-            <img className={style.userPic} src={userPic} alt='User Pic' />
+            <img className={style.userPic} src={userData.profilepic} alt='User Pic' />
             <button className={style.editBtn}>
               <img className={style.edit} src={Edit} alt="" />
             </button>
