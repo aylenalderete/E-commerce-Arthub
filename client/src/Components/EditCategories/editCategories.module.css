@@ -60,6 +60,25 @@
     outline: none;
 }
 
+.containerCatPic {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 110px;
+    width: 110px;
+    border: 1px solid white;
+    cursor: pointer;
+}
+
+.progressBar{
+    display: flex;
+    width: 110px;
+}
+
+.inputFile{
+    display:none;
+}
+
 /*Key Frames*/
 
 @keyframes color {
