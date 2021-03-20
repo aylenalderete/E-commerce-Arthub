@@ -111,7 +111,7 @@ function FormCategories() {
                 )}
 
                 {/* </div> */}
-                <input onFocus={onFocus} className={style.input} onChange={handleChange} type='text' required='required' placeholder='descripción*' name='description' value={input.description} />
+                <textarea onFocus={onFocus} className={style.input} onChange={handleChange} type='text' required='required' placeholder='descripción*' name='description' value={input.description} />
                 {errors.description && touched.description && (
                     <p>{errors.description}</p>
                 )}
@@ -119,7 +119,7 @@ function FormCategories() {
                     <label for='files' >
                         <div className={style.containerCatPic}>
                             {upload.picture ? <img width='100' height='100' src={upload.picture} /> : <div className={style.containerProfilePic}>
-                                Push to add
+                                Seleccionar imagen
                                         </div>}
 
                         </div>
