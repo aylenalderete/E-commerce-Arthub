@@ -46,7 +46,14 @@ const initialState = {
 
     //Delete product state
     isOpenDeleteProd: false,
-};
+
+    productId:0,
+
+    //user orders state
+    userOrders:[]
+
+}
+
 
 //reducer
 const reducer = function (state = initialState, action) {
@@ -221,12 +228,26 @@ const reducer = function (state = initialState, action) {
                 isOpenDeleteProd: action.payload,
             };
 
-        //jorge
+
+        
         case "GET_USER_ORDER":
             return {
                 ...state,
                 shoppingCart: action.payload,
             };
+
+        case "PRODUCT_ID" :
+            return {
+                ...state,
+                productId: action.payload
+            }
+
+        case 'GET_USER_ORDERS':
+            return{
+                ...state,
+                userOrders: action.payload
+            }
+
 
         case "DELETE_USER_ORDER":
             return {

@@ -62,6 +62,7 @@ return (
             <h4>{`Precio: $` + `${detailed.price}`}</h4>
           </div>
             <p>{detailed.description}</p>
+            
             <button onClick={() => handlePostUserOrder(4, artId)} className={style.button} >
                 Añadir al carrito
              </button>

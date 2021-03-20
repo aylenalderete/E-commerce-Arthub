@@ -21,9 +21,9 @@ server.get("/", async (req, res) => {
                 include: [
                     {
                         model: Lineorder,
-                        include: [{ model: Product }],
+                        include: [{ model: Product, include: [{ model: Image }] }],
                     },
-                ],
+                ]
             });
             if (ordersToReturn.length > 0) {
                 res.json(ordersToReturn);
@@ -37,9 +37,9 @@ server.get("/", async (req, res) => {
                 include: [
                     {
                         model: Lineorder,
-                        include: [{ model: Product }],
+                        include: [{ model: Product, include: [{ model: Image }] }],
                     },
-                ],
+                ]
             });
             if (allOrders.length > 0) {
                 res.json(allOrders);
@@ -66,7 +66,7 @@ server.get("/:id", async (req, res) => {
             include: [
                 {
                     model: Lineorder,
-                    include: [{ model: Product }],
+                    include: [{ model: Product, include: [{ model: Image }] }],
                 },
             ],
         });

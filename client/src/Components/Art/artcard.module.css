@@ -5,8 +5,9 @@
     align-items: center;
     width:25%;  
     margin:30px;
-    border:1px solid white;
     height: auto;
+    border-radius: 5px;
+    position:relative;
    
     
 }
@@ -16,7 +17,7 @@
     height: 300px;
     margin:0;
     position:relative;
-    border-bottom: 1px solid white;
+    
 }
 
 .text{
@@ -24,8 +25,40 @@
     line-height: 1rem;   
     font-size: 1em;
     margin:0;
-    margin-top: 10px;
+    margin-top: 20px;
+    cursor:default
     
+}
+.noStock{
+    font-size: 1em;
+    position:absolute;
+    top:10px;
+    right:10px;
+    color: #f042ea;
+    cursor:default;
+}
+.name{
+    color: white;
+    line-height: 1rem;   
+    font-size: 1.2em;
+    margin:0;
+    text-decoration: underline;
+    
+}
+
+.name:hover{
+    color:#F427EC
+}
+.artist{
+    color: white;
+    line-height: 1rem;   
+    font-size: 1em;
+    margin:0;
+    margin-top: 20px;
+    text-decoration: underline;
+}
+.artist:hover{ 
+        color:#F427EC
 }
 .pieceName{
     color:white;
@@ -37,8 +70,20 @@
 }
 
 .linksArtCard{
-    align-self: flex-start;
-    margin-left: 10px;
+    
+    position: absolute;
+    display: none;
+    width:100%;
+    height: 100%;
+
+}
+.cardContainer:hover .linksArtCard{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    animation: fadein ease 0.7s;
+    animation-fill-mode: forwards;
 
 }
 
@@ -51,6 +96,11 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
+    border-radius: 5px;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+
+    z-index: -99999;
     
 }
 
@@ -111,6 +161,22 @@
     height: 20px;
 }
 
+.cart{
+    width: 30px;
+    height:30px;
+    position: absolute;
+    top:10px;
+    right:10px;
+    background-color: black;
+    padding:5px;
+    border-radius:5px;
+    
+}
+
+
+
+
+
 
 @keyframes color {
     0% {
@@ -120,5 +186,18 @@
     100% {
         background-color: #F427EC; 
 
+    }
+  }
+
+ 
+  
+@keyframes fadein {
+    0% {
+        opacity:0;
+        background-color: transparent;
+    }
+    100% {
+        opacity:1;
+        background-color: rgba(0, 0, 0, 0.698);
     }
   }
