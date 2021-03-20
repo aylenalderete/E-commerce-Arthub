@@ -1,19 +1,9 @@
 .mainContainer{
     display: flex;
-    flex-direction: row;
 }
-.container{
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    color: white;
-    align-items: center;
-    justify-content: center;
+.aboutContainer{
     width: 100%;
-    /* margin : 2rem 0;  */
+    display: flex;
+    
 }
 
-.rectangle{
-    border: solid 1px white;
-    padding : 4px 4rem;
-}
