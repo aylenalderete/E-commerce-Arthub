@@ -39,11 +39,9 @@ export default function BuyUser() {
                         </div>
 
                         <p>Quieres ser artista y vender tus obras? Solicitalo <Link className={table.links} to='/editProfile'>aquí</Link></p>
-                        {/* AGREGAR BOTON ACA */}
+
                         <button className={style.logOut} onClick={() => history.push(`/editarperfil/`)}>
                             Editar perfil </button>
-                        <button className={style.logOut}>
-                            Cerrar sesion </button>
                     </div>
                     <div className={style.containerPic}>
                         <img className={style.userPic} src={!userData.profilepic ? NotFound : userData.profilepic} alt='User Pic' />
