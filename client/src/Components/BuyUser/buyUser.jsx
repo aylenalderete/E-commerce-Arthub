@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import NavBar from '../../Components/NavBar/NavBar';
-import { Link } from 'react-router-dom';
-import userPic from '../../Images/elcapitan.jpg';
+import { Link, useHistory } from 'react-router-dom';
 import style from '../AdminUser/adminuser.module.css';
 import { useSelector, useDispatch } from 'react-redux';
 import NotFound from '../Assets/profPic.jpg';
@@ -25,6 +24,7 @@ export default function BuyUser() {
     //get user orders
     const userOrders = useSelector(state => state.userOrders);
 
+    let history = useHistory()
     return (
         <div className={style.mainContainer}>
             <NavBar renderTop={false} />
@@ -40,6 +40,8 @@ export default function BuyUser() {
 
                         <p>Quieres ser artista y vender tus obras? Solicitalo <Link className={table.links} to='/editProfile'>aquí</Link></p>
                         {/* AGREGAR BOTON ACA */}
+                        <button className={style.logOut} onClick={() => history.push(`/editarperfil/`)}>
+                            Editar perfil </button>
                         <button className={style.logOut}>
                             Cerrar sesion </button>
                     </div>
