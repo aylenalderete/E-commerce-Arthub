@@ -10,7 +10,7 @@ module.exports = (sequelize) => {
                 primaryKey: true,
             },
             state: {
-                type: DataTypes.STRING,
+                type: DataTypes.ENUM(['pending', 'fullfilled']),
                 allowNull: false,
             },
             total_price: {

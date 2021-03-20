@@ -1,8 +1,7 @@
-
-const server = require('express').Router();
-const jwt = require('jsonwebtoken')
-const verifyToken = require('./verifyToken')
-const bcrypt = require('bcryptjs')
+const server = require("express").Router();
+const jwt = require("jsonwebtoken");
+const verifyToken = require("./verifyToken");
+const bcrypt = require("bcryptjs");
 const {
 	User,
 	Category,
@@ -11,7 +10,6 @@ const {
 	Lineorder,
 	Product,
 } = require("../db.js");
-
 
 // 1: Get all users
 // No password
@@ -162,12 +160,41 @@ server.put("/:id", async (req, res) => {
 		console.log(err);
 	}
 });
+// esta funcion actualiza el precio total del carrito
+async function updateCartTotalPrice(userId) {
+	try {
+		const cartToUpdate = await Shoppingcart.findOne({
+			where: { userId, state: "pending" },
+			include: [
+				{
+					model: Lineorder,
+					include: [{ model: Product, include: [{ model: Image }] }],
+				},
+			],
+		});
+
+		if (cartToUpdate) {
+			var new_total_price = 0;
+			await cartToUpdate.lineorders.map((m) => {
+				var lineorder_total_price = parseInt(m.quantity * m.unit_price);
+				new_total_price += lineorder_total_price;
+			});
+			cartToUpdate.total_price = new_total_price;
+			await cartToUpdate.save();
+		} else {
+			return false;
+		}
+	} catch (e) {
+		console.log(e);
+	}
+}
 
 // 5: Trae la última ORDEN abierta que tenga el usuario.
 // Cuando el usuario haga el checkout, esa orden se cerrará y se creará una nueva orden vacía que este abierta.
 
-server.get("/:idUser/cart", (req, res) => {
-	Shoppingcart.findOne({
+server.get("/:idUser/cart", async (req, res) => {
+	await updateCartTotalPrice(req.params.idUser);
+	await Shoppingcart.findOne({
 		where: { userId: req.params.idUser, state: "pending" },
 		include: [
 			{
@@ -222,15 +249,11 @@ server.delete("/:idUser/cart", async (req, res) => {
 	}
 });
 
-// 7: Agrega item a carrito 
+// 7: Agrega item a carrito
+
 server.post("/:idUser/cart", async (req, res) => {
 	const { idUser: userId } = req.params;
 	const { productId, quantity } = req.body;
-
-
-
-
-
 
 	try {
 		//Chequeamos que el usuario exista por ID para avisar en caso contrario
@@ -243,18 +266,49 @@ server.post("/:idUser/cart", async (req, res) => {
 			quantity,
 			unit_price: productToAdd.dataValues.price,
 		});
-		const newCart = await Shoppingcart.create({
-			state: "pending",
-			total_price:
-				newLineorder.dataValues.unit_price *
-				newLineorder.dataValues.quantity,
-			userId,
+
+		let cartNew = await Shoppingcart.findOne({
+			where: {
+				state: "pending",
+				userId,
+			},
 		});
-		await productToAdd.setLineorder(newLineorder);
-		await newCart.setLineorders(newLineorder);
-		res.json({ message: "Shoppingcart created" });
+
+		if (!cartNew) {
+			cartNew = await Shoppingcart.create({
+				state: "pending",
+				total_price:
+					newLineorder.dataValues.unit_price *
+					newLineorder.dataValues.quantity,
+				userId,
+			});
+		}
+		//Chequeamos que el producto no este en el shoppingcart para no repetirlo
+		const alreadyInCart = await Shoppingcart.findOne({
+			where: { userId, state: "pending" },
+			include: [
+				{
+					model: Lineorder,
+
+					include: [
+						{ model: Product, where: { id_product: productId } },
+					],
+				},
+			],
+		});
+		// si alreadyInCart existe quiere decir que el producto ya esta en el carrito
+		if (alreadyInCart) {
+			return res.json({
+				message: "This product is already in your ShoppingCart!",
+			});
+		} else {
+			await productToAdd.setLineorder(newLineorder.dataValues.id_line);
+			await cartNew.addLineorder(newLineorder.dataValues.id_line);
+			await cartNew.save();
+			res.json(cartNew);
+		}
 	} catch (error) {
-		res.status(500).send("Error");
+		res.status(500).send(error);
 	}
 });
 
@@ -276,66 +330,76 @@ server.put("/:idUser/cart", async (req, res) => {
 		const quantityId = cartToEdit.lineorders[0].id_line;
 		const lineOrderToEdit = await Lineorder.findOne({
 			where: { id_line: quantityId },
+			include: [
+				{
+					model: Product,
+				},
+			],
 		});
-		lineOrderToEdit.quantity = quantity;
-		await lineOrderToEdit.save();
-		await cartToEdit.reload();
-		await console.log(cartToEdit.lineorders);
+		const stock = parseInt(lineOrderToEdit.product.stock);
 
-		res.json({
-			message: "Quantity updated",
-		});
+		if (quantity > stock) {
+			return res.json({ message: "Not enough stock of this product" });
+		}
+		if (quantity < 1) {
+			return res.json({ message: "Quantity less than 1 is not allowed" });
+		} else {
+			lineOrderToEdit.quantity = parseInt(quantity);
+			await lineOrderToEdit.save();
+			await cartToEdit.save();
+
+			await cartToEdit.reload();
+			await lineOrderToEdit.reload();
+			// console.log(lineOrderToEdit);
+			res.json({ message: "Quantity Updated!" });
+		}
 	} catch (error) {
 		console.log(error);
 		res.status(500).send("Error");
 	}
 });
 
-server.post('/signin/algo', async (req, res, next) => {
-
+server.post("/signin/algo", async (req, res, next) => {
 	const { username, password } = req.body;
 
 	const compare = async (password, passwordDataBase) => {
 		return bcrypt.compare(password, passwordDataBase);
 	};
 
-
-
 	User.findOne({
-		where: { username: username } //Verify if username is correct
+		where: { username: username }, //Verify if username is correct
 	})
-		.then(async user => {
+		.then(async (user) => {
 			if (user) {
-				const comparer = await compare(password, user.password)
+				const comparer = await compare(password, user.password);
 
-				if (comparer) { //Verify if password is correct
+				if (comparer) {
+					//Verify if password is correct
 
 					//create token
-					let token = jwt.sign({ id: user.id }, 'secret_key', {
-						expiresIn: 60 * 60 * 24
-					})
-					user.password = '';
+					let token = jwt.sign({ id: user.id }, "secret_key", {
+						expiresIn: 60 * 60 * 24,
+					});
+					user.password = "";
 					res.json({
 						user: user,
 						auth: true,
-						token
-					})
+						token,
+					});
 				} else {
-					res.json('contraseña incorrecta')
+					res.json("contraseña incorrecta");
 				}
 			} else {
-				res.json('usuario inexistente')
+				res.json("usuario inexistente");
 			}
 		})
-		.catch(err => {
-			console.log(err)
-			res.json(err)
-		})
-
-})
+		.catch((err) => {
+			console.log(err);
+			res.json(err);
+		});
+});
 
 server.post("/userdata/token", verifyToken, (req, res, next) => {
-
 	User.findByPk(req.userId)
 		.then((user) => {
 			user.password = 0;
@@ -345,10 +409,9 @@ server.post("/userdata/token", verifyToken, (req, res, next) => {
 			console.log(err);
 			res.json(err);
 		});
+});
 
-})
-
-// 9: Retorna todas las ordenes de usuario (id) pasado por params 
+// 9: Retorna todas las ordenes de usuario (id) pasado por params
 server.get("/:id/orders", async (req, res) => {
 	const { id } = req.params;
 
@@ -365,41 +428,42 @@ server.get("/:id/orders", async (req, res) => {
 		if (orderToReturn.length > 0) {
 			res.json(orderToReturn);
 		}
-		res.json({ message: `Could not find order associated with user id: ${id}` });
+		res.json({
+			message: `Could not find order associated with user id: ${id}`,
+		});
 	} catch {
 		(err) => {
 			console.log(err);
 			res.json(err);
 		};
 	}
-
 });
 
-// 10: Elimina lineorder de shopping cart y actualiza precio total de order 
+// 10: Elimina lineorder de shopping cart y actualiza precio total de order
 server.delete("/order/:idorder/lineorder/:idlineorder", async (req, res) => {
-
 	try {
-
-		await Lineorder.destroy({ where: { id_line: req.params.idlineorder } })
+		await Lineorder.destroy({ where: { id_line: req.params.idlineorder } });
 
 		const cart = await Shoppingcart.findOne({
 			where: { id_order: req.params.idorder },
-			include: [{ model: Lineorder }]
-		}
-		)
+			include: [{ model: Lineorder }],
+		});
 		let newTotal = 0;
-		cart.dataValues.lineorders.forEach(element => {
-			newTotal += element.dataValues.unit_price * element.dataValues.quantity
+		cart.dataValues.lineorders.forEach((element) => {
+			newTotal +=
+				element.dataValues.unit_price * element.dataValues.quantity;
 		});
 
-		Shoppingcart.update({
-			total_price: newTotal
-		}, {
-			where: { id_order: req.params.idorder }
-		});
+		Shoppingcart.update(
+			{
+				total_price: newTotal,
+			},
+			{
+				where: { id_order: req.params.idorder },
+			}
+		);
 
 		res.send(`Line order with id ${req.params.idlineorder} was deleted`);
-
 	} catch {
 		(err) => {
 			console.log(err);
@@ -409,4 +473,3 @@ server.delete("/order/:idorder/lineorder/:idlineorder", async (req, res) => {
 });
 
 module.exports = server;
-

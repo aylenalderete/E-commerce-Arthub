@@ -26,9 +26,11 @@ server.get("/", async (req, res) => {
                 ]
             });
             if (ordersToReturn.length > 0) {
-                res.json(ordersToReturn)
+                res.json(ordersToReturn);
             } else {
-                res.json({ message: `Could not find orders with status: ${status}` });
+                res.json({
+                    message: `Could not find orders with status: ${status}`,
+                });
             }
         } else {
             const allOrders = await Shoppingcart.findAll({
@@ -40,7 +42,7 @@ server.get("/", async (req, res) => {
                 ]
             });
             if (allOrders.length > 0) {
-                res.json(allOrders)
+                res.json(allOrders);
             } else {
                 res.json({ message: "No orders found" });
             }
@@ -79,7 +81,6 @@ server.get("/:id", async (req, res) => {
         };
     }
 });
-
 
 // 3: PUT /orders/:id
 // Ruta para modificar una Orden

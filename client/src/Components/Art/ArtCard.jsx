@@ -9,16 +9,25 @@ import deleteproduct from '../../Actions/deleteproduct';
 import getproductid from '../../Actions/getproductid';
 import cart from '../../Images/shopping-cart.svg';
 
+import addToCart from "../../Actions/addToCart.js";
+import getUserOrder from '../../Actions/getUserOrder';
 
 
 function ArtCard({ name, pic, artist, id, idArtist, price, stock, setFlag }) {
   const userType = useSelector(state => state.userData.type);
 
+
+  const dispatch = useDispatch();
+
+  const handlePostUserOrder = async (idUser, productId) => {
+    await dispatch(addToCart(idUser, productId));
+    dispatch(getUserOrder(idUser))
+  };
+  
   const isOpenDeleteProd = useSelector(state => state.isOpenDeleteProd);
 
   const [productId, setProductId] = useState()
 
-  const dispatch = useDispatch()
 
   function handleDeleteClick (id) {
     isOpenDeleteProd=== false ? dispatch(deleteproduct(true)) : dispatch(deleteproduct(false));
@@ -31,7 +40,9 @@ function ArtCard({ name, pic, artist, id, idArtist, price, stock, setFlag }) {
     return (
       <div className={style.cardContainer}>
         <div className={style.imgContainer}>
+        <Link className={style.linksA} to={`/coleccion/${id}`}>
           <img className={style.cardImg} alt="artpic" src={pic}></img>
+          </Link>
         </div>
         <div className={style.linksArtCard}>
           <Link className={style.linksA} to={`/coleccion/${id}`}>
@@ -42,11 +53,28 @@ function ArtCard({ name, pic, artist, id, idArtist, price, stock, setFlag }) {
           <Link className={style.linksA} to={`/artistas/${idArtist}`}>
             <h5 className={style.artist}>Artista: {artist}</h5>
           </Link>
+
+          {
+            stock === 0 &&
+            <Link className={style.linksA} onClick={() => alert("Producto no disponible")}>
+              <p className={style.btn}>Añadir al carrito</p>
+            </Link>
+          }
+          {/* {
+            stock > 0 &&
+            <Link className={style.linksA} >
+              <button onClick={() => handlePostUserOrder(4, id)} className={style.btn} >
+                Añadir al carrito
+             </button>
+
           
+          { */}
           {
             stock > 0 &&
             <Link className={style.cartCont} to='/carrito'>
+              <button onClick={() => handlePostUserOrder(4, id)} className={style.btn} >
               <img className={style.cart} src={cart}></img>
+              </button>
             </Link>
           }
         </div>
@@ -54,8 +82,8 @@ function ArtCard({ name, pic, artist, id, idArtist, price, stock, setFlag }) {
     );
   }
 
-// if user is artist type 
-  else if (userType === 'artist' || userType === 'admin'){
+  // if user is artist type 
+  else if (userType === 'artist' || userType === 'admin') {
     return (
       <div className={style.cardContainer}>
         {isOpenDeleteProd === true && <DeleteProduct productId = {productId} setFlag = {setFlag}> 
@@ -63,12 +91,18 @@ function ArtCard({ name, pic, artist, id, idArtist, price, stock, setFlag }) {
         <div className={style.imgContainer}>
           <img className={style.cardImg} alt="artpic" src={pic}></img>
           <Link to={`/editarproducto/${id}`} className={style.btnEdit}>
-            <img className={style.icon} src={editPiece} alt='edit item'/>
+            <img className={style.icon} src={editPiece} alt='edit item' />
           </Link>
+          <Link to={`/editarproducto/${id}`} className={style.btnDelete}>
+            <img className={style.icon} src={deletePiece} alt='delete item' />
+          </Link>
+
+
             <div className={style.btnDelete}>
             <img className={style.icon} src={deletePiece} alt='delete item' onClick={() => handleDeleteClick(id)} />
             </div>
             
+
         </div>
         <div className={style.linksArtCard}>
           <Link className={style.linksA} to={`/coleccion/${id}`}>

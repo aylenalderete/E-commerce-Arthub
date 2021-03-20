@@ -1,11 +1,11 @@
-// Importante: En este archivo se encuentran unificados el store y su respectivo reducer! 
+// Importante: En este archivo se encuentran unificados el store y su respectivo reducer!
 
-import { createStore, applyMiddleware } from 'redux';
+import { createStore, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
-//redux dev tool para browser 
-import { composeWithDevTools } from 'redux-devtools-extension';
+//redux dev tool para browser
+import { composeWithDevTools } from "redux-devtools-extension";
 
-// estado inicial 
+// estado inicial
 const initialState = {
     //global states
     products: [],
@@ -16,11 +16,14 @@ const initialState = {
     //filter states
     isOpenFilters: false,
     filteredProducts: [],
-    //artist states 
+    //artist states
     usersArtists: [],
     artistsProducts: [],
     //carousel states
     isActiveFilters: false,
+
+    // shopping cart
+    shoppingCart: [],
 
     userData: {
         id: 0,
@@ -30,8 +33,7 @@ const initialState = {
         email: "",
         birth: "",
         type: "",
-        state: ""
-
+        state: "",
     },
 
     carouselActive: 1,
@@ -44,6 +46,7 @@ const initialState = {
 
     //Delete product state
     isOpenDeleteProd: false,
+
     productId:0,
 
     //user orders state
@@ -51,19 +54,18 @@ const initialState = {
 
 }
 
-//reducer 
+
+//reducer
 const reducer = function (state = initialState, action) {
     switch (action.type) {
-
-
         //aca crear los switch cases de cada action
 
         case "GET_PRODUCTS":
             if (state.filteredProducts.length > 0 && !state.search[0]) {
                 return {
                     ...state,
-                    filteredProducts: action.payload
-                }
+                    filteredProducts: action.payload,
+                };
             }
             return {
                 ...state,
@@ -76,95 +78,92 @@ const reducer = function (state = initialState, action) {
                 products: action.payload,
             };
 
-        case 'SET_URL_IMAGES':
-
+        case "SET_URL_IMAGES":
             return {
                 ...state,
-                urlImages: action.payload
-            }
+                urlImages: action.payload,
+            };
 
-        case 'GET_CATEGORIES':
+        case "GET_CATEGORIES":
             return {
                 ...state,
                 categories: action.payload,
-            }
-
-        case 'SET_FILTERS':
-
-            return {
-                ...state,
-                filteredProducts: action.payload
-            }
-
-        case 'SHOW_FILTERS':
-
-            return {
-                ...state,
-                isOpenFilters: action.payload
-            }
-
-        case 'SIGN_OUT':
-
-            return {
-              ...state,
-              userData: {
-                id: 0,
-                username: "",
-                name: "",
-                lastname: "",
-                email: "",
-                birth: "",
-                type: "",
-                state: "",
-              }
             };
 
-        case 'GET_USER_PRODUCTS':
+        case "SET_FILTERS":
             return {
                 ...state,
-                products: action.payload
-            }
+                filteredProducts: action.payload,
+            };
 
-        case 'GET_USERS_ARTISTS':
+        case "SHOW_FILTERS":
             return {
                 ...state,
-                usersArtists: action.payload
-            }
+                isOpenFilters: action.payload,
+            };
 
-        case 'GET_ARTISTS_PRODUCTS':
+        case "SIGN_OUT":
             return {
                 ...state,
-                artistsProducts: action.payload
-            }
+                userData: {
+                    id: 0,
+                    username: "",
+                    name: "",
+                    lastname: "",
+                    email: "",
+                    birth: "",
+                    type: "",
+                    state: "",
+                },
+            };
 
-        case 'CLEAR_URL_IMAGES':
+        case "GET_USER_PRODUCTS":
             return {
                 ...state,
-                urlImages: []
-            }
+                products: action.payload,
+            };
 
-        case 'SEARCH_FILTERS':
-            let searchF = state.search.filter(f => f.categories.find(x => x.name === action.payload))
+        case "GET_USERS_ARTISTS":
+            return {
+                ...state,
+                usersArtists: action.payload,
+            };
+
+        case "GET_ARTISTS_PRODUCTS":
+            return {
+                ...state,
+                artistsProducts: action.payload,
+            };
+
+        case "CLEAR_URL_IMAGES":
+            return {
+                ...state,
+                urlImages: [],
+            };
+
+        case "SEARCH_FILTERS":
+            let searchF = state.search.filter((f) =>
+                f.categories.find((x) => x.name === action.payload)
+            );
             if (!searchF[0]) {
-                searchF = 'void'
+                searchF = "void";
             }
             return {
                 ...state,
-                search: searchF
-            }
+                search: searchF,
+            };
 
-        case 'ACTIVE_FILTERS':
+        case "ACTIVE_FILTERS":
             return {
                 ...state,
-                isActiveFilters: action.payload
-            }
+                isActiveFilters: action.payload,
+            };
 
         case "SIGN_IN":
             if (action.payload.auth === true)
                 return {
                     ...state,
                     userData: action.payload.user,
-
                 };
             else
                 return {
@@ -175,62 +174,67 @@ const reducer = function (state = initialState, action) {
             return {
                 ...state,
                 userData: action.payload,
-            }
+            };
 
-        case 'MOVE_CAROUSEL':
-            if (action.payload === 'next' && state.carouselActive < 3) {
+        case "MOVE_CAROUSEL":
+            if (action.payload === "next" && state.carouselActive < 3) {
                 return {
                     ...state,
-                    carouselActive: state.carouselActive + 1
-                }
+                    carouselActive: state.carouselActive + 1,
+                };
             }
 
-
-       
-
-            if (action.payload === 'prev' && state.carouselActive > 1) {
+            if (action.payload === "prev" && state.carouselActive > 1) {
                 return {
                     ...state,
-                    carouselActive: state.carouselActive - 1
-                }
+                    carouselActive: state.carouselActive - 1,
+                };
             }
 
-            if (action.payload === 'next' && state.carouselActive === 3) {
+            if (action.payload === "next" && state.carouselActive === 3) {
                 return {
                     ...state,
-                    carouselActive: 1
-                }
+                    carouselActive: 1,
+                };
             }
 
-            if (action.payload === 'prev' && state.carouselActive === 1) {
+            if (action.payload === "prev" && state.carouselActive === 1) {
                 return {
                     ...state,
-                    carouselActive: 3
-                }
+                    carouselActive: 3,
+                };
             }
 
-        case 'IS_USER_LOGGED':
+        case "IS_USER_LOGGED":
             return {
                 ...state,
-                isUserLogged: action.payload}
+                isUserLogged: action.payload,
+            };
 
-              
-               case 'POP_UP_CATEGORY' :
-            return{
+        case "POP_UP_CATEGORY":
+            return {
                 ...state,
-                isOpenCategory: action.payload
-            }
+                isOpenCategory: action.payload,
+            };
 
-        case 'POP_UP_DELETE_CATEGORY' :
-            return{
+        case "POP_UP_DELETE_CATEGORY":
+            return {
                 ...state,
-                isOpenDeleteCat: action.payload
-            }
-        case 'POP_UP_DELETE_PRODUCT' :
-            return{
+                isOpenDeleteCat: action.payload,
+            };
+        case "POP_UP_DELETE_PRODUCT":
+            return {
                 ...state,
-                isOpenDeleteProd: action.payload
-            }
+                isOpenDeleteProd: action.payload,
+            };
+
+
+        
+        case "GET_USER_ORDER":
+            return {
+                ...state,
+                shoppingCart: action.payload,
+            };
 
         case "PRODUCT_ID" :
             return {
@@ -245,13 +249,26 @@ const reducer = function (state = initialState, action) {
             }
 
 
+        case "DELETE_USER_ORDER":
+            return {
+                ...state,
+            };
+
+        case "ADD_TO_CART":
+            return {
+                ...state,
+            };
+        case "CHANGE_QUANTITY":
+            return {
+                ...state,
+            };
+
         default:
             return state;
-
-
     }
-}
+};
 
-
-
-export default createStore(reducer, composeWithDevTools(applyMiddleware(thunk)));
+export default createStore(
+    reducer,
+    composeWithDevTools(applyMiddleware(thunk))
+);
