@@ -8,6 +8,7 @@ import changeQuantity from "../../Actions/changeQuantity.js";
 export default function LineOrder({ lineOrderElement }) {
 	const isUserLogged = useSelector((state) => state.isUserLogged);
 	const shoppingCart = useSelector((state) => state.shoppingCart);
+	const userData = useSelector((state) => state.userData);
 	const dispatch = useDispatch();
 	const handleDeleteUserOrder = async (idorder, idlineorder, idUser) => {
 		await dispatch(deleteUserOrder(idorder, idlineorder));
@@ -34,11 +35,11 @@ export default function LineOrder({ lineOrderElement }) {
 				<button
 					onClick={() =>
 						handleQuantity(
-							shoppingCart.userId,
+							userData.id,
 							lineOrderElement.id_line,
 							lineOrderElement.quantity - 1
 						)
-					} 
+					}
 				>
 					-
 				</button>
@@ -46,7 +47,7 @@ export default function LineOrder({ lineOrderElement }) {
 				<button
 					onClick={() =>
 						handleQuantity(
-							shoppingCart.userId,
+							userData.id,
 							lineOrderElement.id_line,
 							lineOrderElement.quantity + 1
 						)
@@ -60,7 +61,7 @@ export default function LineOrder({ lineOrderElement }) {
 					handleDeleteUserOrder(
 						shoppingCart.id_order,
 						lineOrderElement.id_line,
-						shoppingCart.userId
+						userData.id
 					)
 				}
 			>

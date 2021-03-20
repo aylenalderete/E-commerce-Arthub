@@ -67,7 +67,7 @@ Product.belongsTo(User, {
 	onDelete: "CASCADE",
 });
 
-Product.hasOne(Lineorder);
+Product.hasMany(Lineorder);
 Lineorder.belongsTo(Product);
 
 Shoppingcart.hasMany(Lineorder);
