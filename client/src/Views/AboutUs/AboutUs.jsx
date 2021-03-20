@@ -1,31 +1,17 @@
 import React from 'react'
 import NavBar from '../../Components/NavBar/NavBar.jsx'
 import style from './aboutUs.module.css'
+import Team from '../../Components/AboutSection/aboutSection';
 
-function AboutUs() {
+export default function AboutUs() {
     return (
-        <div className={style.mainContainer}>
-            <NavBar renderTop={false} />
-        <div className = {style.container}>
-            <div className = {style.title}>
-                <h1>nosotros</h1>
-            </div>
-            <div className = {style.text}>
-                <p>érase una vez en Henry...</p>
-            </div>
-            <div className = {style.rectangle}>
-                <div className = {style.text2}>
-                    <h4>
-                        contacto: <br>
-                        </br>dirección@mail.com<br>
-                        </br>29384 383284
-                        
-                    </h4>
-                </div>
-            </div>
-        </div>
-        </div>
+       <div className={style.mainContainer}>
+           <NavBar></NavBar>
+           <div className={style.aboutContainer}>
+           <Team></Team>
+           </div>
+       </div>
     )
 }
 
-export default AboutUs
+
