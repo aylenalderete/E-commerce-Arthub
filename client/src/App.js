@@ -1,7 +1,7 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import axios from 'axios'
 import './App.css';
-import {Route} from 'react-router-dom'
+import { Route } from 'react-router-dom'
 import Home from './Views/Home/Home.jsx';
 import AboutUs from './Views/AboutUs/AboutUs.jsx';
 import Collection from './Views/Collection/Collection.jsx';
@@ -19,34 +19,35 @@ import CreateCategory from './Views/CreateCategory/CreateCategory.jsx';
 import EditProduct from './Components/EditProduct/EditProduct.jsx';
 
 
-
 import signInUsers from './Actions/signInUsers';
-import {useDispatch} from 'react-redux'
+import { useDispatch } from 'react-redux'
 import AllCategories from './Views/AllCategories/AllCategories';
 import Carrito from './Components/PopUpTrolley/PopUpTrolley.jsx';
+import EditUser from './Views/EditUser/EditUser';
+import EditCategories from './Components/EditCategories/EditCategories';
 
 
 function App() {
   const dispatch = useDispatch();
-useEffect(() => {
-  var token = localStorage.getItem('token')
-    async function request(){
-    if(!localStorage.getItem('token')){
-      return
-    }
-    else {
-     axios
-        .post("http://localhost:3001/users/userdata/token", {
-          headers: {
-            "Authorization": `${token}`,
-          },
-        })
-        .then((result) => dispatch(signInUsers(result.data)));
-    }
+  useEffect(() => {
+    var token = localStorage.getItem('token')
+    async function request() {
+      if (!localStorage.getItem('token')) {
+        return
+      }
+      else {
+        axios
+          .post("http://localhost:3001/users/userdata/token", {
+            headers: {
+              "Authorization": `${token}`,
+            },
+          })
+          .then((result) => dispatch(signInUsers(result.data)));
+      }
 
-  }
-  request()
-}, [])
+    }
+    request()
+  }, [])
 
 
   return (
@@ -57,16 +58,16 @@ useEffect(() => {
       <Route path="/ingresar" component={LogIn}></Route>
       <Route path="/registrarse" component={SignIn}></Route>
       <Route exact path="/tableroadmin" component={ArtistAdminDashboard}></Route>
-      <Route exact path="/crearproducto" component= {CreateProduct}></Route> 
+      <Route exact path="/crearproducto" component={CreateProduct}></Route>
       <Route path="/artistas" exact component={Artists}></Route>
-      <Route path="/editarproducto/:id" 
-      render={({match}) => (
-        <EditProduct id={match.params.id}/>
-      )}></Route>
-      <Route path="/artistas/:artistId" 
-      render={({match}) => (
-        <ArtistProfile artistId={match.params.artistId}></ArtistProfile>
-      )}></Route>
+      <Route path="/editarproducto/:id"
+        render={({ match }) => (
+          <EditProduct id={match.params.id} />
+        )}></Route>
+      <Route path="/artistas/:artistId"
+        render={({ match }) => (
+          <ArtistProfile artistId={match.params.artistId}></ArtistProfile>
+        )}></Route>
       <Route
         exact
         path="/coleccion/:idArte"
@@ -78,7 +79,8 @@ useEffect(() => {
       <Route path="/misproductos" component={ArtistsProducts}></Route>
       <Route path="/crearcategorias" component={CreateCategory}></Route>
       <Route path="/categorias" component={AllCategories}></Route>
-      <Route path= '/carrito' component={Carrito}/>
+      <Route path='/carrito' component={Carrito} />
+      <Route path='/editarperfil/' component={EditUser} />
 
 
 
