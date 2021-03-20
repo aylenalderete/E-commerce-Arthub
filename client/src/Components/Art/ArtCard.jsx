@@ -5,8 +5,9 @@ import {useSelector, useDispatch} from 'react-redux';
 import editPiece from '../../Images/edit.svg';
 import deletePiece from '../../Images/delete.svg';
 import DeleteProduct from '../DeleteProduct/DeleteProduct.jsx';
-import deleteproduct from '../../Actions/deleteproduct'
-import getproductid from '../../Actions/getproductid'
+import deleteproduct from '../../Actions/deleteproduct';
+import getproductid from '../../Actions/getproductid';
+import cart from '../../Images/shopping-cart.svg';
 
 
 
@@ -34,23 +35,18 @@ function ArtCard({ name, pic, artist, id, idArtist, price, stock, setFlag }) {
         </div>
         <div className={style.linksArtCard}>
           <Link className={style.linksA} to={`/coleccion/${id}`}>
-            <h5 className={style.text}>Pieza: {name}</h5>
+            <h5 className={style.name}>{name}</h5>
           </Link>
           <h5 className={style.text}>Precio: {"$ " + price}</h5>
-          <h5 className={style.text}>{stock > 0 ? `Stock: ${stock}` : "Producto no disponible"}</h5>
+         {stock > 0 ? (<h5 className={style.text}>{`Stock: ${stock}`}</h5>) : <h5 className={style.noStock}>Sin stock</h5>}
           <Link className={style.linksA} to={`/artistas/${idArtist}`}>
-            <h5 className={style.text}>Artista: {artist}</h5>
+            <h5 className={style.artist}>Artista: {artist}</h5>
           </Link>
-          {
-            stock === 0 &&
-          <Link className={style.linksA} onClick={() => alert("Producto no disponible")}>
-            <p className={style.btn}>Añadir al carrito</p>
-          </Link>
-          }
+          
           {
             stock > 0 &&
-            <Link className={style.linksA} to='/carrito'>
-              <p className={style.btn}>Añadir al carrito</p>
+            <Link className={style.cartCont} to='/carrito'>
+              <img className={style.cart} src={cart}></img>
             </Link>
           }
         </div>
