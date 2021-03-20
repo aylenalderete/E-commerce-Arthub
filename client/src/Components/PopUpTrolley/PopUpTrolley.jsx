@@ -8,6 +8,7 @@ import LineOrder from "../LineOrder/LineOrder";
 function PopUpTrolley() {
     const isUserLogged = useSelector((state) => state.isUserLogged);
     const shoppingCart = useSelector((state) => state.shoppingCart);
+    const userData = useSelector((state) => state.userData);
     const dispatch = useDispatch();
 
     const handleLog = () => {
@@ -17,12 +18,9 @@ function PopUpTrolley() {
     // esto se jarcodea con 4 como el idUser que indica el acceso del usuario
 
     useEffect(() => {
-        dispatch(getUserOrder(4));
+        dispatch(getUserOrder(userData.id));
     }, []);
 
-
-
-   
     return (
         <div className={style.mainContainer}>
             <label className={style.myTrolley}>Mi carrito</label>
@@ -30,7 +28,7 @@ function PopUpTrolley() {
             <div className={style.container}>
                 <div className={style.card}>
                     <h3>Imagen</h3>
-                    <h3>Producto</h3> 
+                    <h3>Producto</h3>
                     <h3>Cantidad</h3>
                     <h3>Eliminar</h3>
                     <h3>Valor Unid</h3>
@@ -46,7 +44,10 @@ function PopUpTrolley() {
             </div>
 
             <div className={style.btnContainer}>
-                <h3>Precio Total : $ {shoppingCart.total_price ? shoppingCart.total_price : 0}</h3>
+                <h3>
+                    Precio Total : ${" "}
+                    {shoppingCart.total_price ? shoppingCart.total_price : 0}
+                </h3>
                 <button className={style.btnPay}>Pagar</button>
             </div>
         </div>

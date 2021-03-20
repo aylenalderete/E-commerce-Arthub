@@ -33,7 +33,7 @@ server.get("/", (req, res) => {
 
 // 2: Create new user
 server.post("/", async function (req, res) {
-	console.log('entro en la ruta')
+	console.log("entro en la ruta");
 	let {
 		username,
 		name,
@@ -45,74 +45,77 @@ server.post("/", async function (req, res) {
 		type,
 		state,
 	} = req.body;
-const finder = await User.findOne({
-	where: {
-		username: username
+	const finder = await User.findOne({
+		where: {
+			username: username,
+		},
+	});
+	if (finder) {
+		return res.json({
+			msgUsername: "El usuario ya existe",
+		});
 	}
-})
-if(finder){return res.json({
-	msgUsername : 'El usuario ya existe'
-})}
-if(!finder){
-	const emailFinder = await User.findOne({
-where : {
-	email: email
-}
-	})
-	if(emailFinder){return res.json({
-		msgEmail : 'Este email ya esta registrado'
-	})}
-	if(!emailFinder){
-let newState = "";
-if (type === "artist") {
-  newState = "pending";
-}
-if (type === "user") {
-  newState = "approved";
-}
-if (type === "admin") {
-  newState = "approved";
-}
+	if (!finder) {
+		const emailFinder = await User.findOne({
+			where: {
+				email: email,
+			},
+		});
+		if (emailFinder) {
+			return res.json({
+				msgEmail: "Este email ya esta registrado",
+			});
+		}
+		if (!emailFinder) {
+			let newState = "";
+			if (type === "artist") {
+				newState = "pending";
+			}
+			if (type === "user") {
+				newState = "approved";
+			}
+			if (type === "admin") {
+				newState = "approved";
+			}
 
-try {
-  const crypter = async (password) => {
-    const salt = await bcrypt.genSalt(10);
-    return bcrypt.hash(password, salt);
-  };
+			try {
+				const crypter = async (password) => {
+					const salt = await bcrypt.genSalt(10);
+					return bcrypt.hash(password, salt);
+				};
 
-  const hashPass = await crypter(password);
+				const hashPass = await crypter(password);
 
-  const newUser = await User.create({
-    username,
-    name,
-    lastname,
-    profilepic,
-    email,
-    password: hashPass,
-    birth,
-    type,
-    state: newState,
-  }).then((newuser) => {
-    const token = jwt.sign({ id: newuser.id }, "secret_key", {
-      expiresIn: 60 * 60 * 24,
-    });
-    newuser.password = " ";
-    let obj = { user: newuser, auth: true, token };
-    console.log(obj);
-    res.json(obj);
-  });
-  // const img = images.map(url => ({ url }))
-  // const userImage = await Image.bulkCreate(img)
-  // await newUser.setImages(userImage.map(i => i.dataValues.id))
-  // console.log(newUser)
-  console.log("User successfully created");
-} catch (err) {
-  console.log(err);
-  res.status(500).json({ message: err });
-}
+				const newUser = await User.create({
+					username,
+					name,
+					lastname,
+					profilepic,
+					email,
+					password: hashPass,
+					birth,
+					type,
+					state: newState,
+				}).then((newuser) => {
+					const token = jwt.sign({ id: newuser.id }, "secret_key", {
+						expiresIn: 60 * 60 * 24,
+					});
+					newuser.password = " ";
+					let obj = { user: newuser, auth: true, token };
+					console.log(obj);
+					res.json(obj);
+				});
+				// const img = images.map(url => ({ url }))
+				// const userImage = await Image.bulkCreate(img)
+				// await newUser.setImages(userImage.map(i => i.dataValues.id))
+				// console.log(newUser)
+				console.log("User successfully created");
+			} catch (err) {
+				console.log(err);
+				res.status(500).json({ message: err });
+			}
+		}
 	}
-}
-	
 });
 
 // 3: Get user by id
@@ -302,7 +305,7 @@ server.post("/:idUser/cart", async (req, res) => {
 				message: "This product is already in your ShoppingCart!",
 			});
 		} else {
-			await productToAdd.setLineorder(newLineorder.dataValues.id_line);
+			await productToAdd.addLineorder(newLineorder.dataValues.id_line);
 			await cartNew.addLineorder(newLineorder.dataValues.id_line);
 			await cartNew.save();
 			res.json(cartNew);
