@@ -5,7 +5,8 @@ import style from "./adminuser.module.css";
 import { Link, useHistory } from "react-router-dom";
 import userPic from '../../Images/elcapitan.jpg';
 import CarouselCategories from '../CarouselCategories/carouselCategories';
-import Edit from '../../Images/edit.svg'
+import Edit from '../../Images/edit.svg';
+import Add from '../../Images/add-file.svg';
 
 function AdminUser() {
 
@@ -22,21 +23,27 @@ function AdminUser() {
             <h1 className={style.name} >{userData.name}</h1>
             <p className={style.rol}>Rol:{userData.type} </p>
 
-            <button className={style.logOut} onClick={() => history.push(`/editarperfil/`)}>
+            <button className={style.editProfile} onClick={() => history.push(`/editarperfil/`)}>
               Editar perfil </button>
 
           </div>
           <div className={style.containerPic}>
-            <img className={style.userPic} src={userData.profilepic} alt='User Pic' />
-            <button className={style.editBtn}>
+            <img className={style.userPic} src={userData.profilepic} alt='User Pic'/>
+            <button onClick={()=> history.push('/editarperfil')} className={style.editBtn}>
               <img className={style.edit} src={Edit} alt="" />
             </button>
           </div>
         </div>
         <div className={style.categories}>
+          <div className={style.alignTitle}>
           <h2 className={style.title}>Categorias</h2>
+          <Link className={style.linkAdd} to='/crearcategorias'>
+            <img className={style.addCategory} src={Add} alt='Agrega nueva categoría'/>
+            <p className={style.addText}>Agregar categoría</p>
+          </Link>
+          </div>
           <CarouselCategories />
-          <Link className={style.link} to='/categorias'>Ver todas</Link>
+          <Link className={style.link} to='/categorias'>Administrar todas</Link>
         </div>
       </div>
 

@@ -19,6 +19,10 @@ function ArtCard({ name, pic, artist, id, idArtist, price, stock, setFlag }) {
   const dispatch = useDispatch();
 
   const handlePostUserOrder = async (idUser, productId) => {
+
+
+
+
     await dispatch(addToCart(idUser, productId));
     dispatch(getUserOrder(idUser));
   };
