@@ -1,8 +1,8 @@
 const arrayOfShoppingcart = [
     {
-        state: "pending",
+        state: "fullfilled",
         total_price: 90,
-        userId: 1,
+        userId: 4,
         lineorder: [
             {
                 unit_price: 10,
@@ -17,24 +17,24 @@ const arrayOfShoppingcart = [
             {
                 unit_price: 10,
                 quantity: 4,
-                productIdProduct: 5,
+                productIdProduct: 1,
             },
         ],
     },
     {
         state: "pending",
         total_price: 43,
-        userId: 2,
+        userId: 1,
         lineorder: [
             {
                 unit_price: 10,
                 quantity: 2,
-                productIdProduct: 2,
+                productIdProduct: 5,
             },
             {
                 unit_price: 5,
                 quantity: 3,
-                productIdProduct: 3,
+                productIdProduct: 2,
             },
             {
                 unit_price: 2,
@@ -65,28 +65,28 @@ const arrayOfShoppingcart = [
             },
         ],
     },
-    {
-        state: "pending",
-        total_price: 60,
-        userId: 4,
-        lineorder: [
-            {
-                unit_price: 5,
-                quantity: 2,
-                productIdProduct: 4,
-            },
-            {
-                unit_price: 10,
-                quantity: 3,
-                productIdProduct: 3,
-            },
-            {
-                unit_price: 5,
-                quantity: 4,
-                productIdProduct: 2,
-            },
-        ],
-    },
+    // {
+    //     state: "pending",
+    //     total_price: 60,
+    //     userId: 4,
+    //     lineorder: [
+    //         {
+    //             unit_price: 5,
+    //             quantity: 2,
+    //             productIdProduct: 4,
+    //         },
+    //         {
+    //             unit_price: 10,
+    //             quantity: 3,
+    //             productIdProduct: 3,
+    //         },
+    //         {
+    //             unit_price: 5,
+    //             quantity: 4,
+    //             productIdProduct: 2,
+    //         },
+    //     ],
+    // },
 ];
 
 module.exports = arrayOfShoppingcart;
