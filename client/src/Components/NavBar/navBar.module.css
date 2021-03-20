@@ -86,7 +86,8 @@
     color:white;
     margin-right: 20px;
     margin-left: 20px;
-    min-height: 100vh;
+    
+  
     
 }
 
@@ -120,6 +121,9 @@
 
 .navMain2{
     border-right: 2px solid white;
+    height: 100vh;
+    position: sticky;
+    top: 0;
 }
 
 .containerUser{
