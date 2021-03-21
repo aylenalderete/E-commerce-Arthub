@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import getCategories from '../../Actions/filter'
 import opencategory from '../../Actions/opencategory'
 import firebase from 'firebase';
+import close from '../../Images/cancel.svg'
 
 function EditCategories(props) {
 
@@ -22,6 +23,8 @@ function EditCategories(props) {
     useEffect(() => {
 
         dispatch(getCategories());
+        return () => {dispatch(opencategory(false))}
+        
     }, []);
 
     useEffect(() => {
@@ -100,37 +103,41 @@ function EditCategories(props) {
         // setErrors(validate()) ---> Hacer despues
     }
 
+    const onClose = () =>{
+        dispatch(opencategory(false))
+    }
     // console.log(category)
 
     return (
         <div className={style.mainDivPopUp}>
-            <h1>edita una categoría</h1>
+            <button onClick={()=>{onClose()}} className={style.btnCloseDiv}>
+                <img className={style.close} src={close} alt="close edit"/>
+            </button>
+            <h1 className={style.title}>Edita una categoría</h1>
             <form className={style.formLabel} onSubmit={handleSubmit} >
-
+                <p className={style.titles}>Nombre:</p>
                 <input className={style.input} onChange={handleChange} type='text' required='required' placeholder='nombre*' name='name' value={theCategory?.name} />
-                <textarea className={style.input} onChange={handleChange} type='text' required='required' placeholder='descripción*' name='description' value={theCategory?.description} />
-                <div className={style.contRadio}>
+                <p className={style.titles}>Descripción:</p>
+                <textarea className={style.textArea} onChange={handleChange} type='text' required='required' placeholder='descripción*' name='description' value={theCategory?.description} />
+                
 
                     <div className={style.radio}>
                         <label for='files' >
                             <div className={style.containerCatPic}>
-                                {upload.picture ? <img width='100' height='100' src={upload.picture} /> : <div className={style.containerCatPic}>
+                                {upload.picture ? <img className={style.picture} src={upload.picture} /> : <div className={style.containerCatPic}>
                                     Seleccionar imagen
             </div>}
 
                             </div>
 
-                            <div className={style.progressBar}>
-                                <progress value={upload.process} ></progress>
-                            </div>
                         </label>
 
                         <input className={style.inputFile} type='file' id='files' onChange={handleUpload} />
                     </div>
-                </div>
+               
                 <div className={style.btnSelect}>
                     <button className={style.btn} type='submit'>
-                        editar
+                        Editar
                     </button>
 
                 </div>
