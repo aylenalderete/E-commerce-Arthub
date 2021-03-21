@@ -1,7 +1,7 @@
 .mainDivPopUp {
     position: fixed;
-    width: 50%;
-    height: 50%;
+    width: 60%;
+    height: fit-content;
     top: 0;
     left: 220px;
     right: 0;
@@ -18,18 +18,42 @@
 
 .input{
     color:white;
-    margin: 10px 10px;
     background-color: transparent;
     border: none;
     border-bottom: 1px solid white;
-    padding: 5px 10px;
+    width:100%;
+    align-self: center;
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+}
+
+.textArea{
+    font-size: 1.2rem;
+    font-family: inherit;
+    background-color: transparent;
+    color:white;
     width: 100%;
+    min-height:30%;
+    border:1px solid white;
+    align-self: center;
+    resize: none;
+}
+
+
+.textArea:focus{
+    outline:none
+}
+
+.input:focus{
+    outline:none; 
 }
 
 
 .formLabel{
     font-size: 1.2rem;
     margin:2px;
+    width:90%;
+    
  }
 
  .btnSelect{
@@ -47,12 +71,18 @@
     background-color: transparent;
     color: white;
     font-size: 15px;
-    border:2px solid white;
+    border:1px solid white;
     cursor: pointer;
+    margin:20px;
+}
+
+.title{
+    font-size:1.5rem;
 }
 
 .btn:hover{
     animation: color 1s infinite;
+   
     
 }
 
@@ -64,19 +94,52 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 110px;
-    width: 110px;
+    height: 150px;
+    width: 150px;
+    object-fit: contain;
     border: 1px solid white;
     cursor: pointer;
 }
-
-.progressBar{
-    display: flex;
-    width: 110px;
+.picture{
+    object-fit: cover;
+    width:150px;
+    height: 150px; 
 }
+
 
 .inputFile{
     display:none;
+}
+.titles{
+    font-size: 1.2rem;
+}
+
+.radio{
+    display:flex;
+    justify-content: center;
+    width:100%;
+    margin-top:20px;
+}
+
+.btnCloseDiv{
+    background-color: transparent;
+    position: absolute;
+    top:0;
+    right:0;
+    border: none;
+    margin: 10px;
+    cursor:pointer;
+
+
+}
+
+.btnCloseDiv{
+    outline:none;
+}
+
+.close{
+    width: 25px;
+    height: 25px;
 }
 
 /*Key Frames*/

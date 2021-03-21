@@ -12,6 +12,7 @@
     justify-content: center;
     border: 1px solid white; 
     z-index: 9999;
+   
 }
 
 .formFilter{
@@ -62,7 +63,23 @@
     animation: color 1s infinite;
 
 }
-
+.btnClose{
+ position: absolute;
+ top:0;
+ right:0;
+ background-color: transparent;
+ cursor:pointer;
+ margin-top: 10px;
+ margin-right: 10px;
+ border:none;
+}
+.btnClose:focus{
+ outline:none;
+}
+.close{
+  width:25px;
+  height: 25px;
+}
 @keyframes color {
     0% {
           background-color: #f427ed78; 

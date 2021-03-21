@@ -6,6 +6,7 @@ import getUsersArtists from '../../Actions/getUsersArtists';
 import Styles from './popUp.module.css';
 import searchFilters from '../../Actions/searchFilters';
 import activeFilters from '../../Actions/activeFilters';
+import close from '../../Images/cancel.svg';
 
 
 
@@ -17,6 +18,7 @@ function Filters({ categories, getCategories, setFilters, showFilters, getUsersA
 
         getCategories();
         getUsersArtists();
+       return ()=> {showFilters(false);}
     }, []);
 
     //hooks for select category change
@@ -52,6 +54,10 @@ function Filters({ categories, getCategories, setFilters, showFilters, getUsersA
          
     }
 
+    const onClose =  () => {
+        showFilters(false);
+    }
+
     return (
         <div className={Styles.mainDivPopUp}>
             <form className={Styles.formFilter} onSubmit={handleSubmit}>
@@ -65,6 +71,10 @@ function Filters({ categories, getCategories, setFilters, showFilters, getUsersA
                 {isActiveFilters? <div>Filtros activados</div> : <div>Filtros desactivados</div>}
                 <button className={Styles.btn}>filtrar</button>
             </form>
+
+            <button onClick={()=>onClose()}  className={Styles.btnClose}>
+                <img className={Styles.close} src={close} alt="close filters"/>
+            </button>
         </div>
     )
 }
