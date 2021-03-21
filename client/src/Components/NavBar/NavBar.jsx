@@ -8,7 +8,7 @@ import profPic from '../Assets/profPic.jpg'
 
 function NavBar({ renderTop }) {
   const loggedUser = useSelector(state => state.userData);
-  console.log(loggedUser);
+  // console.log(loggedUser);
   const history = useHistory();
   const [redirect, setRedirect] = useState(false)
   function handleGoBack() {
@@ -39,74 +39,74 @@ function NavBar({ renderTop }) {
           </div>
         </div>
       ) : (
-          <div className={Styles.navContainer2}>
-            <p onClick={handleGoBack} className={Styles.tituloNavbar2}>
-              arthub
+        <div className={Styles.navContainer2}>
+          <p onClick={handleGoBack} className={Styles.tituloNavbar2}>
+            arthub
             </p>
 
-            <div className={Styles.navContainerSecciones2}>
-              <Link className={Styles.link2} to="/coleccion">
-                <p className={Styles.secciones2}>colección</p>
-              </Link>
-              <Link className={Styles.link2} to="/artistas">
-                <p className={Styles.secciones2}>artistas</p>
-              </Link>
-              <Link className={Styles.link2} to="/nosotros">
-                <p className={Styles.secciones2}>nosotros</p>
-              </Link>
-            </div>
+          <div className={Styles.navContainerSecciones2}>
+            <Link className={Styles.link2} to="/coleccion">
+              <p className={Styles.secciones2}>colección</p>
+            </Link>
+            <Link className={Styles.link2} to="/artistas">
+              <p className={Styles.secciones2}>artistas</p>
+            </Link>
+            <Link className={Styles.link2} to="/nosotros">
+              <p className={Styles.secciones2}>nosotros</p>
+            </Link>
+          </div>
 
           {/* ------------------------------------------------ */}
-            <div className={Styles.navContainerSeccionesProf}>
-              {loggedUser.id > 0 ? (
-                <div className={Styles.containerUser}>
+          <div className={Styles.navContainerSeccionesProf}>
+            {loggedUser.id > 0 ? (
+              <div className={Styles.containerUser}>
 
-                  {loggedUser.id > 0 && loggedUser.profilepic ? (
-                    <Link className={Styles.link2} to='/miperfil'>
-                      <img
-                        className={Styles.profPic}
-                        src={loggedUser.profilepic}
-                      ></img>
-                    </Link>
-                  ) : (
-                      <Link className={Styles.link2} to='/miperfil'>
-                        <img className={Styles.profPic} src={profPic}></img>
-                      </Link>
+                {loggedUser.id > 0 && loggedUser.profilepic ? (
+                  <Link className={Styles.link2} to='/miperfil'>
+                    <img
+                      className={Styles.profPic}
+                      src={loggedUser.profilepic}
+                    ></img>
+                  </Link>
+                ) : (
+                  <Link className={Styles.link2} to='/miperfil'>
+                    <img className={Styles.profPic} src={profPic}></img>
+                  </Link>
 
-                    )}
-                  {loggedUser.id > 0 ? (
-                    <Link className={Styles.link2} to='/miperfil'>
-                      <h1 className={Styles.profInfo}>{loggedUser.name.toLowerCase()}</h1>
-                    </Link>
-                  ) : null}
-
-                </div>
-              )
-                : <div className={Styles.navContainerSecciones2}>
-                  {loggedUser.id > 0 ? (
-                    <Link className={Styles.link2} to="/miperfil">
-                      <p className={Styles.secciones2}>mi cuenta</p>
-                    </Link>
-                  ) : (
-                      <Link className={Styles.link2} to="/ingresar">
-                        <p className={Styles.secciones2}>mi cuenta</p>
-                      </Link>
-                    )}
-                </div>}
-
-              <div>
-               
+                )}
                 {loggedUser.id > 0 ? (
-                  <p onClick={clickHandler} className={Styles.secciones2}>
-                    cerrar sesión
-                  </p>
+                  <Link className={Styles.link2} to='/miperfil'>
+                    <h1 className={Styles.profInfo}>{loggedUser.name.toLowerCase()}</h1>
+                  </Link>
                 ) : null}
-              </div>
 
-            
               </div>
+            )
+              : <div className={Styles.navContainerSecciones2}>
+                {loggedUser.id > 0 ? (
+                  <Link className={Styles.link2} to="/miperfil">
+                    <p className={Styles.secciones2}>mi cuenta</p>
+                  </Link>
+                ) : (
+                  <Link className={Styles.link2} to="/ingresar">
+                    <p className={Styles.secciones2}>mi cuenta</p>
+                  </Link>
+                )}
+              </div>}
+
+            <div>
+
+              {loggedUser.id > 0 ? (
+                <p onClick={clickHandler} className={Styles.secciones2}>
+                  cerrar sesión
+                </p>
+              ) : null}
             </div>
-        )
+
+
+          </div>
+        </div>
+      )
       }
     </div>
   )
