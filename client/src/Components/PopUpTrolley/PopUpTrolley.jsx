@@ -3,8 +3,10 @@ import style from "./popUpTrolley.module.css";
 import userLog from "../../Actions/userLog";
 import { useSelector, useDispatch } from "react-redux";
 import getUserOrder from "../../Actions/getUserOrder";
-import deleteUserOrder from "../../Actions/deleteUserOrder";
+import deleteUserOrderAll from '../../Actions/deleteUSerOrderAll'
 import LineOrder from "../LineOrder/LineOrder";
+import { Link } from 'react-router-dom'
+
 function PopUpTrolley() {
     const isUserLogged = useSelector((state) => state.isUserLogged);
     const shoppingCart = useSelector((state) => state.shoppingCart);
@@ -15,7 +17,10 @@ function PopUpTrolley() {
         dispatch(userLog(true));
     };
 
-    // esto se jarcodea con 4 como el idUser que indica el acceso del usuario
+    const handleDeleteUserOrderAll = async (idUser) => {
+        await dispatch(deleteUserOrderAll(idUser));
+    };
+
 
     useEffect(() => {
         dispatch(getUserOrder(userData.id));
@@ -48,7 +53,9 @@ function PopUpTrolley() {
                     Precio Total : ${" "}
                     {shoppingCart.total_price ? shoppingCart.total_price : 0}
                 </h3>
-                <button className={style.btnPay}>Pagar</button>
+                <button onClick={() => handleDeleteUserOrderAll(userData.id)}>Vaciar Carrito</button>
+                <Link to="/coleccion"><button>Regresar a comprar</button></Link>
+                <button  className={style.btnPay}>Pagar</button>
             </div>
         </div>
     );
