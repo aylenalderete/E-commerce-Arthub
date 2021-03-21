@@ -10,16 +10,47 @@ export default function LineOrder({ lineOrderElement }) {
 	const shoppingCart = useSelector((state) => state.shoppingCart);
 	const userData = useSelector((state) => state.userData);
 	const dispatch = useDispatch();
+
+
 	const handleDeleteUserOrder = async (idorder, idlineorder, idUser) => {
-		await dispatch(deleteUserOrder(idorder, idlineorder));
-		dispatch(getUserOrder(idUser));
-	};
-	const handleQuantity = async (idUser, idlineorder, quantity) => {
-		await dispatch(changeQuantity(idUser, idlineorder, quantity));
-		dispatch(getUserOrder(idUser));
+		if (userData.username) {
+			await dispatch(deleteUserOrder(idorder, idlineorder));
+			dispatch(getUserOrder(idUser));
+		} else {
+			let cart = JSON.parse(localStorage.getItem('cart'));
+			cart = cart.filter(l => l.product.id_product !== lineOrderElement.product.id_product);
+			localStorage.setItem('cart', JSON.stringify(cart));
+		}
 	};
 
-	console.log(lineOrderElement);
+	const handleQuantity = async (idUser, idlineorder, quantity) => {
+		if (userData.username) {
+			await dispatch(changeQuantity(idUser, idlineorder, quantity));
+			dispatch(getUserOrder(idUser));
+		} else {
+			if (quantity <= lineOrderElement.product.stock && quantity >= 1) {
+
+				let cart = JSON.parse(localStorage.getItem('cart'));
+				lineOrderElement.quantity = quantity;
+				cart = cart.filter(l => l.product.id_product !== lineOrderElement.product.id_product);
+				cart.push(lineOrderElement);
+
+				cart.sort(function (a, b) {
+					if (a.product.id_product > b.product.id_product) {
+					  return 1;
+					}
+					if (a.product.id_product < b.product.id_product) {
+					  return -1;
+					}
+					// a must be equal to b
+					return 0;
+				  });
+				localStorage.setItem('cart', JSON.stringify(cart));
+			}
+		}
+
+	};
+
 	return (
 		<div className={style.card}>
 			<img
