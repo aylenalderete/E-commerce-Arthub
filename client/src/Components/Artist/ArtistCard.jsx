@@ -8,9 +8,11 @@ function ArtistCard({ name, lastname, artistId, profilepic, username }) {
             <div className={style.imgArtist}>
                 <img src={profilepic} />
             </div>
-            <Link to={`/artistas/${artistId}`}>
-                {name} {lastname}
-            </Link>
+            <div className={style.info}>
+                <Link to={`/artistas/${artistId}`}>
+                    <h2>{name} {lastname}</h2>
+                </Link>
+            </div>
         </div>
     )
 }
