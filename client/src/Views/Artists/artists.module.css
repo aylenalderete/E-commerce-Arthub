@@ -19,7 +19,6 @@
 
 .artists{
     display: flex;
-    flex-direction: row;
     margin-top: 15%;
     height: auto;
     flex-wrap: wrap;
