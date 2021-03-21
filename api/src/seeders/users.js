@@ -18,7 +18,7 @@ const arrayOfUsers = [
 		email: "guimtio@gmail.com",
 		password: "SSKsods#!djjd323",
 		birth: 10121970,
-		type: "user",
+		type: "artist",
 		state: "approved"
 	},
 	{
@@ -29,7 +29,7 @@ const arrayOfUsers = [
 		email: "paulinapeter@gmail.com",
 		password: "Sjdj$$$//djdj7",
 		birth: 21021999,
-		type: "user",
+		type: "artist",
 		state: "approved"
 	},
 	{
@@ -40,7 +40,7 @@ const arrayOfUsers = [
 		email: "jajko@gmail.com",
 		password: "Gsksek#$%jd7jd#m%4",
 		birth: 12121976,
-		type: "user",
+		type: "artist",
 		state: "approved"
 	},
 	{

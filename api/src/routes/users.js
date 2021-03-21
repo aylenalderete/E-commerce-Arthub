@@ -14,21 +14,44 @@ const {
 // 1: Get all users
 // No password
 server.get("/", (req, res) => {
-	User.findAll({
-		attributes: [
-			"id",
-			"username",
-			"name",
-			"lastname",
-			"profilepic",
-			"birth",
-			"email",
-			"type",
-			"state",
-		],
-	}).then((result) => {
-		res.json(result);
-	});
+	if (req.query.type === 'artists') {
+		User.findAll({
+			where: {
+				state: 'approved',
+				type: 'artist'
+			},
+			attributes: [
+				"id",
+				"username",
+				"name",
+				"lastname",
+				"profilepic",
+				"birth",
+				"email",
+				"type",
+				"state",
+			]
+		}).then((result) => {
+			res.json(result);
+		});
+	} else {
+		User.findAll({
+			attributes: [
+				"id",
+				"username",
+				"name",
+				"lastname",
+				"profilepic",
+				"birth",
+				"email",
+				"type",
+				"state",
+			],
+		}).then((result) => {
+			res.json(result);
+		});
+	}
+
 });
 
 // 2: Create new user
