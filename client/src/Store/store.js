@@ -8,6 +8,7 @@ import { composeWithDevTools } from "redux-devtools-extension";
 // estado inicial
 const initialState = {
     //global states
+    guestCart: JSON.parse(localStorage.getItem('cart')) || [],
     products: [],
     search: [],
     categories: [],
@@ -266,6 +267,33 @@ const reducer = function (state = initialState, action) {
             return {
                 ...state,
                 shoppingCart: action.payload
+            };
+        case 'ADD_TO_CART_GUEST':
+
+            return {
+                ...state,
+                guestCart: [...state.guestCart, action.payload]
+            }
+
+        case 'CHANGE_QUANTITY_GUEST':
+            return {
+                ...state,
+                guestCart: state.guestCart.map(prod => {
+                    if (prod.product.id_product === action.payload.productId) {
+                        prod.quantity = action.payload.quantity
+                    }
+                    return prod;
+                })
+            }
+        case 'DELETE_LINEORDER_GUEST':
+            return{
+                ...state,
+                guestCart: state.guestCart.filter(prod => prod.product.id_product !== action.payload)
+            }
+        case 'DELETE_USER_ORDER_GUEST':
+            return{
+                ...state,
+                guestCart: []
             }
 
         default:
