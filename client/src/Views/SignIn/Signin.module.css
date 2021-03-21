@@ -113,8 +113,9 @@
     cursor: pointer;
 }
 
-.progressBar{
-    display: flex;
+.loadingPic{
+    background-image: url(../../Images/simple.gif);
+    height:110px;
     width: 110px;
 }
 

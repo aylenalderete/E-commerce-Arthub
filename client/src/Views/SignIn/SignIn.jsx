@@ -64,6 +64,8 @@ function SignIn() {
         errorEmail: ''
     })
 
+    const [loading,setLoading] = React.useState(false)
+
     const dispatch = useDispatch();
     const [redirect, setRedirect] = useState(false);
     const [input, setInput] = useState({
@@ -97,6 +99,8 @@ function SignIn() {
     const [refresh, setRefresh] = React.useState([])
 
     function handleUpload(event) {
+
+        setLoading(true);
 
         const file = event.target.files[0];
 
@@ -325,14 +329,17 @@ function SignIn() {
                         <img width="100" height="100" src={upload.picture} />
                       ) : (
                         <div className={Styles.containerProfilePic}>
-                          Push to add
+                          {loading?
+                          <div className={Styles.loadingPic}></div>
+                          :'Push to add'
+                          }
                         </div>
                       )}
                     </div>
 
-                    <div className={Styles.progressBar}>
+                    {/* <div className={Styles.progressBar}>
                       <progress value={upload.process}></progress>
-                    </div>
+                    </div> */}
                   </label>
 
                   <input
