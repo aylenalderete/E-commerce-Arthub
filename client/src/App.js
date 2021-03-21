@@ -25,6 +25,7 @@ import AllCategories from './Views/AllCategories/AllCategories';
 import Carrito from './Components/PopUpTrolley/PopUpTrolley.jsx';
 import EditUser from './Views/EditUser/EditUser';
 import EditCategories from './Components/EditCategories/EditCategories';
+import OrderDetail from './Views/OrderDetail/OrderDetail';
 
 
 function App() {
@@ -81,6 +82,8 @@ function App() {
       <Route path="/categorias" component={AllCategories}></Route>
       <Route path='/carrito' component={Carrito} />
       <Route path='/editarperfil/' component={EditUser} />
+      <Route path='/detalledeorden/:id' component={OrderDetail} />
+
 
 
 

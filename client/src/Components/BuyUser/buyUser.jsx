@@ -55,30 +55,20 @@ export default function BuyUser() {
                 <div className={style.containerProducts}>
                     <h2 className={style.title}>Mis Ordenes</h2>
 
-                    {/* ESTO ES UN CONDICIONAL */}
                     {!userOrders.message ?
                         <div className={style.divOrders}>
                             <div className={table.tableContainer}>
                                 {userOrders.length > 0 && userOrders.map(o =>
-                                    o.lineorders.map(l =>
-
-                                        <div className={table.orderContainer} >
-                                            <div className={table.productInfo}>
-                                                <p className={table.infoProduct}>Producto: {l.product.title} </p>
-                                                <p className={table.infoProduct}>Cantidad: {l.quantity}</p>
-                                                <p className={table.infoProduct}>Fecha: {o.createdAt.slice(0, 10)} </p>
-                                                <p className={table.infoProduct}>Precio: {l.product.price}</p>
-                                                <p className={table.infoProduct}>Estado:{' '}
-                                                    {o.state === 'pending' && 'Pendiente'}
-                                                    {o.state === 'fulfilled' && 'Entregado'}
-                                                </p>
-                                            </div>
-
-                                            <div className={table.containerImg}>
-                                                <img className={table.img} src={l.product.images[0].url} alt="product image" />
-                                            </div>
+                                    <div className={table.orderContainer} >
+                                        <div className={table.productInfo}>
+                                            <p className={table.infoProduct}>Orden: {o.id_order}</p>
+                                            <p className={table.infoProduct}>State: {o.state}</p>
+                                            <p className={table.infoProduct}>Precio total: $ {o.total_price}</p>
+                                            <p className={table.infoProduct}>Creada: {o.createdAt}</p>
+                                            <Link to={`/detalledeorden/${o.id_order}`}>Ver detalle</Link>
                                         </div>
-                                    )
+                                    </div>
+
                                 )}
                             </div>
                         </div>
