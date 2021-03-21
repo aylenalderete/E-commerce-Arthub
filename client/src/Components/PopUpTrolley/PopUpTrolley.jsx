@@ -40,7 +40,7 @@ function PopUpTrolley() {
 
     useEffect(() => {
         dispatch(getUserOrder(userData.id));
-    }, [cart]);
+    }, []); // ver esto
 
     return (
         <div className={style.mainContainer}>
