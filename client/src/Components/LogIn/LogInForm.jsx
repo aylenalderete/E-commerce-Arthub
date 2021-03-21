@@ -17,10 +17,18 @@ function LogIn() {
 
   const [error, setError] = useState();
   const [redirect, setRedirect] = useState(false);
-
+  const [errorreq, setErrorreq] = useState({
+    username : '',
+    password : ''
+  })
 
 const set = (userName) => {
+  
   return ({ target: { value } }) => {
+    setErrorreq({
+      username: "",
+      password: "",
+    });
     setInput((oldValues) => ({ ...oldValues, [userName]: value }));
     setError('')
   };
@@ -31,15 +39,37 @@ const submitHandler = async (event) => {
   console
     .log(input)
 
-    await axios.post("http://localhost:3001/users/signin/algo", input)
-    .then(result => {
-      if (result.data.auth) {
-        localStorage.setItem('token', result.data.token)
-        setRedirect(true);
-        dispatch(signInUsers(result.data));
+    if (input.username && input.password) {
+      await axios
+        .post("http://localhost:3001/users/signin/algo", input)
+        .then((result) => {
+          if (result.data.auth) {
+            localStorage.setItem("token", result.data.token);
+            setRedirect(true);
+            dispatch(signInUsers(result.data));
+          } else setError(result.data);
+        });
+    }
+    else{
+      var errors = { username: "", password: "" };
+      if(!input.username){
+        errors.username = "El campo usuario es requerido";
+        // setErrorreq({...errorreq,
+        //   username: 'El campo usuario es requerido'
+        // })
       }
-      else setError(result.data)
-    });
+      if(!input.password){
+        errors.password = "La contraseña es requerida";
+        // setErrorreq({...errorreq,
+        //   password: 'La contraseña es requerida'
+        // })
+      }
+      setErrorreq({
+        username: errors.username,
+        password: errors.password
+      });
+    }
+    ;
   
   
  
@@ -56,7 +86,6 @@ return (
     <div className={style.alignForm}>
       <form onSubmit={submitHandler} className={style.form}>
         <input
-          required
           className={style.input}
           type="text"
           name="user"
@@ -64,8 +93,12 @@ return (
           placeholder="usuario..."
           onChange={set("username")}
         ></input>
+        <div>
+          {errorreq.username ? (
+            <span className={style.link}>{errorreq.username}</span>
+          ) : null}
+        </div>
         <input
-          required
           className={style.input}
           type="password"
           name="password"
@@ -73,7 +106,14 @@ return (
           placeholder="contraseña..."
           onChange={set("password")}
         ></input>
-        <div>{error && input.username || input.password ? <span className={style.link}>{error}</span> : null}</div>
+        {errorreq.password ? (
+          <span className={style.link}>{errorreq.password}</span>
+        ) : null}
+        <div>
+          {(error && input.username) || input.password ? (
+            <span className={style.link}>{error}</span>
+          ) : null}
+        </div>
 
         <button className={style.btn} type="submit">
           iniciar sesión
