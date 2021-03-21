@@ -5,7 +5,7 @@ import Styles from './home.module.css'
 
 function Home() {
     return (
-        <div>
+        <div className={Styles.mainContainer}>
             
             <NavBar renderTop={true} />
             <div className={Styles.titleContainer}>

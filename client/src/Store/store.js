@@ -19,7 +19,7 @@ const initialState = {
     //artist states
     usersArtists: [],
     artistsProducts: [],
-    //carousel states
+    //filters states
     isActiveFilters: false,
 
     // shopping cart
@@ -35,8 +35,9 @@ const initialState = {
         type: "",
         state: "",
     },
-
+    //carousel states
     carouselActive: 1,
+    autoplay: true,
     //PopUp categories states
     isOpenCategory: false,
     isOpenDeleteCat: false,
@@ -205,6 +206,12 @@ const reducer = function (state = initialState, action) {
                 };
             }
 
+        case 'AUTOPLAY':
+            return{
+                ...state, 
+                autoplay: action.payload
+            }
+
         case "IS_USER_LOGGED":
             return {
                 ...state,
@@ -266,6 +273,12 @@ const reducer = function (state = initialState, action) {
             return {
                 ...state,
                 shoppingCart: action.payload
+            }
+        case 'RESET_CAROUSEL':
+            
+            return{
+                ...state, 
+                carouselActive: 1
             }
 
         default:
