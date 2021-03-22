@@ -61,6 +61,45 @@
 }
 
 
+.createProduct{
+    width:40px;
+    height: 40px;
+}
+.linkCreate{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 10px;
+    text-decoration: none;
+}
+
+.addText{
+    display: none;
+    font-size: 0.9em;
+}
+
+.linkCreate:hover .addText{
+
+    
+    display: block;
+    animation: fadein ease 0.5s;
+    animation-fill-mode: forwards;
+    
+}
+/* KEYFRAMES */
+
+@keyframes fadein {
+    0% {
+        opacity:0;
+        color:transparent;
+    }
+    100% {
+        opacity:1;
+        color: #F427EC;
+    }
+  }
+
+
 /* PAGINADO  */
 
 .paginateContainer {
@@ -93,6 +132,7 @@
 .paginateContainer * {
     outline: none;
 }
+
 
 /*Responsive screen*/
 @media only screen and (max-width: 480px){
