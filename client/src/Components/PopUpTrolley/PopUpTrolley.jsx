@@ -9,7 +9,6 @@ import LineOrder from "../LineOrder/LineOrder";
 import { Link } from "react-router-dom";
 import deleteUserOrderGuest from "../../Actions/deleteUserOrderGuest";
 import addToCart from "../../Actions/addToCart";
-
 function PopUpTrolley() {
 	const isUserLogged = useSelector((state) => state.isUserLogged);
 	const shoppingCart = useSelector((state) => state.shoppingCart);
@@ -56,6 +55,11 @@ function PopUpTrolley() {
 		if (userData.username) {
 			dispatch(getUserOrder(userData.id));
 		}
+		//EXPERIMENTOOOOOO
+		else {
+			dispatch({ type: "GET_USER_ORDER_GUEST" });
+		}
+		//EXPERIMENTOOOOOO
 	}, []);
 
 	return (

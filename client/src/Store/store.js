@@ -270,6 +270,10 @@ const reducer = function (state = initialState, action) {
                 ...state,
                 shoppingCart: action.payload,
             };
+        case "GET_USER_ORDER_GUEST":
+            return {
+                ...state,
+            };
         case "ADD_TO_CART_GUEST":
             return {
                 ...state,
