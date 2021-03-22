@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { Link } from "react-router-dom"
+import { Redirect } from "react-router-dom"
 import React, { useState, useEffect } from 'react'
 import NavBar from "../../Components/NavBar/NavBar"
 import Styles from "./AllCategories.module.css"
@@ -14,6 +14,8 @@ import deletecategory from '../../Actions/deletecategory'
 
 function AllCategories() {
     const categories = useSelector(state => state.categories)
+
+    const loggedUser = useSelector((state) => state.userData);
 
     const dispatch = useDispatch()
 
@@ -42,6 +44,8 @@ function AllCategories() {
         setCategoryId(id)
     }
 
+    if(loggedUser.type !== 'admin' && loggedUser.type !== 'artist') return <Redirect to="/miperfil"></Redirect>
+    
     return (
         <div className={Styles.mainContainer}>
             <NavBar renderTop={false} />
