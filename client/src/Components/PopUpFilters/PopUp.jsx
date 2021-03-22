@@ -12,13 +12,13 @@ import close from '../../Images/cancel.svg';
 
 import { connect } from 'react-redux';
 
-function Filters({ categories, getCategories, setFilters, showFilters, getUsersArtists, search, searchFilters , activeFilters, isActiveFilters}) {
+function Filters({filteredProducts, categories, getCategories, setFilters, showFilters, getUsersArtists, search, searchFilters , activeFilters, isActiveFilters}) {
     //get all the categories once the component mounts
     useEffect(() => {
 
         getCategories();
         getUsersArtists();
-       return ()=> {showFilters(false);}
+       return ()=> {showFilters(false) && activeFilters(true);}
     }, []);
 
     //hooks for select category change
@@ -41,7 +41,7 @@ function Filters({ categories, getCategories, setFilters, showFilters, getUsersA
 
     const handleSubmit = (e) => {
          e.preventDefault();
-         if(search[0]){
+         if(search[0] && filteredProducts[0]){
              
              activeFilters(true)
              searchFilters(select.category);
@@ -68,7 +68,7 @@ function Filters({ categories, getCategories, setFilters, showFilters, getUsersA
                         <option className={Styles.option} value={c.name}>{c.name}</option>
                     )}
                 </select>
-                {isActiveFilters? <div>Filtros activados</div> : <div>Filtros desactivados</div>}
+                {isActiveFilters === true? <div>Filtros activados</div> : <div>Filtros desactivados</div>}
                 <button className={Styles.btn}>filtrar</button>
             </form>
 
@@ -84,6 +84,7 @@ const mapStateToProps = (state) => {
         categories: state.categories,
         search: state.search,
         isActiveFilters: state.isActiveFilters,
+        filteredProducts: state.filteredProducts
     }
 }
 

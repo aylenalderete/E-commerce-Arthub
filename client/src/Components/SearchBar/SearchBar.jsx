@@ -4,8 +4,9 @@ import Styles from './searchBar.module.css';
 import SearchIcon from '../../Images/search.svg';
 import getProductsByName from '../../Actions/getActions';
 import searchFilters from '../../Actions/searchFilters';
+import activeFilters from '../../Actions/activeFilters';
 
-function SearchBar({getProductsByName, search , searchFilters}) {
+function SearchBar({getProductsByName, search , searchFilters, filteredProducts, isactiveFilters}) {
 
     //hooks
     const [input, setInput] = useState('');
@@ -20,12 +21,17 @@ function SearchBar({getProductsByName, search , searchFilters}) {
 
     function handleSubmit(e){
         e.preventDefault();
+        
 
         if (!search[0]){
+            console.log('entro primer if searchbar')
         getProductsByName(input);}
-        else{
-            searchFilters(input)
+        if(search[0] && !filteredProducts[0]){
+            console.log('entro primer if searchbar')
+
+            getProductsByName(input)
         }
+      
     }
     
 
@@ -43,14 +49,17 @@ function SearchBar({getProductsByName, search , searchFilters}) {
 
 const mapStateToProps = (state) => {
     return {
-        search: state.search
+        search: state.search,
+        filteredProducts : state.filteredProducts,
+        
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
         getProductsByName: search => dispatch(getProductsByName(search)),
-        searchFilters: category => dispatch(searchFilters(category))
+        searchFilters: category => dispatch(searchFilters(category)),
+        isactiveFilters: condition => dispatch(activeFilters(condition))
     }
 }
 
