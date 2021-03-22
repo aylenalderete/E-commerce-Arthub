@@ -5,7 +5,10 @@ import { useSelector, useDispatch } from "react-redux";
 import getUserOrder from "../../Actions/getUserOrder";
 import deleteUserOrder from "../../Actions/deleteUserOrder";
 import changeQuantity from "../../Actions/changeQuantity.js";
-export default function LineOrder({ lineOrderElement }) {
+import changeQuantityGuest from '../../Actions/changeQuantityGuest';
+import deleteLineOrderGuest from '../../Actions/deteleLineOrderGuest';
+
+export default function LineOrder({ lineOrderElement, change }) {
 	const isUserLogged = useSelector((state) => state.isUserLogged);
 	const shoppingCart = useSelector((state) => state.shoppingCart);
 	const userData = useSelector((state) => state.userData);
@@ -20,6 +23,9 @@ export default function LineOrder({ lineOrderElement }) {
 			let cart = JSON.parse(localStorage.getItem('cart'));
 			cart = cart.filter(l => l.product.id_product !== lineOrderElement.product.id_product);
 			localStorage.setItem('cart', JSON.stringify(cart));
+			dispatch(deleteLineOrderGuest(lineOrderElement.product.id_product));
+
+			// change();
 		}
 	};
 
@@ -37,15 +43,19 @@ export default function LineOrder({ lineOrderElement }) {
 
 				cart.sort(function (a, b) {
 					if (a.product.id_product > b.product.id_product) {
-					  return 1;
+						return 1;
 					}
 					if (a.product.id_product < b.product.id_product) {
-					  return -1;
+						return -1;
 					}
 					// a must be equal to b
 					return 0;
-				  });
+				});
 				localStorage.setItem('cart', JSON.stringify(cart));
+				// change();
+				// console.log(lineOrderElement);
+				dispatch(changeQuantityGuest(lineOrderElement.product.id_product, quantity));
+
 			}
 		}
 

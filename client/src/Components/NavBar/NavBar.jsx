@@ -33,7 +33,7 @@ function NavBar({ renderTop }) {
             <Link className={Styles.link} to="/artistas">
               <p className={Styles.secciones}>artistas</p>
             </Link>
-            <Link className={Styles.link} to="/nosotros">
+            <Link className={Styles.link3} to="/nosotros">
               <p className={Styles.secciones}>nosotros</p>
             </Link>
           </div>

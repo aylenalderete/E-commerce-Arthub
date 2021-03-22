@@ -126,6 +126,7 @@
     top: 0;
 }
 
+
 .containerUser{
     display: flex;
     justify-content: flex-start;
@@ -141,7 +142,11 @@
         border-top:2px solid #F427EC;
  
 }
-
+.link3{
+    text-decoration: none;  
+    margin-right: 40px;
+    line-height: 1.5rem;
+}
 
 /*Responsive screen*/
 @media only screen and (max-width: 480px){
