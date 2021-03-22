@@ -9,6 +9,9 @@ import DeleteCategories from '../../Components/DeleteCategories/DeleteCategories
 import opencategory from '../../Actions/opencategory'
 import PopUp from '../../Components/EditCategories/EditCategories.jsx'
 import deletecategory from '../../Actions/deletecategory'
+import edit from "../../Images/edit.svg"
+import deletecat from "../../Images/delete.svg"
+
 
 
 
@@ -50,7 +53,7 @@ function AllCategories() {
                 {isOpenDeleteCat === true && <DeleteCategories category = {categoryId} flag={setFlag} />}
                 <table className={Styles.table}>
                     <tr>
-                        <th className={Styles.th}>Categorías:</th>
+                        <th className={Styles.categories}>Categorías:</th>
                         <th>
                         </th>
                     </tr>
@@ -60,10 +63,15 @@ function AllCategories() {
                             <td>{p.name}</td>
                             <td>{p.description}</td>
                             <th className={Styles.th}>
+                                <div className={Styles.btnContainer}>
+                                    <div className={Styles.btnContainer} onClick ={() => handleClick(p.id)}>
+                                        <img className={Styles.icon} src={edit} alt="edit item" />
+                                    </div>
 
-                                <button className={Styles.btn} onClick ={() => handleClick(p.id)}>Editar</button>
-
-                                <button className={Styles.btn} onClick ={() => handleDeleteClick(p)}>Eliminar</button>
+                                    <div className={Styles.btnContainer} onClick ={() => handleDeleteClick(p)}>
+                                    <img className={Styles.icon} src={deletecat} alt="edit item" />
+                                    </div>
+                                </div>
                             </th>
                         </tr>
                         ))                        

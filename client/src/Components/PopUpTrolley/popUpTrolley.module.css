@@ -1,4 +1,4 @@
-.container{
+.mainContainer{
     width: 100%;
     max-width: 1200px;
     flex-direction: column;
@@ -9,8 +9,8 @@
 
 
 .container .card{
- display: flex;
- justify-content: space-around;
+    display: flex;
+    justify-content: space-evenly;
     border-radius:8px;
     box-shadow: 0 2px 2px rgba(0,0,0,0.2);
     overflow: hidden;
@@ -24,3 +24,70 @@
     width: 60px;
     height: 60px;
 }
+
+.myTrolley{
+    display: flex;
+    justify-content: center;
+    padding: 2vh;
+    font-size: 5vh;
+}
+
+.btnContainer{
+    display: flex;
+    justify-content: center;
+}
+
+.btn{
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-right: 20px;
+    padding-left:20px;
+    margin-top:20px;
+    margin-right: 10px;
+    background-color: transparent;
+    color: white;
+    font-size: 15px;
+    border:2px solid white;
+    cursor: pointer;
+}
+
+.btn:hover{
+    animation: color 1s infinite;
+    
+}
+
+.btn:focus{
+    outline: none;
+}
+
+/*Key Frames*/
+
+@keyframes color {
+    0% {
+          background-color: #f427ed78; 
+    }
+
+    20% {
+        background-color: #f427ed8a; 
+    }
+
+    40%{
+        background-color: #f427eda2; 
+        border-color:rgba(255, 255, 255, 0.657)
+    }
+
+    60%{
+        background-color: #f427edc4; 
+        border-color:rgba(255, 255, 255, 0.445)
+    }
+
+    80%{
+        background-color: #f427ede5; 
+        border-color:rgba(255, 255, 255, 0)
+    }
+  
+    100% {
+        background-color: #f427ed; 
+        border-color:rgba(255, 255, 255, 0)
+    }
+  }
