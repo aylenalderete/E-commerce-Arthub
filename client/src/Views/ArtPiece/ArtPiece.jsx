@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { Link, useHistory } from 'react-router-dom'
 import NavBar from "../../Components/NavBar/NavBar.jsx";
 import style from "./artpiece.module.css";
 
@@ -20,6 +21,8 @@ function ArtPiece({ artId }) {
     ],
   });
   const userData = useSelector((state) => state.userData);
+
+  let history = useHistory()
 
   useEffect(() => {
     dispatch(getInitialProducts());
@@ -51,31 +54,29 @@ function ArtPiece({ artId }) {
             <div>
               <h1>{detailed.title}</h1>
             </div>
-            <div>
+            <div className={style.infoSecondContainer}>
+              {detailed.stock > 0
+                ? <h3>Stock: {detailed.stock}</h3>
+                : <h3>Producto no disponible</h3>}
+              <h3>Categoria/s:</h3>
               <div className={style.categoriesContainer}>
-                <h4>
-                  {detailed.stock > 0
-                    ? `Stock: ${detailed.stock}`
-                    : "Producto no disponible"}
-                </h4>
-                <h4>
-                  Categoria/s:{" "}
-                  {detailed.categories &&
-                    detailed.categories.map((x) => <h4>{x.name}</h4>)}
-                </h4>
+                {detailed.categories &&
+                  detailed.categories.map((x) => <div className={style.catContainer}><p>{x.name}</p></div>)}
               </div>
-              <div className={style.artistContainer}>
-                {/* <h3>{detailed.artist}</h3> */}
-                <h4>{`Precio: $` + `${detailed.price}`}</h4>
-              </div>
-              <p>{detailed.description}</p>
+            </div>
+            <h3>{`Precio: $` + `${detailed.price}`}</h3>
+            <p>{detailed.description}</p>
 
-              <button
-                onClick={() => handlePostUserOrder(userData.id, artId)}
-                className={style.button}
-              >
-                Añadir al carrito
+            <div className={style.containerButtons}>
+              <Link to="/carrito">
+                <button
+                  onClick={() => handlePostUserOrder(userData.id, artId)}
+                  className={style.button}>
+                  Añadir al carrito
               </button>
+              </Link>
+              <button className={style.button} onClick={() => history.push(`/coleccion/`)}>
+                Volver a coleccion </button>
             </div>
           </div>
         </div>
