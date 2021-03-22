@@ -5,8 +5,8 @@ import { useSelector, useDispatch } from "react-redux";
 import getUserOrder from "../../Actions/getUserOrder";
 import deleteUserOrder from "../../Actions/deleteUserOrder";
 import changeQuantity from "../../Actions/changeQuantity.js";
-import changeQuantityGuest from '../../Actions/changeQuantityGuest';
-import deleteLineOrderGuest from '../../Actions/deteleLineOrderGuest';
+import changeQuantityGuest from "../../Actions/changeQuantityGuest";
+import deleteLineOrderGuest from "../../Actions/deteleLineOrderGuest";
 
 export default function LineOrder({ lineOrderElement, change }) {
 	const isUserLogged = useSelector((state) => state.isUserLogged);
@@ -14,15 +14,17 @@ export default function LineOrder({ lineOrderElement, change }) {
 	const userData = useSelector((state) => state.userData);
 	const dispatch = useDispatch();
 
-
 	const handleDeleteUserOrder = async (idorder, idlineorder, idUser) => {
 		if (userData.username) {
 			await dispatch(deleteUserOrder(idorder, idlineorder));
 			dispatch(getUserOrder(idUser));
 		} else {
-			let cart = JSON.parse(localStorage.getItem('cart'));
-			cart = cart.filter(l => l.product.id_product !== lineOrderElement.product.id_product);
-			localStorage.setItem('cart', JSON.stringify(cart));
+			let cart = JSON.parse(localStorage.getItem("cart"));
+			cart = cart.filter(
+				(l) =>
+					l.product.id_product !== lineOrderElement.product.id_product
+			);
+			localStorage.setItem("cart", JSON.stringify(cart));
 			dispatch(deleteLineOrderGuest(lineOrderElement.product.id_product));
 
 			// change();
@@ -35,10 +37,13 @@ export default function LineOrder({ lineOrderElement, change }) {
 			dispatch(getUserOrder(idUser));
 		} else {
 			if (quantity <= lineOrderElement.product.stock && quantity >= 1) {
-
-				let cart = JSON.parse(localStorage.getItem('cart'));
+				let cart = JSON.parse(localStorage.getItem("cart"));
 				lineOrderElement.quantity = quantity;
-				cart = cart.filter(l => l.product.id_product !== lineOrderElement.product.id_product);
+				cart = cart.filter(
+					(l) =>
+						l.product.id_product !==
+						lineOrderElement.product.id_product
+				);
 				cart.push(lineOrderElement);
 
 				cart.sort(function (a, b) {
@@ -51,14 +56,17 @@ export default function LineOrder({ lineOrderElement, change }) {
 					// a must be equal to b
 					return 0;
 				});
-				localStorage.setItem('cart', JSON.stringify(cart));
+				localStorage.setItem("cart", JSON.stringify(cart));
 				// change();
 				// console.log(lineOrderElement);
-				dispatch(changeQuantityGuest(lineOrderElement.product.id_product, quantity));
-
+				dispatch(
+					changeQuantityGuest(
+						lineOrderElement.product.id_product,
+						quantity
+					)
+				);
 			}
 		}
-
 	};
 
 	return (

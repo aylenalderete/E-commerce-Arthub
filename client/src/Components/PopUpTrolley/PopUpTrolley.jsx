@@ -9,7 +9,6 @@ import LineOrder from "../LineOrder/LineOrder";
 import { Link } from "react-router-dom";
 import deleteUserOrderGuest from "../../Actions/deleteUserOrderGuest";
 import addToCart from "../../Actions/addToCart";
-
 function PopUpTrolley() {
 	const isUserLogged = useSelector((state) => state.isUserLogged);
 	const shoppingCart = useSelector((state) => state.shoppingCart);
@@ -32,7 +31,6 @@ function PopUpTrolley() {
 	const handleDeleteUserOrderAll = async (idUser) => {
 		if (userData.username) {
 			await dispatch(deleteUserOrderAll(idUser));
-			history.go(0);
 		} else {
 			localStorage.setItem("cart", JSON.stringify([]));
 			dispatch(deleteUserOrderGuest());
@@ -56,6 +54,11 @@ function PopUpTrolley() {
 		if (userData.username) {
 			dispatch(getUserOrder(userData.id));
 		}
+		//EXPERIMENTOOOOOO
+		else {
+			dispatch({ type: "GET_USER_ORDER_GUEST" });
+		}
+		//EXPERIMENTOOOOOO
 	}, []);
 
 	return (
@@ -107,7 +110,7 @@ function PopUpTrolley() {
 					<button>Regresar a comprar</button>
 				</Link>
 				{userData.username ? (
-					shoppingCart.lineorders ? (
+					shoppingCart.lineorders?.length !== 0 ? (
 						<button
 							onClick={() => alert("Compra Exitosa")}
 							className={style.btnPay}
