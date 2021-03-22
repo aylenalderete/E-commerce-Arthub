@@ -117,12 +117,12 @@ function Collection() {
 
           <button className={style.btnFilters} onClick={handleClick}>filtrar</button>
           <SearchBar></SearchBar>
-
+           {userType && userType === 'artist' ?
           <Link className={style.linkCreate} to='/crearproducto'>
             <img className={style.createProduct} src={createProduct} alt='create product'/>
             <p className={style.addText}>Agregar producto</p>
-          </Link>
-       
+          </Link> : <></>
+          }
 
           {userType !== 'artist' ?
 
