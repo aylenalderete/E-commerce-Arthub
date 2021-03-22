@@ -6,6 +6,7 @@ import { setUrlImages } from "../../Actions/setUrlImage.js";
 import { clearUrlImage } from "../../Actions/clearUrlImage";
 import { connect, useSelector } from "react-redux";
 import NavBar from "../NavBar/NavBar.jsx";
+import {Redirect} from 'react-router-dom';
 
 const firebaseConfig = {
     apiKey: "AIzaSyDJ5J7_0pkNGDhDo1mIkVB0Gyrzvyk7J5U",
@@ -66,7 +67,7 @@ function CreateProduct(props) {
     });
     const [errors, setErrors] = useState({});
     const [touched, setTouched] = useState({});
-
+    const loggedUser = useSelector((state) => state.userData);
     const { urlImages } = useSelector((state) => state);
     //carga de imagenes
     const [upload, setUpload] = React.useState({
@@ -212,7 +213,7 @@ function CreateProduct(props) {
         });
         return names;
     }
-
+if(loggedUser.type !== 'artist' && loggedUser.type !== 'admin') return <Redirect to='/miperfil'></Redirect>
     return (
       <div className={Styles.navBaralign}>
         <NavBar renderTop={false}></NavBar>

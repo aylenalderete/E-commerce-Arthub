@@ -183,13 +183,14 @@ function SignIn() {
             console.log(res);
             localStorage.setItem("token", res.data.token);
             //AGREGO CARRITO GUEST A USUARIO NUEVO - INICIO
-            await cart.forEach(async (p) => {
+            if(cart)
+            {await cart.forEach(async (p) => {
               await dispatch(
                 addToCart(res.data.user.id, p.product.id_product, p.quantity)
               );
               dispatch(getUserOrder(res.data.user.id));
             });
-            await dispatch(deleteUserOrderGuest());
+            await dispatch(deleteUserOrderGuest());}
             localStorage.setItem("cart", JSON.stringify([]));
             //AGREGO CARRITO GUEST A USUARIO NUEVO - FIN
 
