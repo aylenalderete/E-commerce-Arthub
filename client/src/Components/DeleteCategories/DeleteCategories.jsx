@@ -3,6 +3,7 @@ import style from './deleteCategories.module.css';
 import {useSelector, useDispatch} from 'react-redux'
 import getCategories from '../../Actions/filter'
 import deletecategory from '../../Actions/deletecategory'
+import close from '../../Images/cancel.svg'
 
 
 function DeleteCategories(props) {
@@ -20,6 +21,7 @@ function DeleteCategories(props) {
 
     useEffect(() => {
         dispatch(getCategories());
+        
     }, []);
     
     useEffect(() => {
@@ -41,12 +43,20 @@ function DeleteCategories(props) {
             alert('No se pudo eliminar la categoria')
         }
 
+        dispatch(deletecategory(false));
+        
+    }
+
+    const onClose = () =>{
         dispatch(deletecategory(false))
     }
  
 
     return (
         <div className={style.mainDivPopUp}>
+            <button onClick={()=>{onClose()}} className={style.btnCloseDiv}>
+                <img className={style.close} src={close} alt="close edit"/>
+            </button>
             <div className={style.formLabel}>
                 estás seguro de querer eliminar la categoría {props.category.name} ?
             </div>        

@@ -9,7 +9,6 @@ import LogIn from './Views/LogIn/LogIn.jsx';
 import SignIn from './Views/SignIn/SignIn.jsx';
 import Artists from './Views/Artists/Artists.jsx';
 import ArtPiece from './Views/ArtPiece/ArtPiece.jsx';
-
 import ArtistAdminDashboard from './Views/ArtistAdmin/ArtistAdminDashboard.jsx';
 import CreateProduct from './Components/CreateProducts/CreateProduct.jsx';
 import ArtistProfile from './Views/ArtistProfile/ArtistProfile.jsx';
@@ -17,8 +16,6 @@ import MyProfile from './Views/MyProfile/myProfile';
 import ArtistsProducts from './Views/ArtistsProducts/ArtistsProducts.jsx';
 import CreateCategory from './Views/CreateCategory/CreateCategory.jsx';
 import EditProduct from './Components/EditProduct/EditProduct.jsx';
-
-
 import signInUsers from './Actions/signInUsers';
 import { useDispatch } from 'react-redux'
 import AllCategories from './Views/AllCategories/AllCategories';
@@ -26,6 +23,7 @@ import Carrito from './Components/PopUpTrolley/PopUpTrolley.jsx';
 import EditUser from './Views/EditUser/EditUser';
 import EditCategories from './Components/EditCategories/EditCategories';
 import OrderDetail from './Views/OrderDetail/OrderDetail';
+import FAQ from './Views/FAQ/FAQ'
 
 
 function App() {
@@ -83,6 +81,7 @@ function App() {
       <Route path='/carrito' component={Carrito} />
       <Route path='/editarperfil/' component={EditUser} />
       <Route path='/detalledeorden/:id' component={OrderDetail} />
+      <Route path='/faq' component={FAQ} />
 
 
 
