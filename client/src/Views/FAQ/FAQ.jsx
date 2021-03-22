@@ -1,4 +1,4 @@
-import React, { useEffect, useState} from 'react';
+import React, { useEffect, useState, useRef} from 'react';
 import NavBar from '../../Components/NavBar/NavBar'
 import style from './FAQ.module.css'
 import { useSelector, useDispatch } from 'react-redux'
