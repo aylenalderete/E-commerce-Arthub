@@ -10,7 +10,10 @@ import getInitialProducts from '../../Actions/getInitialProducts';
 import PopUp from '../../Components/PopUpFilters/PopUp';
 import showFilters from '../../Actions/showFilters';
 import shoppingCartImg from '../../Images/shopping-cart.svg';
+
 import createProduct from '../../Images/add-product.svg';
+
+import ReactPaginate from 'react-paginate';
 
 function Collection() {
 
@@ -30,10 +33,10 @@ function Collection() {
   useEffect(() => {
     dispatch(getInitialProducts());
 
-    if(flag === true) {
+    if (flag === true) {
       setFlag(false)
     }
-  
+
   }, [flag])
 
   function handleClick() {
@@ -46,8 +49,20 @@ function Collection() {
     history.go(0)
   }
 
+
+  // Paginado
+  const [pageNumber, setPageNumber] = useState(0);
+  const productsPerPage = 9
+  const pagesVisited = pageNumber * productsPerPage
+  const pageCount = Math.ceil(products.length / productsPerPage);
+  function changePage({ selected }) {
+    setPageNumber(selected);
+  }
+
+
   function displayProducts(array) {
 
+    let products = array.slice(pagesVisited, pagesVisited + productsPerPage);
 
     if (array === 'void') {
       return (
@@ -74,7 +89,7 @@ function Collection() {
       )
     }
 
-    return array.map((piece) => {
+    return products.map((piece) => {
       return (
         <ArtCard
           name={piece.title}
@@ -85,7 +100,7 @@ function Collection() {
           key={piece.id_product}
           price={piece.price}
           stock={piece.stock}
-          setFlag = {setFlag}
+          setFlag={setFlag}
         />
       )
     })
@@ -102,14 +117,18 @@ function Collection() {
 
           <button className={style.btnFilters} onClick={handleClick}>filtrar</button>
           <SearchBar></SearchBar>
+
           <Link className={style.linkCreate} to='/crearproducto'>
             <img className={style.createProduct} src={createProduct} alt='create product'/>
             <p className={style.addText}>Agregar producto</p>
           </Link>
-          { userType && userType !== 'artist' ?
+       
+
+          {userType !== 'artist' ?
+
             <Link className={style.shContainer} to='/carrito'>
               <img className={style.shoppingCartImg} src={shoppingCartImg} alt='my shopping cart' />
-            </Link>:
+            </Link> :
             <></>}
 
         </div>
@@ -120,6 +139,17 @@ function Collection() {
           {filteredProducts[0] && !search[0] ? displayProducts(filteredProducts) : <></>}
           {!filteredProducts[0] && search[0] ? displayProducts(search) : <></>}
         </div>
+
+        <div className={style.paginateContainer}>
+          <ReactPaginate
+            previousLabel={"Anterior"}
+            nextLabel={"Siguiente"}
+            pageCount={pageCount}
+            onPageChange={changePage}
+            activeClassName={style.paginationActive}
+          />
+        </div>
+
       </div>
     </div>
   );

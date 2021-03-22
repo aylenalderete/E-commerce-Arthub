@@ -166,6 +166,36 @@ server.get("/:id", (req, res) => {
 // To be used by the common user/artist
 // No password (new route)
 server.put("/:id", async (req, res) => {
+
+	var finder = await User.findOne({
+    where: {
+      username: req.body.username,
+    },
+  });
+  if(finder && req.params.id == finder.dataValues.id){
+	  finder = ''
+  }
+  if (finder) {
+    return res.json({
+      msgUsername: "El usuario ya existe",
+    });
+}
+	if (!finder) {
+		var emailFinder = await User.findOne({
+			where: {
+				email: req.body.email,
+			},
+		});
+		 if (emailFinder && req.params.id == emailFinder.dataValues.id) {
+       emailFinder = "";
+     }
+		if (emailFinder) {
+			return res.json({
+				msgEmail: "Este email ya esta registrado",
+			});
+		}
+		
+		if (!emailFinder) {
 	try {
 		let updated = await User.update(
 			{
@@ -185,6 +215,8 @@ server.put("/:id", async (req, res) => {
 	} catch (err) {
 		console.log(err);
 	}
+}
+}
 });
 // esta funcion actualiza el precio total del carrito
 async function updateCartTotalPrice(userId) {

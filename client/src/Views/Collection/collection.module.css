@@ -60,6 +60,7 @@
     margin-left: 10px;
 }
 
+
 .createProduct{
     width:40px;
     height: 40px;
@@ -97,6 +98,42 @@
         color: #F427EC;
     }
   }
+
+
+/* PAGINADO  */
+
+.paginateContainer {
+    justify-content: center;
+    display: flex;
+    list-style: none;
+  }
+
+.paginateContainer ul {
+    display: flex;
+    list-style: none;
+}
+
+.paginateContainer li {
+    margin: 0 1em;
+    border: 1px solid white;
+    padding: 0.5em 1em;
+    cursor: pointer;
+}
+
+.paginateContainer li:hover {
+    color:  #F427EC;
+}
+
+.paginateContainer .paginationActive {
+    border: 1px solid #F427EC;
+    outline: none;
+}
+
+.paginateContainer * {
+    outline: none;
+}
+
+
 /*Responsive screen*/
 @media only screen and (max-width: 480px){
     .mainContainer{
