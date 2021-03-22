@@ -59,3 +59,29 @@
 .links:hover{
     color: white
 }
+
+.btnEditProfile{
+    width:30%;
+    padding:10px;
+    background-color: transparent;
+    color:white;
+    font-size:1rem;
+    border: 1px solid white;
+    cursor:pointer
+}
+
+.btnEditProfile:hover{
+    animation: fadein ease 0.5s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes fadein {
+    0% {
+        opacity:0;
+        background-color:transparent;
+    }
+    100% {
+        opacity:1;
+        background-color: #F427EC;
+    }
+  }

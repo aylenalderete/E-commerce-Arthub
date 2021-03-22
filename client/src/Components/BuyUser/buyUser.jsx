@@ -40,7 +40,7 @@ export default function BuyUser() {
 
                         <p>Quieres ser artista y vender tus obras? Solicitalo <Link className={table.links} to='/editProfile'>aquí</Link></p>
 
-                        <button className={style.logOut} onClick={() => history.push(`/editarperfil/`)}>
+                        <button className={table.btnEditProfile} onClick={() => history.push(`/editarperfil/`)}>
                             Editar perfil </button>
                     </div>
                     <div className={style.containerPic}>

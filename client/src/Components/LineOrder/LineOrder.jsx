@@ -78,7 +78,7 @@ export default function LineOrder({ lineOrderElement, change }) {
 					lineOrderElement.product.images[0].url
 				}
 			/>
-			<p>{lineOrderElement.product && lineOrderElement.product.title}</p>
+			<p className={style.p}>{lineOrderElement.product && lineOrderElement.product.title}</p>
 
 			<div>
 				<button className={style.btn}
