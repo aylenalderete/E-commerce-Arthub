@@ -9,15 +9,6 @@
     margin: 40px;
 }
 
-.cardContainer {
-        display: flex;
-        flex-direction: row;
-        margin-top: 20px;
-        height: auto;
-        flex-wrap: wrap;
-        justify-content: space-around;
-        width: 100%;
-}
 
 .mainContainer {
     display: flex;
@@ -38,4 +29,10 @@
 
 .navBaralign{
     display: flex;
+}
+
+.allCardsContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
 }
