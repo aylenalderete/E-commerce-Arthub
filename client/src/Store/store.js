@@ -62,6 +62,7 @@ const reducer = function (state = initialState, action) {
 
         case "GET_PRODUCTS":
             if (state.filteredProducts.length > 0 && !state.search[0]) {
+                
                 return {
                     ...state,
                     filteredProducts: action.payload,
@@ -142,6 +143,7 @@ const reducer = function (state = initialState, action) {
             };
 
         case "SEARCH_FILTERS":
+            if(state.search[0]){
             let searchF = state.search.filter((f) =>
                 f.categories.find((x) => x.name === action.payload)
             );
@@ -151,13 +153,13 @@ const reducer = function (state = initialState, action) {
             return {
                 ...state,
                 search: searchF,
-            };
-
-        case "ACTIVE_FILTERS":
-            return {
+            };}
+            
+            return{
                 ...state,
-                isActiveFilters: action.payload,
-            };
+            }
+
+        
 
         case "SIGN_IN":
             if (action.payload.auth === true)
@@ -305,6 +307,11 @@ const reducer = function (state = initialState, action) {
                 ...state,
                 carouselActive: 1,
             };
+            case "ACTIVE_FILTERS":
+                return {
+                    ...state,
+                    isActiveFilters: action.payload,
+                };
 
         default:
             return state;
