@@ -8,11 +8,11 @@ import DeleteProduct from "../DeleteProduct/DeleteProduct.jsx";
 import deleteproduct from "../../Actions/deleteproduct";
 import getproductid from "../../Actions/getproductid";
 import cart from "../../Images/shopping-cart.svg";
-import axios from 'axios';
+import axios from "axios";
 
 import addToCart from "../../Actions/addToCart.js";
 import getUserOrder from "../../Actions/getUserOrder";
-import addToCartGuest from '../../Actions/addToCartGuest';
+import addToCartGuest from "../../Actions/addToCartGuest";
 
 function ArtCard({ name, pic, artist, id, idArtist, price, stock, setFlag }) {
   const userType = useSelector((state) => state.userData.type);
@@ -20,25 +20,25 @@ function ArtCard({ name, pic, artist, id, idArtist, price, stock, setFlag }) {
 
   const dispatch = useDispatch();
 
-  const handlePostUserOrder = async (idUser, productId) => {
-
-
-    if (userData.id === 0) {
-      let prod = (await axios.get(`http://localhost:3001/products/${productId}`)).data;
+  const handlePostUserOrder = async (idUser, productId, quantity) => {
+    if (!userData.username) {
+      let prod = (
+        await axios.get(`http://localhost:3001/products/${productId}`)
+      ).data;
 
       let line = { unit_price: prod.price, quantity: 1, product: prod };
-      let cart = localStorage.getItem('cart');
+      let cart = localStorage.getItem("cart");
       cart = JSON.parse(cart);
       if (!cart) {
         let array = [];
         array.push(line);
-        localStorage.setItem('cart', JSON.stringify(array));
+        localStorage.setItem("cart", JSON.stringify(array));
         dispatch(addToCartGuest(productId));
         // change();
-
       } else {
-
-        if (!cart.find(l => l.product.id_product == line.product.id_product)) {
+        if (
+          !cart.find((l) => l.product.id_product == line.product.id_product)
+        ) {
           cart.push(line);
           cart.sort(function (a, b) {
             if (a.product.id_product > b.product.id_product) {
@@ -50,20 +50,16 @@ function ArtCard({ name, pic, artist, id, idArtist, price, stock, setFlag }) {
             // a must be equal to b
             return 0;
           });
-          localStorage.setItem('cart', JSON.stringify(cart));
+          localStorage.setItem("cart", JSON.stringify(cart));
           dispatch(addToCartGuest(productId));
 
           // change();
-
         }
-
       }
-
     } else {
-      await dispatch(addToCart(idUser, productId));
+      await dispatch(addToCart(idUser, productId, quantity));
       dispatch(getUserOrder(idUser));
     }
-
   };
 
   const isOpenDeleteProd = useSelector((state) => state.isOpenDeleteProd);
@@ -101,7 +97,6 @@ function ArtCard({ name, pic, artist, id, idArtist, price, stock, setFlag }) {
             <h5 className={style.artist}>Artista: {artist}</h5>
           </Link>
 
-
           {/* {
             stock > 0 &&
             <Link className={style.linksA} >
@@ -113,7 +108,11 @@ function ArtCard({ name, pic, artist, id, idArtist, price, stock, setFlag }) {
           { */}
           {stock > 0 && (
             <Link className={style.cartCont} to="/carrito">
-              <img onClick={() => handlePostUserOrder(userData.id, id)} className={style.cart} src={cart}></img>
+              <img
+                onClick={() => handlePostUserOrder(userData.id, id, 1)}
+                className={style.cart}
+                src={cart}
+              ></img>
             </Link>
           )}
         </div>
@@ -140,7 +139,12 @@ function ArtCard({ name, pic, artist, id, idArtist, price, stock, setFlag }) {
             <img className={style.icon} src={editPiece} alt="edit item" />
           </Link>
           <div className={style.btnDelete}>
-            <img className={style.icon} src={deletePiece} alt="delete item" onClick={() => handleDeleteClick(id)} />
+            <img
+              className={style.icon}
+              src={deletePiece}
+              alt="delete item"
+              onClick={() => handleDeleteClick(id)}
+            />
           </div>
           <Link className={style.linksA} to={`/coleccion/${id}`}>
             <h5 className={style.pieceName}>Pieza: {name}</h5>
