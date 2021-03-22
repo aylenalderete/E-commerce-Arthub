@@ -32,9 +32,8 @@ function OrderTable() {
                 <label>Filtrar por estado</label>
                 <select onChange={ChangeState} name="filtroEstado">
                     <option value=""></option>
-                    <option value="activa">activa</option>
-                    <option value="cancelada">cancelada</option>
-                    <option value="pendiente">pendiente</option>
+                    <option value="pending">Pendiente</option>
+                    <option value="fullfilled">Aprobada</option>
                 </select>
                 <label>Filtrar por Fecha</label>
                 <select name="filtroFecha">
@@ -54,7 +53,7 @@ function OrderTable() {
                     <th className={Styles.th}>Precio total</th>
                     <th className={Styles.th}></th>                    
                 </tr>
-                {
+                { filterStatus.length && 
                     filterStatus.map((p) => (
                         <tr className={Styles.tr}>
                             <th className={Styles.th}>{p.id_order}</th>
@@ -63,7 +62,7 @@ function OrderTable() {
                             {/* <th className={Styles.th}>{p.lineorders.products}</th> */}
                             <th className={Styles.th}>{p.userId}</th>
                             <th className={Styles.th}>${p.total_price}</th>
-                            <Link to={`/ordenes/${p.id_order}`}>
+                            <Link to={`/orden/${p.id_order}`}>
                                 <button className={Styles.btn}>Ver más</button>
                             </Link>
                         </tr>
