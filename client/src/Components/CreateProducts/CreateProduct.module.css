@@ -49,6 +49,11 @@
 
 }
 
+.loadingPic{
+    background-image: url(../../Images/simple.gif);
+    height:110px;
+    width: 110px;
+}
 
 .selectCategory:focus{
     outline:none;

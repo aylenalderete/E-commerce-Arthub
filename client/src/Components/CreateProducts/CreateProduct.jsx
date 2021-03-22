@@ -56,6 +56,7 @@ export const validate = (product) => {
 };
 
 function CreateProduct(props) {
+    const [loading, setLoading] = useState(false)
     const [product, setProduct] = useState({
         title: "",
         description: "",
@@ -75,6 +76,7 @@ function CreateProduct(props) {
 
     const [refresh, setRefresh] = React.useState([]);
     function handleUpload(event) {
+        setLoading(true)
         const file = event.target.files[0];
         console.log(event.target.files);
 
@@ -103,6 +105,7 @@ function CreateProduct(props) {
                         props.setUrlImages(arrayImages);
                         console.log("termino1", props.urlImages);
                         setRefresh([1, 2]);
+                        setLoading(false)
                     });
                 }
             );
@@ -211,149 +214,140 @@ function CreateProduct(props) {
     }
 
     return (
-        <div className={Styles.navBaralign}>
-            <NavBar renderTop={false}></NavBar>
-            <div className={Styles.mainContainer}>
-                <div className={Styles.secondContainer}>
-                    <div className={Styles.divTitle}>
-                        <p>crear producto</p>
-                    </div>
-                    <form
-                        className={Styles.formCategory}
-                        onSubmit={handleSubmitCat}
-                    >
-                        <div className={Styles.alignForm}>
-                            <select
-                                className={Styles.selectCategory}
-                                onChange={handleChangeCat}
-                                name="categories"
-                                value={selectedCat}
-                                >
-                                {categories.map((c) => (
-                                    <option
-                                        onFocus={onFocus}
-                                        className={Styles.options}
-                                        value={c.id}
-                                        key={c.id}
-                                    >
-                                        {c.name}
-                                    </option>
-                                ))}
-                            </select>
-                            <button className={Styles.btnCategory} type="submit">
-                                Agregar
-                    </button>
-                        </div>
-                        <div className={Styles.alignSelectedCat}>
-                            {getNames(product.categories).map((c) => (
-                                <p className={Styles.showCategory}>{c}</p>
-                            ))}
-                        </div>
-                        {
-                            errors.categories && touched.categories && <p>{errors.categories}</p>
-                        }
-                    </form>
-
-                    <form className={Styles.containerForm2} onSubmit={handleSubmit}>
-                        <input
-                            className={Styles.input}
-                            value={product.title}
-                            name="title"
-                            onChange={handleChange}
-                            placeholder="título"
-                            required
-                            onFocus={onFocus}
-                        ></input>
-                        {
-                            errors.title && touched.title && <p>{errors.title}</p>
-                        }
-                        <input
-                            className={Styles.input}
-                            value={product.description}
-                            name="description"
-                            onChange={handleChange}
-                            placeholder="descripción"
-                            required
-                            onFocus={onFocus}
-                        ></input>
-                        {
-                            errors.description && touched.description && <p>{errors.description}</p>
-                        }
-                        <input
-                            className={Styles.input}
-                            value={product.price}
-                            name="price"
-                            onChange={handleChange}
-                            placeholder="precio"
-                            required
-                            onFocus={onFocus}
-                        ></input>
-                        {
-                            errors.price && touched.price && <p>{errors.price}</p>
-                        }
-                        <input
-                            className={Styles.input}
-                            value={product.stock}
-                            name="stock"
-                            onChange={handleChange}
-                            placeholder="stock"
-                            required
-                            onFocus={onFocus}
-                        ></input>
-                        {
-                            errors.stock && touched.stock && <p>{errors.stock}</p>
-                        }
-
-                        <div className={Styles.file}>
-                            <div className={Styles.containerImgs}>
-                                <div className={Styles.container2}>
-                                    {props.urlImages &&
-                                        props.urlImages.map((value) => (
-                                            <div className={Styles.pictureAdd}>
-                                                <img width="100" height="100" src={value} />
-
-                                                <button
-                                                    className={Styles.btnDelete}
-                                                    onClick={onDelete}
-                                                    value={value}
-                                                >
-                                                    x
-                        </button>
-                                            </div>
-                                        ))}
-                                </div>
-
-
-                                <div className={Styles.container3}>
-                                    <label className={Styles.label2} for="files">
-                                        <div className={Styles.containerArtImage}>
-                                            Seleccionar imagen
-                    </div>
-                                        <div className={Styles.progressBar}>
-                                            <progress value={upload.process}></progress>
-                                        </div>
-                                        <div className={Styles.btnSelect}>seleccionar</div>
-                                    </label>
-                                    {/*  <div className='inputFile'> */}
-                                    <input
-                                        className={Styles.inpt}
-                                        type="file"
-                                        id="files"
-                                        onChange={handleUpload}
-                                    />
-                                    {/* </div> */}
-                                </div>
-                            </div>
-                            {/* <input className={Styles.btnFile} type="file" name="file" accept= ".jpeg, .png, .jpg"/> */}
-                        </div>
-                    </form>
-
-                    <button className={Styles.btn} onClick={sendProduct}>
-                        Crear producto
-        </button>
-                </div>
+      <div className={Styles.navBaralign}>
+        <NavBar renderTop={false}></NavBar>
+        <div className={Styles.mainContainer}>
+          <div className={Styles.secondContainer}>
+            <div className={Styles.divTitle}>
+              <p>crear producto</p>
             </div>
+            <form className={Styles.formCategory} onSubmit={handleSubmitCat}>
+              <div className={Styles.alignForm}>
+                <select
+                  className={Styles.selectCategory}
+                  onChange={handleChangeCat}
+                  name="categories"
+                  value={selectedCat}
+                >
+                  {categories.map((c) => (
+                    <option
+                      onFocus={onFocus}
+                      className={Styles.options}
+                      value={c.id}
+                      key={c.id}
+                    >
+                      {c.name}
+                    </option>
+                  ))}
+                </select>
+                <button className={Styles.btnCategory} type="submit">
+                  Agregar
+                </button>
+              </div>
+              <div className={Styles.alignSelectedCat}>
+                {getNames(product.categories).map((c) => (
+                  <p className={Styles.showCategory}>{c}</p>
+                ))}
+              </div>
+              {errors.categories && touched.categories && (
+                <p>{errors.categories}</p>
+              )}
+            </form>
+
+            <form className={Styles.containerForm2} onSubmit={handleSubmit}>
+              <input
+                className={Styles.input}
+                value={product.title}
+                name="title"
+                onChange={handleChange}
+                placeholder="título"
+                required
+                onFocus={onFocus}
+              ></input>
+              {errors.title && touched.title && <p>{errors.title}</p>}
+              <input
+                className={Styles.input}
+                value={product.description}
+                name="description"
+                onChange={handleChange}
+                placeholder="descripción"
+                required
+                onFocus={onFocus}
+              ></input>
+              {errors.description && touched.description && (
+                <p>{errors.description}</p>
+              )}
+              <input
+                className={Styles.input}
+                value={product.price}
+                name="price"
+                onChange={handleChange}
+                placeholder="precio"
+                required
+                onFocus={onFocus}
+              ></input>
+              {errors.price && touched.price && <p>{errors.price}</p>}
+              <input
+                className={Styles.input}
+                value={product.stock}
+                name="stock"
+                onChange={handleChange}
+                placeholder="stock"
+                required
+                onFocus={onFocus}
+              ></input>
+              {errors.stock && touched.stock && <p>{errors.stock}</p>}
+
+              <div className={Styles.file}>
+                <div className={Styles.containerImgs}>
+                  <div className={Styles.container2}>
+                    {props.urlImages &&
+                      props.urlImages.map((value) => (
+                        <div className={Styles.pictureAdd}>
+                          <img width="100" height="100" src={value} />
+
+                          <button
+                            className={Styles.btnDelete}
+                            onClick={onDelete}
+                            value={value}
+                          >
+                            x
+                          </button>
+                        </div>
+                      ))}
+                  </div>
+
+                  <div className={Styles.container3}>
+                    <label className={Styles.label2} for="files">
+                      <div className={Styles.containerArtImage}>
+                        {loading ? (
+                          <div className={Styles.loadingPic}></div>
+                        ) : (
+                          "Seleccionar imagen"
+                        )}
+                      </div>
+                      <div className={Styles.btnSelect}>seleccionar</div>
+                    </label>
+                    {/*  <div className='inputFile'> */}
+                    <input
+                      className={Styles.inpt}
+                      type="file"
+                      id="files"
+                      onChange={handleUpload}
+                    />
+                    {/* </div> */}
+                  </div>
+                </div>
+                {/* <input className={Styles.btnFile} type="file" name="file" accept= ".jpeg, .png, .jpg"/> */}
+              </div>
+            </form>
+
+            <button className={Styles.btn} onClick={sendProduct}>
+              Crear producto
+            </button>
+          </div>
         </div>
+      </div>
     );
 }
 

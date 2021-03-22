@@ -3,46 +3,53 @@
     flex-direction: row;
     height: 100vh;   
 }
+
 .container{
-    display: flex;
-    
-    margin-top: 10%;
+    margin-top: 7%;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    width: 100%;
 }
+
 .imgContainer{
     margin-right: 2%;
 }
+
 .infoContainer{
-    margin-left: 2%;
+    align-content: center;
 }
+
 .artistContainer{
     display:flex;
     flex-direction: row;
     justify-content: space-between;
 }
 
-.img{
-      width: 13vmax;
-    height: 16vmax;
+.img {
+    width:400px;
 }
 
 .button{
     color:white;
-     background-color: Transparent;
+    background-color: Transparent;
     background-repeat:no-repeat;
     border: 1px solid white;
     cursor:pointer;
     padding: 10px;
-    margin-left: 40%;
-    margin-top: 20%;
+    font: inherit;
+    justify-content: center;
 }
 
 .borderContainer{
     display: flex;
     flex-direction: row;
     border: 1px solid white;
-    width: 50%;
-    height: fit-content;
-    margin-left: 25%;
+    width: 90%;
+    margin-left: 40px;
+    padding: 20px;
+    align-items: center;
+    justify-content: center;
 }
 
 .button:hover{
@@ -50,7 +57,24 @@
     cursor:pointer;
     color: black;
 }
+
+.catContainer {
+    margin: 0 1em;
+    border: 1px solid white;
+    padding: 0 1em;
+}
 .categoriesContainer{
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
+
+}
+
+.containerButtons{
+    display: flex;
+    justify-content:space-around;
+    margin: 5px;
+}
+
+.infoSecondContainer{
+    align-content: center;
 }

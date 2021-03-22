@@ -44,6 +44,23 @@
     outline: none;
 }
 
+.btnCloseDiv{
+    background-color: transparent;
+    position: absolute;
+    top:0;
+    right:0;
+    border: none;
+    margin: 10px;
+    cursor:pointer;
+
+
+}
+
+.close{
+    width: 25px;
+    height: 25px;
+}
+
 /*Key Frames*/
 
 @keyframes color {
