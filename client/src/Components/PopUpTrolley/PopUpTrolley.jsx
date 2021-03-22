@@ -31,7 +31,6 @@ function PopUpTrolley() {
 	const handleDeleteUserOrderAll = async (idUser) => {
 		if (userData.username) {
 			await dispatch(deleteUserOrderAll(idUser));
-			history.go(0);
 		} else {
 			localStorage.setItem("cart", JSON.stringify([]));
 			dispatch(deleteUserOrderGuest());
@@ -111,7 +110,7 @@ function PopUpTrolley() {
 					<button>Regresar a comprar</button>
 				</Link>
 				{userData.username ? (
-					shoppingCart.lineorders ? (
+					shoppingCart.lineorders?.length !== 0 ? (
 						<button
 							onClick={() => alert("Compra Exitosa")}
 							className={style.btnPay}

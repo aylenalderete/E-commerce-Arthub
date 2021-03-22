@@ -115,6 +115,7 @@ const reducer = function (state = initialState, action) {
                     type: "",
                     state: "",
                 },
+                shoppingCart: [],
             };
 
         case "GET_USER_PRODUCTS":
