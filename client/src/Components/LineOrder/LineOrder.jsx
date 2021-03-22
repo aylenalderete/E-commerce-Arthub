@@ -68,6 +68,7 @@ export default function LineOrder({ lineOrderElement, change }) {
 			}
 		}
 	};
+	//COMENTARIO
 
 	return (
 		<div className={style.card}>
