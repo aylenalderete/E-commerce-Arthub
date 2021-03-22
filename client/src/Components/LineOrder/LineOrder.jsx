@@ -81,7 +81,7 @@ export default function LineOrder({ lineOrderElement, change }) {
 			<p>{lineOrderElement.product && lineOrderElement.product.title}</p>
 
 			<div>
-				<button
+				<button className={style.btn}
 					onClick={() =>
 						handleQuantity(
 							userData.id,
@@ -92,8 +92,8 @@ export default function LineOrder({ lineOrderElement, change }) {
 				>
 					-
 				</button>
-				<button>{lineOrderElement.quantity}</button>
-				<button
+				<button className={style.btn}>{lineOrderElement.quantity}</button>
+				<button className={style.btn}
 					onClick={() =>
 						handleQuantity(
 							userData.id,
@@ -105,7 +105,8 @@ export default function LineOrder({ lineOrderElement, change }) {
 					+
 				</button>
 			</div>
-			<button
+			<div>
+			<button className={style.btn}
 				onClick={() =>
 					handleDeleteUserOrder(
 						shoppingCart.id_order,
@@ -116,8 +117,9 @@ export default function LineOrder({ lineOrderElement, change }) {
 			>
 				X
 			</button>
-			<p>{lineOrderElement.unit_price}</p>
-			<p>
+			</div>
+			<p className = {style.text}>{lineOrderElement.unit_price}</p>
+			<p className = {style.text}>
 				{lineOrderElement.quantity * lineOrderElement.unit_price < 0
 					? 0
 					: lineOrderElement.quantity * lineOrderElement.unit_price}

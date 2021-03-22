@@ -96,24 +96,25 @@ function PopUpTrolley() {
 				</div>
 			)}
 
-			<div className={style.btnContainer}>
+			<div >
 				<h3>
 					Precio Total : ${" "}
 					{shoppingCart.total_price
 						? shoppingCart.total_price
 						: price()}
 				</h3>
-				<button onClick={() => handleDeleteUserOrderAll(userData.id)}>
+				<div className={style.btnContainer}>
+				<button className={style.btn} onClick={() => handleDeleteUserOrderAll(userData.id)}>
 					Vaciar Carrito
 				</button>
 				<Link to="/coleccion">
-					<button>Regresar a comprar</button>
+					<button className={style.btn}>Regresar a comprar</button>
 				</Link>
 				{userData.username ? (
 					shoppingCart.lineorders?.length !== 0 ? (
 						<button
 							onClick={() => alert("Compra Exitosa")}
-							className={style.btnPay}
+							className={style.btn}
 						>
 							Pagar
 						</button>
@@ -124,7 +125,7 @@ function PopUpTrolley() {
 									"Debe agregar por lo menos un cuadro al carrito"
 								)
 							}
-							className={style.btnPay}
+							className={style.btn}
 						>
 							Pagar
 						</button>
@@ -134,13 +135,14 @@ function PopUpTrolley() {
 						<Link to="/ingresar">
 							<button
 								onClick={() => alert("Debe iniciar sesión")}
-								className={style.btnPay}
+								className={style.btn}
 							>
 								Pagar
 							</button>
 						</Link>
 					</div>
 				)}
+				</div>
 			</div>
 		</div>
 	);
