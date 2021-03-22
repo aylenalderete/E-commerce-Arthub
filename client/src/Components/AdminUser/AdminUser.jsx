@@ -7,7 +7,8 @@ import userPic from '../../Images/elcapitan.jpg';
 import CarouselCategories from '../CarouselCategories/carouselCategories';
 import Edit from '../../Images/edit.svg';
 import Add from '../../Images/add-file.svg';
-
+import noProfPic  from '../Assets/profPic.jpg';
+import ProductsAdmin from '../ProductsAdmin/productsAdmin';
 function AdminUser() {
 
   const userData = useSelector(state => state.userData);
@@ -28,7 +29,7 @@ function AdminUser() {
 
           </div>
           <div className={style.containerPic}>
-            <img className={style.userPic} src={userData.profilepic} alt='User Pic'/>
+            <img className={style.userPic} src={userData.profilepic ? userData.profilepic : noProfPic } alt='User Pic'/>
             <button onClick={()=> history.push('/editarperfil')} className={style.editBtn}>
               <img className={style.edit} src={Edit} alt="" />
             </button>
@@ -44,6 +45,7 @@ function AdminUser() {
           </div>
           <CarouselCategories />
           <Link className={style.link} to='/categorias'>Administrar todas</Link>
+           <ProductsAdmin/>
         </div>
       </div>
 

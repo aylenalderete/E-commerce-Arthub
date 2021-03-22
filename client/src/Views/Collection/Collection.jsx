@@ -10,6 +10,7 @@ import getInitialProducts from '../../Actions/getInitialProducts';
 import PopUp from '../../Components/PopUpFilters/PopUp';
 import showFilters from '../../Actions/showFilters';
 import shoppingCartImg from '../../Images/shopping-cart.svg';
+import createProduct from '../../Images/add-product.svg';
 
 function Collection() {
 
@@ -101,7 +102,11 @@ function Collection() {
 
           <button className={style.btnFilters} onClick={handleClick}>filtrar</button>
           <SearchBar></SearchBar>
-          { userType !== 'artist' ?
+          <Link className={style.linkCreate} to='/crearproducto'>
+            <img className={style.createProduct} src={createProduct} alt='create product'/>
+            <p className={style.addText}>Agregar producto</p>
+          </Link>
+          { userType && userType !== 'artist' ?
             <Link className={style.shContainer} to='/carrito'>
               <img className={style.shoppingCartImg} src={shoppingCartImg} alt='my shopping cart' />
             </Link>:
