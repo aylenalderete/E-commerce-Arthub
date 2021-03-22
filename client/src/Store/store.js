@@ -8,7 +8,7 @@ import { composeWithDevTools } from "redux-devtools-extension";
 // estado inicial
 const initialState = {
     //global states
-    guestCart: JSON.parse(localStorage.getItem('cart')) || [],
+    guestCart: JSON.parse(localStorage.getItem("cart")) || [],
     products: [],
     search: [],
     categories: [],
@@ -52,10 +52,8 @@ const initialState = {
     productId: 0,
 
     //user orders state
-    userOrders: []
-
-}
-
+    userOrders: [],
+};
 
 //reducer
 const reducer = function (state = initialState, action) {
@@ -207,11 +205,11 @@ const reducer = function (state = initialState, action) {
                 };
             }
 
-        case 'AUTOPLAY':
-            return{
-                ...state, 
-                autoplay: action.payload
-            }
+        case "AUTOPLAY":
+            return {
+                ...state,
+                autoplay: action.payload,
+            };
 
         case "IS_USER_LOGGED":
             return {
@@ -236,8 +234,6 @@ const reducer = function (state = initialState, action) {
                 isOpenDeleteProd: action.payload,
             };
 
-
-
         case "GET_USER_ORDER":
             return {
                 ...state,
@@ -247,15 +243,14 @@ const reducer = function (state = initialState, action) {
         case "PRODUCT_ID":
             return {
                 ...state,
-                productId: action.payload
-            }
+                productId: action.payload,
+            };
 
-        case 'GET_USER_ORDERS':
+        case "GET_USER_ORDERS":
             return {
                 ...state,
-                userOrders: action.payload
-            }
-
+                userOrders: action.payload,
+            };
 
         case "DELETE_USER_ORDER":
             return {
@@ -270,44 +265,46 @@ const reducer = function (state = initialState, action) {
             return {
                 ...state,
             };
-        case 'DELETE_USER_ORDER_All':
+        case "DELETE_USER_ORDER_All":
             return {
                 ...state,
-                shoppingCart: action.payload
+                shoppingCart: action.payload,
             };
-        case 'ADD_TO_CART_GUEST':
-
+        case "ADD_TO_CART_GUEST":
             return {
                 ...state,
-                guestCart: [...state.guestCart, action.payload]
-            }
+                guestCart: [...state.guestCart, action.payload],
+            };
 
-        case 'CHANGE_QUANTITY_GUEST':
+        case "CHANGE_QUANTITY_GUEST":
             return {
                 ...state,
-                guestCart: state.guestCart.map(prod => {
+                guestCart: state.guestCart.map((prod) => {
                     if (prod.product.id_product === action.payload.productId) {
-                        prod.quantity = action.payload.quantity
+                        prod.quantity = action.payload.quantity;
                     }
                     return prod;
-                })
-            }
-        case 'DELETE_LINEORDER_GUEST':
-            return{
+                }),
+            };
+        case "DELETE_LINEORDER_GUEST":
+            return {
                 ...state,
-                guestCart: state.guestCart.filter(prod => prod.product.id_product !== action.payload)
-            }
-        case 'DELETE_USER_ORDER_GUEST':
-            return{
+                guestCart: state.guestCart.filter(
+                    (prod) => prod.product.id_product !== action.payload
+                ),
+            };
+        case "DELETE_USER_ORDER_GUEST":
+            return {
                 ...state,
-                guestCart: []
-            }
-        case 'RESET_CAROUSEL':
-            
-            return{
-                ...state, 
-                carouselActive: 1
-            }
+
+                guestCart: [],
+            };
+
+        case "RESET_CAROUSEL":
+            return {
+                ...state,
+                carouselActive: 1,
+            };
 
         default:
             return state;
