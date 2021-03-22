@@ -24,6 +24,8 @@ import EditUser from './Views/EditUser/EditUser';
 import EditCategories from './Components/EditCategories/EditCategories';
 import OrderDetail from './Views/OrderDetail/OrderDetail';
 import FAQ from './Views/FAQ/FAQ'
+import Orders from "./Views/Orders/Orders"
+import OrderDetailArtist from "./Views/OrderDetailArtist/OrderDetailArtist"
 
 
 function App() {
@@ -82,8 +84,8 @@ function App() {
       <Route path='/editarperfil/' component={EditUser} />
       <Route path='/detalledeorden/:id' component={OrderDetail} />
       <Route path='/faq' component={FAQ} />
-
-
+      <Route exact path='/ordenes' component={Orders}/>
+      <Route exact path="/orden/:id" component={OrderDetailArtist}/>
 
 
     </div>

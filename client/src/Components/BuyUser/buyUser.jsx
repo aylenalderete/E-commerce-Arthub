@@ -60,13 +60,11 @@ export default function BuyUser() {
                             <div className={table.tableContainer}>
                                 {userOrders.length > 0 && userOrders.map(o =>
                                     <div className={table.orderContainer} >
-                                        <div className={table.productInfo}>
-                                            <p className={table.infoProduct}>Orden: {o.id_order}</p>
-                                            <p className={table.infoProduct}>State: {o.state}</p>
-                                            <p className={table.infoProduct}>Precio total: $ {o.total_price}</p>
-                                            <p className={table.infoProduct}>Creada: {o.createdAt.slice(0,10)}</p>
-                                            <Link to={`/detalledeorden/${o.id_order}`}>Ver detalle</Link>
-                                        </div>
+                                        <p className={table.infoProduct}>Orden: {o.id_order}</p>
+                                        <p className={table.infoProduct}>State: {o.state}</p>
+                                        <p className={table.infoProduct}>Precio total: $ {o.total_price}</p>
+                                        <p className={table.infoProduct}>Creada: {o.createdAt.slice(0, 10)}</p>
+                                        <Link to={`/detalledeorden/${o.id_order}`} >Ver detalle</Link>
                                     </div>
 
                                 )}
