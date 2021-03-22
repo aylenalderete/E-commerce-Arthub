@@ -39,10 +39,10 @@ function ArtistProfile({ artistId }) {
                 <div className={style.secondContainer}>
 
                     <h1>{artistDetails.name} {artistDetails.lastname}</h1>
-
-                    {
-                        (Object.entries(artistProducts).length > 1) ? artistProducts.map(piece => (
-                            <div className={style.cardContainer}>
+                    <h3>Productos publicados</h3>
+                    <div className={style.allCardsContainer}>
+                        {
+                            (Object.entries(artistProducts).length > 1) ? artistProducts.map(piece => (
                                 <ArtCard
                                     name={piece.title}
                                     artist={artistDetails.name + ' ' + artistDetails.lastname}
@@ -53,13 +53,13 @@ function ArtistProfile({ artistId }) {
                                     price={piece.price}
                                     stock={piece.stock}
                                 />
-                            </div>
-                        ))
-                            :
-                            <div className={style.secondContainer}>
-                                <p>No hay productos publicados</p>
-                            </div>
-                    }
+                            ))
+                                :
+                                <div className={style.secondContainer}>
+                                    <p>No hay productos publicados</p>
+                                </div>
+                        }
+                    </div>
                 </div>
             </div>
         </div>
