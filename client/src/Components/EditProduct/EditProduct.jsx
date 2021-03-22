@@ -3,6 +3,8 @@ import Styles from './EditProduct.module.css';
 import axios from 'axios';
 import NavBar from '../NavBar/NavBar.jsx';
 import firebase from 'firebase';
+import {useSelector} from 'react-redux'
+import {Redirect} from 'react-router-dom'
 
 // const firebaseConfig = {
 //     apiKey: "AIzaSyDJ5J7_0pkNGDhDo1mIkVB0Gyrzvyk7J5U",
@@ -201,6 +203,12 @@ function EditProduct({ id }) {
         });
     }
 
+
+    const loggedUser = useSelector(state => state.userData)
+
+    if(loggedUser.type !== 'admin' && loggedUser.type !== 'artist') {
+      alert('Acceso denegado');
+      return <Redirect to='/ingresar'></Redirect>}
 
     return (
       <div className={Styles.navBaralign}>
