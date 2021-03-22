@@ -26,7 +26,8 @@ import Carrito from './Components/PopUpTrolley/PopUpTrolley.jsx';
 import EditUser from './Views/EditUser/EditUser';
 import EditCategories from './Components/EditCategories/EditCategories';
 import OrderDetail from './Views/OrderDetail/OrderDetail';
-
+import Orders from "./Views/Orders/Orders"
+import OrderDetailArtist from "./Views/OrderDetailArtist/OrderDetailArtist"
 
 function App() {
   const dispatch = useDispatch();
@@ -83,9 +84,8 @@ function App() {
       <Route path='/carrito' component={Carrito} />
       <Route path='/editarperfil/' component={EditUser} />
       <Route path='/detalledeorden/:id' component={OrderDetail} />
-
-
-
+      <Route exact path='/ordenes' component={Orders}/>
+      <Route exact path="/orden/:id" component={OrderDetailArtist}/>
 
     </div>
   );
