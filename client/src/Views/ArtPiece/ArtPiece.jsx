@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import addToCart from "../../Actions/addToCart.js";
 import getUserOrder from "../../Actions/getUserOrder";
 import getInitialProducts from "../../Actions/getInitialProducts";
+import addToCartGuest from "../../Actions/addToCartGuest";
 
 function ArtPiece({ artId }) {
   const [detailed, setDetailed] = useState({
@@ -33,9 +34,46 @@ function ArtPiece({ artId }) {
 
   const dispatch = useDispatch();
 
-  const handlePostUserOrder = async (idUser, productId) => {
-    await dispatch(addToCart(idUser, productId));
-    dispatch(getUserOrder(idUser));
+  const handlePostUserOrder = async (idUser, productId, quantity) => {
+    if (!userData.username) {
+      let prod = (
+        await axios.get(`http://localhost:3001/products/${productId}`)
+      ).data;
+
+      let line = { unit_price: prod.price, quantity: 1, product: prod };
+      let cart = localStorage.getItem("cart");
+      cart = JSON.parse(cart);
+      if (!cart) {
+        let array = [];
+        array.push(line);
+        localStorage.setItem("cart", JSON.stringify(array));
+        dispatch(addToCartGuest(productId));
+        // change();
+      } else {
+        if (
+          !cart.find((l) => l.product.id_product == line.product.id_product)
+        ) {
+          cart.push(line);
+          cart.sort(function (a, b) {
+            if (a.product.id_product > b.product.id_product) {
+              return 1;
+            }
+            if (a.product.id_product < b.product.id_product) {
+              return -1;
+            }
+            // a must be equal to b
+            return 0;
+          });
+          localStorage.setItem("cart", JSON.stringify(cart));
+          dispatch(addToCartGuest(productId));
+
+          // change();
+        }
+      }
+    } else {
+      await dispatch(addToCart(idUser, productId, quantity));
+      dispatch(getUserOrder(idUser));
+    }
   };
 
   return (
