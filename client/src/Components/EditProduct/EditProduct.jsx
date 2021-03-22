@@ -17,6 +17,7 @@ import firebase from 'firebase';
 // firebase.initializeApp(firebaseConfig);
 
 function EditProduct({ id }) {
+    const [loading, setLoading] = useState(false);
 
     // ------- firebase ------
     const [upload, setUpload] = React.useState({
@@ -27,6 +28,7 @@ function EditProduct({ id }) {
     const [refresh, setRefresh] = React.useState([])
 
     function handleUpload(event) {
+         setLoading(true);
 
         const file = event.target.files[0];
         console.log(event.target.files)
@@ -57,6 +59,7 @@ function EditProduct({ id }) {
                         ...input,
                         images: [...input.images, { url: urlImg }]
                     });
+                    setLoading(false);
 
                 });
             })
@@ -111,6 +114,7 @@ function EditProduct({ id }) {
         );
     }
     function handleSubmitCat(ev) {
+        setLoading(true)
         ev.preventDefault();
         // console.log('ENTRE AQUI');
 
@@ -161,7 +165,9 @@ function EditProduct({ id }) {
 
 
     async function handleSubmit(e) {
+       
         e.preventDefault();
+         
         if (input.title.length >= 40) {
             alert('El titulo no puede tener mas de 40 caracteres');
         }
@@ -197,140 +203,163 @@ function EditProduct({ id }) {
 
 
     return (
-        <div className={Styles.navBaralign}>
-            <NavBar renderTop={false}></NavBar>
+      <div className={Styles.navBaralign}>
+        <NavBar renderTop={false}></NavBar>
 
+        <div className={Styles.mainContainer}>
+          <div className={Styles.divTitle}>
+            <p className={Styles.divTitle}>Editar producto</p>
+          </div>
 
-            <div className={Styles.mainContainer}>
-                <div className={Styles.divTitle}>
-                    <p className={Styles.divTitle}>Editar producto</p>
-                </div>
-
-
-                <form className={Styles.formCategory} onSubmit={handleSubmitCat}>
-                    <p className={Styles.text}>Categorias</p>
-                    <div className={Styles.alignForm}>
-                        <select className={Styles.selectCategory} onChange={handleChangeCat} name="categories" value={selectedCat}  >
-                            <option className={Styles.options} value='' >seleccionar</option>
-                            {
-
-                                categories.map((c) => (
-
-                                    <option className={Styles.options} value={c.id} key={c.id}>{c.name}</option>
-                                ))
-                            }
-
-                        </select>
-                        <button className={Styles.btnCategory} type='submit'>Agregar</button>
+          <form className={Styles.formCategory} onSubmit={handleSubmitCat}>
+            <p className={Styles.text}>Categorias</p>
+            <div className={Styles.alignForm}>
+              <select
+                className={Styles.selectCategory}
+                onChange={handleChangeCat}
+                name="categories"
+                value={selectedCat}
+              >
+                <option className={Styles.options} value="">
+                  seleccionar
+                </option>
+                {categories.map((c) => (
+                  <option className={Styles.options} value={c.id} key={c.id}>
+                    {c.name}
+                  </option>
+                ))}
+              </select>
+              <button className={Styles.btnCategory} type="submit">
+                Agregar
+              </button>
+            </div>
+            <div className={Styles.alignSelectedCat}>
+              {input.categories.map(
+                (cat) =>
+                  categories.find((category) => category.id === cat) && (
+                    <div className={Styles.alignCatSelected}>
+                      <p className={Styles.showCategory}>{getNames([cat])}</p>{" "}
+                      {/* la funcion get names me trae el nombre pero recibe array asi que por eso está asi */}
+                      <button
+                        className={Styles.btnDelete}
+                        onClick={handleClickCat}
+                        value={cat}
+                      >
+                        x
+                      </button>
                     </div>
-                    <div className={Styles.alignSelectedCat}>
-                        {
-
-                            input.categories.map(cat => (
-                                categories.find(category => category.id === cat) &&
-                                <div className={Styles.alignCatSelected}>
-                                    <p className={Styles.showCategory}>{getNames([cat])}</p> {/* la funcion get names me trae el nombre pero recibe array asi que por eso está asi */}
-                                    <button className={Styles.btnDelete} onClick={handleClickCat} value={cat}>x</button>
-                                </div>
-                            ))
-                        }
-                    </div>
-                    {/* <div>
+                  )
+              )}
+            </div>
+            {/* <div>
                         {
                             getNames(input.categories).map((c) => <p>{c}</p>)
                         }
                     </div> */}
-                </form>
+          </form>
 
-                <form className={Styles.containerForm2} onSubmit={handleSubmit} >
-                    <p className={Styles.text}>Titulo</p>
-                    <input className={Styles.input}
-                        name="title"
-                        type="text"
-                        value={input.title}
-                        placeholder="Titulo"
-                        onChange={handleChange}
-                        required />
-                    <br />
-                    <p className={Styles.text}>Descripcion</p>
-                    <textarea
-                        className={Styles.input2}
-                        name="description"
-                        type="text"
-                        value={input.description}
-                        placeholder="Descripcion"
-                        onChange={handleChange}
-                        required />
-                    <br />
-                    <p className={Styles.text}>Precio</p>
-                    <input
-                        className={Styles.input}
-                        name="price"
-                        type="number"
-                        value={input.price}
-                        placeholder="Precio"
-                        onChange={handleChange}
-                        required />
-                    <br />
-                    <p className={Styles.text}>Stock</p>
-                    <input
-                        className={Styles.input}
-                        name="stock"
-                        type="number"
-                        value={input.stock}
-                        placeholder="Stock"
-                        onChange={handleChange}
-                        required />
-                    <br />
+          <form className={Styles.containerForm2} onSubmit={handleSubmit}>
+            <p className={Styles.text}>Titulo</p>
+            <input
+              className={Styles.input}
+              name="title"
+              type="text"
+              value={input.title}
+              placeholder="Titulo"
+              onChange={handleChange}
+              required
+            />
+            <br />
+            <p className={Styles.text}>Descripcion</p>
+            <textarea
+              className={Styles.input2}
+              name="description"
+              type="text"
+              value={input.description}
+              placeholder="Descripcion"
+              onChange={handleChange}
+              required
+            />
+            <br />
+            <p className={Styles.text}>Precio</p>
+            <input
+              className={Styles.input}
+              name="price"
+              type="number"
+              value={input.price}
+              placeholder="Precio"
+              onChange={handleChange}
+              required
+            />
+            <br />
+            <p className={Styles.text}>Stock</p>
+            <input
+              className={Styles.input}
+              name="stock"
+              type="number"
+              value={input.stock}
+              placeholder="Stock"
+              onChange={handleChange}
+              required
+            />
+            <br />
 
-
-                    <br />
-                    <p className={Styles.text}>Imagenes</p>
-                    <div className={Styles.file} >
-                        <div className={Styles.containerImgs}>
-                            <div className={Styles.container2}>
-                                {
-                                    input.images.map(img =>
-                                        // <div className={Styles.images}>
-                                        //     <img src={img.url} />
-                                        //     <button onClick={onDelete} value={img.url}>X</button>
-                                        // </div>
-                                        <div className={Styles.pictureAdd}>
-                                            <div className={Styles.containerArtImage}>
-                                                <img width='100' height='100' src={img.url} />
-                                            </div>
-                                            <button className={Styles.btnDelete2} onClick={onDelete} value={img.url}>x</button>
-                                        </div>
-                                    )
-                                }
-                            </div>
-                            <div className={Styles.container3}>
-                                <label className={Styles.label2} for='files' >
-                                    <div className={Styles.containerArtImage}>
-                                        Seleccionar imagen
-                                        </div>
-                                    <div className={Styles.progressBar}>
-                                        <progress value={upload.process} ></progress>
-                                    </div>
-                                    <div onChange={handleUpload} className={Styles.btnSelect}>seleccionar</div>
-                                </label>
-                                {/*  <div className='inputFile'> */}
-                                <input className={Styles.inpt} type='file' id='files' onChange={handleUpload} />
-                                {/* </div> */}
-                            </div>
-                        </div>
+            <br />
+            <p className={Styles.text}>Imagenes</p>
+            <div className={Styles.file}>
+              <div className={Styles.containerImgs}>
+                <div className={Styles.container2}>
+                  {input.images.map((img) => (
+                    // <div className={Styles.images}>
+                    //     <img src={img.url} />
+                    //     <button onClick={onDelete} value={img.url}>X</button>
+                    // </div>
+                    <div className={Styles.pictureAdd}>
+                      <div className={Styles.containerArtImage}>
+                        <img width="100" height="100" src={img.url} />
+                      </div>
+                      <button
+                        className={Styles.btnDelete2}
+                        onClick={onDelete}
+                        value={img.url}
+                      >
+                        x
+                      </button>
                     </div>
-                    <button type="submit" value="Editar" className={Styles.btn}
-                    >Editar</button>
-                </form>
-
+                  ))}
+                </div>
+                <div className={Styles.container3}>
+                  <label className={Styles.label2} for="files">
+                    {loading ? (
+                      <div className={Styles.loadingPic}></div>
+                    ) : (
+                      "Seleccionar imagen"
+                    )}
+                    <div onChange={handleUpload} className={Styles.btnSelect}>
+                      seleccionar
+                    </div>
+                  </label>
+                  {/*  <div className='inputFile'> */}
+                  <input
+                    className={Styles.inpt}
+                    type="file"
+                    id="files"
+                    onChange={handleUpload}
+                  />
+                  {/* </div> */}
+                </div>
+              </div>
             </div>
-            {/* <div className={Styles.btnProduct}>
+            <button type="submit" value="Editar" className={Styles.btn}>
+              Editar
+            </button>
+          </form>
+        </div>
+        {/* <div className={Styles.btnProduct}>
                 <button className={Styles.btn} >Editar producto</button>
             </div> */}
-        </div>
-
-    )
+      </div>
+    );
 }
 
 export default EditProduct
