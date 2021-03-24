@@ -17,7 +17,7 @@ import ArtistsProducts from "./Views/ArtistsProducts/ArtistsProducts.jsx";
 import CreateCategory from "./Views/CreateCategory/CreateCategory.jsx";
 import EditProduct from "./Components/EditProduct/EditProduct.jsx";
 import signInUsers from "./Actions/signInUsers";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import AllCategories from "./Views/AllCategories/AllCategories";
 import EditUser from "./Views/EditUser/EditUser";
 import EditCategories from "./Components/EditCategories/EditCategories";
@@ -30,6 +30,8 @@ import ShoppingCart from './Components/ShoppingCart/ShoppingCart';
 
 function App() {
   const dispatch = useDispatch();
+
+
   useEffect(() => {
     var token = localStorage.getItem("token");
     async function request() {
@@ -90,7 +92,7 @@ function App() {
       <Route path="/misproductos" component={ArtistsProducts}></Route>
       <Route path="/crearcategorias" component={CreateCategory}></Route>
       <Route path="/categorias" component={AllCategories}></Route>
-      <Route path="/carrito" component={ShoppingCart} />
+      <Route exact path="/carrito" render={() => <ShoppingCart />} />
       <Route path="/editarperfil/" component={EditUser} />
       <Route path="/detalledeorden/:id" component={OrderDetail} />
       <Route path="/faq" component={FAQ} />

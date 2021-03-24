@@ -143,7 +143,7 @@ function Collection() {
             <Link className={style.shContainer} to="/carrito">
               <img
                 className={style.shoppingCartImg}
-                onclick={() => handleCartClick()}
+                onClick={() => handleCartClick()}
                 src={shoppingCartImg}
                 alt="my shopping cart"
               />

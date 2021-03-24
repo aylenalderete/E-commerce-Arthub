@@ -1,14 +1,11 @@
 import React, { useEffect, useState } from "react";
-import style from "./lineOrder.module.css";
+import style from "./lineorder.module.css";
 import { useSelector, useDispatch } from "react-redux";
+import { addItem, deleteItem, reduceQuantity } from './../../Actions/shoppingCart';
 
-export default function LineOrder({ lineOrderElement, change }) {
+export default function LineOrder({ lineOrderElement }) {
 
-	// const isUserLogged = useSelector((state) => state.isUserLogged);
-	// const shoppingCart = useSelector((state) => state.shoppingCart);
-	// const userData = useSelector((state) => state.userData);
-	// const dispatch = useDispatch();
-
+	const dispatch = useDispatch();
 
 	return (
 		<div className={style.card}>
@@ -22,49 +19,27 @@ export default function LineOrder({ lineOrderElement, change }) {
 			<p className={style.p}>{lineOrderElement.product && lineOrderElement.product.title}</p>
 
 			<div>
-				<button className={style.btn}
-				// onClick={() =>
-				// 	// handleQuantity(
-				// 	// 	userData.id,
-				// 	// 	lineOrderElement.id_line,
-				// 	// 	lineOrderElement.quantity - 1
-				// 	// )
-				// }
+				<button onClick={() => { dispatch(reduceQuantity(lineOrderElement.product.id_product)) }} className={style.btn}
 				>
 					-
 				</button>
-				<button className={style.btn}>{lineOrderElement.quantity}</button>
-				<button className={style.btn}
-				// onClick={() =>
-				// 	handleQuantity(
-				// 		userData.id,
-				// 		lineOrderElement.id_line,
-				// 		lineOrderElement.quantity + 1
-				// 	)
-				// }
+				<p className={style.btn}>{lineOrderElement.quantity}</p>
+				<button onClick={() => { dispatch(addItem(lineOrderElement.product.id_product)) }} className={style.btn}
 				>
 					+
 				</button>
 			</div>
 			<div>
-				<button className={style.btn}
-				// onClick={() =>
-				// 	handleDeleteUserOrder(
-				// 		shoppingCart.id_order,
-				// 		lineOrderElement.id_line,
-				// 		userData.id
-				// 	)
-				// }
+				<button onClick={() => { dispatch(deleteItem(lineOrderElement.product.id_product)) }} className={style.btn}
 				>
 					X
 			</button>
 			</div>
 			<p className={style.text}>{lineOrderElement.unit_price}</p>
-			{/* <p className = {style.text}>
-				{lineOrderElement.quantity * lineOrderElement.unit_price < 0
-					? 0
-					: lineOrderElement.quantity * lineOrderElement.unit_price}
-			</p> */}
+			{
+				<p>{lineOrderElement.subTotal}</p>
+			}
+
 		</div>
 	);
 }

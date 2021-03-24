@@ -86,8 +86,11 @@ function SignIn() {
   });
   const [errors, setErrors] = useState({});
   const [touched, setTouched] = useState({});
+
+  // Carrito
   const cart = JSON.parse(localStorage.getItem("cart"));
   const userData = useSelector((state) => state.userData);
+
   function onFocus(ev) {
     setTouched({
       ...touched,
@@ -170,13 +173,18 @@ function SignIn() {
       axios
         .post(`http://localhost:3001/users`, input)
         .then(async (res) => {
-          console.log(res);
 
           if (res.data.auth === true) {
             await dispatch(signInUsers(res.data.user));
             alert("Cuenta registrada");
             console.log(res);
             localStorage.setItem("token", res.data.token);
+
+            // Carrito
+
+            // if
+
+            // Fin carrito
 
             setRedirect(true);
           } else {
