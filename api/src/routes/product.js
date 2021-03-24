@@ -1,5 +1,5 @@
 const server = require('express').Router();
-const { Product, Image, Category, User, productcategory } = require('../db.js');
+const { Product, Image, Category, User, productcategory, Review } = require('../db.js');
 
 // 1: Get all products 
 server.get('/', (req, res) => {
@@ -217,5 +217,121 @@ server.get('/user/:id', (req, res) => {
 		})
 
 })
+
+//------------------------INICIO CRUD REVIEW-------------------------------
+
+server.post('/:id/review', async (req, res) => {
+	const { id } = req.params;
+	const { description, qualification, userIdClient } = req.body;
+	try {
+		const reviewExists = await Review.findOne({
+			where: {userId : userIdClient},
+			include :[
+				{
+				model: Product,
+				where : {id_product : id}
+				}
+			]
+		})
+		console.log(reviewExists)
+		if(!reviewExists){
+
+			const newReview = await Review.create({
+				description,
+				qualification,
+			})
+			const product = await Product.findByPk(parseInt(id))
+	
+			const user = await User.findByPk(parseInt(userIdClient))
+	
+			await product.addReview(newReview.dataValues.id_review);
+			await user.addReview(newReview.dataValues.id_review)
+	
+			console.log(newReview)
+	
+			res.status(200).json({ message: 'review added successfully' })
+			
+		}
+		else{
+			res.json({message:'you have already reviewed this product'})
+		}
+	
+
+	} catch (error) {
+		console.log(error)
+		res.status(400).json({ message: 'has not been added' })
+	}
+
+})
+
+server.get('/:id/review', async (req, res) => {
+	const { id } = req.params
+	try {
+		await Product.findOne({
+			where: {
+				id_product: id
+			},
+			include: [Review, User]
+		})
+			.then((result) => {
+				res.json(result)
+			})
+
+	} catch (error) {
+		res.status(400).json({ message: "Error" })
+	}
+
+})
+
+server.put('/:id/review/:idReview', async (req, res) => {
+	const { description, qualification, userIdClient } = req.body
+	const { id, idReview } = req.params;
+
+	try {
+
+		const productReview = await Product.findOne({
+			where: { id_product: id },
+			include: { model: Review },
+		});
+
+		await Review.update({
+			description,
+			qualification,
+			userIdClient
+		}, {
+			where: {
+				id_review: idReview,
+			}
+		});
+			
+			
+		await productReview.save();
+		await productReview.reload();
+		
+		res.status(200).json({ message: 'review successfully modified' })
+
+	} catch (error) {
+		res.status(400).json({ message: "Error" })
+	}
+})
+
+server.delete("/:id/review/:idReview", async (req, res) => {
+
+	const { id, idReview } = req.params;
+
+
+	try {
+		const productReview = await Product.findOne({
+			where: { id_product: id },
+			include: { model: Review },
+		});
+		await productReview.removeReview(idReview);
+		res.json({message:'review successfully removed'});
+	} catch (error) {
+		res.status(400).json({message:'Error'});
+	}
+});
+
+//------------------------FIN CRUD REVIEW-------------------------------
 
 module.exports = server;
