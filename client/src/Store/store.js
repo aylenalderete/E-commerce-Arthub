@@ -22,6 +22,9 @@ const initialState = {
     //filters states
     isActiveFilters: false,
 
+    // Carrito
+
+    cart: JSON.parse(localStorage.getItem('cart')) || [],
 
     userData: {
         id: 0,
@@ -52,10 +55,62 @@ const initialState = {
     userOrders: [],
 };
 
+
+
+
+
+
 //reducer
 const reducer = function (state = initialState, action) {
     switch (action.type) {
         //aca crear los switch cases de cada action
+
+        // Cart
+        case "ADD_ITEM":
+            // let index = state.cart.indexOf(action.payload)
+            const found = state.cart.find((f) => f.product.id_product === action.payload.product.id_product)
+            if (!found) {
+                return {
+                    ...state,
+                    cart: [...state.cart, action.payload]
+                }
+            } else {
+                return {
+                    ...state,
+                    cart: state.cart.map(p => {
+                        if (p.product.id_product === action.payload.product.id_product) {
+                            p = action.payload
+                        }
+                        return p
+                    })
+                }
+            }
+
+        case 'REDUCE_QUANTITY':
+
+            let change = state.cart.map(c => {
+                if (action.payload === c.product.id_product && c.quantity > 1) {
+                    c.quantity -= 1
+                }
+                return c
+            })
+            localStorage.setItem('cart', JSON.stringify(change))
+
+            return {
+                ...state,
+                cart: change
+            }
+
+        case 'DELETE_ITEM':
+            let filter = state.cart.filter(f => action.payload !== f.product.id_product)
+            localStorage.setItem('cart', JSON.stringify(filter));
+            return {
+                ...state,
+                cart: filter
+            }
+
+        //////////////////////////////////
+
 
         case "GET_PRODUCTS":
             if (state.filteredProducts.length > 0 && !state.search[0]) {
