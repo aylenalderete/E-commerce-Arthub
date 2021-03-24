@@ -56,7 +56,7 @@ server.get("/", (req, res) => {
 
 // 2: Create new user
 server.post("/", async function (req, res) {
-	console.log("entro en la ruta");
+	// console.log("entro en la ruta");
 	let {
 		username,
 		name,
@@ -125,7 +125,7 @@ server.post("/", async function (req, res) {
 					});
 					newuser.password = " ";
 					let obj = { user: newuser, auth: true, token };
-					console.log(obj);
+					// console.log(obj);
 					res.json(obj);
 				});
 				// const img = images.map(url => ({ url }))
@@ -168,55 +168,55 @@ server.get("/:id", (req, res) => {
 server.put("/:id", async (req, res) => {
 
 	var finder = await User.findOne({
-    where: {
-      username: req.body.username,
-    },
-  });
-  if(finder && req.params.id == finder.dataValues.id){
-	  finder = ''
-  }
-  if (finder) {
-    return res.json({
-      msgUsername: "El usuario ya existe",
-    });
-}
+		where: {
+			username: req.body.username,
+		},
+	});
+	if (finder && req.params.id == finder.dataValues.id) {
+		finder = ''
+	}
+	if (finder) {
+		return res.json({
+			msgUsername: "El usuario ya existe",
+		});
+	}
 	if (!finder) {
 		var emailFinder = await User.findOne({
 			where: {
 				email: req.body.email,
 			},
 		});
-		 if (emailFinder && req.params.id == emailFinder.dataValues.id) {
-       emailFinder = "";
-     }
+		if (emailFinder && req.params.id == emailFinder.dataValues.id) {
+			emailFinder = "";
+		}
 		if (emailFinder) {
 			return res.json({
 				msgEmail: "Este email ya esta registrado",
 			});
 		}
-		
+
 		if (!emailFinder) {
-	try {
-		let updated = await User.update(
-			{
-				username: req.body.username,
-				name: req.body.name,
-				lastname: req.body.lastname,
-				profilepic: req.body.profilepic,
-				email: req.body.email,
-				birth: req.body.birth,
-				type: req.body.type,
-			},
-			{
-				where: { id: req.params.id },
+			try {
+				let updated = await User.update(
+					{
+						username: req.body.username,
+						name: req.body.name,
+						lastname: req.body.lastname,
+						profilepic: req.body.profilepic,
+						email: req.body.email,
+						birth: req.body.birth,
+						type: req.body.type,
+					},
+					{
+						where: { id: req.params.id },
+					}
+				);
+				res.json("User succesfully modified");
+			} catch (err) {
+				console.log(err);
 			}
-		);
-		res.json("User succesfully modified");
-	} catch (err) {
-		console.log(err);
+		}
 	}
-}
-}
 });
 // esta funcion actualiza el precio total del carrito
 async function updateCartTotalPrice(userId) {
@@ -340,6 +340,12 @@ server.post("/:idUser/cart", async (req, res) => {
 					newLineorder.dataValues.quantity,
 				userId,
 			});
+		} else {
+			cartNew.total_price = cartNew.total_price
+				+ newLineorder.dataValues.unit_price * newLineorder.dataValues.quantity
+
+			await cartNew.save();
+			await cartNew.reload();
 		}
 		//Chequeamos que el producto no este en el shoppingcart para no repetirlo
 		const alreadyInCart = await Shoppingcart.findOne({
