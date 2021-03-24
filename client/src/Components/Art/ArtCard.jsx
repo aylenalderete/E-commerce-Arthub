@@ -8,59 +8,13 @@ import DeleteProduct from "../DeleteProduct/DeleteProduct.jsx";
 import deleteproduct from "../../Actions/deleteproduct";
 import getproductid from "../../Actions/getproductid";
 import cart from "../../Images/shopping-cart.svg";
-import axios from "axios";
-
-import addToCart from "../../Actions/addToCart.js";
-import getUserOrder from "../../Actions/getUserOrder";
-import addToCartGuest from "../../Actions/addToCartGuest";
 
 function ArtCard({ name, pic, artist, id, idArtist, price, stock, setFlag }) {
+
   const userType = useSelector((state) => state.userData.type);
   const userData = useSelector((state) => state.userData);
 
   const dispatch = useDispatch();
-
-  const handlePostUserOrder = async (idUser, productId, quantity) => {
-    if (!userData.username) {
-      let prod = (
-        await axios.get(`http://localhost:3001/products/${productId}`)
-      ).data;
-
-      let line = { unit_price: prod.price, quantity: 1, product: prod };
-      let cart = localStorage.getItem("cart");
-      cart = JSON.parse(cart);
-      if (!cart) {
-        let array = [];
-        array.push(line);
-        localStorage.setItem("cart", JSON.stringify(array));
-        dispatch(addToCartGuest(productId));
-        // change();
-      } else {
-        if (
-          !cart.find((l) => l.product.id_product == line.product.id_product)
-        ) {
-          cart.push(line);
-          cart.sort(function (a, b) {
-            if (a.product.id_product > b.product.id_product) {
-              return 1;
-            }
-            if (a.product.id_product < b.product.id_product) {
-              return -1;
-            }
-            // a must be equal to b
-            return 0;
-          });
-          localStorage.setItem("cart", JSON.stringify(cart));
-          dispatch(addToCartGuest(productId));
-
-          // change();
-        }
-      }
-    } else {
-      await dispatch(addToCart(idUser, productId, quantity));
-      dispatch(getUserOrder(idUser));
-    }
-  };
 
   const isOpenDeleteProd = useSelector((state) => state.isOpenDeleteProd);
 
@@ -97,19 +51,10 @@ function ArtCard({ name, pic, artist, id, idArtist, price, stock, setFlag }) {
             <h5 className={style.artist}>Artista: {artist}</h5>
           </Link>
 
-          {/* {
-            stock > 0 &&
-            <Link className={style.linksA} >
-              <button onClick={() => handlePostUserOrder(4, id)} className={style.btn} >
-                Añadir al carrito
-             </button>
-
-          
-          { */}
           {stock > 0 && (
             <Link className={style.cartCont} to="/carrito">
               <img
-                onClick={() => handlePostUserOrder(userData.id, id, 1)}
+                // onClick={() => handlePostUserOrder(userData.id, id, 1)}
                 className={style.cart}
                 src={cart}
               ></img>
@@ -120,7 +65,7 @@ function ArtCard({ name, pic, artist, id, idArtist, price, stock, setFlag }) {
     );
   }
 
-  // if user is artist type
+  // If user is artist type
   else if (userType === "artist" || userType === "admin") {
     return (
       <div className={style.cardContainer}>

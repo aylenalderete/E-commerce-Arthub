@@ -8,7 +8,6 @@ import { composeWithDevTools } from "redux-devtools-extension";
 // estado inicial
 const initialState = {
     //global states
-    guestCart: JSON.parse(localStorage.getItem("cart")) || [],
     products: [],
     search: [],
     categories: [],
@@ -23,8 +22,6 @@ const initialState = {
     //filters states
     isActiveFilters: false,
 
-    // shopping cart
-    shoppingCart: [],
 
     userData: {
         id: 0,
@@ -62,7 +59,7 @@ const reducer = function (state = initialState, action) {
 
         case "GET_PRODUCTS":
             if (state.filteredProducts.length > 0 && !state.search[0]) {
-                
+
                 return {
                     ...state,
                     filteredProducts: action.payload,
@@ -144,23 +141,22 @@ const reducer = function (state = initialState, action) {
             };
 
         case "SEARCH_FILTERS":
-            if(state.search[0]){
-            let searchF = state.search.filter((f) =>
-                f.categories.find((x) => x.name === action.payload)
-            );
-            if (!searchF[0]) {
-                searchF = "void";
-            }
-            return {
-                ...state,
-                search: searchF,
-            };}
-            
-            return{
-                ...state,
+            if (state.search[0]) {
+                let searchF = state.search.filter((f) =>
+                    f.categories.find((x) => x.name === action.payload)
+                );
+                if (!searchF[0]) {
+                    searchF = "void";
+                }
+                return {
+                    ...state,
+                    search: searchF,
+                };
             }
 
-        
+            return {
+                ...state,
+            }
 
         case "SIGN_IN":
             if (action.payload.auth === true)
@@ -255,68 +251,16 @@ const reducer = function (state = initialState, action) {
                 userOrders: action.payload,
             };
 
-        case "DELETE_USER_ORDER":
-            return {
-                ...state,
-            };
-
-        case "ADD_TO_CART":
-            return {
-                ...state,
-            };
-        case "CHANGE_QUANTITY":
-            return {
-                ...state,
-            };
-        case "DELETE_USER_ORDER_All":
-            return {
-                ...state,
-                shoppingCart: action.payload,
-            };
-        case "GET_USER_ORDER_GUEST":
-            return {
-                ...state,
-            };
-        case "ADD_TO_CART_GUEST":
-            return {
-                ...state,
-                guestCart: [...state.guestCart, action.payload],
-            };
-
-        case "CHANGE_QUANTITY_GUEST":
-            return {
-                ...state,
-                guestCart: state.guestCart.map((prod) => {
-                    if (prod.product.id_product === action.payload.productId) {
-                        prod.quantity = action.payload.quantity;
-                    }
-                    return prod;
-                }),
-            };
-        case "DELETE_LINEORDER_GUEST":
-            return {
-                ...state,
-                guestCart: state.guestCart.filter(
-                    (prod) => prod.product.id_product !== action.payload
-                ),
-            };
-        case "DELETE_USER_ORDER_GUEST":
-            return {
-                ...state,
-
-                guestCart: [],
-            };
-
         case "RESET_CAROUSEL":
             return {
                 ...state,
                 carouselActive: 1,
             };
-            case "ACTIVE_FILTERS":
-                return {
-                    ...state,
-                    isActiveFilters: action.payload,
-                };
+        case "ACTIVE_FILTERS":
+            return {
+                ...state,
+                isActiveFilters: action.payload,
+            };
 
         default:
             return state;

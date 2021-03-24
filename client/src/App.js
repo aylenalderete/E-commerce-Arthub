@@ -19,7 +19,6 @@ import EditProduct from "./Components/EditProduct/EditProduct.jsx";
 import signInUsers from "./Actions/signInUsers";
 import { useDispatch } from "react-redux";
 import AllCategories from "./Views/AllCategories/AllCategories";
-import Carrito from "./Components/PopUpTrolley/PopUpTrolley.jsx";
 import EditUser from "./Views/EditUser/EditUser";
 import EditCategories from "./Components/EditCategories/EditCategories";
 import OrderDetail from "./Views/OrderDetail/OrderDetail";
@@ -27,6 +26,8 @@ import FAQ from "./Views/FAQ/FAQ";
 import Orders from "./Views/Orders/Orders";
 import OrderDetailArtist from "./Views/OrderDetailArtist/OrderDetailArtist";
 import getUserOrder from "./Actions/getUserOrder.js";
+import ShoppingCart from './Components/ShoppingCart/ShoppingCart';
+
 function App() {
   const dispatch = useDispatch();
   useEffect(() => {
@@ -89,7 +90,7 @@ function App() {
       <Route path="/misproductos" component={ArtistsProducts}></Route>
       <Route path="/crearcategorias" component={CreateCategory}></Route>
       <Route path="/categorias" component={AllCategories}></Route>
-      <Route path="/carrito" component={Carrito} />
+      <Route path="/carrito" component={ShoppingCart} />
       <Route path="/editarperfil/" component={EditUser} />
       <Route path="/detalledeorden/:id" component={OrderDetail} />
       <Route path="/faq" component={FAQ} />
