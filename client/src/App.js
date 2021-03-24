@@ -94,7 +94,6 @@ function App() {
       <Route path="/detalledeorden/:id" component={OrderDetail} />
       <Route path="/faq" component={FAQ} />
       <Route exact path="/ordenes" component={Orders} />
-      <Route exact path="/orden/:id" component={OrderDetailArtist} />
     </div>
   );
 }

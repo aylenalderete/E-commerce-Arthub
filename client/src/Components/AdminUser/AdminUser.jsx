@@ -26,6 +26,9 @@ function AdminUser() {
 
             <button className={style.editProfile} onClick={() => history.push(`/editarperfil/`)}>
               Editar perfil </button>
+            <br></br>
+            <button className={style.editProfile} onClick={() => history.push(`/ordenes/`)}>
+              Ordenes </button>
 
           </div>
           <div className={style.containerPic}>
