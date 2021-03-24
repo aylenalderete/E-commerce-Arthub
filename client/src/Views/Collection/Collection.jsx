@@ -14,6 +14,7 @@ import getUserOrder from "../../Actions/getUserOrder.js";
 import createProduct from "../../Images/add-product.svg";
 
 import ReactPaginate from "react-paginate";
+//COMENTARIO
 
 function Collection() {
   const search = useSelector((state) => state.search);
