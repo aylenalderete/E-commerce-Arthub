@@ -7,9 +7,6 @@ import signInUsers from "../../Actions/signInUsers";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
 import firebase from "firebase";
-import addToCart from "../../Actions/addToCart.js";
-import getUserOrder from "../../Actions/getUserOrder.js";
-import deleteUserOrderGuest from "../../Actions/deleteUserOrderGuest.js";
 
 export const validate = (input) => {
   let errors = {};
@@ -161,8 +158,6 @@ function SignIn() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    // setInput({...input, profilepic: upload.picture})
-    console.log(errors);
     if (
       !errors.password2 &&
       !errors.email &&
@@ -182,17 +177,6 @@ function SignIn() {
             alert("Cuenta registrada");
             console.log(res);
             localStorage.setItem("token", res.data.token);
-            //AGREGO CARRITO GUEST A USUARIO NUEVO - INICIO
-            if(cart)
-            {await cart.forEach(async (p) => {
-              await dispatch(
-                addToCart(res.data.user.id, p.product.id_product, p.quantity)
-              );
-              dispatch(getUserOrder(res.data.user.id));
-            });
-            await dispatch(deleteUserOrderGuest());}
-            localStorage.setItem("cart", JSON.stringify([]));
-            //AGREGO CARRITO GUEST A USUARIO NUEVO - FIN
 
             setRedirect(true);
           } else {
@@ -370,10 +354,6 @@ function SignIn() {
                       </div>
                     )}
                   </div>
-
-                  {/* <div className={Styles.progressBar}>
-                      <progress value={upload.process}></progress>
-                    </div> */}
                 </label>
 
                 <input
