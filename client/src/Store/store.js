@@ -7,6 +7,7 @@ import { composeWithDevTools } from "redux-devtools-extension";
 
 // estado inicial
 const initialState = {
+
     //global states
     guestCart: JSON.parse(localStorage.getItem("cart")) || [],
     products: [],
@@ -62,6 +63,7 @@ const initialState = {
 
 //reducer
 const reducer = function (state = initialState, action) {
+
     switch (action.type) {
         //aca crear los switch cases de cada action
         case 'GET_PRODUCT_REVIEWS':
@@ -349,9 +351,10 @@ const reducer = function (state = initialState, action) {
         default:
             return state;
     }
+
 };
 
 export default createStore(
-    reducer,
-    composeWithDevTools(applyMiddleware(thunk))
+  reducer,
+  composeWithDevTools(applyMiddleware(thunk))
 );

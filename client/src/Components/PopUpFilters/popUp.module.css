@@ -57,6 +57,26 @@
     margin:2px;
 
 }
+.spanCat{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    
+    
+    /* display: flex;
+    width: 250px;
+    flex-direction: row;
+    flex-wrap: wrap; */
+}
+.spanCat div{
+    margin: 5px;
+    display: flex;
+    flex-direction: row;
+}
+
+.spanButton{
+    
+    cursor: pointer;
+}
 
 .btn:hover{
     /* background-color: #f427edd5; */
