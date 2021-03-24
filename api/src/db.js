@@ -47,6 +47,7 @@ const {
 	User,
 	Lineorder,
 	Shoppingcart,
+	Review
 } = sequelize.models;
 
 // Aca vendrian las relaciones
@@ -75,6 +76,12 @@ Lineorder.belongsTo(Shoppingcart);
 
 User.hasMany(Shoppingcart);
 Shoppingcart.belongsTo(User);
+
+Product.hasMany(Review);
+Review.belongsTo(Product);
+
+User.hasMany(Review);
+Review.belongsTo(User)
 
 module.exports = {
 	...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');
