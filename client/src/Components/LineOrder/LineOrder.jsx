@@ -3,24 +3,9 @@ import style from "./lineorder.module.css";
 import { useSelector, useDispatch } from "react-redux";
 import { addItem, deleteItem, reduceQuantity } from './../../Actions/shoppingCart';
 
-export default function LineOrder({ lineOrderElement, setSubTotal }) {
+export default function LineOrder({ lineOrderElement }) {
 
-	const [subTotalLineOrders, setSubTotalLineOrders] = useState([]);
-	let cart = useSelector((state) => state.cart);
-	// console.log('CART DE REDUX', cart)
-
-	const handleSetSubTotal = () => {
-		setSubTotalLineOrders(cart.map(p => p.quantity * p.product.price));
-	}
-	// const isUserLogged = useSelector((state) => state.isUserLogged);
-	// const shoppingCart = useSelector((state) => state.shoppingCart);
-	// const userData = useSelector((state) => state.userData);
 	const dispatch = useDispatch();
-
-	// useEffect(() => {
-	// 	handleSetSubTotal();
-	// }, [subTotalLineOrders])
-
 
 	return (
 		<div className={style.card}>
@@ -52,7 +37,7 @@ export default function LineOrder({ lineOrderElement, setSubTotal }) {
 			</div>
 			<p className={style.text}>{lineOrderElement.unit_price}</p>
 			{
-				// <p>{subTotalLineOrders}</p>
+				<p>{lineOrderElement.subTotal}</p>
 			}
 
 		</div>

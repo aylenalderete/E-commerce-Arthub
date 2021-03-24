@@ -9,13 +9,15 @@ export const addItem = (id) => {
     let index = cart.indexOf(found)
     let item = {
         product: {},
-        quantity: 1
+        quantity: 1,
+        subTotal: 0
     };
     if (!found) {
         return function (dispatch) {
             axios.get(`http://localhost:3001/products/${id}`)
                 .then(r => {
                     item.product = r.data
+                    item.subTotal = item.product.price * item.quantity
                     return item
                 })
                 .then(item => {
@@ -32,8 +34,9 @@ export const addItem = (id) => {
         if (cart[index].quantity < stock) {
             cart[index].quantity += 1;
         }
+        cart[index].subTotal = cart[index].product.price * cart[index].quantity;
         localStorage.setItem('cart', JSON.stringify(cart));
-        item = cart[index]
+        item = cart[index];
 
         return {
             type: "ADD_ITEM",
@@ -51,7 +54,7 @@ export const deleteItem = (id) => {
 
 export const emptyCart = () => {
     return {
-
+        type: "EMPTY_CART"
     }
 }
 
@@ -64,3 +67,10 @@ export const reduceQuantity = (id) => {
     }
 
 }
+
+// Agrega a la base de datos
+// export const addToCart = ( userId,productId, quantity) => {
+//     return function(dispatch) {
+//         axios.post(`http://localhost:3001/users/${idUser}/cart`), 
+//     }
+// }

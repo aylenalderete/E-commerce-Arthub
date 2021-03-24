@@ -91,6 +91,7 @@ const reducer = function (state = initialState, action) {
             let change = state.cart.map(c => {
                 if (action.payload === c.product.id_product && c.quantity > 1) {
                     c.quantity -= 1
+                    c.subTotal = c.quantity * c.product.price
                 }
                 return c
             })
@@ -107,6 +108,13 @@ const reducer = function (state = initialState, action) {
             return {
                 ...state,
                 cart: filter
+            }
+
+        case 'EMPTY_CART':
+            localStorage.setItem('cart', JSON.stringify([]));
+            return {
+                ...state,
+                cart: []
             }
 
         //////////////////////////////////
