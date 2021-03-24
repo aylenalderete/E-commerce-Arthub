@@ -88,7 +88,6 @@ function SignIn() {
   const [touched, setTouched] = useState({});
 
   // Carrito
-  const cart = JSON.parse(localStorage.getItem("cart"));
   const userData = useSelector((state) => state.userData);
 
   function onFocus(ev) {
@@ -176,20 +175,33 @@ function SignIn() {
 
           if (res.data.auth === true) {
             await dispatch(signInUsers(res.data.user));
+            // console.log('ESTE ES EL CONSOLE LOG', res.data.user.id);
             alert("Cuenta registrada");
-            console.log(res);
             localStorage.setItem("token", res.data.token);
 
             // Carrito
+            // res.data.user.id
+            const cart = JSON.parse(localStorage.getItem("cart"));
+            // item={
+            //   quantity,
+            //   subtotal,
+            //   product: {...}
+            // }
+            if (cart.length > 0) {
 
-            // if
+              cart.forEach(p => {
+                axios.post(`http://localhost:3001/users/${res.data.user.id}/cart`, { quantity: p.quantity, productId: p.product.id_product });
+              });
+
+            }
+
 
             // Fin carrito
 
             setRedirect(true);
           } else {
             if (res.data.msgUsername) {
-              console.log(res);
+              // console.log(res);
               setErrormsg({ ...errormsg, errorUsername: res.data.msgUsername });
             } else if (res.data.msgEmail) {
               setErrormsg({

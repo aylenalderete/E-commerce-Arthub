@@ -70,7 +70,9 @@ export const reduceQuantity = (id) => {
 
 // Agrega a la base de datos
 // export const addToCart = ( userId,productId, quantity) => {
-//     return function(dispatch) {
-//         axios.post(`http://localhost:3001/users/${idUser}/cart`), 
+//     return async function(dispatch) {
+//         await axios.post(`http://localhost:3001/users/${userId}/cart`, {quantity, productId})
+
+        
 //     }
 // }

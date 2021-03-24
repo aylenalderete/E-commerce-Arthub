@@ -14,6 +14,7 @@ function ShoppingCart() {
 	const [total, setTotal] = useState(0);
 
 	const handlePayment = () => {
+		//toda la logica futura para un pago
 		if (!localStorage.getItem('jwt')) {
 			alert('Debe iniciar sesion')
 			history.push('/ingresar');
