@@ -34,7 +34,7 @@ function OrderDetail() {
                         <div className={style.secondContainer}>
                             <h2 className={style.title}>Detalle de orden</h2>
                             <h3> Estado: {orderDetail.state} </h3>
-                            <h3> Fecha: {orderDetail.createdAt.slice(0,10)} </h3>
+                            <h3> Fecha: {orderDetail.createdAt.slice(0, 10)} </h3>
                             <h3> Precio total: $ {orderDetail.total_price} </h3>
 
                             {orderDetail.lineorders.map(l =>
