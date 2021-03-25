@@ -8,6 +8,7 @@ export const getProductReviews = (idProduct) => {
     }
 }
 
+
 export const addProductReview = (idProduct, description, qualification, userIdClient) => {
     return async dispatch => {
         await axios.post(`http://localhost:3001/products/${idProduct}/review`, {
@@ -44,4 +45,13 @@ export function putProductReview(idProduct, idReview, description, qualification
             })
 
     };
+}
+
+export const getUserReviews = (idUser) => {
+    return function (dispatch){
+        axios.get(`http://localhost:3001/users/${idUser}/reviews`)
+            .then(r => dispatch({
+                type: 'GET_USER_REVIEWS', payload: r.data
+            }))
+    }
 }
