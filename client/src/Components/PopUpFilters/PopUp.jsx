@@ -167,6 +167,7 @@ const mapDispatchToProps = (dispatch) => {
     activeFilters: (condition) => dispatch(activeFilters(condition)),
     addItemPopUp: (category) => dispatch(addItemPopUp(category)),
     deleteItemPopUp: (n) => dispatch(deleteItemPopUp(n)),
+    
   };
 };
 
