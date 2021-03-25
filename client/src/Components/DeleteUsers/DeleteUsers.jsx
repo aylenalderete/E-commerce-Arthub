@@ -25,22 +25,14 @@ function DeleteUsers(props) {
     function handleSubmit() {
         
         try {
-            fetch(`http://localhost:3001/users/${theUser.id}`, {
+            fetch(`http://localhost:3001/users/softdelete/${theUser.id}`, {
                 method: 'PUT',
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    username: null,
-                    name: theUser.name,
-                    lastname: theUser.lastname,
-                    profilepic: theUser.profilepic,
-                    email: null,
-                    password: theUser.password,
-                    birth: theUser.birth,
-                    type: theUser.type,
-                    state: 'deleted',
+                    id: theUser.id,
                 })
                 
             })
