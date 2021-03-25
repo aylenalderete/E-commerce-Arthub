@@ -7,8 +7,8 @@ module.exports = (sequelize) => {
     sequelize.define("user", {
         username: {
             type: DataTypes.STRING,
-            allowNull: false,
-            unique: true,
+            allowNull: true,
+
         },
         name: {
             type: DataTypes.STRING,
@@ -24,8 +24,7 @@ module.exports = (sequelize) => {
         },
         email: {
             type: DataTypes.STRING,
-            allowNull: false,
-            unique: true,
+            allowNull: true,
             validate: {
                 isEmail: true
             }
@@ -49,7 +48,7 @@ module.exports = (sequelize) => {
             allowNull: false,
         },
         state: {
-            type: DataTypes.ENUM(['approved', 'rejected', 'pending']),
+            type: DataTypes.ENUM(['approved', 'rejected', 'pending', 'deleted']),
             allowNull: false
         }
     }, {

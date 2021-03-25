@@ -55,9 +55,15 @@ const initialState = {
     //user orders state
     userOrders: [],
 
+    //promote/delete users
+    users:[],
+    promoteUser:false,
+    deleteUser:false,
+
     //reviews states 
     reviewsProduct: [],
     messages: ''
+
 
 };
 
@@ -347,6 +353,24 @@ const reducer = function (state = initialState, action) {
                 ...state,
                 isActiveFilters: action.payload,
             };
+
+        case "GET_ALL_USERS":
+            return {
+                ...state,
+                users: action.payload
+            }
+    
+        case "POP_UP_PROMOTE_USER":
+            return {
+                ...state,
+                promoteUser: action.payload
+            }
+
+        case "POP_UP_DELETE_USER" :
+            return {
+                ...state,
+                deleteUser:action.payload
+            }
 
         default:
             return state;

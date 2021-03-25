@@ -166,7 +166,7 @@ server.get("/:id", (req, res) => {
 // To be used by the common user/artist
 // No password (new route)
 server.put("/:id", async (req, res) => {
-
+	
 	var finder = await User.findOne({
     where: {
       username: req.body.username,
@@ -206,6 +206,7 @@ server.put("/:id", async (req, res) => {
 				email: req.body.email,
 				birth: req.body.birth,
 				type: req.body.type,
+				state: req.body.state,
 			},
 			{
 				where: { id: req.params.id },
