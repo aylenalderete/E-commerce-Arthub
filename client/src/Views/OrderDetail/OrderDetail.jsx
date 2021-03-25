@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router'
-import{Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import axios from 'axios'
 import NavBar from '../../Components/NavBar/NavBar';
 import style from '../OrderDetail/OrderDetail.module.css';
@@ -14,6 +14,7 @@ function OrderDetail() {
 
 
     const { id } = useParams()
+    const idUser = useSelector(state=> state.userData.id)
 
     useEffect(() => {
         async function order() {
@@ -72,10 +73,12 @@ function OrderDetail() {
                                     <div className={style.containerImg}>
                                         <img className={style.img} src={l.product.images[0].url} alt="product image" />
                                     </div>
-                                    <Link className={style.iconRContainer}  to={`/agregarReseña/${l.product.id_product}`}> 
-                                        <img  className={style.iconReview} src={iconReview} alt='agrega una reseña'/>
+                                    { 
+                                        <Link className={style.iconRContainer} to={`/agregarReseña/${l.product.id_product}`}>
+                                            <img className={style.iconReview} src={iconReview} alt='agrega una reseña' />
                                         </Link>
-                                </div>
+                                    }                               
+                                     </div>
                             )}
 
                         </div>

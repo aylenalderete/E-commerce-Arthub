@@ -3,11 +3,32 @@ import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
 import Styles from './addReview.module.css';
 import { addProductReview } from "../../Actions/reviews";
+//start
+import Rating from '@material-ui/lab/Rating';
+import { makeStyles } from '@material-ui/core/styles';
+import StarBorderIcon from '@material-ui/icons/StarBorder';
+
+const useStyles = makeStyles((theme) => ({
+    root: {
+        display: 'flex',
+        flexDirection: 'column',
+        '& > * + *': {
+            marginTop: theme.spacing(1),
+        },
+    },
+    border : {
+        
+        color : '#ffb400'
+    }
+}));
+//---start
 
 export default function AddReview({ idproduct }) {
     const userId = useSelector(state => state.userData.id)
     const dispatch = useDispatch()
     const [product, setProduct] = useState({})
+    const classes = useStyles();
+
 
 
 
@@ -52,7 +73,9 @@ export default function AddReview({ idproduct }) {
                     <form onSubmit={(e) => handleSubmit(e)} className={Styles.form}>
 
                         <label>Calificación</label>
-                        <input onChange={(e) => handleChange(e)} name="qualification" type='number' max='10' />
+                        <div className={classes.root}>
+                            <Rating name="qualification" onChange={(e) => handleChange(e)} defaultValue={0} precision={0.5} emptyIcon={<StarBorderIcon fontSize="inherit" className={classes.border} />}/>
+                        </div>
                         <label className={Styles.label} name='descripcion'>Descripción:  </label>
                         <textarea className={Styles.textArea} onChange={(e) => handleChange(e)} name='description' type="text" />
                         <button type="submit" className={Styles.btn}>Enviar</button>
