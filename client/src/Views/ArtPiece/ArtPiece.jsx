@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useHistory } from 'react-router-dom'
 import NavBar from "../../Components/NavBar/NavBar.jsx";
 import style from "./artpiece.module.css";
-
+import Reviews from "../../Components/Reviews/reviews";
 import { useDispatch, useSelector } from "react-redux";
 import getInitialProducts from "../../Actions/getInitialProducts";
 
@@ -21,6 +21,8 @@ function ArtPiece({ artId }) {
   const userData = useSelector((state) => state.userData);
 
   let history = useHistory()
+   
+
 
   useEffect(() => {
     dispatch(getInitialProducts());
@@ -60,6 +62,7 @@ function ArtPiece({ artId }) {
             </div>
             <h3>{`Precio: $` + `${detailed.price}`}</h3>
             <p>{detailed.description}</p>
+            
 
             <div className={style.containerButtons}>
               <Link to="/carrito">
@@ -74,6 +77,8 @@ function ArtPiece({ artId }) {
             </div>
           </div>
         </div>
+       
+        <Reviews artId={artId}/>
       </div>
     </div>
   );
