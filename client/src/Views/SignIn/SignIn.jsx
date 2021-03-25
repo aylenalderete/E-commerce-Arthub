@@ -180,20 +180,10 @@ function SignIn() {
             localStorage.setItem("token", res.data.token);
 
             // Carrito
-            // res.data.user.id
-            const cart = JSON.parse(localStorage.getItem("cart"));
-            // item={
-            //   quantity,
-            //   subtotal,
-            //   product: {...}
+            // const cart = JSON.parse(localStorage.getItem("cart"));
+            // if (cart.length > 0) {
+            //   axios.post(`http://localhost:3001/users/${res.data.user.id}/newcart`, { cart: cart }).catch(err => console.log(err))
             // }
-            if (cart.length > 0) {
-
-              axios.post(`http://localhost:3001/users/${res.data.user.id}/newcart`, { cart: cart }).catch(err => console.log(err))
-
-            }
-
-
             // Fin carrito
 
             setRedirect(true);

@@ -296,12 +296,6 @@ const reducer = function (state = initialState, action) {
                 isOpenDeleteProd: action.payload,
             };
 
-        case "GET_USER_ORDER":
-            return {
-                ...state,
-                shoppingCart: action.payload,
-            };
-
         case "PRODUCT_ID":
             return {
                 ...state,

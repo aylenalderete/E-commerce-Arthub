@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import style from "./lineorder.module.css";
+import style from "./lineOrder.module.css";
 import { useSelector, useDispatch } from "react-redux";
 import { addItem, deleteItem, reduceQuantity } from './../../Actions/shoppingCart';
 
