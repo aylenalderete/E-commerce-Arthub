@@ -103,11 +103,11 @@ const reducer = function (state = initialState, action) {
         //         messages action.payload
         //     }
 
-        // case 'UPDATE_PRODUCT_REVIEW':
-        //     return {
-        //         ...state,
-
-        //     }
+        case 'UPDATE_PRODUCT_REVIEW':
+             return {
+                 ...state,
+              userReviews: action.payload
+             }
 
         case "GET_PRODUCTS":
             if (state.filteredProducts.length > 0 && !state.search[0]) {
