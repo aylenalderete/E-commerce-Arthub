@@ -62,7 +62,6 @@ const initialState = {
 
     //reviews states 
     reviewsProduct: [],
-    userReviews: [],
     messages: '',
     selectedCategories: [],
 
@@ -88,20 +87,20 @@ const reducer = function (state = initialState, action) {
         case "GET_USER_REVIEWS":
             return {
                 ...state,
-                userReviews: action.payload
+                reviewsProduct: action.payload,
             }
 
         // case 'DELETE_PRODUCT_REVIEW':
         //     return {
         //         ...state,
-        //         messages action.payload
+        //         messages:action.payload
         //     }
 
-        // case 'UPDATE_PRODUCT_REVIEW':
-        //     return {
-        //         ...state,
-
-        //     }
+        case 'UPDATE_PRODUCT_REVIEW':
+           return {
+                ...state,
+                userReviews:action.payload
+            }
 
         case "GET_PRODUCTS":
             if (state.filteredProducts.length > 0 && !state.search[0]) {

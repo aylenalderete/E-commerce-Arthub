@@ -290,38 +290,41 @@ server.get('/:id/review', async (req, res) => {
 	}
 
 })
-
-server.put('/:id/review/:idReview', async (req, res) => {
-	const { description, qualification, userIdClient } = req.body
-	const { id, idReview } = req.params;
+server.put("/:id/review", async (req, res) => {
+	const { description, qualification, userIdClient } = req.body;
+	const { id } = req.params;
 
 	try {
-
-		const productReview = await Product.findOne({
-			where: { id_product: id },
-			include: { model: Review },
+		const reviewToEdit = await Review.findOne({
+			include: [
+				{
+					model: User,
+					where: { id:parseInt(userIdClient) },
+				},
+                {
+                    model: Product,
+                    where: { id_product:parseInt(id) },
+                },
+            
+			],
 		});
+		if(!reviewToEdit){
+			return res.json({message:"Could not find specified review :("})
+		}
 
-		await Review.update({
-			description,
-			qualification,
-			userIdClient
-		}, {
-			where: {
-				id_review: idReview,
-			}
-		});
-			
-			
-		await productReview.save();
-		await productReview.reload();
-		
-		res.status(200).json({ message: 'review successfully modified' })
+		reviewToEdit.description=description
+		reviewToEdit.qualification=qualification
 
+
+		await reviewToEdit.save();
+		await reviewToEdit.reload();
+
+		res.status(200).json(reviewToEdit);
 	} catch (error) {
-		res.status(400).json({ message: "Error" })
+		res.status(400).json({ message: "Error" });
 	}
-})
+});
+
 
 server.delete("/:id/review/:idReview", async (req, res) => {
 

@@ -32,10 +32,10 @@ export function deleteProductReview(idProduct, idReview) {
     };
 }
 
-export function putProductReview(idProduct, idReview, description, qualification, userIdClient) {
+export function putProductReview(idProduct, description, qualification, userIdClient) {
     return async function (dispatch) {
         return await axios
-            .put(`http://localhost:3001/products/${idProduct}/review/${idReview}`, {
+            .put(`http://localhost:3001/products/${idProduct}/review/`, {
                 description,
                 qualification,
                 userIdClient

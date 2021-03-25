@@ -10,7 +10,7 @@ const {
 	Lineorder,
 	Product,
 	Review
-} = require("../db.js");
+} = require("../db.js"); 
 
 // 1: Get all users
 // No password
