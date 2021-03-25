@@ -1,4 +1,5 @@
 const server = require("express").Router();
+
 const jwt = require("jsonwebtoken");
 const verifyToken = require("./verifyToken");
 const bcrypt = require("bcryptjs");
@@ -306,6 +307,34 @@ server.delete("/:idUser/cart", async (req, res) => {
 		};
 	}
 });
+
+// Crea carrito de guest en base de datos
+server.post("/:idUser/newcart", async (req, res) => {
+	const { idUser: userId } = req.params;
+	const { cart } = req.body;
+
+	try {
+		let totalPrice = cart.reduce((acc, prod) => acc + prod.quantity * prod.product.price, 0)
+		let newCart = await Shoppingcart.create({
+			total_price: totalPrice,
+			state: "pending",
+			userId
+		})
+		for (let i = 0; i < cart.length; i++) {
+			const productToAdd = await Product.findByPk(parseInt(cart[i].product.id_product));
+			const newLineorder = await Lineorder.create({
+				quantity: cart[i].quantity,
+				unit_price: productToAdd.dataValues.price,
+			});
+			await productToAdd.addLineorder(newLineorder.dataValues.id_line);
+			await newCart.addLineorder(newLineorder.dataValues.id_line);
+		}
+		res.json(newCart)
+	}
+	catch (error) {
+		res.status(400).send(error)
+	}
+})
 
 // 7: Agrega item a carrito
 
