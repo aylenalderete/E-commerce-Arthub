@@ -271,7 +271,15 @@ server.get('/:id/review', async (req, res) => {
 			where: {
 				id_product: id
 			},
-			include: [Review, User]
+			include: [
+				{
+				model : Review,
+				include: [{ model: User }],
+			},
+			{
+				model : User
+			}
+		]
 		})
 			.then((result) => {
 				res.json(result)
