@@ -12,21 +12,22 @@ import showFilters from "../../Actions/showFilters";
 import shoppingCartImg from "../../Images/shopping-cart.svg";
 import getUserOrder from "../../Actions/getUserOrder.js";
 import createProduct from "../../Images/add-product.svg";
-
+import setFilters from "../../Actions/setFilters";
 import ReactPaginate from "react-paginate";
-//COMENTARIO
+import { addItemPopUp } from "../../Actions/dispatchCategories";
+import activeFilters from "../../Actions/activeFilters.js";
 
 function Collection() {
   const search = useSelector((state) => state.search);
   const isOpenFilters = useSelector((state) => state.isOpenFilters);
   const filteredProducts = useSelector((state) => state.filteredProducts);
   const products = useSelector((state) => state.products);
-
   const userType = useSelector((state) => state.userData.type);
   const cart = useSelector((state) => state.cart);
 
+  const isActiveFilters = useSelector((state) => state.isActiveFilters);
   const [flag, setFlag] = useState(false);
-
+  const selectedCategories = useSelector((state) => state.selectedCategories);
   const dispatch = useDispatch();
   const history = useHistory();
   const userData = useSelector((state) => state.userData);
@@ -50,6 +51,11 @@ function Collection() {
   // function handleCartClick() {
   // }
 
+  function onRefresh() {
+    dispatch(setFilters(products));
+    dispatch(activeFilters(false));
+    dispatch(addItemPopUp());
+  }
   // Paginado
   const [pageNumber, setPageNumber] = useState(0);
   const productsPerPage = 9;
@@ -62,20 +68,17 @@ function Collection() {
   function displayProducts(array) {
     let products = array.slice(pagesVisited, pagesVisited + productsPerPage);
 
-    if (array === "void") {
+    if (isActiveFilters && !filteredProducts[0] && !array.length) {
       return (
         <div>
-          <p>No encontramos ningún producto relacionado a tu búsqueda</p>
-          <p className={style.linkRefresh} onClick={handleRefresh}>
-            Volver
-          </p>
+          <p>No encontramos ningún producto relacionado a tu búsqueda </p>
         </div>
       );
     }
     if (array === "No products found") {
       return (
         <div>
-          <p>No encontramos ningún producto relacionado a tu búsqueda</p>
+          <p>No encontramos ningún producto relacionado a tu búsqueda </p>
           <p className={style.linkRefresh} onClick={handleRefresh}>
             Volver
           </p>
@@ -117,6 +120,13 @@ function Collection() {
         {isOpenFilters === true ? <PopUp></PopUp> : <></>}
 
         <div className={style.sbContainer}>
+          <button
+            type="button"
+            onClick={() => onRefresh()}
+            className={style.btnFilters}
+          >
+            actualizar
+          </button>
           <button className={style.btnFilters} onClick={handleClick}>
             filtrar
           </button>
@@ -152,7 +162,15 @@ function Collection() {
         </div>
 
         <div className={style.container}>
-          {!filteredProducts[0] && !search[0] ? (
+          {!filteredProducts[0] &&
+          !search[0] &&
+          isActiveFilters &&
+          selectedCategories[0] ? (
+            displayProducts([])
+          ) : (
+            <></>
+          )}
+          {!filteredProducts[0] && !search[0] && !isActiveFilters ? (
             displayProducts(products)
           ) : (
             <></>

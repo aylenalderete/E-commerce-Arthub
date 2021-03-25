@@ -7,7 +7,9 @@ import { composeWithDevTools } from "redux-devtools-extension";
 
 // estado inicial
 const initialState = {
+
     //global states
+    guestCart: JSON.parse(localStorage.getItem("cart")) || [],
     products: [],
     search: [],
     categories: [],
@@ -53,6 +55,11 @@ const initialState = {
 
     //user orders state
     userOrders: [],
+
+    //reviews states 
+    reviewsProduct: [],
+    messages: ''
+
 };
 
 
@@ -62,6 +69,7 @@ const initialState = {
 
 //reducer
 const reducer = function (state = initialState, action) {
+
     switch (action.type) {
         //aca crear los switch cases de cada action
 
@@ -120,6 +128,29 @@ const reducer = function (state = initialState, action) {
         //////////////////////////////////
 
 
+        case 'GET_PRODUCT_REVIEWS':
+            return {
+                ...state,
+                reviewsProduct: action.payload
+            }
+       case "ADD_PRODUCT_REVIEW":
+            return {
+                ...state,
+                messages: action.payload
+           }
+
+        // case 'DELETE_PRODUCT_REVIEW':
+        //     return {
+        //         ...state,
+        //         messages action.payload
+        //     }
+
+        // case 'UPDATE_PRODUCT_REVIEW':
+        //     return {
+        //         ...state,
+                
+        //     }
+ 
         case "GET_PRODUCTS":
             if (state.filteredProducts.length > 0 && !state.search[0]) {
 
@@ -221,6 +252,8 @@ const reducer = function (state = initialState, action) {
                 ...state,
             }
 
+
+
         case "SIGN_IN":
             if (action.payload.auth === true)
                 return {
@@ -308,6 +341,58 @@ const reducer = function (state = initialState, action) {
                 userOrders: action.payload,
             };
 
+        case "DELETE_USER_ORDER":
+            return {
+                ...state,
+            };
+
+        case "ADD_TO_CART":
+            return {
+                ...state,
+            };
+        case "CHANGE_QUANTITY":
+            return {
+                ...state,
+            };
+        case "DELETE_USER_ORDER_All":
+            return {
+                ...state,
+                shoppingCart: action.payload,
+            };
+        case "GET_USER_ORDER_GUEST":
+            return {
+                ...state,
+            };
+        case "ADD_TO_CART_GUEST":
+            return {
+                ...state,
+                guestCart: [...state.guestCart, action.payload],
+            };
+
+        case "CHANGE_QUANTITY_GUEST":
+            return {
+                ...state,
+                guestCart: state.guestCart.map((prod) => {
+                    if (prod.product.id_product === action.payload.productId) {
+                        prod.quantity = action.payload.quantity;
+                    }
+                    return prod;
+                }),
+            };
+        case "DELETE_LINEORDER_GUEST":
+            return {
+                ...state,
+                guestCart: state.guestCart.filter(
+                    (prod) => prod.product.id_product !== action.payload
+                ),
+            };
+        case "DELETE_USER_ORDER_GUEST":
+            return {
+                ...state,
+
+                guestCart: [],
+            };
+
         case "RESET_CAROUSEL":
             return {
                 ...state,
@@ -322,9 +407,10 @@ const reducer = function (state = initialState, action) {
         default:
             return state;
     }
+
 };
 
 export default createStore(
-    reducer,
-    composeWithDevTools(applyMiddleware(thunk))
+  reducer,
+  composeWithDevTools(applyMiddleware(thunk))
 );
