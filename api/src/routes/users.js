@@ -176,6 +176,7 @@ server.put("/:id", async (req, res) => {
 	  finder = ''
   }
   if (finder) {
+	  
     return res.json({
       msgUsername: "El usuario ya existe",
     });
@@ -190,6 +191,7 @@ server.put("/:id", async (req, res) => {
        emailFinder = "";
      }
 		if (emailFinder) {
+			
 			return res.json({
 				msgEmail: "Este email ya esta registrado",
 			});
@@ -197,6 +199,7 @@ server.put("/:id", async (req, res) => {
 		
 		if (!emailFinder) {
 	try {
+
 		let updated = await User.update(
 			{
 				username: req.body.username,
@@ -219,6 +222,32 @@ server.put("/:id", async (req, res) => {
 }
 }
 });
+
+
+//SoftDelete
+//To be used only to softDelete users
+server.put("/softdelete/:id", async (req, res) => {
+
+	try {
+		let updated = await User.update(
+			{
+				id:req.body.id,
+				username: null,
+				email: null,
+				state: 'deleted',
+			},
+			{
+				where: { id: req.params.id },
+			}
+		);
+		res.json("User succesfully modified");
+	} catch (err) {
+		console.log(err);
+	}
+
+});
+
+
 // esta funcion actualiza el precio total del carrito
 async function updateCartTotalPrice(userId) {
 	try {

@@ -6,6 +6,22 @@
 
 }
 
+.goBack {
+    display: flex;
+    margin:2px 2px;
+}
+
+.button{
+    color:white;
+    background-color: Transparent;
+    background-repeat:no-repeat;
+    border: 1px solid white;
+    cursor:pointer;
+    padding: 4px;
+    font-size: 3vh;
+    justify-content: center;
+}
+
 .table {
     border: 1px solid;
     border-color: white;
