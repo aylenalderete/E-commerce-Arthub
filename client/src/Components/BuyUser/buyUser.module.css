@@ -75,6 +75,11 @@
     animation-fill-mode: forwards;
 }
 
+.iconReview{
+    width: 40px;
+    height: 40px;
+}
+
 @keyframes fadein {
     0% {
         opacity:0;

@@ -1,14 +1,20 @@
 import React, { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux';
 import { useParams } from 'react-router'
+import { Link } from 'react-router-dom';
 import axios from 'axios'
 import NavBar from '../../Components/NavBar/NavBar';
 import style from '../OrderDetail/OrderDetail.module.css';
+import iconReview from '../../Images/review.svg';
+
 
 function OrderDetail() {
-
     const [orderDetail, setOrderDetail] = useState({})
+    const userType = useSelector(state => state.userData.type);
+
 
     const { id } = useParams()
+    const idUser = useSelector(state=> state.userData.id)
 
     useEffect(() => {
         async function order() {
@@ -23,6 +29,16 @@ function OrderDetail() {
         order()
     }, [id])
 
+    const EditStateChange = (e) => {
+        axios.put(`http://localhost:3001/orders/${id}`, {state: e.target.value, total_price: orderDetail.total_price} )
+        .then((res) => {
+            setOrderDetail({...orderDetail, state: res.data.state})
+        })
+        .catch((error) => {
+            console.log(error)
+        })
+    }
+
     return (
         <div className={style.mainContainer}>
             <div className={style.navBaralign}>
@@ -34,6 +50,14 @@ function OrderDetail() {
                         <div className={style.secondContainer}>
                             <h2 className={style.title}>Detalle de orden</h2>
                             <h3> Estado: {orderDetail.state} </h3>
+                            {
+                                userType === 'artist' ?
+                                <select value={orderDetail.state} onChange={EditStateChange}> 
+                                    Editar estado
+                                    <option value="pending">Pendiente</option>
+                                    <option value="fullfilled">Aprobada</option>
+                                </select> : null
+                            }
                             <h3> Fecha: {orderDetail.createdAt.slice(0,10)} </h3>
                             <h3> Precio total: $ {orderDetail.total_price} </h3>
 
@@ -49,7 +73,12 @@ function OrderDetail() {
                                     <div className={style.containerImg}>
                                         <img className={style.img} src={l.product.images[0].url} alt="product image" />
                                     </div>
-                                </div>
+                                    { 
+                                        <Link className={style.iconRContainer} to={`/agregarReseña/${l.product.id_product}`}>
+                                            <img className={style.iconReview} src={iconReview} alt='agrega una reseña' />
+                                        </Link>
+                                    }                               
+                                     </div>
                             )}
 
                         </div>
