@@ -27,6 +27,7 @@ import Orders from "./Views/Orders/Orders";
 import OrderDetailArtist from "./Views/OrderDetailArtist/OrderDetailArtist";
 import getUserOrder from "./Actions/getUserOrder.js";
 import ShoppingCart from './Components/ShoppingCart/ShoppingCart';
+import ShowAllUsers from './Views/ShowAllUsers/ShowAllUsers'
 
 function App() {
   const dispatch = useDispatch();
@@ -96,6 +97,7 @@ function App() {
       <Route path="/faq" component={FAQ} />
       <Route exact path="/ordenes" component={Orders} />
       <Route exact path="/orden/:id" component={OrderDetailArtist} />
+      <Route path="/usuarios" component={ShowAllUsers} />
     </div>
   );
 }
