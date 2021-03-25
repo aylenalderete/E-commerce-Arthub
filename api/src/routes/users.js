@@ -10,6 +10,7 @@ const {
 	Shoppingcart,
 	Lineorder,
 	Product,
+	Review
 } = require("../db.js");
 
 // 1: Get all users
@@ -177,6 +178,7 @@ server.put("/:id", async (req, res) => {
 		finder = ''
 	}
 	if (finder) {
+
 		return res.json({
 			msgUsername: "El usuario ya existe",
 		});
@@ -191,6 +193,7 @@ server.put("/:id", async (req, res) => {
 			emailFinder = "";
 		}
 		if (emailFinder) {
+
 			return res.json({
 				msgEmail: "Este email ya esta registrado",
 			});
@@ -198,6 +201,7 @@ server.put("/:id", async (req, res) => {
 
 		if (!emailFinder) {
 			try {
+
 				let updated = await User.update(
 					{
 						username: req.body.username,
@@ -207,6 +211,7 @@ server.put("/:id", async (req, res) => {
 						email: req.body.email,
 						birth: req.body.birth,
 						type: req.body.type,
+						state: req.body.state,
 					},
 					{
 						where: { id: req.params.id },
@@ -219,6 +224,32 @@ server.put("/:id", async (req, res) => {
 		}
 	}
 });
+
+
+//SoftDelete
+//To be used only to softDelete users
+server.put("/softdelete/:id", async (req, res) => {
+
+	try {
+		let updated = await User.update(
+			{
+				id: req.body.id,
+				username: null,
+				email: null,
+				state: 'deleted',
+			},
+			{
+				where: { id: req.params.id },
+			}
+		);
+		res.json("User succesfully modified");
+	} catch (err) {
+		console.log(err);
+	}
+
+});
+
+
 // esta funcion actualiza el precio total del carrito
 async function updateCartTotalPrice(userId) {
 	try {
@@ -308,7 +339,7 @@ server.delete("/:idUser/cart", async (req, res) => {
 	}
 });
 
-// Crea carrito de guest en base de datos
+// Crea carrito en base de datos
 server.post("/:idUser/newcart", async (req, res) => {
 	const { idUser: userId } = req.params;
 	const { cart } = req.body;
@@ -565,4 +596,50 @@ server.delete("/order/:idorder/lineorder/:idlineorder", async (req, res) => {
 	}
 });
 
+//Retorna las reviews del usuario
+server.get("/:id/reviews", async (req, res) => {
+	const { id } = req.params;
+	try {
+		const userReviews = await Review.findAll({
+			include: [
+				{
+					model: User,
+					where: { id },
+				},
+			],
+		})
+		if (userReviews) {
+			return res.json(result);
+		}
+		else {
+			res.json({ message: "This user has no reviews" })
+		}
+	} catch (error) {
+		res.status(400).json({ message: "Error" });
+	}
+});
+
+//Retorna las reviews del usuario
+server.get("/:id/reviews", async (req, res) => {
+	const { id } = req.params;
+	try {
+		const userReviews = await Review.findAll({
+			include: [
+				{
+					model: User,
+					where: { id },
+				},
+			],
+		});
+		console.log(userReviews);
+		if (userReviews) {
+			return res.json(userReviews);
+		} else {
+			res.json({ message: "This user has no reviews" });
+		}
+	} catch (error) {
+		console.log(error);
+		res.status(400).json({ message: "Error" });
+	}
+});
 module.exports = server;
