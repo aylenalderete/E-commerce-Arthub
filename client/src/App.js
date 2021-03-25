@@ -28,6 +28,11 @@ import OrderDetailArtist from "./Views/OrderDetailArtist/OrderDetailArtist";
 import getUserOrder from "./Actions/getUserOrder.js";
 import ShoppingCart from './Components/ShoppingCart/ShoppingCart';
 
+import ShowAllUsers from './Views/ShowAllUsers/ShowAllUsers'
+
+import AddReview from "./Components/Reviews/addReview"
+
+
 function App() {
   const dispatch = useDispatch();
   useEffect(() => {
@@ -95,6 +100,10 @@ function App() {
       <Route path="/detalledeorden/:id" component={OrderDetail} />
       <Route path="/faq" component={FAQ} />
       <Route exact path="/ordenes" component={Orders} />
+      <Route exact path="/orden/:id" component={OrderDetailArtist} />
+      <Route path="/usuarios" component={ShowAllUsers} />
+      <Route exact path="/agregarReseña/:idProduct"  render={({match})=> (<AddReview idproduct={match.params.idProduct} />)}/>
+                                                                          
     </div>
   );
 }
