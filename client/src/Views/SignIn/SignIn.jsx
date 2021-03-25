@@ -189,9 +189,9 @@ function SignIn() {
             // }
             if (cart.length > 0) {
 
-              cart.forEach(p => {
-                axios.post(`http://localhost:3001/users/${res.data.user.id}/cart`, { quantity: p.quantity, productId: p.product.id_product });
-              });
+              Promise.all(cart.map(p => {
+                return axios.post(`http://localhost:3001/users/${res.data.user.id}/cart`, { quantity: p.quantity, productId: p.product.id_product });
+              })).then((res)=> console.log('orden creada en DB', res))
 
             }
 
