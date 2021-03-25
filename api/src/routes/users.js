@@ -619,27 +619,4 @@ server.get("/:id/reviews", async (req, res) => {
 	}
 });
 
-//Retorna las reviews del usuario
-server.get("/:id/reviews", async (req, res) => {
-	const { id } = req.params;
-	try {
-		const userReviews = await Review.findAll({
-			include: [
-				{
-					model: User,
-					where: { id },
-				},
-			],
-		});
-		console.log(userReviews);
-		if (userReviews) {
-			return res.json(userReviews);
-		} else {
-			res.json({ message: "This user has no reviews" });
-		}
-	} catch (error) {
-		console.log(error);
-		res.status(400).json({ message: "Error" });
-	}
-});
 module.exports = server;
