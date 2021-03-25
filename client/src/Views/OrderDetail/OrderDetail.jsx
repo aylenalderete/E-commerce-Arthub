@@ -6,7 +6,6 @@ import axios from 'axios'
 import NavBar from '../../Components/NavBar/NavBar';
 import style from '../OrderDetail/OrderDetail.module.css';
 import iconReview from '../../Images/review.svg';
-import { useSelector } from 'react-redux';
 
 
 function OrderDetail() {
