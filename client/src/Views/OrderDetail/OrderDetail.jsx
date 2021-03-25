@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux';
 import { useParams } from 'react-router'
 import{Link} from 'react-router-dom';
 import axios from 'axios'
@@ -8,8 +9,9 @@ import iconReview from '../../Images/review.svg';
 
 
 function OrderDetail() {
-
     const [orderDetail, setOrderDetail] = useState({})
+    const userType = useSelector(state => state.userData.type);
+
 
     const { id } = useParams()
 
@@ -26,6 +28,16 @@ function OrderDetail() {
         order()
     }, [id])
 
+    const EditStateChange = (e) => {
+        axios.put(`http://localhost:3001/orders/${id}`, {state: e.target.value, total_price: orderDetail.total_price} )
+        .then((res) => {
+            setOrderDetail({...orderDetail, state: res.data.state})
+        })
+        .catch((error) => {
+            console.log(error)
+        })
+    }
+
     return (
         <div className={style.mainContainer}>
             <div className={style.navBaralign}>
@@ -37,6 +49,14 @@ function OrderDetail() {
                         <div className={style.secondContainer}>
                             <h2 className={style.title}>Detalle de orden</h2>
                             <h3> Estado: {orderDetail.state} </h3>
+                            {
+                                userType === 'artist' ?
+                                <select value={orderDetail.state} onChange={EditStateChange}> 
+                                    Editar estado
+                                    <option value="pending">Pendiente</option>
+                                    <option value="fullfilled">Aprobada</option>
+                                </select> : null
+                            }
                             <h3> Fecha: {orderDetail.createdAt.slice(0,10)} </h3>
                             <h3> Precio total: $ {orderDetail.total_price} </h3>
 

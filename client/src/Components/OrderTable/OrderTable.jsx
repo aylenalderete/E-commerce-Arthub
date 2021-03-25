@@ -46,23 +46,25 @@ function OrderTable() {
             <table className={Styles.table}>
                 <tr className={Styles.tr}>
                     <th className={Styles.th}>N° orden</th>
-                    <th className={Styles.th}>Fecha</th>
+                    <th className={Styles.th}>Fecha y hora</th>
                     <th className={Styles.th}>Estado</th>
                     {/* <th className={Styles.th}>Cantidad de items</th> */}
                     <th className={Styles.th}>ID cliente</th>
                     <th className={Styles.th}>Precio total</th>
-                    <th className={Styles.th}></th>                    
+                    <th className={Styles.th}></th>                   
                 </tr>
-                { filterStatus.length && 
+                {filterStatus.length < 1 ? 
+                <th className={Styles.th}>No hay ordenes disponibles</th> :
+                filterStatus.length && 
                     filterStatus.map((p) => (
                         <tr className={Styles.tr}>
                             <th className={Styles.th}>{p.id_order}</th>
-                            <th className={Styles.th}>17/3/2021</th>
+                            <th className={Styles.th}>{p.createdAt}</th>
                             <th className={Styles.th}>{p.state}</th>
                             {/* <th className={Styles.th}>{p.lineorders.products}</th> */}
                             <th className={Styles.th}>{p.userId}</th>
                             <th className={Styles.th}>${p.total_price}</th>
-                            <Link to={`/orden/${p.id_order}`}>
+                            <Link to={`/detalledeorden/${p.id_order}`}>
                                 <button className={Styles.btn}>Ver más</button>
                             </Link>
                         </tr>
