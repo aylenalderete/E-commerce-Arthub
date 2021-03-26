@@ -35,7 +35,7 @@ function OrderDetail() {
     useEffect(()=>{
     
         dispatch(getUserReviews(idUser));
-    },[idUser,userReview])
+    },[idUser])
 
     const EditStateChange = (e) => {
         axios.put(`http://localhost:3001/orders/${id}`, { state: e.target.value, total_price: orderDetail.total_price })
