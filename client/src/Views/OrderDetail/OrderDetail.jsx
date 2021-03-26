@@ -69,7 +69,7 @@ function OrderDetail() {
                             <h3> Fecha: {orderDetail.createdAt.slice(0, 10)} </h3>
                             <h3> Precio total: $ {orderDetail.total_price} </h3>
 
-                            {orderDetail.lineorders.map(l =>
+                            {orderDetail && orderDetail.lineorders.map(l =>
 
                                 <div className={style.orderContainer} >
                                     <div className={style.productInfo}>
@@ -82,19 +82,19 @@ function OrderDetail() {
                                         <img className={style.img} src={l.product.images[0].url} alt="product image" />
                                     </div>
                                     
-                                    {userReview.find(r => r.productIdProduct === l.product.id_product) ?
+                                    {userReview && userReview.length > 0 && userReview.find(r => r.productIdProduct === l.product.id_product) ?
                                         <Link className={style.iconRContainer} to={`/editarReseña/${l.product.id_product}`}>
                                             <img className={style.iconReview} src={iconReview} alt='agrega una reseña' />
                                             <img className={style.checkIcon} src={checkIcon} alt='agrega una reseña' />
                                      
-                                        </Link>
+                                        </Link> 
                                         :
                                         <Link className={style.iconRContainer} to={`/agregarReseña/${l.product.id_product}`}>
                                             <img className={style.iconReview} src={iconReview} alt='agrega una reseña' />
                                         </Link>
                                     }
                                 </div>
-                            )}
+                            )} 
 
                         </div>
                         :

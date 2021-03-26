@@ -50,7 +50,7 @@ function ArtPiece({ artId }) {
   const classes = useStyles();
 
 
-  useEffect(() => {
+  useEffect(() => {    
     dispatch(getInitialProducts());
     axios
       .get(`http://localhost:3001/products/${artId}`)
@@ -68,14 +68,17 @@ function ArtPiece({ artId }) {
 
   let average = 0;
   let finalAverage;
-
   if (reviews && reviews[0]) {
     reviews.forEach(r => average += r.qualification)
     if (average > 0) {
       finalAverage = average / reviews.length
     }
-
   }
+  
+
+  
+
+
 
 
   if (detailed && detailed.description) {
@@ -94,16 +97,12 @@ function ArtPiece({ artId }) {
             <div className={style.infoContainer}>
               <div>
                 <h1>{detailed.title}</h1>
-              </div>{finalAverage ?
+              
+              </div>
                 <div className={classes.root}>
-                  <Rating name="half-rating-read" defaultValue={finalAverage} precision={0.5} readOnly emptyIcon={<StarBorderIcon fontSize="inherit" className={classes.border} />} />
+                <Rating   value= {parseFloat(finalAverage)} precision={0.5} readOnly emptyIcon={<StarBorderIcon fontSize="inherit" className={classes.border} />}/>
                 </div>
-                :
-                <div className={classes.root}>
-                  <Rating name="half-rating-read"  defaultValue={0} precision={0.5} emptyIcon={<StarBorderIcon fontSize="inherit" className={classes.border} />} />
-                </div>
-
-              }
+                
               <div className={style.infoSecondContainer}>
                 {detailed.stock > 0
                   ? <h3>Stock: {detailed.stock}</h3>

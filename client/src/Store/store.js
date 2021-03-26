@@ -92,11 +92,11 @@ const reducer = function (state = initialState, action) {
                 userReviews: action.payload
             }
 
-        // case 'DELETE_PRODUCT_REVIEW':
-        //     return {
-        //         ...state,
-        //         messages action.payload
-        //     }
+        case 'DELETE_PRODUCT_REVIEW':
+            return {
+                ...state,
+                messages: action.payload
+            }
 
         case 'UPDATE_PRODUCT_REVIEW':
              return {

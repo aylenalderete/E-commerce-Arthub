@@ -28,9 +28,10 @@ import OrderDetailArtist from "./Views/OrderDetailArtist/OrderDetailArtist";
 import getUserOrder from "./Actions/getUserOrder.js";
 import ShoppingCart from './Components/ShoppingCart/ShoppingCart';
 import AddReview from "./Components/Reviews/addReview"
-import EditReview from './Components/Reviews/editReview';
+import EditReview from "./Components/Reviews/editReview";
 
 import ShowAllUsers from './Views/ShowAllUsers/ShowAllUsers'
+import { getUserReviews } from "./Actions/reviews";
 
 
 
@@ -54,6 +55,7 @@ function App() {
             await dispatch(signInUsers(result.data));
             if (result.data.username) {
               dispatch(getUserOrder(result.data.id));
+              dispatch(getUserReviews(result.data.id));
             } else {
               dispatch({ type: "GET_USER_ORDER_GUEST" });
             }

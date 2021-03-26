@@ -48,7 +48,6 @@ export function putProductReview(idProduct, idReview, description, qualification
 }
 
 export const getUserReviews = (idUser) => {
-    console.log(idUser+ '-------action') 
     return async  function  (dispatch){
        return await axios.get(`http://localhost:3001/users/${idUser}/reviews`)
             .then(r => dispatch({
