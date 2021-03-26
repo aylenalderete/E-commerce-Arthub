@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
 import Styles from './addReview.module.css';
-import { addProductReview } from "../../Actions/reviews";
+import { addProductReview, getUserReviews } from "../../Actions/reviews";
 //start
 import Rating from '@material-ui/lab/Rating';
 import { makeStyles } from '@material-ui/core/styles';
@@ -31,8 +31,8 @@ export default function AddReview({ idproduct }) {
 
 
 
-
     useEffect(() => {
+        
         axios
             .get(`http://localhost:3001/products/${idproduct}`)
             .then((result) => setProduct(result.data));
@@ -72,8 +72,6 @@ export default function AddReview({ idproduct }) {
                     </div>
                     <form onSubmit={(e) => handleSubmit(e)} className={Styles.form}>
 
-                        <label>Calificación</label>
-                        <input onChange={(e) => handleChange(e)} name="qualification" type='number' max='10' />
                         <div className={classes.root}>
                             <Rating name="qualification" onChange={(e) => handleChange(e)} defaultValue={0} precision={0.5} emptyIcon={<StarBorderIcon fontSize="inherit" className={classes.border} />}/>
                         </div>
