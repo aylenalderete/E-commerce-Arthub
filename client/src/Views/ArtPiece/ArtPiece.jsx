@@ -46,8 +46,6 @@ function ArtPiece({ artId }) {
 
 
   let history = useHistory()
-   
-
 
   const classes = useStyles();
 
@@ -136,8 +134,6 @@ function ArtPiece({ artId }) {
 
           <Reviews artId={artId} />
         </div>
-       
-        <Reviews artId={artId}/>
       </div>
     );
 

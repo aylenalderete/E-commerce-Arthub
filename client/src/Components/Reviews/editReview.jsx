@@ -2,7 +2,9 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
 import Styles from './addReview.module.css';
-import { editProductReview, deleteProductReview, getProductReviews, getUserReviews} from "../../Actions/reviews";
+
+import { putProductReview, deleteProductReview, getProductReviews, getUserReviews} from "../../Actions/reviews";
+
 //start
 import Rating from '@material-ui/lab/Rating';
 import { makeStyles } from '@material-ui/core/styles';
@@ -59,7 +61,9 @@ export default function EditReview({ idproduct }) {
     }
     function handleSubmit(e) {
         e.preventDefault();
-        dispatch(editProductReview(idproduct ,input.description, input.qualification, userId))
+
+        dispatch(putProductReview(idproduct ,input.description, input.qualification, userId))
+
     }
 
     return (
@@ -91,9 +95,6 @@ export default function EditReview({ idproduct }) {
 
         </div>
     )
+
 }
-
-
-
-
 
