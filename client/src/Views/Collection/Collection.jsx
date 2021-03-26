@@ -23,6 +23,8 @@ function Collection() {
   const filteredProducts = useSelector((state) => state.filteredProducts);
   const products = useSelector((state) => state.products);
   const userType = useSelector((state) => state.userData.type);
+  const cart = useSelector((state) => state.cart);
+
   const isActiveFilters = useSelector((state) => state.isActiveFilters);
   const [flag, setFlag] = useState(false);
   const selectedCategories = useSelector((state) => state.selectedCategories);
@@ -46,15 +48,8 @@ function Collection() {
   function handleRefresh() {
     history.go(0);
   }
-  function handleCartClick() {
-    if (userData.username) {
-      dispatch(getUserOrder(userData.id));
-    }
-    //EXPERIMENTOOOOOO
-    else {
-      dispatch({ type: "GET_USER_ORDER_GUEST" });
-    }
-  }
+  // function handleCartClick() {
+  // }
 
   function onRefresh() {
     dispatch(setFilters(products));
@@ -151,12 +146,15 @@ function Collection() {
 
           {userType !== "artist" ? (
             <Link className={style.shContainer} to="/carrito">
-              <img
-                className={style.shoppingCartImg}
-                onclick={() => handleCartClick()}
-                src={shoppingCartImg}
-                alt="my shopping cart"
-              />
+              <div className={style.imgContainer}>
+                <img
+                  className={style.shoppingCartImg}
+                  // onClick={() => handleCartClick()}
+                  src={shoppingCartImg}
+                  alt="my shopping cart"
+                />
+                {cart.length > 0 && <span>{cart.length < 10? cart.length : '9+'}</span>}
+              </div>
             </Link>
           ) : (
             <></>

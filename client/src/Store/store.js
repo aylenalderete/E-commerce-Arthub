@@ -9,7 +9,6 @@ import { composeWithDevTools } from "redux-devtools-extension";
 const initialState = {
 
     //global states
-    guestCart: JSON.parse(localStorage.getItem("cart")) || [],
     products: [],
     search: [],
     categories: [],
@@ -24,8 +23,9 @@ const initialState = {
     //filters states
     isActiveFilters: false,
 
-    // shopping cart
-    shoppingCart: [],
+    // Carrito
+
+    cart: JSON.parse(localStorage.getItem('cart')) || [],
 
     userData: {
         id: 0,
@@ -54,6 +54,12 @@ const initialState = {
 
     //user orders state
     userOrders: [],
+
+    //reviews states 
+    reviewsProduct: [],
+    messages: '',
+
+
 
     //promote/delete users
     users: [],
@@ -97,11 +103,11 @@ const reducer = function (state = initialState, action) {
         //         messages action.payload
         //     }
 
-        // case 'UPDATE_PRODUCT_REVIEW':
-        //     return {
-        //         ...state,
-
-        //     }
+        case 'UPDATE_PRODUCT_REVIEW':
+             return {
+                 ...state,
+              userReviews: action.payload
+             }
 
         case "GET_PRODUCTS":
             if (state.filteredProducts.length > 0 && !state.search[0]) {
@@ -278,11 +284,7 @@ const reducer = function (state = initialState, action) {
                 isOpenDeleteProd: action.payload,
             };
 
-        case "GET_USER_ORDER":
-            return {
-                ...state,
-                shoppingCart: action.payload,
-            };
+        
 
         case "PRODUCT_ID":
             return {
@@ -296,57 +298,12 @@ const reducer = function (state = initialState, action) {
                 userOrders: action.payload,
             };
 
-        case "DELETE_USER_ORDER":
-            return {
-                ...state,
-            };
+        
 
-        case "ADD_TO_CART":
-            return {
-                ...state,
-            };
-        case "CHANGE_QUANTITY":
-            return {
-                ...state,
-            };
-        case "DELETE_USER_ORDER_All":
-            return {
-                ...state,
-                shoppingCart: action.payload,
-            };
-        case "GET_USER_ORDER_GUEST":
-            return {
-                ...state,
-            };
-        case "ADD_TO_CART_GUEST":
-            return {
-                ...state,
-                guestCart: [...state.guestCart, action.payload],
-            };
-
-        case "CHANGE_QUANTITY_GUEST":
-            return {
-                ...state,
-                guestCart: state.guestCart.map((prod) => {
-                    if (prod.product.id_product === action.payload.productId) {
-                        prod.quantity = action.payload.quantity;
-                    }
-                    return prod;
-                }),
-            };
-        case "DELETE_LINEORDER_GUEST":
-            return {
-                ...state,
-                guestCart: state.guestCart.filter(
-                    (prod) => prod.product.id_product !== action.payload
-                ),
-            };
-        case "DELETE_USER_ORDER_GUEST":
-            return {
-                ...state,
-
-                guestCart: [],
-            };
+        
+       
+        
+        
 
         case "RESET_CAROUSEL":
             return {
@@ -397,6 +354,58 @@ const reducer = function (state = initialState, action) {
                     ...state.selectedCategories.filter((n) => n != action.payload),
                 ],
             };
+
+        // Cart
+        case "ADD_ITEM":
+            // let index = state.cart.indexOf(action.payload)
+            const found = state.cart.find((f) => f.product.id_product === action.payload.product.id_product)
+            if (!found) {
+                return {
+                    ...state,
+                    cart: [...state.cart, action.payload]
+                }
+            } else {
+                return {
+                    ...state,
+                    cart: state.cart.map(p => {
+                        if (p.product.id_product === action.payload.product.id_product) {
+                            p = action.payload
+                        }
+                        return p
+                    })
+                }
+            }
+
+        case 'REDUCE_QUANTITY':
+
+            let change = state.cart.map(c => {
+                if (action.payload === c.product.id_product && c.quantity > 1) {
+                    c.quantity -= 1
+                    c.subTotal = c.quantity * c.product.price
+                }
+                return c
+            })
+            localStorage.setItem('cart', JSON.stringify(change))
+
+            return {
+                ...state,
+                cart: change
+            }
+
+        case 'DELETE_ITEM':
+            let filter = state.cart.filter(f => action.payload !== f.product.id_product)
+            localStorage.setItem('cart', JSON.stringify(filter));
+            return {
+                ...state,
+                cart: filter
+            }
+
+        case 'EMPTY_CART':
+            localStorage.setItem('cart', JSON.stringify([]));
+            return {
+                ...state,
+                cart: []
+            }
 
         default:
             return state;
