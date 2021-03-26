@@ -1,4 +1,5 @@
 const server = require("express").Router();
+
 const jwt = require("jsonwebtoken");
 const verifyToken = require("./verifyToken");
 const bcrypt = require("bcryptjs");
@@ -57,7 +58,7 @@ server.get("/", (req, res) => {
 
 // 2: Create new user
 server.post("/", async function (req, res) {
-	console.log("entro en la ruta");
+	// console.log("entro en la ruta");
 	let {
 		username,
 		name,
@@ -126,7 +127,7 @@ server.post("/", async function (req, res) {
 					});
 					newuser.password = " ";
 					let obj = { user: newuser, auth: true, token };
-					console.log(obj);
+					// console.log(obj);
 					res.json(obj);
 				});
 				// const img = images.map(url => ({ url }))
@@ -163,65 +164,62 @@ server.get("/:id", (req, res) => {
 	});
 });
 
-// 4: Modify user by id
-// To be used by the common user/artist
-// No password (new route)
 server.put("/:id", async (req, res) => {
-	
+
 	var finder = await User.findOne({
-    where: {
-      username: req.body.username,
-    },
-  });
-  if(finder && req.params.id == finder.dataValues.id){
-	  finder = ''
-  }
-  if (finder) {
-	  
-    return res.json({
-      msgUsername: "El usuario ya existe",
-    });
-}
+		where: {
+			username: req.body.username,
+		},
+	});
+	if (finder && req.params.id == finder.dataValues.id) {
+		finder = ''
+	}
+	if (finder) {
+
+		return res.json({
+			msgUsername: "El usuario ya existe",
+		});
+	}
 	if (!finder) {
 		var emailFinder = await User.findOne({
 			where: {
 				email: req.body.email,
 			},
 		});
-		 if (emailFinder && req.params.id == emailFinder.dataValues.id) {
-       emailFinder = "";
-     }
+		if (emailFinder && req.params.id == emailFinder.dataValues.id) {
+			emailFinder = "";
+		}
 		if (emailFinder) {
-			
+
 			return res.json({
 				msgEmail: "Este email ya esta registrado",
 			});
 		}
-		
-		if (!emailFinder) {
-	try {
 
-		let updated = await User.update(
-			{
-				username: req.body.username,
-				name: req.body.name,
-				lastname: req.body.lastname,
-				profilepic: req.body.profilepic,
-				email: req.body.email,
-				birth: req.body.birth,
-				type: req.body.type,
-				state: req.body.state,
-			},
-			{
-				where: { id: req.params.id },
+		if (!emailFinder) {
+			try {
+
+				let updated = await User.update(
+					{
+						username: req.body.username,
+						name: req.body.name,
+						lastname: req.body.lastname,
+						profilepic: req.body.profilepic,
+						email: req.body.email,
+						birth: req.body.birth,
+						type: req.body.type,
+						state: req.body.state,
+					},
+					{
+						where: { id: req.params.id },
+					}
+				);
+				res.json("User succesfully modified");
+			} catch (err) {
+				console.log(err);
 			}
-		);
-		res.json("User succesfully modified");
-	} catch (err) {
-		console.log(err);
+		}
 	}
-}
-}
 });
 
 
@@ -232,7 +230,7 @@ server.put("/softdelete/:id", async (req, res) => {
 	try {
 		let updated = await User.update(
 			{
-				id:req.body.id,
+				id: req.body.id,
 				username: null,
 				email: null,
 				state: 'deleted',
@@ -338,6 +336,34 @@ server.delete("/:idUser/cart", async (req, res) => {
 	}
 });
 
+// Crea carrito en base de datos
+server.post("/:idUser/newcart", async (req, res) => {
+	const { idUser: userId } = req.params;
+	const { cart } = req.body;
+
+	try {
+		let totalPrice = cart.reduce((acc, prod) => acc + prod.quantity * prod.product.price, 0)
+		let newCart = await Shoppingcart.create({
+			total_price: totalPrice,
+			state: "pending",
+			userId
+		})
+		for (let i = 0; i < cart.length; i++) {
+			const productToAdd = await Product.findByPk(parseInt(cart[i].product.id_product));
+			const newLineorder = await Lineorder.create({
+				quantity: cart[i].quantity,
+				unit_price: productToAdd.dataValues.price,
+			});
+			await productToAdd.addLineorder(newLineorder.dataValues.id_line);
+			await newCart.addLineorder(newLineorder.dataValues.id_line);
+		}
+		res.json(newCart)
+	}
+	catch (error) {
+		res.status(400).send(error)
+	}
+})
+
 // 7: Agrega item a carrito
 
 server.post("/:idUser/cart", async (req, res) => {
@@ -371,6 +397,12 @@ server.post("/:idUser/cart", async (req, res) => {
 					newLineorder.dataValues.quantity,
 				userId,
 			});
+		} else {
+			cartNew.total_price = cartNew.total_price
+				+ newLineorder.dataValues.unit_price * newLineorder.dataValues.quantity
+
+			await cartNew.save();
+			await cartNew.reload();
 		}
 		//Chequeamos que el producto no este en el shoppingcart para no repetirlo
 		const alreadyInCart = await Shoppingcart.findOne({
@@ -561,28 +593,27 @@ server.delete("/order/:idorder/lineorder/:idlineorder", async (req, res) => {
 	}
 });
 
-
 //Retorna las reviews del usuario
 server.get("/:id/reviews", async (req, res) => {
-    const { id } = req.params;
-    try {
-        const userReviews = await Review.findAll({
-            include: [
-                {
-                    model: User,
-                    where: { id },
-                },
-            ],
-        });
-        console.log(userReviews);
-        if (userReviews) {
-            return res.json(userReviews);
-        } else {
-            res.json({ message: "This user has no reviews" });
-        }
-    } catch (error) {
-        console.log(error);
-        res.status(400).json({ message: "Error" });
-    }
+	const { id } = req.params;
+	try {
+		const userReviews = await Review.findAll({
+			include: [
+				{
+					model: User,
+					where: { id },
+				},
+			],
+		})
+		if (userReviews) {
+			return res.json(result);
+		}
+		else {
+			res.json({ message: "This user has no reviews" })
+		}
+	} catch (error) {
+		res.status(400).json({ message: "Error" });
+	}
 });
+
 module.exports = server;

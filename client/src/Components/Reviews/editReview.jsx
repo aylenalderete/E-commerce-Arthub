@@ -2,11 +2,12 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
 import Styles from './addReview.module.css';
-import { addProductReview, getUserReviews } from "../../Actions/reviews";
+import { editProductReview, deleteProductReview, getProductReviews, getUserReviews} from "../../Actions/reviews";
 //start
 import Rating from '@material-ui/lab/Rating';
 import { makeStyles } from '@material-ui/core/styles';
 import StarBorderIcon from '@material-ui/icons/StarBorder';
+
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -23,16 +24,23 @@ const useStyles = makeStyles((theme) => ({
 }));
 //---start
 
-export default function AddReview({ idproduct }) {
+export default function EditReview({ idproduct }) {
     const userId = useSelector(state => state.userData.id)
     const dispatch = useDispatch()
     const [product, setProduct] = useState({})
     const classes = useStyles();
-
-
+    const userIdReview = useSelector(state => state.userReviews)
+/* 
+    const editIdReview = userIdReview.find(r => r.productIdProduct === idproduct) */
+    
 
     useEffect(() => {
-        
+      dispatch(getProductReviews(idproduct))
+      dispatch(getUserReviews(userId));
+    }, []);
+
+   
+    useEffect(() => {
         axios
             .get(`http://localhost:3001/products/${idproduct}`)
             .then((result) => setProduct(result.data));
@@ -51,16 +59,14 @@ export default function AddReview({ idproduct }) {
     }
     function handleSubmit(e) {
         e.preventDefault();
-
-        console.log(idproduct, input.description, input.qualification, userId)
-        dispatch(addProductReview(idproduct, input.description, input.qualification, userId))
+        dispatch(editProductReview(idproduct ,input.description, input.qualification, userId))
     }
 
     return (
         <div className={Styles.mainContainer}>
             {product.title &&
                 <div className={Styles.secondContainer}>
-                    <h1 className={Styles.title}>{`Agrega una reseña al producto ${product.title}`}</h1>
+                    <h1 className={Styles.title}>{`Modifica la reseña del producto ${product.title}`}</h1>
                     <div className={Styles.containerProduct}>
                         <div className={Styles.textContainer}>
                             <p>Descripción:</p>
@@ -72,6 +78,7 @@ export default function AddReview({ idproduct }) {
                     </div>
                     <form onSubmit={(e) => handleSubmit(e)} className={Styles.form}>
 
+                        <label>Calificación</label>
                         <div className={classes.root}>
                             <Rating name="qualification" onChange={(e) => handleChange(e)} defaultValue={0} precision={0.5} emptyIcon={<StarBorderIcon fontSize="inherit" className={classes.border} />}/>
                         </div>
