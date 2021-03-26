@@ -3,10 +3,12 @@ import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
 import Styles from './addReview.module.css';
 import { addProductReview, getUserReviews } from "../../Actions/reviews";
+import {useHistory} from 'react-router-dom'
 //start
 import Rating from '@material-ui/lab/Rating';
 import { makeStyles } from '@material-ui/core/styles';
 import StarBorderIcon from '@material-ui/icons/StarBorder';
+import NavBar from '../../Components/NavBar/NavBar'
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -23,12 +25,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 //---start
 
-export default function AddReview({ idproduct }) {
+export default function AddReview({ idproduct, idorder}) { 
     const userId = useSelector(state => state.userData.id)
     const dispatch = useDispatch()
     const [product, setProduct] = useState({})
     const classes = useStyles();
-
+    const history = useHistory();
 
 
     useEffect(() => {
@@ -54,10 +56,12 @@ export default function AddReview({ idproduct }) {
 
         console.log(idproduct, input.description, input.qualification, userId)
         dispatch(addProductReview(idproduct, input.description, input.qualification, userId))
+        history.push(`/coleccion/${idproduct}`)
     }
 
     return (
         <div className={Styles.mainContainer}>
+            <NavBar renderTop={false}/>
             {product.title &&
                 <div className={Styles.secondContainer}>
                     <h1 className={Styles.title}>{`Agrega una reseña al producto ${product.title}`}</h1>
@@ -70,7 +74,7 @@ export default function AddReview({ idproduct }) {
                             <img className={Styles.img} src={product.images[0].url} alt="" />
                         </div>
                     </div>
-                    <form onSubmit={(e) => handleSubmit(e)} className={Styles.form}>
+                    <form onSubmit={(e) => handleSubmit(e)} className={Styles.form} action={`/detalledeorden/${idorder}`}>
 
 
                         <div className={classes.root}>
@@ -78,7 +82,9 @@ export default function AddReview({ idproduct }) {
                         </div>
                         <label className={Styles.label} name='descripcion'>Descripción:  </label>
                         <textarea className={Styles.textArea} onChange={(e) => handleChange(e)} name='description' type="text" />
-                        <button type="submit" className={Styles.btn}>Enviar</button>
+                    
+                        <button type="submit" className={Styles.btn} >Enviar</button>
+                       
                     </form>
                 </div>
             }

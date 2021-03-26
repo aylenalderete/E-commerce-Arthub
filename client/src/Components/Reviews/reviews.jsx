@@ -43,7 +43,7 @@ export default function Reviews({ artId }) {
                 {reviewsProduct.reviews.map((elem) => (
                     <div className={Styles.review}>
                         <div className={classes.root}>
-                        <Rating  name="half-rating-read" defaultValue={elem.qualification} precision={0.5} readOnly emptyIcon={<StarBorderIcon fontSize="inherit" className={classes.border} />}/>
+                        <Rating  name="half-rating-read" value={parseFloat(elem.qualification)} precision={0.5} readOnly emptyIcon={<StarBorderIcon fontSize="inherit" className={classes.border} />}/>
                         </div>
                         <div className={Styles.align}>
                             <div className={Styles.containerUser}>
