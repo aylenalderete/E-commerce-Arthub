@@ -1,6 +1,7 @@
 .mainContainer{
     display:flex;
     width: 100%;
+    height: 100%;
     justify-content: center;
     align-items: center;
 }
@@ -13,10 +14,17 @@
     align-items: center;
 
 }
+.titleContainer{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 100%;
+}
 
 .containerProduct{
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     width:90%;
@@ -24,10 +32,94 @@
 }
 
 .textContainer{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+padding: 10px;
+}
 
+.formContainer {
+    justify-content: center;
+    align-items: center;
 }
 
 .img{
-    width:100px;
-    height: 100px;
+    width:20%;
+    height: 20%;
+    justify-content: center;
+    border-radius: 3%;
+}
+
+.navContainer{
+    display: flex;
+    flex-direction: row;
+      
+}
+
+.container{
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    
+}
+
+.label {
+    padding-right: 3%;
+}
+
+.commentContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-right: 20px;
+    padding-left:20px;
+    margin-top:20px;
+    margin-right: 10px;
+    background-color: transparent;
+    color: white;
+    font-size: 15px;
+    border:1px solid white;
+    cursor: pointer;
+    margin: 5%;
+}
+
+.textArea {
+    background-color: black;
+    color:  white;
+    width: 130%;
+    height: 60px;
+   
+}
+
+.btnDeleteConten{
+    width:30%;
+    display: flex;
+    justify-content: end;
+    padding-right: 5%;
+    align-self: center;
+}
+
+.titleContainer2{
+    width: 70%;
+    display: flex;
+    justify-content: end;
+}
+
+.btnDelete{
+width: 100%;
+
+}
+
+.link{
+    width:15%
 }
