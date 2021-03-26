@@ -164,9 +164,6 @@ server.get("/:id", (req, res) => {
 	});
 });
 
-// 4: Modify user by id
-// To be used by the common user/artist
-// No password (new route)
 server.put("/:id", async (req, res) => {
 
 	var finder = await User.findOne({
