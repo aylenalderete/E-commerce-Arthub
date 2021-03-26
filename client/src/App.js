@@ -31,7 +31,6 @@ import AddReview from "./Components/Reviews/addReview"
 import EditReview from './Components/Reviews/editReview';
 
 import ShowAllUsers from './Views/ShowAllUsers/ShowAllUsers'
-import EditReview from './Components/Reviews/editReview';
 
 
 

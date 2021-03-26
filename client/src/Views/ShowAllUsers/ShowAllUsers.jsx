@@ -7,17 +7,17 @@ import SearchBar from "../../Components/SearchBar/SearchBar.jsx";
 
 
 function ShowAllUsers() {
-    const userType = useSelector(state => state.userData.type); 
+    const userType = useSelector(state => state.userData.type);
 
     return (
-        <div className = {style.mainContainer}>
-            {userType && userType === "admin" ?( 
-            <div className = {style.mainContainer}>
-            <NavBar />
-            <AllUsers />
-            </div>
+        <div className={style.mainContainer}>
+            {userType && userType === "admin" ? (
+                <div className={style.mainContainer}>
+                    <NavBar />
+                    <AllUsers />
+                </div>
             ) : (<></>
-                )}
+            )}
         </div>
     )
 }
