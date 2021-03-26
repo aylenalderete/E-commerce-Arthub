@@ -30,13 +30,11 @@ export default function EditReview({ idproduct }) {
     const dispatch= useDispatch();
     const userReview = useSelector(state => state.userReviews);
     const userId = useSelector(state=> state.userData);
-    if(userReview != []){
-    const found = userReview.find(r=> r.productIdProduct === idproduct);
-    }
+    
     useEffect(()=>{
         if (userId.id !== 0){
         dispatch(getUserReviews(userId.id));
-        console.log(found)
+        
         console.log(userReview)
       }
 
