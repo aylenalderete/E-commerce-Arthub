@@ -7,7 +7,8 @@ import {useSelector} from 'react-redux'
 
 function CreateCategory() {
     const loggedUser = useSelector(state => state.userData)
-    if(loggedUser.type !== 'admin' && loggedUser !== 'artist') return <Redirect to='/miperfil'></Redirect>
+    console.log(loggedUser);
+    if(loggedUser.type !== 'admin' && loggedUser.type !== 'artist') return <Redirect to='/miperfil'></Redirect>
     return (
         <div className={Styles.mainContainer}>
             <NavBar renderTop={false} />

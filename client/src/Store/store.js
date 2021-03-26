@@ -55,11 +55,6 @@ const initialState = {
     //user orders state
     userOrders: [],
 
-    //reviews states 
-    reviewsProduct: [],
-    messages: '',
-
-
 
     //promote/delete users
     users: [],

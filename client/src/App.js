@@ -31,6 +31,7 @@ import AddReview from "./Components/Reviews/addReview"
 import EditReview from './Components/Reviews/editReview';
 
 import ShowAllUsers from './Views/ShowAllUsers/ShowAllUsers'
+import EditReview from './Components/Reviews/editReview';
 
 
 
@@ -106,7 +107,10 @@ function App() {
       <Route exact path="/orden/:id" component={OrderDetailArtist} />
       <Route path="/usuarios" component={ShowAllUsers} />
       <Route exact path="/agregarReseña/:idProduct"  render={({match})=> (<AddReview idproduct={match.params.idProduct} />)}/>
-      <Route exact path="/editarReseña/:idProduct"  render={({match})=> (<EditReview idproduct={match.params.idProduct} />)}/>                                                             
+
+      <Route exact path="/editarReseña/:idProduct"  render={({match})=> (<EditReview idproduct={match.params.idProduct} />)}/>
+                                                                          
+
     </div>
   );
 }

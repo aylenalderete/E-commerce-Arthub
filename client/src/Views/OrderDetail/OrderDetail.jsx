@@ -81,10 +81,17 @@ function OrderDetail() {
                                     <div className={style.containerImg}>
                                         <img className={style.img} src={l.product.images[0].url} alt="product image" />
                                     </div>
+                                    // aca esta el problema
+                                    {userReview.find(r => r.productIdProduct === l.product.id_product) ?
+                                        <Link className={style.iconRContainer} to={`/editarReseña/${l.product.id_product}`}>
+                                            <img className={style.iconReview} src={iconReview} alt='agrega una reseña' />
+                                            <img className={style.checkIcon} src={checkIcon} alt='agrega una reseña' />
+                                     // aqui
                                     {userReview?.find(r => r.productIdProduct === l.product.id_product) ?
                                         <Link className={style.iconRContainer} to={`/editarReseña/${l.product.id_product}`}>
                                             <img className={style.iconReview} src={iconReview} alt='editar una reseña' />
                                             <img className={style.checkIcon} src={checkIcon} alt='editar una reseña' />
+                                          // aqui
                                         </Link>
                                         :
                                         <Link className={style.iconRContainer} to={`/agregarReseña/${l.product.id_product}`}>
