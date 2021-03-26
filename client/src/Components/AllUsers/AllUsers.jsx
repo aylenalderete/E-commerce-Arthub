@@ -8,6 +8,8 @@ import changeusertype from '../../Actions/changeusertype'
 import PromoteUsers from '../PromoteUsers/PromoteUsers'
 import DeleteUsers from '../DeleteUsers/DeleteUsers'
 import deleteUsers from '../../Actions/deleteUsers'
+import UserSearchBar from "./UserSearchBar";
+
 
 
 function AllUsers() {
@@ -22,6 +24,7 @@ function AllUsers() {
     const dispatch = useDispatch()
 
     const [flag, setFlag] = useState(false)
+
 
     
 
@@ -42,14 +45,19 @@ function AllUsers() {
         setUserId(id)
     }
 
-    
+    console.log(users)
+    console.log(typeof users)
 
     return (
         <div className={style.container}>
             {promoteUser === true && <PromoteUsers userId = {userId} />}
             {deleteUser === true && <DeleteUsers userId = {userId} />}
-            <div>
+            <div >
+                    <UserSearchBar />
+
             <table className={style.table}>
+                
+                
                 <tr>
                     <th className={style.title}>
                         Usuarios:
@@ -63,7 +71,7 @@ function AllUsers() {
                     <td>tipo</td>
                     <td>estado</td>
                 </tr>
-                {users.map((u) => (
+                {users.length ? users && users.map((u) => (
                     <tr className={style.users}>
                         <td>{u.name}</td>
                         <td>{u.lastname}</td>
@@ -84,7 +92,7 @@ function AllUsers() {
                                 </div>
                             </th>
                     </tr>
-                ))}
+                )) : <div>No se encontró el usuario</div>}
             </table>
             </div>
         </div>

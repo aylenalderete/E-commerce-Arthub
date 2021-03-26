@@ -72,7 +72,7 @@ export default function AddReview({ idproduct }) {
                     </div>
                     <form onSubmit={(e) => handleSubmit(e)} className={Styles.form}>
 
-                        
+
                         <div className={classes.root}>
                             <Rating name="qualification" onChange={(e) => handleChange(e)} defaultValue={0} precision={0.5} emptyIcon={<StarBorderIcon fontSize="inherit" className={classes.border} />}/>
                         </div>
