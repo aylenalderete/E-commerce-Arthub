@@ -73,6 +73,10 @@ color:white
     cursor: pointer;
 }
 
+.btn i{
+   margin-right: 25px;
+}
+
 .btn:hover{
     animation: color 1s infinite;
     

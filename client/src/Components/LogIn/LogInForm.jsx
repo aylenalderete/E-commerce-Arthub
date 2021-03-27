@@ -4,7 +4,7 @@ import style from './logInForm.module.css'
 import signInUsers from '../../Actions/signInUsers'
 import {useDispatch, useSelector} from 'react-redux'
 import axios from 'axios'
-
+import FacebookLogin from "react-facebook-login";
 
 function LogIn() {
   const userData = useSelector(state => state.userData)
@@ -32,6 +32,19 @@ const set = (userName) => {
     setInput((oldValues) => ({ ...oldValues, [userName]: value }));
     setError('')
   };
+};
+
+const responseFacebook = async(response) => {
+  console.log(response)
+  await axios
+    .post(`http://localhost:3001/users/login/facebook`, response)
+    .then((result) => {
+      if (result.data.auth) {
+        localStorage.setItem("token", result.data.token);
+        setRedirect(true);
+        dispatch(signInUsers(result.data));
+      } else setError(result.data);
+    });
 };
 
 const submitHandler = async (event) => {
@@ -124,6 +137,16 @@ return (
         <Link className={style.link} to="/registrarse">
           Registrate
         </Link>
+      </div>
+      <div>
+        <FacebookLogin
+          appId="271851164442149"
+          autoLoad={true}
+          fields="name,email,picture"
+          callback={responseFacebook}
+          icon='fa-facebook'
+          cssClass={style.btn}
+        />
       </div>
     </div>
   </div>
