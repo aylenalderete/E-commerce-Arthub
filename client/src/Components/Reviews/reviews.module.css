@@ -73,3 +73,15 @@ margin-right: 5px;
 .messageText{
     font-size:1.2rem;
 }
+
+.edit{
+    width:30px;
+    height:30px;
+    padding-bottom: 3px;
+}
+
+.containerData{
+    width: 95%;
+    display: flex;
+    justify-content: space-between;
+}
