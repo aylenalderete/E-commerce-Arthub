@@ -64,3 +64,12 @@ margin-right: 5px;
 
 }
 
+.message{
+    display:flex;
+    width: 90%;
+    margin:20px;
+}
+
+.messageText{
+    font-size:1.2rem;
+}

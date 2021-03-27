@@ -71,8 +71,8 @@ export default function Reviews({ artId }) {
 
 else{
     return(
-        <div>
-            'No hay reviews para este producto'
+        <div className={Styles.message}>
+           <p className={Styles.messageText}>No hay reviews para este producto...</p>
         </div>
     )
 }
