@@ -42,26 +42,8 @@ export default function Reviews({ artId }) {
     const dispatch = useDispatch();
     const reviewsProduct = useSelector(state => state.reviewsProduct);
     const classes = useStyles();
-
     const userDataId = useSelector(state => state.userData.id);
-
-    if (reviewsProduct && reviewsProduct.reviews && reviewsProduct.reviews[0]) {
-        var idUserReview = 0;
-        for (var i = 0; i < reviewsProduct.reviews.length; i++) {
-            console.log("acaà")
-            if (reviewsProduct.reviews[i].productIdProduct == artId) {
-                console.log("entró")
-                idUserReview += reviewsProduct.reviews[i].userId
-
-            }
-        }
-    }
-    console.log("userReviewId" + " " + idUserReview)
-    console.log("userDataId" + " " + userDataId)
-    console.log("artId " + artId)
-
-
-
+// userData
     useEffect(() => {
         dispatch(getProductReviews(artId));
     }, [])
@@ -93,7 +75,7 @@ export default function Reviews({ artId }) {
                                 <div className={Styles.containerData}>
                                     <p className={Styles.text}>Fecha: {elem.createdAt.slice(0, 10)}</p>
                                     {
-                                        idUserReview == userDataId ?
+                                        elem.userId == userDataId ?
                                             <Link to={`/editarReseña/${artId}`} >
                                                 <img src={logoEdit} className={Styles.edit} />
                                             </Link>
@@ -101,9 +83,6 @@ export default function Reviews({ artId }) {
                                             <div></div>
                                     }
                                 </div>
-
-
-
                             </div>
                         </div>
                     ))}
