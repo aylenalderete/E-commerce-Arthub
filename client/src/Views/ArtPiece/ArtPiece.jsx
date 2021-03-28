@@ -17,17 +17,27 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     '& > * + *': {
       marginTop: theme.spacing(1),
+
       
     },
+    ['@media (max-width:480px)']: { 
+     marginBottom: '5px'
+    }
     
   },
   border: {
     color: '#ffb400',
+    
   },
   
   stars:{
-    fontSize: '2rem'
+    fontSize: '2rem',
+    ['@media (max-width:480px)']: { 
+     fontSize:'1.2rem'
+    }
+    
   }
+  
 
 }));
 //---start
@@ -115,7 +125,7 @@ function ArtPiece({ artId }) {
                 </div>
 
                 <h3>{`Precio: $` + `${detailed.price}`}</h3>
-                <p>{detailed.description}</p>
+                <p className={style.description}>{detailed.description}</p>
               </div>
 
 

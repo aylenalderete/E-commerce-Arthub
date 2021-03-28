@@ -85,3 +85,52 @@ margin-right: 5px;
     display: flex;
     justify-content: space-between;
 }
+
+@media screen and (max-width: 480px){
+    .mainContainer h1{
+        font-size: 1.2rem;
+    }
+
+    .containerLeft p{
+        font-size: 0.8rem;
+        
+    }
+    .containerUser{
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-start;
+    }
+    .containerUser p{
+        margin:0;
+    }
+    .containerComments p{
+        font-size: 0.8rem;
+        align-self: flex-start;
+        
+    }
+    .containerComments{
+        margin:0;
+        margin-bottom: 5px;
+    }
+    .containerData p{
+        font-size: 0.8rem;
+     
+    }
+
+    .containerData{
+        display:flex;
+        align-items: flex-end;
+        justify-content: flex-end;
+        margin-top: 5px;
+    }
+    .text{
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        font-size: 0.8rem;
+        margin: 0;
+        margin-right: 5px;
+    }
+    
+}

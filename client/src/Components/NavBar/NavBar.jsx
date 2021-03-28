@@ -98,7 +98,7 @@ function NavBar({ renderTop }) {
                 )}
               </div>}
 
-            <div>
+            <div className={Styles.close}>
 
               {loggedUser.id > 0 ? (
                 <p onClick={clickHandler} className={Styles.secciones2}>

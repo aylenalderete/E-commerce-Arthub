@@ -209,12 +209,35 @@
         margin:0;
     }
 
+    .containerUser{
+        margin:0;
+        margin-top:10px;
+        align-items: flex-start;
+    }
+
    
   .navContainerSeccionesProf{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
       margin:0;
+      flex-direction: row;
   }
 
-  .secciones2{
+  
+
+  .profPic{
+      width:25px;
+      height: 25px;
+  }
+
+  .profInfo{
       font-size: 1.2rem;
+  }
+  .close p{
+      align-self: flex-end;
+      font-size: 1.2rem;
+      line-height: 1rem;
+
   }
 }
