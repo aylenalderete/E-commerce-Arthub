@@ -5,6 +5,7 @@ const categoryRouter = require("./category.js");
 const searchRouter = require("./search.js");
 const userRouter = require("./users.js");
 const orderRouter = require("./orders.js");
+const searchuserRouter = require("./searchuser.js")
 
 const router = Router();
 
@@ -16,5 +17,6 @@ router.use("/products", productRouter);
 router.use("/search", searchRouter);
 router.use("/users", userRouter);
 router.use("/orders", orderRouter);
+router.use("/searchuser", searchuserRouter);
 
 module.exports = router;

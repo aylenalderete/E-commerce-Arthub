@@ -8,18 +8,31 @@ import DeleteProduct from "../DeleteProduct/DeleteProduct.jsx";
 import deleteproduct from "../../Actions/deleteproduct";
 import getproductid from "../../Actions/getproductid";
 import cart from "../../Images/shopping-cart.svg";
+import { addItem, getOrCreateCart } from "../../Actions/shoppingCart"
+import { useHistory } from 'react-router';
 
 function ArtCard({ name, pic, artist, id, idArtist, price, stock, setFlag }) {
 
   const userType = useSelector((state) => state.userData.type);
   const userData = useSelector((state) => state.userData);
 
+  const history = useHistory();
   const dispatch = useDispatch();
 
   const isOpenDeleteProd = useSelector((state) => state.isOpenDeleteProd);
 
   const [productId, setProductId] = useState();
 
+  // Create cart
+
+  function handleClick(id) {
+    // dispatch(getOrCreateCart())
+    dispatch(addItem(id))
+    // history.push('/carrito')
+  }
+
+
+  // Eliminar producto
   function handleDeleteClick(id) {
     isOpenDeleteProd === false
       ? dispatch(deleteproduct(true))
@@ -54,7 +67,7 @@ function ArtCard({ name, pic, artist, id, idArtist, price, stock, setFlag }) {
           {stock > 0 && (
             <Link className={style.cartCont} to="/carrito">
               <img
-                // onClick={() => handlePostUserOrder(userData.id, id, 1)}
+                onClick={() => handleClick(id)}
                 className={style.cart}
                 src={cart}
               ></img>

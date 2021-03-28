@@ -163,9 +163,6 @@ server.get("/:id", (req, res) => {
 	});
 });
 
-// 4: Modify user by id
-// To be used by the common user/artist
-// No password (new route)
 server.put("/:id", async (req, res) => {
 	
 	var finder = await User.findOne({
@@ -335,69 +332,6 @@ server.delete("/:idUser/cart", async (req, res) => {
 			console.log(err);
 			res.json(err);
 		};
-	}
-});
-
-// 7: Agrega item a carrito
-
-server.post("/:idUser/cart", async (req, res) => {
-	const { idUser: userId } = req.params;
-	const { productId, quantity } = req.body;
-
-	try {
-		//Chequeamos que el usuario exista por ID para avisar en caso contrario
-		const userExists = await User.findByPk(userId);
-		if (!userExists) {
-			res.json({ message: "Could not find user" });
-		}
-		const productToAdd = await Product.findByPk(parseInt(productId));
-		const newLineorder = await Lineorder.create({
-			quantity,
-			unit_price: productToAdd.dataValues.price,
-		});
-
-		let cartNew = await Shoppingcart.findOne({
-			where: {
-				state: "pending",
-				userId,
-			},
-		});
-
-		if (!cartNew) {
-			cartNew = await Shoppingcart.create({
-				state: "pending",
-				total_price:
-					newLineorder.dataValues.unit_price *
-					newLineorder.dataValues.quantity,
-				userId,
-			});
-		}
-		//Chequeamos que el producto no este en el shoppingcart para no repetirlo
-		const alreadyInCart = await Shoppingcart.findOne({
-			where: { userId, state: "pending" },
-			include: [
-				{
-					model: Lineorder,
-
-					include: [
-						{ model: Product, where: { id_product: productId } },
-					],
-				},
-			],
-		});
-		// si alreadyInCart existe quiere decir que el producto ya esta en el carrito
-		if (alreadyInCart) {
-			return res.json({
-				message: "This product is already in your ShoppingCart!",
-			});
-		} else {
-			await productToAdd.addLineorder(newLineorder.dataValues.id_line);
-			await cartNew.addLineorder(newLineorder.dataValues.id_line);
-			await cartNew.save();
-			res.json(cartNew);
-		}
-	} catch (error) {
-		res.status(500).send(error);
 	}
 });
 
@@ -585,6 +519,104 @@ server.get("/:id/reviews", async (req, res) => {
         res.status(400).json({ message: "Error" });
     }
 });
+
+// Crea carrito en base de datos
+server.post("/:idUser/newcart", async (req, res) => {
+	const { idUser: userId } = req.params;
+	const { cart } = req.body;
+
+	try {
+		let totalPrice = cart.reduce((acc, prod) => acc + prod.quantity * prod.product.price, 0)
+		let newCart = await Shoppingcart.create({
+			total_price: totalPrice,
+			state: "pending",
+			userId
+		})
+		for (let i = 0; i < cart.length; i++) {
+			const productToAdd = await Product.findByPk(parseInt(cart[i].product.id_product));
+			const newLineorder = await Lineorder.create({
+				quantity: cart[i].quantity,
+				unit_price: productToAdd.dataValues.price,
+			});
+			await productToAdd.addLineorder(newLineorder.dataValues.id_line);
+			await newCart.addLineorder(newLineorder.dataValues.id_line);
+		}
+		res.json(newCart)
+	}
+	catch (error) {
+		res.status(400).send(error)
+	}
+})
+
+// 7: Agrega item a carrito
+
+server.post("/:idUser/cart", async (req, res) => {
+	const { idUser: userId } = req.params;
+	const { productId, quantity } = req.body;
+
+	try {
+		//Chequeamos que el usuario exista por ID para avisar en caso contrario
+		const userExists = await User.findByPk(userId);
+		if (!userExists) {
+			res.json({ message: "Could not find user" });
+		}
+		const productToAdd = await Product.findByPk(parseInt(productId));
+		const newLineorder = await Lineorder.create({
+			quantity,
+			unit_price: productToAdd.dataValues.price,
+		});
+
+		let cartNew = await Shoppingcart.findOne({
+			where: {
+				state: "pending",
+				userId,
+			},
+		});
+
+		if (!cartNew) {
+			cartNew = await Shoppingcart.create({
+				state: "pending",
+				total_price:
+					newLineorder.dataValues.unit_price *
+					newLineorder.dataValues.quantity,
+				userId,
+			});
+		} else {
+			cartNew.total_price = cartNew.total_price
+				+ newLineorder.dataValues.unit_price * newLineorder.dataValues.quantity
+
+			await cartNew.save();
+			await cartNew.reload();
+		}
+		//Chequeamos que el producto no este en el shoppingcart para no repetirlo
+		const alreadyInCart = await Shoppingcart.findOne({
+			where: { userId, state: "pending" },
+			include: [
+				{
+					model: Lineorder,
+
+					include: [
+						{ model: Product, where: { id_product: productId } },
+					],
+				},
+			],
+		});
+		// si alreadyInCart existe quiere decir que el producto ya esta en el carrito
+		if (alreadyInCart) {
+			return res.json({
+				message: "This product is already in your ShoppingCart!",
+			});
+		} else {
+			await productToAdd.addLineorder(newLineorder.dataValues.id_line);
+			await cartNew.addLineorder(newLineorder.dataValues.id_line);
+			await cartNew.save();
+			res.json(cartNew);
+		}
+	} catch (error) {
+		res.status(500).send(error);
+	}
+});
+
 
 server.post('/login/facebook', async (req, res) => {
 
