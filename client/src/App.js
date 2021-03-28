@@ -66,7 +66,7 @@ function App() {
   }, []);
 
   return (
-    <div>
+    <div className='main'>
       <Route exact path="/" component={Home}></Route>
       <Route path="/nosotros" component={AboutUs}></Route>
       <Route path="/coleccion" exact component={Collection}></Route>

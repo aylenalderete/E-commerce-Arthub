@@ -23,7 +23,7 @@ function NavBar({ renderTop }) {
   }
   if (redirect) return <Redirect to="/ingresar"></Redirect>
   return (
-    <div className={renderTop === true ? Styles.navMain : Styles.navMain2}>
+    <nav className={renderTop === true ? Styles.navMain : Styles.navMain2}>
       {renderTop === true ? (
         <div className={Styles.navContainer}>
           <div className={Styles.navContainerSecciones}>
@@ -112,7 +112,7 @@ function NavBar({ renderTop }) {
         </div>
       )
       }
-    </div>
+    </nav>
   )
 }
 
