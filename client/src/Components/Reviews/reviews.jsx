@@ -43,7 +43,7 @@ export default function Reviews({ artId }) {
     const reviewsProduct = useSelector(state => state.reviewsProduct);
     const classes = useStyles();
     const userDataId = useSelector(state => state.userData.id);
-
+// userData
     useEffect(() => {
         dispatch(getProductReviews(artId));
     }, [])
