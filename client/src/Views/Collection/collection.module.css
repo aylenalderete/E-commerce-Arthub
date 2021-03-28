@@ -17,6 +17,7 @@
 }
 .mainContainer{
     display: flex;
+    width:100%;
 }
 
 
@@ -121,6 +122,7 @@
 /* PAGINADO  */
 
 .paginateContainer {
+    width:100%;
     justify-content: center;
     display: flex;
     list-style: none;
@@ -153,10 +155,54 @@
 
 
 /*Responsive screen*/
-@media only screen and (max-width: 480px){
+@media screen and (max-width: 480px){
     .mainContainer{
         display: flex;
         flex-direction: column;
+        width: 100%;
+        overflow-x: hidden;
+        margin-top: 170px;
+        
+    }
+
+    
+
+    .sbContainer{
+        margin:0;
+        width:93%;
+        justify-content: space-between;
+        margin-left: 15px;
+        margin-right: 15px;
+    }
+
+    .btnFilters{
+        margin:0;
+        padding: 5px;
+    }
+
+    .shContainer{
+      width:30px;
+      margin: 0;
+    
+    }
+
+    .imgContainer{
+        display:flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .paginateContainer li {
+        margin: 5px;
+        border: 1px solid white;
+        padding: 5px;
+        cursor: pointer;
+    }
+    .paginateContainer ul {
+        display: flex;
+        list-style: none;
+        margin:0;
+        padding: 0;
     }
     
 }
