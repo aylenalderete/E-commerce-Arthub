@@ -32,9 +32,9 @@ export default function BuyUser() {
                 <div className={style.userDesc}>
 
                     <div className={style.userInfo}>
-                        <h1 className={style.name} >{userData.name + ' ' + userData.lastname}</h1>
+                        <h1 className={style.name} >{userData.lastname ? (userData.name + ' ' + userData.lastname): (userData.name)}</h1>
                         <div className={style.info}>
-                            <p>Cumpleaños: {userData.birth.slice(5, 10)} </p>
+                            <p>Cumpleaños: {userData.birth && userData.birth.slice(5, 10)} </p>
                             <p>Mail: {userData.email} </p>
                         </div>
 
