@@ -34,7 +34,7 @@ export default function BuyUser() {
                     <div className={style.userInfo}>
                         <h1 className={style.name} >{userData.lastname ? (userData.name + ' ' + userData.lastname): (userData.name)}</h1>
                         <div className={style.info}>
-                            <p>Cumpleaños: {userData.birth && userData.birth.slice(5, 10)} </p>
+                           {userData.birth? <p>Cumpleaños: {userData.birth && userData.birth.slice(5, 10)} </p> : null}
                             <p>Mail: {userData.email} </p>
                         </div>
 
