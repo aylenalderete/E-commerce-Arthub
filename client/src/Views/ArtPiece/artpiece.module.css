@@ -120,3 +120,74 @@
 
     }
   }
+
+  /* Responsive screen */
+  @media screen and (max-width: 480px){
+
+    .container{
+        margin:0;
+        margin-top: 180px;
+    }
+
+    .borderContainer{
+        width:90%;
+        border:1px solid white;
+    
+    }
+
+    .align{
+        margin:0;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .imgContainer{
+        
+        width: 50%;
+        border-right: 1px solid white;
+    }
+
+    .title{
+        font-size:1.2rem;
+        margin-right: 5px;
+    }
+
+    .infoContainer{
+        width:50%;
+        margin:10px;
+    }
+   
+    .infoSecondContainer h3{
+        margin:0px;
+      
+        margin-bottom: 5px;
+
+        font-size: 0.8rem;
+    }
+    .categoriesContainer h3 {
+      font-size: 0.8rem;
+      
+    }
+    .categoriesContainer{
+        margin:0;
+        height: fit-content;
+    }
+
+    .categoriesContainer p{
+        font-size: 0.8rem;
+        margin:0;
+        margin-bottom: 5px;
+      }
+    .description{
+        font-size: 0.8rem;
+    }
+
+    .containerButtons button{
+        padding: 2px;
+        font-size: 0.7rem;
+    }
+
+    .containerButtons{
+        margin:0;
+    }
+  }

@@ -161,7 +161,7 @@
         flex-direction: column;
         width: 100%;
         overflow-x: hidden;
-        margin-top: 170px;
+        margin-top: 180px;
         
     }
 
@@ -185,6 +185,11 @@
       margin: 0;
     
     }
+    .shContainer span{
+        top:0;
+        right: -15px;
+      
+      }
 
     .imgContainer{
         display:flex;
