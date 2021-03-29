@@ -9,36 +9,32 @@ export default function LineOrder({ lineOrderElement }) {
 
 	return (
 		<div className={style.card}>
-			<img
-				className={style.imagen}
-				src={
-					lineOrderElement.product &&
-					lineOrderElement.product.images[0].url
-				}
-			/>
-			<p className={style.p}>{lineOrderElement.product && lineOrderElement.product.title}</p>
+			<div className={style.imgContainer}>
 
-			<div>
-				<button onClick={() => { dispatch(reduceQuantity(lineOrderElement.product.id_product)) }} className={style.btn}
-				>
-					-
-				</button>
-				<p className={style.btn}>{lineOrderElement.quantity}</p>
-				<button onClick={() => { dispatch(addItem(lineOrderElement.product.id_product)) }} className={style.btn}
-				>
-					+
-				</button>
+				<img
+					className={style.image}
+					src={
+						lineOrderElement.product &&
+						lineOrderElement.product.images[0].url
+					}
+				/>
 			</div>
-			<div>
-				<button onClick={() => { dispatch(deleteItem(lineOrderElement.product.id_product)) }} className={style.btn}
-				>
-					X
-			</button>
+			<div className={style.info}>
+
+				<h2 className={style.title}>{lineOrderElement.product && lineOrderElement.product.title}</h2>
+
+				<p className={style.price}>Precio: ${lineOrderElement.product.price}</p>
+				<div className={style.quantity}>
+					<button onClick={() => { dispatch(reduceQuantity(lineOrderElement.product.id_product)) }} className={style.btn}>-</button>
+					<p>{lineOrderElement.quantity}</p>
+					<button onClick={() => { dispatch(addItem(lineOrderElement.product.id_product)) }} className={style.btn}>+</button>
+				</div>
+
+				<button onClick={() => { dispatch(deleteItem(lineOrderElement.product.id_product)) }} className={`${style.btn} ${style.close}`}>X</button>
+
+				<p>Subtotal: ${lineOrderElement.subTotal}</p>
 			</div>
-			<p className={style.text}>{lineOrderElement.unit_price}</p>
-			{
-				<p>{lineOrderElement.subTotal}</p>
-			}
+
 
 		</div>
 	);
