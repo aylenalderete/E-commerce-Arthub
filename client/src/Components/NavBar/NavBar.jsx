@@ -10,16 +10,16 @@ function NavBar({ renderTop }) {
   const loggedUser = useSelector(state => state.userData);
   // console.log(loggedUser);
   const history = useHistory();
-  const [redirect, setRedirect] = useState(false)
+  const [redirect, setRedirect] = useState(false);
   function handleGoBack() {
-    history.push('/')
+    history.push('/');
   }
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
+
   function clickHandler() {
     dispatch(signOutUsers())
     localStorage.removeItem('token')
     setRedirect(true)
-
   }
   if (redirect) return <Redirect to="/ingresar"></Redirect>
   return (

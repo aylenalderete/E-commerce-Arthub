@@ -6,6 +6,8 @@ import { emptyCart } from '../../Actions/shoppingCart';
 import style from "./shoppingcartpayment.module.css";
 import { useHistory } from 'react-router';
 import NavBar from '../NavBar/NavBar';
+import { Redirect } from 'react-router-dom';
+import linkSet from '../../Actions/linkset';
 
 
 function ShoppingCartPayment() {
@@ -19,6 +21,9 @@ function ShoppingCartPayment() {
     const dispatch = useDispatch();
     const [total, setTotal] = useState(0);
     const [loading, setLoading] = useState(false);
+    const [redirect, setRedirect] = useState(false);
+    const [link, setLink] = useState('');
+
     const cart = useSelector((state) => state.cart);
 
     const handleChange = (e) => {
@@ -36,24 +41,27 @@ function ShoppingCartPayment() {
             setLoading(!loading)
 
             axios.post(`http://localhost:3001/users/${id}/newcart`, { cart })
-                .then(() => {
-                    axios.get(`http://localhost:3001/users/${id}/cart`)
-                        .then((r) => {
-                            axios.post(`http://localhost:3001/orders/mercadopago`, { cart, idOrder: r.data.id_order })
-                                .then(response => {
-                                    // console.log(response.data);
-                                    window.location = response.data.mpLink;
-                                    // setTimeout(() => {
-                                        setLoading(!loading)
-                                        localStorage.setItem('cart', JSON.stringify([]));
-                                        dispatch(emptyCart());
-                                    // }, 1000)
-                                });
-                        })
+                .then((newCart) => {
+
+                    axios.post(`http://localhost:3001/orders/mercadopago`, { cart, idOrder: newCart.data.id_order })
+                        .then(async response => {
+                            // console.log('ESTE ES EL LINK MP',response.data.mpLink);
+                            dispatch(linkSet(response.data.mpLink));
+                            // setLink(response.data.mpLink);
+                            setRedirect(true);
+                            // window.location = response.data.mpLink;
+                            // setTimeout(() => {
+                            setLoading(!loading)
+                            localStorage.setItem('cart', JSON.stringify([]));
+                            dispatch(emptyCart());
+                            // }, 3000)
+                        });
                 })
         }
     }
-
+    if (redirect) {
+        return <Redirect to='/linkmp'></Redirect>
+    }
     return (
         <div className={style.mainContainer}>
             <NavBar renderTop={false} />
