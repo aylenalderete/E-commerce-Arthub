@@ -153,9 +153,13 @@ return (
         </Link>
       </div>
       <div>
+        <Link className={style.link} to="/emailform"> 
+          Olvidé mi contraseña
+        </Link>
+      </div>
+      <div>
         <FacebookLogin
           appId="271851164442149"
-          autoLoad={true}
           fields="name,email,picture"
           callback={responseFacebook}
           icon="fa-facebook"

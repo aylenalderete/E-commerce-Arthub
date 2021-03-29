@@ -29,6 +29,8 @@ import getUserOrder from "./Actions/getUserOrder.js";
 import ShoppingCart from './Components/ShoppingCart/ShoppingCart';
 import AddReview from "./Components/Reviews/addReview"
 import EditReview from "./Components/Reviews/editReview";
+import PasswordReset from './Components/PasswordReset/PasswordReset'
+import EmailForm from './Components/EmailForm/EmailForm'
 
 import ShowAllUsers from './Views/ShowAllUsers/ShowAllUsers'
 import { getUserReviews } from "./Actions/reviews";
@@ -110,7 +112,8 @@ function App() {
       <Route exact path="/agregarReseña/:idProduct"  render={({match})=> (<AddReview idproduct={match.params.idProduct} />)}/>
 
       <Route exact path="/editarReseña/:idProduct"  render={({match})=> (<EditReview idproduct={match.params.idProduct} />)}/>
-                                                                          
+      <Route exact path="/passwordreset/:token" render={({match})=><PasswordReset token={match.params.token} />}></Route>
+      <Route path="/emailform" component={EmailForm} />                                                               
 
     </div>
   );
