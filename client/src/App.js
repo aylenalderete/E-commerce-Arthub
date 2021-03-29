@@ -107,10 +107,10 @@ function App() {
       <Route exact path="/ordenes" component={Orders} />
       <Route exact path="/orden/:id" component={OrderDetailArtist} />
       <Route path="/usuarios" component={ShowAllUsers} />
+      <Route exact path="/editarReseña/:idProduct"  render={({match})=> (<EditReview idproduct={match.params.idProduct} />)}/>
       <Route exact path="/passwordreset/:token" render={({match})=><PasswordReset token={match.params.token} />}></Route>
-      <Route path="/emailform" component={EmailForm} />                                                               
-      <Route exact path="/agregarReseña/:idProduct" render={({ match }) => (<AddReview idproduct={match.params.idProduct} />)} />
-      <Route exact path="/editarReseña/:idProduct" render={({ match }) => (<EditReview idproduct={match.params.idProduct} />)} />
+      <Route path="/emailform" component={EmailForm} />                                                                 
+      <Route exact path="/agregarReseña/:idProduct"  render={({match})=> (<AddReview idproduct={match.params.idProduct} />)}/>
       <Route path="/pago" component={ShoppingCartPayment} />
       <Route path="/carritocomprado/:id/:status" render={({ match }) => (<ShoppingCartResponse idorder={match.params.id} status={match.params.status} />)} />
     </div>
