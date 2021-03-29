@@ -32,15 +32,25 @@ function OrderDetail() {
         }
         order();
     }, [id])
-    useEffect(()=>{
-    
+    useEffect(() => {
+
         dispatch(getUserReviews(idUser));
-    },[idUser])
+    }, [idUser])
 
     const EditStateChange = (e) => {
         axios.put(`http://localhost:3001/orders/${id}`, { state: e.target.value, total_price: orderDetail.total_price })
             .then((res) => {
                 setOrderDetail({ ...orderDetail, state: res.data.state })
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    }
+
+    const completePayment = () => {
+        axios.get(`http://localhost:3001/orders/${id}`)
+            .then((res) => {
+                window.location = res.data.payment_link
             })
             .catch((error) => {
                 console.log(error)
@@ -58,6 +68,16 @@ function OrderDetail() {
                         <div className={style.secondContainer}>
                             <h2 className={style.title}>Detalle de orden</h2>
                             <h3> Estado: {orderDetail.state} </h3>
+                            {/* {
+                                orderDetail.state !== "fullfilled" ?
+                                    <button className={style.btn} onClick={() => toLocalStorage()}> Quiero editar la orden </button>
+                                    : <div></div>
+                            } */}
+                            {
+                                orderDetail.state !== "fullfilled" ?
+                                    <button className={style.btn} onClick={() => completePayment()}> Quiero completar el pago de mi orden </button>
+                                    : <div></div>
+                            }
                             {
                                 userType === 'artist' ?
                                     <select value={orderDetail.state} onChange={EditStateChange}>
@@ -81,20 +101,20 @@ function OrderDetail() {
                                     <div className={style.containerImg}>
                                         <img className={style.img} src={l.product.images[0].url} alt="product image" />
                                     </div>
-                                    
+
                                     {userReview && userReview.length > 0 && userReview.find(r => r.productIdProduct === l.product.id_product) ?
                                         <Link className={style.iconRContainer} to={`/editarReseña/${l.product.id_product}`}>
                                             <img className={style.iconReview} src={iconReview} alt='agrega una reseña' />
                                             <img className={style.checkIcon} src={checkIcon} alt='agrega una reseña' />
-                                     
-                                        </Link> 
+
+                                        </Link>
                                         :
                                         <Link className={style.iconRContainer} to={`/agregarReseña/${l.product.id_product}`}>
                                             <img className={style.iconReview} src={iconReview} alt='agrega una reseña' />
                                         </Link>
                                     }
                                 </div>
-                            )} 
+                            )}
 
                         </div>
                         :
