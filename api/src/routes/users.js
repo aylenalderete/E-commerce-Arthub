@@ -617,4 +617,148 @@ server.post("/:idUser/cart", async (req, res) => {
 	}
 });
 
+
+server.post('/login/facebook', async (req, res) => {
+
+
+	const { username, email, userID, logType } = req.body;
+	const compare = async (userID, passwordDataBase) => {
+    return bcrypt.compare(userID, passwordDataBase);
+  };
+
+	var finder = await User.findOne({
+		where: {
+			logType: 'facebook',
+			email: email
+		}
+	})
+
+	if(finder){
+		const comparer = await compare(userID, finder.password);
+
+				if (comparer) {
+					//Verify if password is correct
+
+					//create token
+					let token = jwt.sign({ id: finder.id }, "secret_key", {
+						expiresIn: 60 * 60 * 24,
+					});
+					finder.password = "";
+					res.json({
+						user: finder,
+						auth: true,
+						token,
+					});
+				} else {
+					res.json("acceso denegado");
+				}
+			}
+	else {
+
+
+		const crypter = async (password) => {
+      const salt = await bcrypt.genSalt(10);
+      return bcrypt.hash(password, salt);
+    };
+
+    const hashPass = await crypter(userID);
+
+		
+		console.log('vamos a crear')
+		const newUser = await User.create({
+      username: req.body.name,
+      name: req.body.name,
+      profilepic: req.body.picture.data.url,
+      email: req.body.email,
+      password: hashPass,
+      type: 'user',
+	  logType: 'facebook',
+      state: 'approved',
+    })
+	
+	const token = jwt.sign({ id: newUser.id }, "secret_key", {
+						expiresIn: 60 * 60 * 24,
+					})
+
+	newUser.password = ''
+	res.json({
+		user: newUser,
+		auth: true,
+		token: token
+	})
+	}
+
+})
+
+server.post("/login/google", async (req, res) => {
+  
+	const userID = req.body.Aa;
+	const email = req.body.profileObj.email;
+	const username = req.body.profileObj.familyName + "" + req.body.profileObj.givenName;
+	const pic = req.body.profileObj.imageUrl;
+	const name = req.body.profileObj.givenName;
+	const lastname = req.body.profileObj.familyName;
+
+  const compare = async (userID, passwordDataBase) => {
+    return bcrypt.compare(userID, passwordDataBase);
+  };
+
+  var finder = await User.findOne({
+    where: {
+      logType: "google",
+      email: email,
+    },
+  });
+
+  if (finder) {
+    const comparer = await compare(userID, finder.password);
+
+    if (comparer) {
+      //Verify if password is correct
+
+      //create token
+      let token = jwt.sign({ id: finder.id }, "secret_key", {
+        expiresIn: 60 * 60 * 24,
+      });
+      finder.password = "";
+      res.json({
+        user: finder,
+        auth: true,
+        token,
+      });
+    } else {
+      res.json("acceso denegado");
+    }
+  } else {
+    const crypter = async (password) => {
+      const salt = await bcrypt.genSalt(10);
+      return bcrypt.hash(password, salt);
+    };
+
+    const hashPass = await crypter(userID);
+
+    console.log("vamos a crear");
+    const newUser = await User.create({
+      username: username,
+      name: name,
+      profilepic: pic,
+      email: email,
+      password: hashPass,
+      type: "user",
+      logType: "google",
+      state: "approved",
+    });
+
+    const token = jwt.sign({ id: newUser.id }, "secret_key", {
+      expiresIn: 60 * 60 * 24,
+    });
+
+    newUser.password = "";
+    res.json({
+      user: newUser,
+      auth: true,
+      token: token,
+    });
+  }
+});
 module.exports = server;

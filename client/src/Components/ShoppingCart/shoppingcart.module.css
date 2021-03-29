@@ -1,4 +1,99 @@
+.container *{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 .mainContainer{
+    display: flex;
+    /* justify-content: space-between; */
+}
+
+.secondContainer{
+    flex: 1;
+    /* text-align: center; */
+    /* display: flex; */
+    /* flex-direction: column; */
+    /* justify-content: space-between; */
+}
+
+.container{
+    display: flex;
+    justify-content: space-around;
+    margin-top: 30px;
+}
+
+.info{
+    position: sticky;
+    top: 100px;
+    height: 100%;
+    border: 2px solid white;
+    padding: 30px 50px;
+}
+
+.title{
+    text-align: center;
+    font-size: 50px;
+}
+
+.btn{
+    padding: 5px 20px;
+    background-color: transparent;
+    color: white;
+    font-size: 15px;
+    border:1px solid white;
+    cursor: pointer;
+}
+
+.noProductsMessage {
+    display:flex;
+    font-size: 20px;
+    margin-bottom: 20px;
+    justify-content: center;
+}
+
+.noProductsMessage a {
+    color:#F427EC;
+}
+
+.noProductsMessage a:hover {
+    color: white;
+}
+
+
+
+.btn.p{
+    padding: 10px 25px;
+}
+
+.btn:active{
+    transform: scale(0.95);
+}
+
+.input{
+    background-color: transparent;
+    color: white;
+    padding: 5px 9px;
+    width: 184px;
+    outline: none;
+    border: 1px solid white;
+    margin: 0 10px 0 0;
+}
+
+.labelInput{
+    display: block;
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+
+.total{
+    font-size: 30px;
+    margin: 20px 0;
+    /* margin: 0; */
+}
+
+
+/* .mainContainer{
     width: 100%;
     max-width: 1200px;
     flex-direction: column;
@@ -65,11 +160,11 @@
 
 .btn:focus{
     outline: none;
-}
+} */
 
 /*Key Frames*/
 
-@keyframes color {
+/* @keyframes color {
     0% {
           background-color: #f427ed78; 
     }
@@ -97,4 +192,4 @@
         background-color: #f427ed; 
         border-color:rgba(255, 255, 255, 0)
     }
-  }
+  } */

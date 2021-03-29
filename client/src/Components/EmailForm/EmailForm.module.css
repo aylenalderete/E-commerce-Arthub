@@ -6,7 +6,7 @@
     justify-content: center;
     align-items: center;
 }
-
+/* / */
 .form{
     width:100%;
     display: flex;
@@ -73,10 +73,6 @@ color:white
     cursor: pointer;
 }
 
-.btn i{
-   margin-right: 25px;
-}
-
 .btn:hover{
     animation: color 1s infinite;
     
@@ -85,70 +81,3 @@ color:white
 .btn:focus{
     outline: none;
 }
-
-.btnImg{
-    width: 20px;
-    height: 20px;
-    margin-right: 25px;
-}
-/*Key Frames*/
-
-@keyframes color {
-    0% {
-          background-color: #f427ed78; 
-    }
-
-    20% {
-        background-color: #f427ed8a; 
-    }
-
-    40%{
-        background-color: #f427eda2; 
-        border-color:rgba(255, 255, 255, 0.657)
-    }
-
-    60%{
-        background-color: #f427edc4; 
-        border-color:rgba(255, 255, 255, 0.445)
-    }
-
-    80%{
-        background-color: #f427ede5; 
-        border-color:rgba(255, 255, 255, 0)
-    }
-  
-    100% {
-        background-color: #f427ed; 
-        border-color:rgba(255, 255, 255, 0)
-    }
-  }
-
-  /* Responsive screen */
-  @media screen and (max-width: 480px){
-      .mainContainer{
-          margin-top: 100px;
-        
-      }
-
-      .alignForm{
-          width:70%;
-      }
-      .input{
-          margin-bottom: 10px;
-          font-size: 1rem;
-          border-bottom: 1px solid white;
-      }
-
-      .btn{
-          padding:10px;
-          border: 1px solid white;
-          font-size: 1rem;
-      }
-
-      .textContainer p{
-          font-size: 1rem;
-      }
-      .textContainer a{
-        font-size: 1rem;
-    }
-  }

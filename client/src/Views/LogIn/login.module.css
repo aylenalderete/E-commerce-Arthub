@@ -3,3 +3,9 @@
     flex-direction: row;
     height: 100vh;
 }
+
+@media screen and (max-width: 480px){
+    .container{
+        overflow-y: hidden;
+    }
+}

@@ -1,25 +1,42 @@
 .navContainer{
     display: flex;
-    flex-direction: row;
-      
+    flex-direction: row; 
 }
 
 .container{
-    margin-top: 40px;
+    margin-top: 60px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 100%;
-    
+    width: 100%; 
 }
 
 .imgContainer{
-    margin-right: 2%;
+    width: 40%;
+    height: 100%;
+    border-right: 2px solid white;
 }
 
 .infoContainer{
-    align-content: center;
+   display: flex;
+   flex-direction: column;
+   width: 60%;
+   margin:20px
+}
+
+.align{
+    display:flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.title{
+    margin: 0;
+    font-size: 2rem;
+    line-height: 2rem;
 }
 
 .artistContainer{
@@ -29,7 +46,9 @@
 }
 
 .img {
-    width:400px;
+    width:100%;
+    height: 100%;
+    object-fit: cover;  
 }
 
 .button{
@@ -47,32 +66,128 @@
     width: 90%;
     display:flex;
     border:2px solid white;
-    
 }
 
 .button:hover{
-    background-color: white;
-    cursor:pointer;
-    color: black;
+    animation: color 1s infinite;
 }
 
-.catContainer {
-    margin: 0 1em;
-    border: 1px solid white;
-    padding: 0 1em;
-}
+
 .categoriesContainer{
-    display: flex;
-    justify-content: space-between;
-
+   display:flex;
+   justify-content: space-between;
 }
 
 .containerButtons{
     display: flex;
-    justify-content:space-around;
+    justify-content:space-between;
     margin: 5px;
 }
 
 .infoSecondContainer{
-    align-content: center;
+   width:100%;
+   display: flex;
+   flex-direction: column;
 }
+
+@keyframes color {
+    0% {
+          background-color: #f427ed78; 
+
+    }
+    20% {
+        background-color: #f427ed8a; 
+
+    }
+    40%{
+     
+        background-color: #f427eda2; 
+
+    }
+
+    60%{
+        background-color: #f427edc4; 
+
+    }
+
+    80%{
+        background-color: #f427ede5; 
+
+    }
+  
+    100% {
+        background-color: #f427ed; 
+
+    }
+  }
+
+  /* Responsive screen */
+  @media screen and (max-width: 480px){
+
+    .container{
+        margin:0;
+        margin-top: 180px;
+    }
+
+    .borderContainer{
+        width:90%;
+        border:1px solid white;
+    
+    }
+
+    .align{
+        margin:0;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .imgContainer{
+        
+        width: 50%;
+        border-right: 1px solid white;
+    }
+
+    .title{
+        font-size:1.2rem;
+        margin-right: 5px;
+    }
+
+    .infoContainer{
+        width:50%;
+        margin:10px;
+    }
+   
+    .infoSecondContainer h3{
+        margin:0px;
+      
+        margin-bottom: 5px;
+
+        font-size: 0.8rem;
+    }
+    .categoriesContainer h3 {
+      font-size: 0.8rem;
+      
+    }
+    .categoriesContainer{
+        margin:0;
+        height: fit-content;
+    }
+
+    .categoriesContainer p{
+        font-size: 0.8rem;
+        margin:0;
+        margin-bottom: 5px;
+      }
+    .description{
+        font-size: 0.8rem;
+    }
+
+    .containerButtons button{
+        padding: 2px;
+        font-size: 0.7rem;
+    }
+
+    .containerButtons{
+        margin:0;
+    }
+  }

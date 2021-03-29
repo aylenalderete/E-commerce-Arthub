@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
+import style from "./shoppingcart.module.css";
 import { useSelector, useDispatch } from "react-redux";
 import LineOrder from "../LineOrder/LineOrder";
 import { emptyCart } from './../../Actions/shoppingCart';
-import { useHistory } from 'react-router-dom';
-import axios from 'axios';
-
+import { useHistory, Link } from 'react-router-dom';
+import NavBar from '../NavBar/NavBar';
 
 function ShoppingCart() {
 
@@ -23,17 +23,17 @@ function ShoppingCart() {
 			history.push('/ingresar');
 		} else {
 			if (cartL.length > 0) {
-				let confirm = window.confirm('¿Desea confirmar su compra?');
-				if (confirm) {
-					axios.post(`http://localhost:3001/users/${id}/newcart`, { cart: cartL }).catch(err => console.log(err))
-						.then(() => {
+				// let confirm = window.confirm('¿Desea confirmar su compra?');
+				// if (confirm) {
+				history.push('/pago');
+				// axios.post(`http://localhost:3001/users/${id}/newcart`, { cart: cartL }).catch(err => console.log(err))
+				// .then(() => {
 
-							localStorage.setItem('cart', JSON.stringify([]));
-							dispatch(emptyCart());
-							history.push('/coleccion');
+				// localStorage.setItem('cart', JSON.stringify([]));
+				// dispatch(emptyCart());
 
-						})
-				}
+				// })
+				// }
 			}
 		}
 	}
@@ -43,24 +43,53 @@ function ShoppingCart() {
 	}, [cart])
 
 	return (
-		<div>
-			{
-				cart.map(p => <LineOrder lineOrderElement={p} ></LineOrder>)
-			}
+		<div className={style.mainContainer}>
+			<NavBar renderTop={false} />
+			
+			<div className={style.secondContainer}>
 
-			<div>
-				<p>Total: {total}</p>
+				<h1 className={style.title}>Paso 1: Detalle del carrito</h1>
+				{
+					cart.length > 0
+						?
+						<div className={style.container}>
+							<div className={style.cards}>
+
+								{
+									cart.map(p => <LineOrder lineOrderElement={p} ></LineOrder>)
+								}
+							</div>
+							<div className={style.info}>
+
+								<div>
+									<form>
+										<label className={style.labelInput} htmlFor="discount">Ingrese cupon de descuento: </label>
+										<input className={style.input} id='discount' type="text" />
+										<button className={style.btn} type="submit">Calcular</button>
+									</form>
+								</div>
+
+
+								<p className={style.total}>Subtotal: ${total}</p>
+
+
+								<button className={`${style.btn} ${style.p}`} onClick={() => history.push('/coleccion')}>Volver</button>
+
+								<button className={`${style.btn} ${style.p}`} onClick={() => dispatch(emptyCart())}>Vaciar carrito</button>
+
+								<button className={`${style.btn} ${style.p}`} onClick={() => handlePayment()}>Continuar</button>
+							</div>
+
+
+						</div >
+						:
+						<div className={style.noProductsMessage}>
+							<p>No hay productos en tu carrito, elige algunos de <Link to="/coleccion"> nuestra colección</Link>
+							</p>
+						</div>
+				}
 			</div>
-
-			<button onClick={() => history.push('/coleccion')}>Seguir comprando</button>
-
-			<button onClick={() => dispatch(emptyCart())}>Vaciar carrito</button>
-
-			<button onClick={() => handlePayment()}>Confirmar</button>
-
-
-		</div >
-
+		</div>
 	);
 }
 

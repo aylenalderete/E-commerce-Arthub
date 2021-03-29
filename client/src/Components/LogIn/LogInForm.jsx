@@ -4,7 +4,9 @@ import style from './logInForm.module.css'
 import signInUsers from '../../Actions/signInUsers'
 import {useDispatch, useSelector} from 'react-redux'
 import axios from 'axios'
-
+import FacebookLogin from "react-facebook-login";
+import GoogleLogin from 'react-google-login';
+import icon from '../Assets/Google-512.png'
 
 function LogIn() {
   const userData = useSelector(state => state.userData)
@@ -34,6 +36,31 @@ const set = (userName) => {
   };
 };
 
+const responseFacebook = async(response) => {
+  console.log(response)
+  await axios
+    .post(`http://localhost:3001/users/login/facebook`, response)
+    .then((result) => {
+      if (result.data.auth) {
+        localStorage.setItem("token", result.data.token);
+        setRedirect(true);
+        dispatch(signInUsers(result.data));
+      } else setError(result.data);
+    });
+};
+
+const responseGoogle = async(response) => {
+    await axios
+    .post(`http://localhost:3001/users/login/google`, response)
+    .then((result) => {
+      if (result.data.auth) {
+        localStorage.setItem("token", result.data.token);
+        setRedirect(true);
+        dispatch(signInUsers(result.data));
+      } else setError(result.data);
+    });
+};
+
 const submitHandler = async (event) => {
   event.preventDefault();
   console
@@ -60,7 +87,7 @@ const submitHandler = async (event) => {
       }
       if(!input.password){
         errors.password = "La contraseña es requerida";
-        // setErrorreq({...errorreq,
+        /// setErrorreq({...errorreq,
         //   password: 'La contraseña es requerida'
         // })
       }
@@ -124,6 +151,39 @@ return (
         <Link className={style.link} to="/registrarse">
           Registrate
         </Link>
+      </div>
+      <div>
+        <Link className={style.link} to="/emailform"> 
+          Olvidé mi contraseña
+        </Link>
+      </div>
+      <div>
+        <FacebookLogin
+          appId="271851164442149"
+          fields="name,email,picture"
+          callback={responseFacebook}
+          icon="fa-facebook"
+          cssClass={style.btn}
+          size='medium'
+        />
+      </div>
+      <div>
+        <GoogleLogin
+          clientId="1093838104479-3hj3el9rll2rkj0iala10o9o9idt6thc.apps.googleusercontent.com"
+          render={(renderProps) => (
+            <button className={style.btn}
+              onClick={renderProps.onClick}
+              disabled={renderProps.disabled}
+            >
+              <img className={style.btnImg} src={icon}></img>
+              Iniciar sesión con Google
+            </button>
+          )}
+          onSuccess={responseGoogle}
+          onFailure={responseGoogle}
+          cookiePolicy={"single_host_origin"}
+          cssClass={style.btn}
+        />
       </div>
     </div>
   </div>
