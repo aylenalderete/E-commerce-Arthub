@@ -1,125 +1,180 @@
 .mainContainer{
     display:flex;
     width: 100%;
-    height: 100%;
-    justify-content: center;
-    align-items: center;
 }
 
 .secondContainer{
-    display:flex;
-    flex-direction: column;
     width: 100%;
-    justify-content: center;
-    align-items: center;
-
-}
-.titleContainer{
     display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
+    flex-direction: column;
+    margin-top: 30px;
     align-items: center;
-    width: 100%;
 }
 
 .containerProduct{
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width:90%;
-    border: 1px solid white;
-}
-
-.textContainer{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-padding: 10px;
-}
-
-.formContainer {
-    justify-content: center;
-    align-items: center;
-}
-
-.img{
-    width:20%;
-    height: 20%;
-    justify-content: center;
-    border-radius: 3%;
-}
-
-.navContainer{
-    display: flex;
-    flex-direction: row;
-      
-}
-
-.container{
-    margin-top: 40px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
+    width: 75%;
     
 }
 
-.label {
-    padding-right: 3%;
+.textContainer{
+    width:100%;
+    display:flex; 
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    border: 2px solid white;
+}
+.imgContainer{
+    width: 200px;
+    height: 100%;
+    
+
+}
+.img{
+    width:100%;
+    height: 100%;
+    object-fit: cover;
 }
 
-.commentContainer {
+.productDesc{
+    margin:0;
+    margin-left: 20px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    width: 100%;
 }
-
-.btn {
-    padding-top: 5px;
-    padding-bottom: 5px;
-    padding-right: 20px;
-    padding-left:20px;
+.formContainer{
+    display: flex;
+    flex-direction: column;
+    width:100%;
+    border: 2px solid white;
     margin-top:20px;
-    margin-right: 10px;
-    background-color: transparent;
-    color: white;
-    font-size: 15px;
-    border:1px solid white;
-    cursor: pointer;
-    margin: 5%;
+    margin-bottom:40px;
+}
+.formContainer p{
+    color: #f427ed
+}
+.form{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    
+}
+.commentContainer{
+    width:100%;
+    display: flex;
+    flex-direction: column;
 }
 
-.textArea {
+
+.textArea{
+    margin-top:15px;
+    font-family: 'Amiko', sans-serif;
+    font-size: 1rem;
+    letter-spacing: -0.06em;
     background-color: black;
-    color:  white;
-    width: 130%;
-    height: 60px;
-   
+    color:white;
+    border: 2px solid white;
+    border-left: none;
+    border-right: none;
+    min-height: 110px;
+    resize: none;
+
 }
 
+.textArea:focus{
+    outline:none;
+}
+
+.btn{
+    padding:5px;
+    font-size: 1rem;
+    cursor:pointer;
+    background-color: transparent;
+    color:white;
+    border:none;
+    border-top:1px solid white;
+
+}
+
+.btn:focus{
+    outline:none;
+}
+
+.btn:hover{
+    animation: color 1s infinite;
+    
+}
+.commentContainer p{
+    align-self: flex-end;
+    margin-right: 10px;
+}
 .btnDeleteConten{
-    width:30%;
     display: flex;
-    justify-content: end;
-    padding-right: 5%;
-    align-self: center;
+    width:fit-content;
+    height: 35px;
+    margin-left:20px;
 }
-
-.titleContainer2{
-    width: 70%;
-    display: flex;
-    justify-content: end;
-}
-
 .btnDelete{
-width: 100%;
-
+    width: 100%;
+    height: 100%;
+}
+.titleContainer{
+    display: flex;
+    flex-direction: row;
+    width:100%;
+    align-items: center;
+    justify-content: center;
 }
 
 .link{
-    width:15%
+    color:#f427ed;
+    text-decoration: none;
+    width:40px;
+    height: 40px;
 }
+
+.deleteReview{
+    color: #f427ed;
+    margin-right:5px;
+    display:none;
+    cursor:pointer;
+}
+.btnDeleteConten:hover .deleteReview{
+    display: flex;
+}
+
+@keyframes color {
+    0% {
+          background-color: #f427ed78; 
+
+    }
+    20% {
+        background-color: #f427ed8a; 
+
+    }
+    40%{
+     
+        background-color: #f427eda2; 
+
+    }
+
+    60%{
+        background-color: #f427edc4; 
+
+    }
+
+    80%{
+        background-color: #f427ede5; 
+
+    }
+  
+    100% {
+        background-color: #f427ed; 
+
+    }
+  }

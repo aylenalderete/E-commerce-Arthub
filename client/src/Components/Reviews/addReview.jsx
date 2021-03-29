@@ -12,10 +12,11 @@ import NavBar from '../../Components/NavBar/NavBar'
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        justifyContent: 'center',
-        alignItems: 'center',
+        
+        alignItems: 'flex-start',
         display: 'flex',
-        padding: '15px',
+        alignItems:'center',
+        marginTop:'15px',
         flexDirection: 'column',
         '& > * + *': {
             marginTop: theme.spacing(1),
@@ -24,6 +25,9 @@ const useStyles = makeStyles((theme) => ({
     border: {
 
         color: '#ffb400'
+    },
+    stars:{
+        fontSize: '1.5rem'
     }
 }));
 //---start
@@ -100,17 +104,21 @@ export default function AddReview({ idproduct, idorder }) {
                         <h1 className={Styles.title}>{`Agrega una reseña al producto`}</h1>
                         <div className={Styles.containerProduct}>
                             <div className={Styles.textContainer}>
-                                <h1>{product.title}</h1>
+                                <div className={Styles.imgContainer}>
                                 <img className={Styles.img} src={product.images[0].url} alt="" />
+                                </div>
+                                <div className={Styles.productDesc}>
+                                <h1>{product.title}</h1>
                                 <p>{product.description}</p>
+                                </div>
                             </div>
                             <div className={Styles.formContainer}>
                                 <form onSubmit={(e) => handleSubmit(e)} className={Styles.form} action={`/detalledeorden/${idorder}`}>
 
 
                                     <div className={classes.root}>
-                                        <label className={Styles.label}>Calificacion  </label>
-                                        <Rating name="qualification" onChange={(e) => handleChange(e)} required defaultValue={0} precision={0.5} emptyIcon={<StarBorderIcon fontSize="inherit" className={classes.border} required="required" />} />
+                                        <label className={Styles.label}>Calificacion</label>
+                                        <Rating className={classes.stars} name="qualification" onChange={(e) => handleChange(e)} required defaultValue={0} precision={0.5} emptyIcon={<StarBorderIcon fontSize="inherit" className={classes.border} required="required" />} />
                                         {errors.qualification && (
                                             <p>{errors.qualification}</p>
                                         )}
@@ -134,10 +142,12 @@ export default function AddReview({ idproduct, idorder }) {
         )
     } else {
         return (
-            <div className={Styles.navContainer}>
+            <div className={Styles.mainContainer}>
                 <NavBar renderTop={false}></NavBar>
-                <div className={Styles.container}>
-                    <></>
+                <div className={Styles.secondContainer}>
+                    <div>
+                     
+                    </div>
                 </div>
             </div>
 
