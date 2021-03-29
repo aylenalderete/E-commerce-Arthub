@@ -22,7 +22,7 @@ function verifyTokenResetPw(req, res, next) {
       }catch(err){
           res.json({auth:false})
       }
-    /*   req.userId = decoded.id; */
+    //*   req.userId = decoded.id; */
      
   }
  

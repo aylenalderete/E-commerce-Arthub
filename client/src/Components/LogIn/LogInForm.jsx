@@ -87,7 +87,7 @@ const submitHandler = async (event) => {
       }
       if(!input.password){
         errors.password = "La contraseña es requerida";
-        // setErrorreq({...errorreq,
+        /// setErrorreq({...errorreq,
         //   password: 'La contraseña es requerida'
         // })
       }

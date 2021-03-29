@@ -56,7 +56,7 @@ const {
 } = require("../db.js");
 const { use } = require("./product");
 
-//Send email to password reset
+///Send email to password reset
 
 server.post("/send/:email", async (req, res) => {
 

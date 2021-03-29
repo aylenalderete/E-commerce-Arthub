@@ -114,7 +114,7 @@ function App() {
       <Route exact path="/editarReseña/:idProduct"  render={({match})=> (<EditReview idproduct={match.params.idProduct} />)}/>
       <Route exact path="/passwordreset/:token" render={({match})=><PasswordReset token={match.params.token} />}></Route>
       <Route path="/emailform" component={EmailForm} />                                                               
-
+    
     </div>
   );
 }
