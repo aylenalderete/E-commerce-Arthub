@@ -47,6 +47,7 @@ server.get("/", (req, res) => {
 				"email",
 				"type",
 				"state",
+				"logType"
 			],
 		}).then((result) => {
 			res.json(result);

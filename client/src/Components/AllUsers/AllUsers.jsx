@@ -9,15 +9,21 @@ import PromoteUsers from '../PromoteUsers/PromoteUsers'
 import DeleteUsers from '../DeleteUsers/DeleteUsers'
 import deleteUsers from '../../Actions/deleteUsers'
 import UserSearchBar from "./UserSearchBar";
+import { Redirect } from 'react-router-dom';
+import axios from 'axios'
 
 
 
 function AllUsers() {
     const users = useSelector(state => state.users)
 
+    const userData = useSelector(state => state.userData)
+
     const promoteUser = useSelector(state => state.promoteUser)
 
     const deleteUser = useSelector(state => state.deleteUser)
+
+    const [loading,setLoading] = useState(false)
 
     const[userId, setUserId] = useState()
 
@@ -45,11 +51,27 @@ function AllUsers() {
         setUserId(id)
     }
 
+    function handleReset(email){
+        setLoading(true)
+        axios
+        .post(`http://localhost:3001/mailer/send/${email}`)
+        .then(result=>{
+            if(result){
+                setLoading(false)
+                alert('se ha resetado el password')
+            }
+        });
+    }
+
     console.log(users)
     console.log(typeof users)
 
+    if(!userData.id){
+        return <Redirect to="/ingresar"></Redirect>;    
+    }
+
     return (
-        <div className={style.container}>
+        <div className={style.container} style={loading?{'cursor':'progress'}:null}>
             {promoteUser === true && <PromoteUsers userId = {userId} />}
             {deleteUser === true && <DeleteUsers userId = {userId} />}
             <div >
@@ -89,6 +111,11 @@ function AllUsers() {
                                     <div className={style.btnContainer} onClick ={() => handleDeleteClick(u.id)} >
                                     <img className={style.icon} src={deleteuser} alt="edit item" />
                                     </div>
+                                    {!(u.logType)?
+                                    <div className={style.btnContainer} onClick ={() => handleReset(u.email)} >           
+                                        <div>reset</div>
+                                    </div>
+                                    :null}
                                 </div>
                             </th>
                     </tr>
