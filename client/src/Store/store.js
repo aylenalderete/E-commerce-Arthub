@@ -67,6 +67,9 @@ const initialState = {
     messages: '',
     selectedCategories: [],
 
+    // link to mp
+    linkmp: 'http://localhost:3000',
+
 
 };
 
@@ -400,6 +403,13 @@ const reducer = function (state = initialState, action) {
             return {
                 ...state,
                 cart: []
+            }
+
+        case 'LINK_SET':
+
+            return {
+                ...state,
+                linkmp: action.payload
             }
 
         default:

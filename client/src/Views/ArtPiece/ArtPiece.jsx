@@ -10,6 +10,7 @@ import getInitialProducts from "../../Actions/getInitialProducts";
 import Rating from '@material-ui/lab/Rating';
 import { makeStyles } from '@material-ui/core/styles';
 import StarBorderIcon from '@material-ui/icons/StarBorder';
+import { addItem } from '../../Actions/shoppingCart';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -132,7 +133,7 @@ function ArtPiece({ artId }) {
               <div className={style.containerButtons}>
                 <Link to="/carrito">
                   <button
-                    // onClick={() => handlePostUserOrder(userData.id, artId)}
+                    onClick={() => dispatch(addItem(artId))}
                     className={style.button}>
                     Añadir al carrito
               </button>

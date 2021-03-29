@@ -61,6 +61,8 @@ server.get("/mercadopago/pagos", (req, res) => {
     const merchant_order_id = req.query.merchant_order_id
     const payment_method = 'mercadopago'
 
+    console.log('ESTO ES EXTERNAL REFERENCE',external_reference)
+
     //Aquí edito el status de mi orden
 
     Shoppingcart.findByPk(external_reference, { include: [{ model: Lineorder, include: [{ model: Product }] }] })
