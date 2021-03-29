@@ -120,22 +120,26 @@ export default function EditReview({ idproduct, idorder }) {
                 <NavBar renderTop={false} />
                 {product.title &&
                     <div className={Styles.secondContainer}>
-                        <div className={Styles.titleContainer}> 
-                            <div className= {Styles.titleContainer2}>                                    
+                        <div className={Styles.titleContainer}>                                
                                 <h1 className={Styles.title}>{`Editar la reseña del producto`}</h1>
-                            </div> 
+                
                             <div className={Styles.btnDeleteConten}>
                                 <Link to={`/coleccion/${idproduct}`} onClick={(e) => handleDelete(e)} className={Styles.link}>
                                     <img className={Styles.btnDelete} src={logoDelete}/>
                                     {/* <button className={Styles.btn} onClick={(e) => handleDelete(e)}>Eliminar Reseña</button> */}
                                 </Link>
+                                    <p className={Styles.deleteReview}>Eliminar reseña</p>
                             </div>
                         </div>
                         <div className={Styles.containerProduct}>
                             <div className={Styles.textContainer}>
-                                <h1>{product.title}</h1>
+                            <div className={Styles.imgContainer}>
                                 <img className={Styles.img} src={product.images[0].url} alt="" />
+                                </div>
+                                <div className={Styles.productDesc}>
+                                <h1>{product.title}</h1>
                                 <p>{product.description}</p>
+                                </div>
                             </div>
                             <div className={Styles.formContainer}>
                                 <form onSubmit={(e) => handleSubmit(e)} className={Styles.form}>
@@ -169,10 +173,12 @@ export default function EditReview({ idproduct, idorder }) {
         )
     } else {
         return (
-            <div className={Styles.navContainer}>
+            <div className={Styles.mainContainer}>
                 <NavBar renderTop={false}></NavBar>
-                <div className={Styles.container}>
-                    <></>
+                <div className={Styles.secondContainer}>
+                    <div>
+                        
+                    </div>
                 </div>
             </div>
 
