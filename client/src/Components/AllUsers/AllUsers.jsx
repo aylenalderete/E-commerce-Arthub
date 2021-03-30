@@ -31,6 +31,11 @@ function AllUsers() {
 
     const [flag, setFlag] = useState(false)
 
+    // const [email, setEmail] = useState({
+    //     flag: true,
+    //     email: ''
+    // });
+
 
     
 
@@ -41,7 +46,7 @@ function AllUsers() {
 
 
 
-    function handleClick(id){
+    function handleClickEdit(id){
         promoteUser === false ? dispatch(changeusertype(true)) : dispatch(changeusertype(false));
         setUserId(id)
     }
@@ -52,22 +57,23 @@ function AllUsers() {
     }
 
     function handleReset(email){
-        setLoading(true)
+        setLoading(true);    
+
         axios
         .post(`http://localhost:3001/mailer/send/${email}`)
         .then(result=>{
             if(result){
-                setLoading(false)
-                alert('se ha resetado el password')
+                setLoading(false);
+                alert('se ha resetado el password');
             }
         });
     }
 
-    console.log(users)
-    console.log(typeof users)
+    // console.log(users)
+    // console.log(typeof users)
 
-    if(!userData.id){
-        return <Redirect to="/ingresar"></Redirect>;    
+    if(userData.id < 1 || userData.type !== 'admin'){
+        return <Redirect to="/ingresar"></Redirect>;
     }
 
     return (
@@ -94,7 +100,7 @@ function AllUsers() {
                     <td>estado</td>
                 </tr>
                 {users.length ? users && users.map((u) => (
-                    <tr className={style.users}>
+                    <tr key={u.id} className={style.users}>
                         <td>{u.name}</td>
                         <td>{u.lastname}</td>
                         <td>{u.username}</td>
@@ -104,7 +110,7 @@ function AllUsers() {
 
                         <th className={style.th}>
                                 <div className={style.btnContainer}>
-                                    <div className={style.btnContainer} onClick ={() => handleClick(u.id)}>
+                                    <div className={style.btnContainer} onClick ={() => handleClickEdit(u.id)}>
                                         <img className={style.icon} src={edit} alt="edit item" />
                                     </div>
 
@@ -113,6 +119,7 @@ function AllUsers() {
                                     </div>
                                     {!(u.logType)?
                                     <div className={style.btnContainer} onClick ={() => handleReset(u.email)} >           
+                                        {/* <div>{loading ? <i class="fas fa-spinner fa-spin"></i>:'reset'}</div> */}
                                         <div>reset</div>
                                     </div>
                                     :null}

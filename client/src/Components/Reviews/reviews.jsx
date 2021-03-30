@@ -63,7 +63,7 @@ export default function Reviews({ artId }) {
                                 </div>
                                 <div className={Styles.containerUser}>
                                     <p className={Styles.user}>Usuario:</p>
-                                    <p className={Styles.user}>{elem.user.username}</p>
+                                    <p className={Styles.user}>{elem.user.username && elem.user.username}</p>
                                 </div>
                             </div>
 
