@@ -71,7 +71,7 @@ server.post("/send/:email", async (req, res) => {
     if(!result) res.json({email:false})
 
     var token = await jwt.sign({ id: result.id }, "secret_change_key", {
-            expiresIn: 60 ,
+            expiresIn: 300 ,
     });
      
 

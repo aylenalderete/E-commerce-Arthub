@@ -29,20 +29,16 @@ import getUserOrder from "./Actions/getUserOrder.js";
 import ShoppingCart from './Components/ShoppingCart/ShoppingCart';
 import AddReview from "./Components/Reviews/addReview"
 import EditReview from "./Components/Reviews/editReview";
-
 import PasswordReset from './Components/PasswordReset/PasswordReset'
 import EmailForm from './Components/EmailForm/EmailForm'
-
 import ShowAllUsers from './Views/ShowAllUsers/ShowAllUsers'
 import { getUserReviews } from "./Actions/reviews";
 import ShoppingCartPayment from './Components/ShoppingCart/ShoppingCartPayment';
 import ShoppingCartResponse from './Components/ShoppingCart/ShoppingCartResponse';
 
-
-
 function App() {
   const dispatch = useDispatch();
-
+  const linkmp = useSelector(state => state.linkmp);
 
   useEffect(() => {
     var token = localStorage.getItem("token");
@@ -112,13 +108,16 @@ function App() {
       <Route exact path="/ordenes" component={Orders} />
       <Route exact path="/orden/:id" component={OrderDetailArtist} />
       <Route path="/usuarios" component={ShowAllUsers} />
-      <Route exact path="/editarReseña/:idProduct"  render={({match})=> (<EditReview idproduct={match.params.idProduct} />)}/>
-      <Route exact path="/passwordreset/:token" render={({match})=><PasswordReset token={match.params.token} />}></Route>
-      <Route path="/emailform" component={EmailForm} />                                                                 
-      <Route exact path="/agregarReseña/:idProduct"  render={({match})=> (<AddReview idproduct={match.params.idProduct} />)}/>
+      <Route exact path="/editarReseña/:idProduct" render={({ match }) => (<EditReview idproduct={match.params.idProduct} />)} />
+      <Route exact path="/passwordreset/:token" render={({ match }) => <PasswordReset token={match.params.token} />}></Route>
+      <Route path="/emailform" component={EmailForm} />
+      <Route exact path="/agregarReseña/:idProduct" render={({ match }) => (<AddReview idproduct={match.params.idProduct} />)} />
       <Route path="/pago" component={ShoppingCartPayment} />
       <Route path="/carritocomprado/:id/:status" render={({ match }) => (<ShoppingCartResponse idorder={match.params.id} status={match.params.status} />)} />
-
+      <Route path='/linkmp' component={() => {
+        window.location = linkmp;
+        return null;
+      }} />
     </div>
   );
 }

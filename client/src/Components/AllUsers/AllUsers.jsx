@@ -9,21 +9,32 @@ import PromoteUsers from '../PromoteUsers/PromoteUsers'
 import DeleteUsers from '../DeleteUsers/DeleteUsers'
 import deleteUsers from '../../Actions/deleteUsers'
 import UserSearchBar from "./UserSearchBar";
+import { Redirect } from 'react-router-dom';
+import axios from 'axios'
 
 
 
 function AllUsers() {
     const users = useSelector(state => state.users)
 
+    const userData = useSelector(state => state.userData)
+
     const promoteUser = useSelector(state => state.promoteUser)
 
     const deleteUser = useSelector(state => state.deleteUser)
+
+    const [loading,setLoading] = useState(false)
 
     const[userId, setUserId] = useState()
 
     const dispatch = useDispatch()
 
     const [flag, setFlag] = useState(false)
+
+    // const [email, setEmail] = useState({
+    //     flag: true,
+    //     email: ''
+    // });
 
 
     
@@ -35,7 +46,7 @@ function AllUsers() {
 
 
 
-    function handleClick(id){
+    function handleClickEdit(id){
         promoteUser === false ? dispatch(changeusertype(true)) : dispatch(changeusertype(false));
         setUserId(id)
     }
@@ -45,11 +56,28 @@ function AllUsers() {
         setUserId(id)
     }
 
-    console.log(users)
-    console.log(typeof users)
+    function handleReset(email){
+        setLoading(true);    
+
+        axios
+        .post(`http://localhost:3001/mailer/send/${email}`)
+        .then(result=>{
+            if(result){
+                setLoading(false);
+                alert('se ha resetado el password');
+            }
+        });
+    }
+
+    // console.log(users)
+    // console.log(typeof users)
+
+    if(userData.id < 1 || userData.type !== 'admin'){
+        return <Redirect to="/ingresar"></Redirect>;
+    }
 
     return (
-        <div className={style.container}>
+        <div className={style.container} style={loading?{'cursor':'progress'}:null}>
             {promoteUser === true && <PromoteUsers userId = {userId} />}
             {deleteUser === true && <DeleteUsers userId = {userId} />}
             <div >
@@ -72,7 +100,7 @@ function AllUsers() {
                     <td>estado</td>
                 </tr>
                 {users.length ? users && users.map((u) => (
-                    <tr className={style.users}>
+                    <tr key={u.id} className={style.users}>
                         <td>{u.name}</td>
                         <td>{u.lastname}</td>
                         <td>{u.username}</td>
@@ -82,13 +110,19 @@ function AllUsers() {
 
                         <th className={style.th}>
                                 <div className={style.btnContainer}>
-                                    <div className={style.btnContainer} onClick ={() => handleClick(u.id)}>
+                                    <div className={style.btnContainer} onClick ={() => handleClickEdit(u.id)}>
                                         <img className={style.icon} src={edit} alt="edit item" />
                                     </div>
 
                                     <div className={style.btnContainer} onClick ={() => handleDeleteClick(u.id)} >
                                     <img className={style.icon} src={deleteuser} alt="edit item" />
                                     </div>
+                                    {!(u.logType)?
+                                    <div className={style.btnContainer} onClick ={() => handleReset(u.email)} >           
+                                        {/* <div>{loading ? <i class="fas fa-spinner fa-spin"></i>:'reset'}</div> */}
+                                        <div>reset</div>
+                                    </div>
+                                    :null}
                                 </div>
                             </th>
                     </tr>

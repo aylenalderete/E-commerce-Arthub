@@ -1,4 +1,11 @@
 
+.mainContainer{
+    display: flex;
+}
+
+.secondContainer{
+    flex: 1;
+}
 .container{
     display: flex;
     justify-content: space-around;
@@ -11,6 +18,9 @@
     height: 100%;
     border: 2px solid white;
     padding: 30px 50px;
+    max-width: 410px;
+    /* width: 460px; */
+
 }
 
 .title{
@@ -24,12 +34,23 @@
 }
 
 .btn{
+    width: 81px;
+    height: 29px;
     padding: 5px 20px;
     background-color: transparent;
     color: white;
     font-size: 15px;
     border:1px solid white;
     cursor: pointer;
+}
+
+.btn[disabled]{
+    opacity: 0.5;
+    cursor: default;
+    transform: none !important;
+}
+.btn:active{
+    transform: scale(0.95);
 }
 
 .select{
@@ -40,4 +61,8 @@
 .label{
     display: inline-block;
     margin-right: 15px;
+}
+
+.option{
+    background-color: black;
 }

@@ -50,9 +50,8 @@
 .btnContainer{
     display: flex;
     margin-top: 2px;
+    cursor:pointer
 }
-
-
 
 .icon{
     margin-top:5px;

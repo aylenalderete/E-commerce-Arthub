@@ -79,7 +79,7 @@ function OrderDetail() {
                                     : <div></div>
                             }
                             {
-                                userType === 'artist' ?
+                                userType === 'admin' ?
                                     <select value={orderDetail.state} onChange={EditStateChange}>
                                         Editar estado
                                     <option value="pending">Pendiente</option>
@@ -102,16 +102,21 @@ function OrderDetail() {
                                         <img className={style.img} src={l.product.images[0].url} alt="product image" />
                                     </div>
 
-                                    {userReview && userReview.length > 0 && userReview.find(r => r.productIdProduct === l.product.id_product) ?
-                                        <Link className={style.iconRContainer} to={`/editarReseña/${l.product.id_product}`}>
-                                            <img className={style.iconReview} src={iconReview} alt='agrega una reseña' />
-                                            <img className={style.checkIcon} src={checkIcon} alt='agrega una reseña' />
+                                    {
+                                        orderDetail.state === 'fullfilled'
+                                        ?
+                                            userReview && userReview.length > 0 && userReview.find(r => r.productIdProduct === l.product.id_product) ?
+                                            <Link className={style.iconRContainer} to={`/editarReseña/${l.product.id_product}`}>
+                                                <img className={style.iconReview} src={iconReview} alt='agrega una reseña' />
+                                                <img className={style.checkIcon} src={checkIcon} alt='agrega una reseña' />
 
-                                        </Link>
+                                            </Link>
+                                            :
+                                            <Link className={style.iconRContainer} to={`/agregarReseña/${l.product.id_product}`}>
+                                                <img className={style.iconReview} src={iconReview} alt='agrega una reseña' />
+                                            </Link>
                                         :
-                                        <Link className={style.iconRContainer} to={`/agregarReseña/${l.product.id_product}`}>
-                                            <img className={style.iconReview} src={iconReview} alt='agrega una reseña' />
-                                        </Link>
+                                        <></>
                                     }
                                 </div>
                             )}
