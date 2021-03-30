@@ -79,7 +79,7 @@ function OrderDetail() {
                                     : <div></div>
                             }
                             {
-                                userType === 'artist' ?
+                                userType === 'admin' ?
                                     <select value={orderDetail.state} onChange={EditStateChange}>
                                         Editar estado
                                     <option value="pending">Pendiente</option>
