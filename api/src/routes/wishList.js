@@ -6,7 +6,7 @@ server.post('/add', async (req, res) => {
         const { iduser, idprod } = req.body
         let prod = await Product.findByPk(idprod)
         prod.addUser(iduser);
-        res.send('agregado');
+        res.send('added');
         
     } catch (error) {
         res.json(error)
