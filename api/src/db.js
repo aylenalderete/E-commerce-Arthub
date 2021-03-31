@@ -59,6 +59,9 @@ Image.belongsTo(Product);
 Product.belongsToMany(Category, { through: "productcategory" });
 Category.belongsToMany(Product, { through: "productcategory" });
 
+Product.belongsToMany(User, { through: "userwishprod" });
+User.belongsToMany(Product, { through: "userwishprod" });
+
 User.hasMany(Product, {
 	foreignKey: { allowNull: false },
 	onDelete: "CASCADE",
