@@ -8,11 +8,14 @@ const orderRouter = require("./orders.js");
 const searchuserRouter = require("./searchuser.js");
 const mailer = require("./mailer.js");
 const newsletter = require("./newsletter.js");
+const wishlistRouter = require("./wishList.js");
+
 const router = Router();
 
 /// load each router on a route
 // i.e: router.use('/auth', authRouter);
 // router.use('/auth', authRouter);
+router.use("/wishlist", wishlistRouter);
 router.use("/products/category", categoryRouter);
 router.use("/products", productRouter);
 router.use("/search", searchRouter);
