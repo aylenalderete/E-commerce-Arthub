@@ -7,7 +7,8 @@ const userRouter = require("./users.js");
 const orderRouter = require("./orders.js");
 const searchuserRouter = require("./searchuser.js")
 const mailer = require("./mailer.js");
-const requestRouter = require("./request.js")
+const requestRouter = require("./request.js");
+const auctionRouter = require("./auctions.js");
 
 const router = Router();
 
@@ -22,5 +23,6 @@ router.use("/orders", orderRouter);
 router.use("/searchuser", searchuserRouter);
 router.use("/mailer", mailer);
 router.use("/request", requestRouter);
+router.use("/auctions", auctionRouter);
 
 module.exports = router;
