@@ -72,7 +72,7 @@ function Request() {
     }
 
     // Firebase end
-    if (loggedUser.type !== 'artist' && loggedUser.type !== 'admin') return <Redirect to='/miperfil'></Redirect>
+    // if (loggedUser.type !== 'user') return <Redirect to='/miperfil'></Redirect>
     return (
         <div className={Styles.navBar}>
             <NavBar renderTop={false}></NavBar>
