@@ -52,7 +52,8 @@
 }
 
 .links{
-    color:#F427EC
+    color:#F427EC;
+    cursor: pointer
 
 }
 

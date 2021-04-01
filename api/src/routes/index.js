@@ -5,10 +5,10 @@ const categoryRouter = require("./category.js");
 const searchRouter = require("./search.js");
 const userRouter = require("./users.js");
 const orderRouter = require("./orders.js");
-const searchuserRouter = require("./searchuser.js")
+const searchuserRouter = require("./searchuser.js");
 const mailer = require("./mailer.js");
 const auctionRouter = require("./auctions.js")
-
+const newsletter = require("./newsletter.js");
 const router = Router();
 
 /// load each router on a route
@@ -22,5 +22,6 @@ router.use("/orders", orderRouter);
 router.use("/searchuser", searchuserRouter);
 router.use("/mailer",mailer);
 router.use("/auctions", auctionRouter)
+router.use("/newsletter", newsletter);
 
 module.exports = router;
