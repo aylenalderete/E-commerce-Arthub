@@ -49,7 +49,8 @@ const {
 	Shoppingcart,
 	Review,
 	Auction,
-	Wishlist
+	Wishlist,
+	Request
 } = sequelize.models;
 
 // Aca vendrian las relaciones
@@ -89,7 +90,10 @@ Product.hasMany(Review);
 Review.belongsTo(Product);
 
 User.hasMany(Review);
-Review.belongsTo(User)
+Review.belongsTo(User);
+
+User.hasMany(Request);
+Request.belongsTo(User);
 
 Auction.hasMany(User);
 User.belongsTo(Auction);
