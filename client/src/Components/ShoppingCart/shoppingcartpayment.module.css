@@ -66,3 +66,12 @@
 .option{
     background-color: black;
 }
+
+.shortInput{
+    width: 40px;
+}
+
+.link{
+    color: #F427EC;
+    font-size:1rem
+}

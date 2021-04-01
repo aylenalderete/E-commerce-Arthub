@@ -48,6 +48,7 @@ const {
 	Lineorder,
 	Shoppingcart,
 	Review,
+	Request,
 	Auction
 } = sequelize.models;
 
@@ -82,7 +83,10 @@ Product.hasMany(Review);
 Review.belongsTo(Product);
 
 User.hasMany(Review);
-Review.belongsTo(User)
+Review.belongsTo(User);
+
+User.hasMany(Request);
+Request.belongsTo(User);
 
 Auction.hasMany(User);
 User.belongsTo(Auction);
