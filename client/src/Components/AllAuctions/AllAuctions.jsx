@@ -48,19 +48,31 @@ function AllAuction() {
         return <Redirect to="/ingresar"></Redirect>;
     }
 
+    console.log(auctionId)
+    
+
     return (
         <div className={style.container} style={loading?{'cursor':'progress'}:null}>
             {createAuction === true && <CreateAuction auctionId = {auctionId} />}
             {deleteAuction === true && <DeleteAuction auctionId = {auctionId} />}
             <div >
+                    <div className = {style.column}>
+                        <h1>Subastas:</h1>
+                    </div>
                 <table className={style.table}>
-                    <tr className = {style.column}>
-                        <th>Subastas:</th>
+                    <tr className = {style.head}>
+                        <th>imagen</th>
+                        <th>título</th>
+                        <th>artista</th>
+                        <th>descripción</th>
+                        <th>estado</th>
                     </tr>
+
                     {auctions && auctions.map((a) => (
-                    <tr key={a.id} className={style.users}>
+                        
+                    <tr key={a.id} className={style.auctions}>
                         <td>
-                            <img src= {a.images[0].url} /> 
+                            <img className={style.picture} src= {a.images[0].url} /> 
                         </td>
                         <td>{a.title}</td>
                         <td>{a.users[0].username}</td>
@@ -69,21 +81,23 @@ function AllAuction() {
 
                         <th className={style.th}>
                                 <div className={style.btnContainer}>
-                                    <div className={style.btnContainer} onClick ={() => handleClickEdit(a.id)}>
+                                    <div className={style.btnContainer} onClick ={() => handleClickEdit(a.id_auction)}>
                                         <img className={style.icon} src={edit} alt="edit item" />
                                     </div>
 
-                                    <div className={style.btnContainer} onClick ={() => handleDeleteClick(a.id)} >
+                                    <div className={style.btnContainer} onClick ={() => handleDeleteClick(a.id_auction)} >
                                     <img className={style.icon} src={deleteauction} alt="edit item" />
                                     </div>
                                 </div>
                             </th>
                     </tr>
+                
                 ))}
             </table>
             </div>
         </div>
     )
+    
 }
 
 export default AllAuction

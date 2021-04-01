@@ -6,7 +6,7 @@
     left: 220px;
     right: 0;
     bottom: 0;
-    margin: auto;
+    margin: 2vh;
     background-color: rgba(0, 0, 0);
     display: flex;
     flex-direction: column;
@@ -14,6 +14,35 @@
     justify-content: center;
     border: 1px solid white; 
     z-index: 9999;
+}
+
+.title {
+    display: flex;
+    flex-direction: column;
+}
+
+.column1{
+    display: flex;
+    margin: 5vh;
+    align-items: center;
+    justify-content: center;
+}
+
+.column2{
+    display: flex;
+    flex-direction: column;
+    margin: 5vh;
+    justify-content: center;
+
+}
+
+
+.picture{
+    display: flex;
+    justify-content: center;
+    object-fit: cover;
+    width:180px;
+    height: 180px; 
 }
 
 .titles{
@@ -28,7 +57,6 @@
     width:100%;
     align-self: center;
     font-size: 1.2rem;
-    margin-bottom: 10px;
 }
 
 .btnCloseDiv{
@@ -51,14 +79,6 @@
     width: 25px;
     height: 25px;
 }
-
-.containerInput{
-    display: flex;
-    margin: 9vh;
-    font-size: 3.5vh;
-    
-}
-
 
 .btnSelect{
     display: flex;

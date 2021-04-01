@@ -11,6 +11,20 @@
 
 }
 
+.head{
+   font-size: 3vh;
+}
+
+.head th{
+    margin: 5vh;
+}
+
+.picture{
+    object-fit: cover;
+    width:100px;
+    height: 100px; 
+}
+
 
 .button{
     color:white;
@@ -24,8 +38,8 @@
 }
 
 .table {
-
-    margin :2vh
+    margin :2vh;
+    
 
 }
 
@@ -35,10 +49,14 @@
 
 .column{
     font-size: 4vh;
+    margin: 5vh;
 }
 
-.users{
+
+.auctions{
     font-size: 3vh;
+    margin: 5vh;
+   
 }
 
 .th {

@@ -20,7 +20,7 @@ function CreateAuction(props) {
     }, [])
 
     useEffect(() => {
-        setTheAuction(auctions.find((element) => element.id === props.auctionId)) 
+        setTheAuction(auctions.find((element) => element.id_auction === props.auctionId)) 
     }, [auctions])
 
     function handleSubmit(ev) {
@@ -35,7 +35,7 @@ function CreateAuction(props) {
                 body: JSON.stringify({
                     price: theAuction.price,
                     state: 'subastando',
-                    percentage: theAuction.percentage,
+                    percentage: theAuction.price*0.1,
                 })
                 
             })
@@ -69,36 +69,40 @@ function CreateAuction(props) {
             <button onClick={()=>{onClose()}} className={style.btnCloseDiv}>
                 <img className={style.close} src={close} alt="close edit" />
             </button>
-
-            <h1 className={style.title}>Crea una subasta</h1>
-
-            <form className={style.formLabel} onSubmit={handleSubmit}>
-
-
-                <div className={style.containerPic}>
-                <img className={style.picture} src={theAuction?.images[0].url} />
-                </div>
-                <p className={style.titles}>Título:</p>
-                <input className={style.input} name='title' value={theAuction?.title} disabled />
-                <p className={style.titles}>Artista:</p>
-                <input className={style.input} name='username' value={theAuction?.users[0].username} disabled />
-                <p className={style.titles}>Descripción:</p>
-                <input className={style.input} name='description' value={theAuction?.description} disabled />
-                <p className={style.titles}>Precio inicial:</p>
-                <input className={style.input} name='price' value={theAuction?.price} onChange={handleChange}/>
-                <p className={style.titles}>Monto de aumento:</p>
-                <input className={style.input} name='percentage' value={theAuction?.percentage} onChange={handleChange}/>
-
-
-                <div className={style.btnSelect}>
-                    <button className={style.btn} type='submit'>
-                        Crear subasta
-                    </button>
-
-                </div>
+            <div className={style.title}>
+            <h1 >Editar subasta</h1>
+            </div>
+        
+            <div>
+                <div className={style.column1}>
+                    <div className={style.containerPic}>
+                        <img className={style.picture} src={theAuction?.images[0].url} />
+                    </div>
+                    <div className={style.column2}>
+                        <p className={style.titles}>Título:</p>
+                        <input className={style.input} name='title' value={theAuction?.title} disabled />
+                        <p className={style.titles}>Artista:</p>
+                        <input className={style.input} name='username' value={theAuction?.users[0].username} disabled />
+                        <p className={style.titles}>Descripción:</p>
+                        <input className={style.input} name='description' value={theAuction?.description} disabled />
+                        <p className={style.titles}>Precio inicial:</p>
+                        <input className={style.input} name='price' value={theAuction?.price} onChange={handleChange} />
+                        <p className={style.titles}>Monto de aumento:</p>
+                        <input className={style.input} name='percentage' value={ theAuction?.price>= 1000 ? 100 : 50
+                        } onChange={handleChange}/>
 
 
-            </form>
+                        </div>
+                            <div className={style.btnSelect}>
+                                <button className={style.btn} type='submit' onClick={handleSubmit}>
+                                    Aceptar subasta
+                                </button>
+
+                            </div>
+                
+                    </div>
+
+            </div>
 
         </div>
     )

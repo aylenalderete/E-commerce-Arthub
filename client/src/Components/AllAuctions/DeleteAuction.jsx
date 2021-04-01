@@ -18,7 +18,7 @@ function DeleteAuction(props) {
     }, []);
 
     useEffect(() => {
-        setTheAuction(auctions.find((element) => element.id === props.auctionId ))
+        setTheAuction(auctions.find((element) => element.id_auction === props.auctionId ))
     }, [auctions])
 
     function handleSubmit() {
