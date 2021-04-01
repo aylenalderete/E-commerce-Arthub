@@ -12,7 +12,7 @@ import linkSet from '../../Actions/linkset';
 
 function ShoppingCartPayment() {
 
-    const { id } = useSelector((state) => state.userData);
+    const { id,email } = useSelector((state) => state.userData);
 
     const history = useHistory();
 
@@ -23,11 +23,30 @@ function ShoppingCartPayment() {
     const [loading, setLoading] = useState(false);
     const [redirect, setRedirect] = useState(false);
     const [link, setLink] = useState('');
+    const [adress,setAdress] = useState({localidad:'',
+                                         provincia:'',
+                                         calle:'',
+                                         numero:''});
+    const [error,setError] = useState({localidad:'',
+                                        provincia:'',
+                                        calle:'',
+                                        numero:''})
 
     const cart = useSelector((state) => state.cart);
 
     const handleChange = (e) => {
         setMethod(e.target.value);
+    }
+
+    function onChange (e){
+        const name = e.target.name;
+        const value = e.target.value;
+        setError({localidad:'',
+                    provincia:'',
+                    calle:'',
+                    numero:''})
+
+        setAdress({...adress,[name]:value})
     }
 
     useEffect(() => {
@@ -37,26 +56,39 @@ function ShoppingCartPayment() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (method === 'mp') {
-            setLoading(!loading)
 
-            axios.post(`http://localhost:3001/users/${id}/newcart`, { cart })
-                .then((newCart) => {
+        if(!adress.provincia){
+            setError({...error,provincia:'El campo provincia es requerido'})
+        }else if(!adress.localidad){
+            setError({...error,localidad:'El campo localidad es requerido'})
+            alert('El campo localidad es requerido')
+        }else if(!adress.calle){
+            setError({...error,calle:'El campo calle es requerido'})
+        }else if(!adress.numero){
+            setError({...error,numero:'El campo número es requerido'})
+        }else{  
+               
+            if (method === 'mp') {
+                setLoading(!loading)
 
-                    axios.post(`http://localhost:3001/orders/mercadopago`, { cart, idOrder: newCart.data.id_order })
-                        .then(async response => {
-                            // console.log('ESTE ES EL LINK MP',response.data.mpLink);
-                            dispatch(linkSet(response.data.mpLink));
-                            // setLink(response.data.mpLink);
-                            setRedirect(true);
-                            // window.location = response.data.mpLink;
-                            // setTimeout(() => {
-                            setLoading(!loading)
-                            localStorage.setItem('cart', JSON.stringify([]));
-                            dispatch(emptyCart());
-                            // }, 3000)
-                        });
-                })
+                axios.post(`http://localhost:3001/users/${id}/newcart`, { cart })
+                    .then((newCart) => {
+
+                        axios.post(`http://localhost:3001/orders/mercadopago`, { cart, idOrder: newCart.data.id_order,email,adress })
+                            .then(async response => {
+                                // console.log('ESTE ES EL LINK MP',response.data.mpLink);
+                                dispatch(linkSet(response.data.mpLink));
+                                // setLink(response.data.mpLink);
+                                setRedirect(true);
+                                // window.location = response.data.mpLink;
+                                // setTimeout(() => {
+                                setLoading(!loading)
+                                localStorage.setItem('cart', JSON.stringify([]));
+                                dispatch(emptyCart());
+                                // }, 3000)
+                            });
+                    })
+            }
         }
     }
     if (redirect) {
@@ -86,6 +118,36 @@ function ShoppingCartPayment() {
 
                             </select>
 
+                            <p className={style.label}>Dirección de envío: </p>
+                            <div>
+                                <p className={style.label}>Provincia: </p>                                    
+                                <input type='text' value={adress.provincia} name='provincia' onChange={onChange}></input>
+                                {error.provincia ? (
+                                <div className={style.link}>{error.provincia}</div>
+                                ) : null}
+                            </div>
+                            <div>
+                                <p className={style.label}>Localidad: </p>                                    
+                                <input type='text' value={adress.localidad} name='localidad' onChange={onChange}></input>
+                                {error.localidad ? (
+                                <div className={style.link}>{error.localidad}</div>
+                                ) : null}
+                            </div>
+                            <div>
+                                <p className={style.label}>Calle: </p>                                    
+                                <input type='text' value={adress.calle} name='calle' onChange={onChange}></input>
+                                {error.calle ? (
+                                <div className={style.link}>{error.calle}</div>
+                                ) : null}
+                            </div>
+                            <div>
+                                <p className={style.label}>Número: </p>                                    
+                                <input type='text' value={adress.numero} name='numero' onChange={onChange} className={style.shortInput}></input>
+                                {error.numero ? (
+                                <div className={style.link}>{error.numero}</div>
+                                ) : null}
+                            </div>
+                            
                             <p className={style.total}>Total: ${total}</p>
                             <button className={`${style.btn} ${style.p}`} onClick={() => history.push('/carrito')}>Volver</button>
 
