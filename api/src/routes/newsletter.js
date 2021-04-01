@@ -12,8 +12,7 @@ const CLIENT_ID =
 const CLIENT_SECRET = "WqmGTBctdvzddpFsmu0_MwBV";
 const REDIRECT_URI = "https://developers.google.com/oauthplayground";
 const REFRESH_TOKEN =
-	"1//04VjdAu7ftOspCgYIARAAGAQSNwF-L9Irxx8NT_J7Zbe-8ahhQWzuEL5JdKgNFPc3cskLeZzmAOHquYKdxgMC0gv53CChhMqLrao";
-
+	"1//04fZsdreosgbrCgYIARAAGAQSNwF-L9IrqHuSDMvBIGRnXIkUilPVz99wzLB613MJ_AIIR87ry3-JOW-VXn1YrMuqnEbtPh16jA0";
 const oAuth2Client = new google.auth.OAuth2(
 	CLIENT_ID,
 	CLIENT_SECRET,
@@ -40,13 +39,10 @@ async function sendEmail(subject, body, to) {
 		const handlebarOptions = {
 			viewEngine: {
 				extName: ".handlebars",
-				partialsDir: path.resolve(__dirname, "/templates"),
+				partialsDir: __dirname + "/templates/",
 				defaultLayout: false,
 			},
-			viewPath: path.resolve(
-				__dirname,
-				"/home/matias/Matias/Portfolio/ecommerce-ft09-g02/api/src/routes/templates"
-			),
+			viewPath: __dirname + "/templates/",
 			extName: ".handlebars",
 		};
 
@@ -55,8 +51,7 @@ async function sendEmail(subject, body, to) {
 			from: "ArtHub <andres2661991@gmail.com>",
 			to: to,
 			subject: subject,
-			// html: body,
-			template: "sub",
+			template: body,
 		};
 
 		const result = await transport.sendMail(mailOptions);
@@ -97,9 +92,8 @@ router.post("/:userId/subscribe", async (req, res) => {
 			userToSubscribe.newsletter = true;
 			userToSubscribe.save();
 			const emailSubject = "Arthub Newsletter";
-			const emailBody = "lalalalalal";
+			const emailBody = "sub";
 			const userEmail = userToSubscribe.email;
-			console.log(userEmail);
 			await sendEmail(emailSubject, emailBody, userEmail);
 			//Guardo el mensaje enviado en la db
 			const saveEmail = await Newsletter.create({ content: emailBody });
@@ -131,8 +125,7 @@ router.post("/:userId/unsubscribe", async (req, res) => {
 			userToSubscribe.newsletter = false;
 			userToSubscribe.save();
 			const emailSubject = "Arthub Newsletter";
-			const emailBody =
-				"You've successfully unsubscribed from our newsletter!";
+			const emailBody = "unsub";
 			const userEmail = userToSubscribe.email;
 			await sendEmail(emailSubject, emailBody, userEmail);
 			//Guardo el mensaje enviado en la db
