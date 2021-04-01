@@ -1,4 +1,6 @@
 const server = require("express").Router();
+const nodemailer = require("nodemailer")
+const {google} = require("googleapis")
 const {
     User,
     Category,
@@ -10,6 +12,49 @@ const {
 const mercadopago = require('mercadopago');
 const { TOKEN_MP } = process.env;
 
+//Configuracion para envío de mail
+
+const CLIENT_ID = '58229968491-6sjdcgkqh0uog45rabbitouniqs182ch.apps.googleusercontent.com'
+const CLIENT_SECRET = 'WqmGTBctdvzddpFsmu0_MwBV'
+const REDIRECT_URI = 'https://developers.google.com/oauthplayground'
+const REFRESH_TOKEN = '1//04VjdAu7ftOspCgYIARAAGAQSNwF-L9Irxx8NT_J7Zbe-8ahhQWzuEL5JdKgNFPc3cskLeZzmAOHquYKdxgMC0gv53CChhMqLrao'
+
+const oAuth2Client = new google.auth.OAuth2(CLIENT_ID,CLIENT_SECRET,REDIRECT_URI)
+oAuth2Client.setCredentials({refresh_token:REFRESH_TOKEN})
+
+async function sendEmail (subject,body,to){
+    try{
+        const accessToken = await oAuth2Client.getAccessToken()
+
+        const transport = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                type: 'OAuth2',
+                user:'andres2661991@gmail.com',
+                clientId: CLIENT_ID,
+                clientSecret:CLIENT_SECRET,
+                refreshToken: REFRESH_TOKEN,
+                accessToken: accessToken
+            }
+        })
+
+        const mailOptions = {
+
+            from: 'ArtHub <andres2661991@gmail.com>',
+            to :to,
+            subject:subject ,
+            html:body
+        }
+
+        const result = await transport.sendMail(mailOptions)
+        return result
+
+    }catch (err){
+        console.log(err)
+        return err
+    }
+}
+
 // MERCADO PAGO
 
 mercadopago.configure({
@@ -17,8 +62,17 @@ mercadopago.configure({
 });
 
 server.post('/mercadopago', async (req, res) => {
-    const { cart, idOrder } = req.body;
+    const { cart, idOrder, email , adress} = req.body;
     const order = parseInt(idOrder);
+
+    console.log(adress)
+
+    console.log(typeof adress)
+
+    var inputAndress = adress.provincia + ' '+
+                       adress.localidad + ' '+
+                       adress.calle + ' '+
+                       adress.numero;
 
     let productsCart = cart.map(p => ({
         id: p.product.id_product,
@@ -34,16 +88,19 @@ server.post('/mercadopago', async (req, res) => {
             items: productsCart,
             external_reference: `${order}`,
             back_urls: {
-                success: "http://localhost:3001/orders/mercadopago/pagos",
-                pending: "http://localhost:3001/orders/mercadopago/pagos",
-                failure: "http://localhost:3001/orders/mercadopago/pagos"
+                success: `http://localhost:3001/orders/mercadopago/pagos/${email}`,
+                pending: `http://localhost:3001/orders/mercadopago/pagos/${email}`,
+                failure: `http://localhost:3001/orders/mercadopago/pagos/${email}`,
             },
+            auto_return:'approved',
         };
+
         const response = await mercadopago.preferences.create(preference)
 
         Shoppingcart.findByPk(idOrder)
             .then((order) => {
                 order.payment_link = response.body.init_point
+                order.adress = inputAndress
                 order.save()
             })
 
@@ -54,7 +111,7 @@ server.post('/mercadopago', async (req, res) => {
     }
 })
 
-server.get("/mercadopago/pagos", (req, res) => {
+server.get("/mercadopago/pagos/:email", (req, res) => {
     const payment_id = req.query.payment_id
     const payment_status = req.query.status
     const external_reference = req.query.external_reference
@@ -91,6 +148,13 @@ server.get("/mercadopago/pagos", (req, res) => {
                     console.info('redirect success')
                     if (order.state === "fullfilled") {
                         // agregar pop up compra realizada con exito
+                        //Envío de mail
+                        const body = `<div>Hola,</div>
+                                      <div>Tu compra se ha realizado con éxito</div>
+                                      <div>El número de orden es : ${external_reference}</div>
+                                      <div><h3>artHub</h3></div>
+                                      <div>arte en su máxima expresión</div>`
+                        sendEmail('Compra exitosa',body,req.params.email)
                         return res.redirect(`http://localhost:3000/carritocomprado/${external_reference}/fullfilled`)
                     } else {
                         // agregar pop up compra en estado pendiente
