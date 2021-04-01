@@ -41,10 +41,8 @@ server.get('/:userId', async (req, res) => {
     }
 })
 
-server.delete('/:userId', async (req, res) => {
-    const { userId } = req.params
-    const { idprod } = req.body
-
+server.delete('/:userId/:idprod', async (req, res) => {
+    const { userId, idprod } = req.params
     try {
         let prod = await Wishlist.destroy({
             where: {productIdProduct: idprod, userId}
@@ -56,6 +54,7 @@ server.delete('/:userId', async (req, res) => {
         }
     
     } catch (error) {
+        console.log(error);
         res.status(500).json(error)
     }
 
