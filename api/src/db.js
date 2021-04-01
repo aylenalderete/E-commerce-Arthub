@@ -48,7 +48,8 @@ const {
 	Lineorder,
 	Shoppingcart,
 	Review,
-	Auction
+	Auction,
+	Wishlist
 } = sequelize.models;
 
 // Aca vendrian las relaciones
@@ -60,8 +61,11 @@ Image.belongsTo(Product);
 Product.belongsToMany(Category, { through: "productcategory" });
 Category.belongsToMany(Product, { through: "productcategory" });
 
-Product.belongsToMany(User, { through: "userwishprod" });
-User.belongsToMany(Product, { through: "userwishprod" });
+Product.hasMany(Wishlist);
+Wishlist.belongsTo(Product);
+
+User.hasMany(Wishlist);
+Wishlist.belongsTo(User)
 
 User.hasMany(Product, {
 	foreignKey: { allowNull: false },
