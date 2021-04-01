@@ -1,11 +1,13 @@
 const { Router } = require("express");
 const { User, Newsletter } = require("../db.js");
 const router = Router();
+const path = require("path");
 
 //Funcion de enviar email --------------------- INICIO
 
 const nodemailer = require("nodemailer");
 const { google } = require("googleapis");
+const hbs = require("nodemailer-express-handlebars");
 const CLIENT_ID =
 	"58229968491-6sjdcgkqh0uog45rabbitouniqs182ch.apps.googleusercontent.com";
 const CLIENT_SECRET = "WqmGTBctdvzddpFsmu0_MwBV";
@@ -36,11 +38,26 @@ async function sendEmail(subject, body, to) {
 			},
 		});
 
+		const handlebarOptions = {
+			viewEngine: {
+				extName: ".handlebars",
+				partialsDir: path.resolve(__dirname, "/templates"),
+				defaultLayout: false,
+			},
+			viewPath: path.resolve(
+				__dirname,
+				"/home/matias/Matias/Portfolio/ecommerce-ft09-g02/api/src/routes/templates"
+			),
+			extName: ".handlebars",
+		};
+
+		transport.use("compile", hbs(handlebarOptions));
 		const mailOptions = {
 			from: "ArtHub <andres2661991@gmail.com>",
 			to: to,
 			subject: subject,
-			html: body,
+			// html: body,
+			template: "sub",
 		};
 
 		const result = await transport.sendMail(mailOptions);
@@ -77,8 +94,7 @@ router.post("/:userId/subscribe", async (req, res) => {
 			userToSubscribe.newsletter = true;
 			userToSubscribe.save();
 			const emailSubject = "Suscription";
-			const emailBody =
-				"You've successfully subscribed to our newsletter!";
+			const emailBody = "lalalalalal";
 			const userEmail = userToSubscribe.email;
 			console.log(userEmail);
 			sendEmail(emailSubject, emailBody, userEmail);
