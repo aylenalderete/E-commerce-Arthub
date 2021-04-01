@@ -88,11 +88,14 @@ Review.belongsTo(User);
 User.hasMany(Request);
 Request.belongsTo(User);
 
-Auction.hasMany(User);
-User.belongsTo(Auction);
+Auction.belongsToMany(User, { through: "userauction" });
+User.belongsToMany(Auction, { through: "userauction" });
 
 Auction.hasMany(Image);
 Image.belongsTo(Auction);
+
+Auction.belongsToMany(Category, { through: "categoryauction" });
+Category.belongsToMany(Auction, { through: "categoryauction" });
 
 module.exports = {
 	...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');

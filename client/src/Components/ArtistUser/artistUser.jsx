@@ -36,12 +36,16 @@ export default function ArtistUser() {
                         <p className={Styles.rol}>Rol:{userData.type} </p>
                         <button className={Styles.editProfile} onClick={() => history.push(`/editarperfil/`)}>
                             Editar perfil </button>
+                        <br></br>
+                        <button className={style.editProfile} onClick={() => history.push(`/requestAuction/`)}>
+                            Solicitar subasta </button>
                     </div>
                     <div className={Styles.containerPic}>
                         <img className={Styles.userPic} src={userData.profilepic ? userData.profilepic : noProfPic} alt='User Pic' />
                         <button onClick={() => history.push('/editarperfil')} className={Styles.editBtn}>
                             <img className={Styles.edit} src={Edit} alt="" />
                         </button>
+                        
                     </div>
                 </div>
                 {/* Productos */}

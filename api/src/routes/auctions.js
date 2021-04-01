@@ -1,25 +1,24 @@
 const server = require('express').Router();
-const { Auction, Image } = require('../db.js');
+const { Auction, Image, User, Category} = require('../db.js');
 
 
 server.post('/', async (req, res) => {
-    const { title, description, state, price, idSeller, percentage, idBuyer, age, images } = req.body
+    const { title, description, state, price, userId, percentage, images, categories} = req.body
     try {
         const newAuction = await Auction.create({
             title,
             description,
             price,
             state,
-            idSeller,
-            idBuyer,
-            percentage
+            percentage,
         })
         res.json(newAuction)
 
         const img = images.map(url => ({ url }))
         const auctionImage = await Image.bulkCreate(img)
-
+        await newAuction.setUsers(userId)
         await newAuction.setImages(auctionImage.map(i => i.dataValues.id))
+        await newAuction.setCategories(categories)
     } catch (error) {
         res.status(400).json({ message: 'Error' })
     }
@@ -28,7 +27,7 @@ server.post('/', async (req, res) => {
 
 server.get('/', async (req, res) => {
     try {
-        await Auction.findOne({
+        await Auction.findAll({
             include: [
                 {
                     model: Image,
@@ -36,6 +35,16 @@ server.get('/', async (req, res) => {
                         "id",
                         "url"
                     ]
+                },
+                {
+                    model:User,
+                    attributes: [
+                        "id",
+                        "username"
+                    ]
+                },
+                {
+                    model:Category
                 }
 
             ],
