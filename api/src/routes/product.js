@@ -1,5 +1,6 @@
 const server = require('express').Router();
 const { Product, Image, Category, User, productcategory, Review } = require('../db.js');
+const { sendEmailUpdateStock } = require('./newsletter.js');
 
 // 1: Get all products 
 server.get('/', (req, res) => {
@@ -59,7 +60,12 @@ server.post('/', async function (req, res) {
 
 // 3: Edit product
 server.put("/:id", async (req, res) => {
-
+	productStock = await Product.findByPk(parseInt(req.params.id))	
+	if (productStock.dataValues.stock === 0 && req.body.stock > 0) {
+		sendEmailUpdateStock(req.params.id)
+		console.log("entra al if", req.body.stock)
+	}
+	
 	try {
 
 		await Image.destroy({ where: { productIdProduct: req.params.id }});

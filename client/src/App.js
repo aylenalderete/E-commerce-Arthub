@@ -35,7 +35,11 @@ import ShowAllUsers from './Views/ShowAllUsers/ShowAllUsers'
 import { getUserReviews } from "./Actions/reviews";
 import ShoppingCartPayment from './Components/ShoppingCart/ShoppingCartPayment';
 import ShoppingCartResponse from './Components/ShoppingCart/ShoppingCartResponse';
+<<<<<<< HEAD
 import Newsletter from "./Views/Newsletter/Newsletter";
+=======
+import Request from './Views/Request/Request';
+>>>>>>> 03b4b76d3c2b8b0724c60a098aec4d08e1e6f944
 
 function App() {
   const dispatch = useDispatch();
@@ -119,7 +123,7 @@ function App() {
         window.location = linkmp;
         return null;
       }} />
-      <Route exact path="/newsletter" component={Newsletter} />
+      <Route path="/solicitar" component={Request} />
     </div>
   );
 }

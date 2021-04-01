@@ -13,7 +13,7 @@ const CLIENT_ID =
 const CLIENT_SECRET = "WqmGTBctdvzddpFsmu0_MwBV";
 const REDIRECT_URI = "https://developers.google.com/oauthplayground";
 const REFRESH_TOKEN =
-	"1//04VjdAu7ftOspCgYIARAAGAQSNwF-L9Irxx8NT_J7Zbe-8ahhQWzuEL5JdKgNFPc3cskLeZzmAOHquYKdxgMC0gv53CChhMqLrao";
+	"1//04fZsdreosgbrCgYIARAAGAQSNwF-L9IrqHuSDMvBIGRnXIkUilPVz99wzLB613MJ_AIIR87ry3-JOW-VXn1YrMuqnEbtPh16jA0";
 
 const oAuth2Client = new google.auth.OAuth2(
 	CLIENT_ID,
@@ -46,7 +46,7 @@ async function sendEmail(subject, body, to) {
 			},
 			viewPath: path.resolve(
 				__dirname,
-				"/home/matias/Matias/Portfolio/ecommerce-ft09-g02/api/src/routes/templates"
+				"/home/aylen/Escritorio/henry/ecommerce-ft09-g02/api/src/routes/templates"
 			),
 			extName: ".handlebars",
 		};
@@ -137,4 +137,13 @@ router.post("/:userId/unsubscribe", async (req, res) => {
 		res.json({ message: "Unable" });
 	}
 });
+
+//cuando se renueva el stock de un producto, 
+//manda un email a los que tienen el producto en su wishlist
+
+
+
+
+
+
 module.exports = router;

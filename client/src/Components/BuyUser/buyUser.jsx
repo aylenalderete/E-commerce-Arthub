@@ -77,7 +77,7 @@ export default function BuyUser() {
                         </div>
                         : 
                         <div>
-                            <p>¡Estas suscripto a nuestro newsletter!, deseas desuscribirte?</p> 
+                            <p>¡Estas suscripto a nuestro newsletter! deseas desuscribirte?</p> 
                             <a className={table.links} onClick={unsuscribeNewsletter}>click aqui</a>
                         </div>
                         }

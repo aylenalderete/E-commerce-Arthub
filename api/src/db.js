@@ -48,8 +48,9 @@ const {
 	Lineorder,
 	Shoppingcart,
 	Review,
-	Auction,
 	Newsletter,
+	Request,
+	Auction
 } = sequelize.models;
 
 // Aca vendrian las relaciones
@@ -87,6 +88,9 @@ Review.belongsTo(User);
 
 Newsletter.belongsToMany(User, { through: "usernewsletter" });
 User.belongsToMany(Newsletter, { through: "usernewsletter" });
+
+User.hasMany(Request);
+Request.belongsTo(User);
 
 Auction.hasMany(User);
 User.belongsTo(Auction);
