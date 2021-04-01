@@ -9,49 +9,51 @@ const {
 	Shoppingcart,
 	Lineorder,
 	Product,
-	Review
+	Review,
+	Wishlist
 } = require("../db.js");
 // retorna compras realizadas a un determinado artista
 server.get("/compras/:iduser", (req, res) => {
 
 	try {
-		
+
 		let iduser = req.params.iduser;
 		Shoppingcart.findAll({
-			where: {state: 'fullfilled'},
+			where: { state: 'fullfilled' },
 			include: [{
 				model: Lineorder,
 				include: [{
 					model: Product,
 					include: [{
-						model: User, 
-						where: {id: iduser}
+						model: User,
+						where: { id: iduser }
 					}]
 				}]
 			}]
 		})
-		.then((cart)=>{
-			let finalCart = cart.map(order => ({
-				id_order: order.dataValues.id_order,
-				state: order.dataValues.state,
-				total_price: order.dataValues.total_price,
-				payment_status: order.dataValues.payment_status,
-				createdAt: order.dataValues.createdAt,
-				userId: order.dataValues.userId,
-				lineorders: order.dataValues.lineorders.map(l => ({
-					unit_price: l.dataValues.unit_price,
-					quantity: l.dataValues.quantity,
-					product: {title: l.dataValues.product?.title,
-						 stock: l.dataValues.product?.stock
+			.then((cart) => {
+				let finalCart = cart.map(order => ({
+					id_order: order.dataValues.id_order,
+					state: order.dataValues.state,
+					total_price: order.dataValues.total_price,
+					payment_status: order.dataValues.payment_status,
+					createdAt: order.dataValues.createdAt,
+					userId: order.dataValues.userId,
+					lineorders: order.dataValues.lineorders.map(l => ({
+						unit_price: l.dataValues.unit_price,
+						quantity: l.dataValues.quantity,
+						product: {
+							title: l.dataValues.product?.title,
+							stock: l.dataValues.product?.stock
 						}
-					
-				}))
-			}));
 
-			return res.json(finalCart)
+					}))
+				}));
 
-		})
-		
+				return res.json(finalCart)
+
+			})
+
 
 	} catch (error) {
 		res.json(error)
@@ -96,6 +98,7 @@ server.get("/", (req, res) => {
 				"logType"
 			],
 		}).then((result) => {
+
 			res.json(result);
 		});
 	}
@@ -206,6 +209,7 @@ server.get("/:id", (req, res) => {
 			"state",
 		],
 	}).then((result) => {
+
 		res.json(result);
 	});
 });
@@ -451,6 +455,11 @@ server.post("/signin/algo", async (req, res, next) => {
 						expiresIn: 60 * 60 * 24,
 					});
 					user.password = "";
+					user.dataValues.wishlist = await Wishlist.findAll({
+						attributes: ['productIdProduct'],
+						where: { userId: user.id },
+					});
+
 					res.json({
 						user: user,
 						auth: true,
@@ -471,8 +480,13 @@ server.post("/signin/algo", async (req, res, next) => {
 
 server.post("/userdata/token", verifyToken, (req, res, next) => {
 	User.findByPk(req.userId)
-		.then((user) => {
+		.then(async (user) => {
 			user.password = 0;
+			user.dataValues.wishlist = await Wishlist.findAll({
+				attributes: ['productIdProduct'],
+				where: { userId: req.userId },
+			});
+
 			res.json(user);
 		})
 		.catch((err) => {

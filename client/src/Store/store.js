@@ -36,6 +36,7 @@ const initialState = {
         birth: "",
         type: "",
         state: "",
+        wishlist: []
     },
     //carousel states
     carouselActive: 1,
@@ -102,10 +103,10 @@ const reducer = function (state = initialState, action) {
             }
 
         case 'UPDATE_PRODUCT_REVIEW':
-             return {
-                 ...state,
-              userReviews: action.payload
-             }
+            return {
+                ...state,
+                userReviews: action.payload
+            }
 
         case "GET_PRODUCTS":
             if (state.filteredProducts.length > 0 && !state.search[0]) {
@@ -282,7 +283,7 @@ const reducer = function (state = initialState, action) {
                 isOpenDeleteProd: action.payload,
             };
 
-        
+
 
         case "PRODUCT_ID":
             return {
@@ -296,12 +297,12 @@ const reducer = function (state = initialState, action) {
                 userOrders: action.payload,
             };
 
-        
 
-        
-       
-        
-        
+
+
+
+
+
 
         case "RESET_CAROUSEL":
             return {
@@ -410,6 +411,24 @@ const reducer = function (state = initialState, action) {
             return {
                 ...state,
                 linkmp: action.payload
+            }
+
+        case 'ADD_FAV':
+            return {
+                ...state,
+                userData: {
+                    ...state.userData,
+                    wishlist: [...state.userData.wishlist, { productIdProduct: action.payload }]
+                }
+            }
+
+        case 'REMOVE_FAV':
+            return {
+                ...state,
+                userData: {
+                    ...state.userData,
+                    wishlist: state.userData.wishlist.filter(p => p.productIdProduct !== action.payload)
+                }
             }
 
         default:

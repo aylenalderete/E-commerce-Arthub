@@ -10,6 +10,7 @@ import getproductid from "../../Actions/getproductid";
 import cart from "../../Images/shopping-cart.svg";
 import { addItem, getOrCreateCart } from "../../Actions/shoppingCart"
 import { useHistory } from 'react-router';
+import { addFav, removeFav } from '../../Actions/wishlist';
 
 function ArtCard({ name, pic, artist, id, idArtist, price, stock, setFlag }) {
 
@@ -39,6 +40,15 @@ function ArtCard({ name, pic, artist, id, idArtist, price, stock, setFlag }) {
       : dispatch(deleteproduct(false));
     setProductId(id);
     dispatch(getproductid(id));
+  }
+
+  // Wishlist
+  function handleAddFav(idprod){
+    dispatch(addFav(idprod, userData.id))
+  }
+
+  function handleRemoveFav(idprod){
+    dispatch(removeFav(idprod, userData.id))
   }
 
   // if user is unlogged or buyer type
@@ -73,6 +83,20 @@ function ArtCard({ name, pic, artist, id, idArtist, price, stock, setFlag }) {
               ></img>
             </Link>
           )}
+
+          {
+            userType === "user" && !userData.wishlist.find(p => p.productIdProduct === id) &&
+            <button className={style.btnFav} onClick={() => handleAddFav(id)}>
+              <i  class="far fa-heart"></i>
+            </button>
+          }
+           {
+            userType === "user" && userData.wishlist.find(p => p.productIdProduct === id) &&
+            <button className={`${style.btnFav} ${style.pink}`} onClick={() => handleRemoveFav(id)}>
+              <i  class="fas fa-heart"></i>
+            </button>
+          }
+
         </div>
       </div>
     );

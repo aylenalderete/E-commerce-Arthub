@@ -160,6 +160,16 @@ function Collection() {
           ) : (
             <></>
           )}
+          {userType !== "admin" ? (
+            <Link to="/favoritos">
+              <button className={style.btnFav}>
+              <i  class="fas fa-heart"></i>
+              <span>favoritos</span>
+              </button>
+            </Link>
+          ) : (
+            <></>
+          )}
         </div>
 
         <div className={style.container}>
