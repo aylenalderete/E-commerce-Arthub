@@ -35,6 +35,7 @@ import ShowAllUsers from './Views/ShowAllUsers/ShowAllUsers'
 import { getUserReviews } from "./Actions/reviews";
 import ShoppingCartPayment from './Components/ShoppingCart/ShoppingCartPayment';
 import ShoppingCartResponse from './Components/ShoppingCart/ShoppingCartResponse';
+import Request from './Views/Request/Request';
 
 function App() {
   const dispatch = useDispatch();
@@ -118,6 +119,7 @@ function App() {
         window.location = linkmp;
         return null;
       }} />
+      <Route path="/solicitar" component={Request} />
     </div>
   );
 }
