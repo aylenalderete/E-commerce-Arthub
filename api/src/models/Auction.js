@@ -7,14 +7,6 @@ module.exports = (sequelize) => {
             autoIncrement: true,
             primaryKey: true,
         },
-        idSeller: {
-            type: DataTypes.INTEGER,
-            allowNull:false
-        },
-        idBuyer:{
-            type: DataTypes.INTEGER,
-            allowNull:false
-        },
         title: {
             type: DataTypes.STRING,
             allowNull: false,
@@ -28,7 +20,7 @@ module.exports = (sequelize) => {
             allowNull: false,
         },
         state: {
-            type: DataTypes.ENUM(['subastado', 'proceso']),
+            type: DataTypes.ENUM(['subastado', 'subastando', 'pendiente']),
             allowNull: false,
         },
         percentage: {

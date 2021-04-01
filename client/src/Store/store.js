@@ -70,6 +70,11 @@ const initialState = {
     // link to mp
     linkmp: 'http://localhost:3000',
 
+    //AUCTION
+    auctions: [],
+    createAuction: false,
+    deleteAuction: false,
+
 
 };
 
@@ -410,6 +415,24 @@ const reducer = function (state = initialState, action) {
             return {
                 ...state,
                 linkmp: action.payload
+            }
+
+        case 'GET_AUCTIONS':
+            return {
+                ...state,
+                auctions: action.payload
+            }
+
+        case 'POP_UP_CREATE_AUCTION':
+            return {
+                ...state,
+                createAuction: action.payload
+            }
+
+        case 'POP_UP_DELETE_AUCTION':
+            return {
+                ...state,
+                deleteAuction:action.payload
             }
 
         default:
