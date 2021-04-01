@@ -86,13 +86,13 @@ function ArtCard({ name, pic, artist, id, idArtist, price, stock, setFlag }) {
 
           {
             userType === "user" && !userData.wishlist.find(p => p.productIdProduct === id) &&
-            <button onClick={() => handleAddFav(id)}>
+            <button className={style.btnFav} onClick={() => handleAddFav(id)}>
               <i  class="far fa-heart"></i>
             </button>
           }
            {
             userType === "user" && userData.wishlist.find(p => p.productIdProduct === id) &&
-            <button onClick={() => handleRemoveFav(id)}>
+            <button className={`${style.btnFav} ${style.pink}`} onClick={() => handleRemoveFav(id)}>
               <i  class="fas fa-heart"></i>
             </button>
           }
