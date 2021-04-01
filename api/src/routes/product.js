@@ -62,8 +62,7 @@ server.post('/', async function (req, res) {
 server.put("/:id", async (req, res) => {
 	productStock = await Product.findByPk(parseInt(req.params.id))	
 	if (productStock.dataValues.stock === 0 && req.body.stock > 0) {
-		sendEmailUpdateStock(req.params.id)
-		console.log("entra al if", req.body.stock)
+		 await sendEmailUpdateStock(req.params.id)
 	}
 	
 	try {

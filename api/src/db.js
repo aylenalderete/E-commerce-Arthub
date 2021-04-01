@@ -52,7 +52,6 @@ const {
 	Request,
 	Auction,
 	Wishlist,
-	Request
 } = sequelize.models;
 
 // Aca vendrian las relaciones
