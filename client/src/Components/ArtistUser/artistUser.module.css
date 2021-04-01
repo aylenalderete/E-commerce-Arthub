@@ -1,0 +1,172 @@
+.mainContainer{
+    width:100%;
+    display: flex;
+    flex-direction: row;
+}
+.wrapper{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-top: 50px;
+    align-items: center;
+    min-height: 100vh;
+   
+}
+
+.userDesc{
+    display: flex;
+    width:90%;
+    justify-content: space-between;
+}
+.userInfo{
+    display:flex;
+    width:50%;
+    flex-direction: column;
+    align-self: flex-start;
+   
+    justify-content: center;
+}
+
+.containerPic{
+    width: 220px;
+    height: 220px;
+    display: flex;
+    justify-content: center;
+    position:relative;
+    border-radius: 50%;
+    align-items: center;
+
+    
+}
+
+.userPic{
+    width: 220px;
+    height: 220px;
+    object-fit: contain;
+    border-radius: 50%;
+    
+}
+
+.name{
+    font-size: 3rem;
+    line-height: 1.7em;
+    margin:0;
+    margin-bottom: 10px;
+    border-bottom: 2px solid white;
+}
+
+.rol{
+    font-size: 1.2rem;
+}
+
+.editProfile{
+    background-color: transparent;
+    border: 1px solid white;
+    color:white;
+    padding:10px;
+    width:30%;
+    font-size: 1rem;
+    justify-content: flex-end;
+    cursor:pointer;
+
+}
+.editProfile:focus{
+    outline:none;
+}
+
+.editBtn{
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
+    background-color: rgba(0, 0, 0, 0.863);
+    display: none;
+    justify-content: center;
+    border:1px solid white;
+    position: absolute;
+    border-radius: 50%;
+    
+    cursor:pointer;
+    
+}
+
+.containerPic:hover button{
+        display: flex;
+        animation: fadein ease 0.5s;
+        animation-fill-mode: forwards;
+        
+}
+
+.editBtn:focus{
+    outline: none;
+}
+
+.edit{
+    align-self: center;
+    width: 30px;
+    height: 30px;
+    object-fit: contain;
+}
+
+.products{
+    width:90%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    height: auto;
+    border-top: 1px solid white;
+    margin:50px;
+}
+.title{
+    font-size:2rem;
+}
+.link{
+    margin-top:20px;
+    align-self: flex-end;
+    font-size: 1.2rem;
+    color:#F427EC
+}
+
+.addProduct{
+    width:35px;
+    height: 35px;
+}
+
+.alignTitle{
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.linkAdd{
+    display:flex;
+    align-items: center;
+    text-decoration: none;
+
+}
+
+.addText{
+    display: none;
+    font-size: 0.9em;
+}
+
+.linkAdd:hover .addText{
+
+    
+    display: block;
+    animation: fadein ease 0.5s;
+    animation-fill-mode: forwards;
+    
+}
+
+@keyframes fadein {
+    0% {
+        opacity:0;
+        color:transparent;
+    }
+    100% {
+        opacity:1;
+        color: #F427EC;
+    }
+  }
+

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import NavBar from '../../Components/NavBar/NavBar';
 import { Link, useHistory } from 'react-router-dom';
 import style from '../AdminUser/adminuser.module.css';
@@ -7,6 +7,7 @@ import NotFound from '../Assets/profPic.jpg';
 import Edit from '../../Images/edit.svg';
 import getUserOrders from '../../Actions/getUserOrders';
 import table from './buyUser.module.css';
+import axios from 'axios';
 
 //get a users id y agarrar el user por el redux store
 export default function BuyUser() {
@@ -24,7 +25,39 @@ export default function BuyUser() {
     //get user orders
     const userOrders = useSelector(state => state.userOrders);
 
+    //newsletter
+    const suscribeNewsletter = () => {
+    var answer = window.confirm("Estás seguro?");
+    if (answer) {
+        axios.post(`http://localhost:3001/newsletter/${userData.id}/subscribe`)
+        .then((res) => {
+            console.log({type: 'SIGN_IN', payload: {...userData, newsletter: true}})
+            dispatch({type: 'SIGN_IN_REFRESH', payload: {...userData, newsletter: true}})
+            console.log(res.data)
+        })
+        .catch((error) => {
+            console.log(error)
+        })
+    }   
+    }
+
+    const unsuscribeNewsletter = () => {
+        var answer = window.confirm("Estás seguro?");
+        if (answer) {
+            axios.post(`http://localhost:3001/newsletter/${userData.id}/unsubscribe`)
+            .then((res) => {
+                console.log({type: 'SIGN_IN', payload: {...userData, newsletter: false}})
+                dispatch({type: 'SIGN_IN_REFRESH', payload: {...userData, newsletter: false}})
+                console.log(res.data)
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+        }   
+        }
+
     let history = useHistory()
+ 
     return (
         <div className={style.mainContainer}>
             <NavBar renderTop={false} />
@@ -37,7 +70,17 @@ export default function BuyUser() {
                            {userData.birth? <p>Cumpleaños: {userData.birth && userData.birth.slice(5, 10)} </p> : null}
                             <p>Mail: {userData.email} </p>
                         </div>
-
+                        { !userData.newsletter ? 
+                        <div>
+                            <p>Te gustaría suscribirte a nuestro newsletter?</p> 
+                            <a className={table.links} onClick={suscribeNewsletter}>click aqui</a>
+                        </div>
+                        : 
+                        <div>
+                            <p>¡Estas suscripto a nuestro newsletter! deseas desuscribirte?</p> 
+                            <a className={table.links} onClick={unsuscribeNewsletter}>click aqui</a>
+                        </div>
+                        }
                         <p>Quieres ser artista y vender tus obras? Solicitalo <Link className={table.links} to='/editProfile'>aquí</Link></p>
 
                         <button className={table.btnEditProfile} onClick={() => history.push(`/editarperfil/`)}>

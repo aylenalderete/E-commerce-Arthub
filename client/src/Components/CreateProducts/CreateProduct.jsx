@@ -124,7 +124,7 @@ function CreateProduct(props) {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setProduct({ ...product, [name]: value, userId: 3 });
+        setProduct({ ...product, [name]: value, userId: loggedUser.id });
         setErrors(validate({
             ...product,
             [name]: value

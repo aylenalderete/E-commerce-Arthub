@@ -1,11 +1,13 @@
 const { Router } = require("express");
-const { User, Newsletter } = require("../db.js");
+const { User, Newsletter, Wishlist ,Product} = require("../db.js");
 const router = Router();
+const path = require("path");
 
 //Funcion de enviar email --------------------- INICIO
 
 const nodemailer = require("nodemailer");
 const { google } = require("googleapis");
+const hbs = require("nodemailer-express-handlebars");
 const CLIENT_ID =
 	"58229968491-6sjdcgkqh0uog45rabbitouniqs182ch.apps.googleusercontent.com";
 const CLIENT_SECRET = "WqmGTBctdvzddpFsmu0_MwBV";
@@ -36,11 +38,26 @@ async function sendEmail(subject, body, to) {
 			},
 		});
 
+		const handlebarOptions = {
+			viewEngine: {
+				extName: ".handlebars",
+				partialsDir: path.resolve(__dirname, "/templates"),
+				defaultLayout: false,
+			},
+			viewPath: path.resolve(
+				__dirname,
+				"/home/aylen/Escritorio/henry/ecommerce-ft09-g02/api/src/routes/templates"
+			),
+			extName: ".handlebars",
+		};
+
+		transport.use("compile", hbs(handlebarOptions));
 		const mailOptions = {
 			from: "ArtHub <andres2661991@gmail.com>",
 			to: to,
 			subject: subject,
-			html: body,
+			// html: body,
+			template: "sub",
 		};
 
 		const result = await transport.sendMail(mailOptions);
@@ -64,6 +81,34 @@ router.get("/", (req, res) => {
 	}
 });
 
+const sendEmailUpdateStock = async (idProduct) => {
+	const search = await Wishlist.findAll ({
+		include: [{
+			model: Product,
+			where: {
+				id_Product: idProduct
+			}
+		}]
+	})
+	console.log("-------------------------")
+	if(search&&search.length>0){console.log(search)}
+	console.log("-------------------------")
+
+
+}
+//Devuelve todos los newsletter
+router.get("/prueba", async (req, res) => {
+	try {
+		await sendEmailUpdateStock(1)
+		res.json("lalalalalal")
+		
+	} catch (error) {
+		console.log(error)
+		res.json({ message: "Could not get newsletters" });
+	}
+});
+
+
 //Suscribe al user al Newsletter
 router.post("/:userId/subscribe", async (req, res) => {
 	const { userId } = req.params;
@@ -77,8 +122,7 @@ router.post("/:userId/subscribe", async (req, res) => {
 			userToSubscribe.newsletter = true;
 			userToSubscribe.save();
 			const emailSubject = "Suscription";
-			const emailBody =
-				"You've successfully subscribed to our newsletter!";
+			const emailBody = "lalalalalal";
 			const userEmail = userToSubscribe.email;
 			console.log(userEmail);
 			sendEmail(emailSubject, emailBody, userEmail);
@@ -121,4 +165,10 @@ router.post("/:userId/unsubscribe", async (req, res) => {
 		res.json({ message: "Unable" });
 	}
 });
+
+//Cuando se renueva el stock de un producto, 
+//manda un email a los que tienen el producto en su wishlist
+
+
+module.exports = { sendEmailUpdateStock }
 module.exports = router;

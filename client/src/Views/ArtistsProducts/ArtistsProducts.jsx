@@ -9,15 +9,16 @@ import getArtistsProducts from '../../Actions/getArtistsProducts'
 function ArtistsProducts() {
 
     const artistsProducts = useSelector((state) => state.artistsProducts)
+    const userId = useSelector(state => state.userData.id);
 
     const dispatch = useDispatch()
 
     useEffect(() => {
-        dispatch(getArtistsProducts(1))
+        dispatch(getArtistsProducts(userId))
     }, []);
 
     console.log(artistsProducts)
-
+  
     return (
         <div className = {style.navContainer}>
             <NavBar />
@@ -40,6 +41,7 @@ function ArtistsProducts() {
             
         </div>
     )
+   
 }
 
 export default ArtistsProducts
