@@ -49,6 +49,9 @@ const {
 	Shoppingcart,
 	Review,
 	Newsletter,
+	Auction,
+	Wishlist,
+	Request,
 } = sequelize.models;
 
 // Aca vendrian las relaciones
@@ -60,8 +63,11 @@ Image.belongsTo(Product);
 Product.belongsToMany(Category, { through: "productcategory" });
 Category.belongsToMany(Product, { through: "productcategory" });
 
-Product.belongsToMany(User, { through: "userwishprod" });
-User.belongsToMany(Product, { through: "userwishprod" });
+Product.hasMany(Wishlist);
+Wishlist.belongsTo(Product);
+
+User.hasMany(Wishlist);
+Wishlist.belongsTo(User);
 
 User.hasMany(Product, {
 	foreignKey: { allowNull: false },
@@ -89,6 +95,15 @@ Review.belongsTo(User);
 
 Newsletter.belongsToMany(User, { through: "usernewsletter" });
 User.belongsToMany(Newsletter, { through: "usernewsletter" });
+
+User.hasMany(Request);
+Request.belongsTo(User);
+
+Auction.hasMany(User);
+User.belongsTo(Auction);
+
+Auction.hasMany(Image);
+Image.belongsTo(Auction);
 
 module.exports = {
 	...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');

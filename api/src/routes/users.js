@@ -9,8 +9,56 @@ const {
 	Shoppingcart,
 	Lineorder,
 	Product,
-	Review
+	Review,
+	Wishlist
 } = require("../db.js");
+// retorna compras realizadas a un determinado artista
+server.get("/compras/:iduser", (req, res) => {
+
+	try {
+
+		let iduser = req.params.iduser;
+		Shoppingcart.findAll({
+			where: { state: 'fullfilled' },
+			include: [{
+				model: Lineorder,
+				include: [{
+					model: Product,
+					include: [{
+						model: User,
+						where: { id: iduser }
+					}]
+				}]
+			}]
+		})
+			.then((cart) => {
+				let finalCart = cart.map(order => ({
+					id_order: order.dataValues.id_order,
+					state: order.dataValues.state,
+					total_price: order.dataValues.total_price,
+					payment_status: order.dataValues.payment_status,
+					createdAt: order.dataValues.createdAt,
+					userId: order.dataValues.userId,
+					lineorders: order.dataValues.lineorders.map(l => ({
+						unit_price: l.dataValues.unit_price,
+						quantity: l.dataValues.quantity,
+						product: {
+							title: l.dataValues.product?.title,
+							stock: l.dataValues.product?.stock
+						}
+
+					}))
+				}));
+
+				return res.json(finalCart)
+
+			})
+
+
+	} catch (error) {
+		res.json(error)
+	}
+})
 
 // 1: Get all users
 // No password
@@ -50,6 +98,7 @@ server.get("/", (req, res) => {
 				"logType"
 			],
 		}).then((result) => {
+
 			res.json(result);
 		});
 	}
@@ -160,66 +209,67 @@ server.get("/:id", (req, res) => {
 			"state",
 		],
 	}).then((result) => {
+
 		res.json(result);
 	});
 });
 
 server.put("/:id", async (req, res) => {
-	
+
 	var finder = await User.findOne({
-    where: {
-      username: req.body.username,
-    },
-  });
-  if(finder && req.params.id == finder.dataValues.id){
-	  finder = ''
-  }
-  if (finder) {
-	  
-    return res.json({
-      msgUsername: "El usuario ya existe",
-    });
-}
+		where: {
+			username: req.body.username,
+		},
+	});
+	if (finder && req.params.id == finder.dataValues.id) {
+		finder = ''
+	}
+	if (finder) {
+
+		return res.json({
+			msgUsername: "El usuario ya existe",
+		});
+	}
 	if (!finder) {
 		var emailFinder = await User.findOne({
 			where: {
 				email: req.body.email,
 			},
 		});
-		 if (emailFinder && req.params.id == emailFinder.dataValues.id) {
-       emailFinder = "";
-     }
+		if (emailFinder && req.params.id == emailFinder.dataValues.id) {
+			emailFinder = "";
+		}
 		if (emailFinder) {
-			
+
 			return res.json({
 				msgEmail: "Este email ya esta registrado",
 			});
 		}
-		
-		if (!emailFinder) {
-	try {
 
-		let updated = await User.update(
-			{
-				username: req.body.username,
-				name: req.body.name,
-				lastname: req.body.lastname,
-				profilepic: req.body.profilepic,
-				email: req.body.email,
-				birth: req.body.birth,
-				type: req.body.type,
-				state: req.body.state,
-			},
-			{
-				where: { id: req.params.id },
+		if (!emailFinder) {
+			try {
+
+				let updated = await User.update(
+					{
+						username: req.body.username,
+						name: req.body.name,
+						lastname: req.body.lastname,
+						profilepic: req.body.profilepic,
+						email: req.body.email,
+						birth: req.body.birth,
+						type: req.body.type,
+						state: req.body.state,
+					},
+					{
+						where: { id: req.params.id },
+					}
+				);
+				res.json("User succesfully modified");
+			} catch (err) {
+				console.log(err);
 			}
-		);
-		res.json("User succesfully modified");
-	} catch (err) {
-		console.log(err);
+		}
 	}
-}
-}
 });
 
 
@@ -230,7 +280,7 @@ server.put("/softdelete/:id", async (req, res) => {
 	try {
 		let updated = await User.update(
 			{
-				id:req.body.id,
+				id: req.body.id,
 				username: null,
 				email: null,
 				state: 'deleted',
@@ -405,6 +455,11 @@ server.post("/signin/algo", async (req, res, next) => {
 						expiresIn: 60 * 60 * 24,
 					});
 					user.password = "";
+					user.dataValues.wishlist = await Wishlist.findAll({
+						attributes: ['productIdProduct'],
+						where: { userId: user.id },
+					});
+
 					res.json({
 						user: user,
 						auth: true,
@@ -425,8 +480,13 @@ server.post("/signin/algo", async (req, res, next) => {
 
 server.post("/userdata/token", verifyToken, (req, res, next) => {
 	User.findByPk(req.userId)
-		.then((user) => {
+		.then(async (user) => {
 			user.password = 0;
+			user.dataValues.wishlist = await Wishlist.findAll({
+				attributes: ['productIdProduct'],
+				where: { userId: req.userId },
+			});
+
 			res.json(user);
 		})
 		.catch((err) => {
@@ -499,26 +559,26 @@ server.delete("/order/:idorder/lineorder/:idlineorder", async (req, res) => {
 
 //Retorna las reviews del usuario
 server.get("/:id/reviews", async (req, res) => {
-    const { id } = req.params;
-    try {
-        const userReviews = await Review.findAll({
-            include: [
-                {
-                    model: User,
-                    where: { id },
-                },
-            ],
-        });
-        console.log(userReviews);
-        if (userReviews) {
-            return res.json(userReviews);
-        } else {
-            res.json({ message: "This user has no reviews" });
-        }
-    } catch (error) {
-        console.log(error);
-        res.status(400).json({ message: "Error" });
-    }
+	const { id } = req.params;
+	try {
+		const userReviews = await Review.findAll({
+			include: [
+				{
+					model: User,
+					where: { id },
+				},
+			],
+		});
+		console.log(userReviews);
+		if (userReviews) {
+			return res.json(userReviews);
+		} else {
+			res.json({ message: "This user has no reviews" });
+		}
+	} catch (error) {
+		console.log(error);
+		res.status(400).json({ message: "Error" });
+	}
 });
 
 // Crea carrito en base de datos
@@ -624,8 +684,8 @@ server.post('/login/facebook', async (req, res) => {
 
 	const { username, email, userID, logType } = req.body;
 	const compare = async (userID, passwordDataBase) => {
-    return bcrypt.compare(userID, passwordDataBase);
-  };
+		return bcrypt.compare(userID, passwordDataBase);
+	};
 
 	var finder = await User.findOne({
 		where: {
@@ -634,65 +694,65 @@ server.post('/login/facebook', async (req, res) => {
 		}
 	})
 
-	if(finder){
+	if (finder) {
 		const comparer = await compare(userID, finder.password);
 
-				if (comparer) {
-					//Verify if password is correct
+		if (comparer) {
+			//Verify if password is correct
 
-					//create token
-					let token = jwt.sign({ id: finder.id }, "secret_key", {
-						expiresIn: 60 * 60 * 24,
-					});
-					finder.password = "";
-					res.json({
-						user: finder,
-						auth: true,
-						token,
-					});
-				} else {
-					res.json("acceso denegado");
-				}
-			}
+			//create token
+			let token = jwt.sign({ id: finder.id }, "secret_key", {
+				expiresIn: 60 * 60 * 24,
+			});
+			finder.password = "";
+			res.json({
+				user: finder,
+				auth: true,
+				token,
+			});
+		} else {
+			res.json("acceso denegado");
+		}
+	}
 	else {
 
 
 		const crypter = async (password) => {
-      const salt = await bcrypt.genSalt(10);
-      return bcrypt.hash(password, salt);
-    };
+			const salt = await bcrypt.genSalt(10);
+			return bcrypt.hash(password, salt);
+		};
 
-    const hashPass = await crypter(userID);
+		const hashPass = await crypter(userID);
 
-		
+
 		console.log('vamos a crear')
 		const newUser = await User.create({
-      username: req.body.name,
-      name: req.body.name,
-      profilepic: req.body.picture.data.url,
-      email: req.body.email,
-      password: hashPass,
-      type: 'user',
-	  logType: 'facebook',
-      state: 'approved',
-    })
-	
-	const token = jwt.sign({ id: newUser.id }, "secret_key", {
-						expiresIn: 60 * 60 * 24,
-					})
+			username: req.body.name,
+			name: req.body.name,
+			profilepic: req.body.picture.data.url,
+			email: req.body.email,
+			password: hashPass,
+			type: 'user',
+			logType: 'facebook',
+			state: 'approved',
+		})
 
-	newUser.password = ''
-	res.json({
-		user: newUser,
-		auth: true,
-		token: token
-	})
+		const token = jwt.sign({ id: newUser.id }, "secret_key", {
+			expiresIn: 60 * 60 * 24,
+		})
+
+		newUser.password = ''
+		res.json({
+			user: newUser,
+			auth: true,
+			token: token
+		})
 	}
 
 })
 
 server.post("/login/google", async (req, res) => {
-  
+
 	const userID = req.body.Aa;
 	const email = req.body.profileObj.email;
 	const username = req.body.profileObj.familyName + "" + req.body.profileObj.givenName;
@@ -700,66 +760,69 @@ server.post("/login/google", async (req, res) => {
 	const name = req.body.profileObj.givenName;
 	const lastname = req.body.profileObj.familyName;
 
-  const compare = async (userID, passwordDataBase) => {
-    return bcrypt.compare(userID, passwordDataBase);
-  };
+	const compare = async (userID, passwordDataBase) => {
+		return bcrypt.compare(userID, passwordDataBase);
+	};
 
-  var finder = await User.findOne({
-    where: {
-      logType: "google",
-      email: email,
-    },
-  });
+	var finder = await User.findOne({
+		where: {
+			logType: "google",
+			email: email,
+		},
+	});
 
-  if (finder) {
-    const comparer = await compare(userID, finder.password);
+	if (finder) {
+		const comparer = await compare(userID, finder.password);
 
-    if (comparer) {
-      //Verify if password is correct
+		if (comparer) {
+			//Verify if password is correct
 
-      //create token
-      let token = jwt.sign({ id: finder.id }, "secret_key", {
-        expiresIn: 60 * 60 * 24,
-      });
-      finder.password = "";
-      res.json({
-        user: finder,
-        auth: true,
-        token,
-      });
-    } else {
-      res.json("acceso denegado");
-    }
-  } else {
-    const crypter = async (password) => {
-      const salt = await bcrypt.genSalt(10);
-      return bcrypt.hash(password, salt);
-    };
+			//create token
+			let token = jwt.sign({ id: finder.id }, "secret_key", {
+				expiresIn: 60 * 60 * 24,
+			});
+			finder.password = "";
+			res.json({
+				user: finder,
+				auth: true,
+				token,
+			});
+		} else {
+			res.json("acceso denegado");
+		}
+	} else {
+		const crypter = async (password) => {
+			const salt = await bcrypt.genSalt(10);
+			return bcrypt.hash(password, salt);
+		};
 
-    const hashPass = await crypter(userID);
+		const hashPass = await crypter(userID);
 
-    console.log("vamos a crear");
-    const newUser = await User.create({
-      username: username,
-      name: name,
-      profilepic: pic,
-      email: email,
-      password: hashPass,
-      type: "user",
-      logType: "google",
-      state: "approved",
-    });
+		console.log("vamos a crear");
+		const newUser = await User.create({
+			username: username,
+			name: name,
+			profilepic: pic,
+			email: email,
+			password: hashPass,
+			type: "user",
+			logType: "google",
+			state: "approved",
+		});
 
-    const token = jwt.sign({ id: newUser.id }, "secret_key", {
-      expiresIn: 60 * 60 * 24,
-    });
+		const token = jwt.sign({ id: newUser.id }, "secret_key", {
+			expiresIn: 60 * 60 * 24,
+		});
 
-    newUser.password = "";
-    res.json({
-      user: newUser,
-      auth: true,
-      token: token,
-    });
-  }
+		newUser.password = "";
+		res.json({
+			user: newUser,
+			auth: true,
+			token: token,
+		});
+	}
 });
+
+
+
 module.exports = server;

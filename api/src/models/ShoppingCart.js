@@ -37,6 +37,9 @@ module.exports = (sequelize) => {
                     isUrl: true
                 }
             },
+            adress:{
+                type: DataTypes.STRING
+            }
         },
 
     );
