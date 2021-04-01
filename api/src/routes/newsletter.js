@@ -2,7 +2,6 @@ const { Router } = require("express");
 const { User, Newsletter } = require("../db.js");
 const router = Router();
 const path = require("path");
-
 //Funcion de enviar email --------------------- INICIO
 
 const nodemailer = require("nodemailer");
@@ -70,10 +69,12 @@ async function sendEmail(subject, body, to) {
 
 //Funcion de enviar email --------------------- FINAL
 
+//RUTAS:
+
 //Devuelve todos los newsletter
 router.get("/", (req, res) => {
 	try {
-		Newsletter.findAll().then((result) => {
+		Newsletter.findAll({ include: [{ model: User }] }).then((result) => {
 			res.json(result);
 		});
 	} catch (error) {
@@ -86,18 +87,25 @@ router.post("/:userId/subscribe", async (req, res) => {
 	const { userId } = req.params;
 	try {
 		const userToSubscribe = await User.findByPk(userId);
-
+		if (!userToSubscribe) {
+			return res.json({ message: "Could not found user" });
+		}
 		if (
 			!userToSubscribe.newsletter ||
 			userToSubscribe.newsletter === false
 		) {
 			userToSubscribe.newsletter = true;
 			userToSubscribe.save();
-			const emailSubject = "Suscription";
+			const emailSubject = "Arthub Newsletter";
 			const emailBody = "lalalalalal";
 			const userEmail = userToSubscribe.email;
 			console.log(userEmail);
-			sendEmail(emailSubject, emailBody, userEmail);
+			await sendEmail(emailSubject, emailBody, userEmail);
+			//Guardo el mensaje enviado en la db
+			const saveEmail = await Newsletter.create({ content: emailBody });
+			saveEmail.addUsers(userToSubscribe.id);
+			saveEmail.save();
+
 			res.json({
 				message: "You've successfully subscribed to our newsletter!",
 			});
@@ -116,6 +124,9 @@ router.post("/:userId/unsubscribe", async (req, res) => {
 	const { userId } = req.params;
 	try {
 		const userToSubscribe = await User.findByPk(userId);
+		if (!userToSubscribe) {
+			return res.json({ message: "Could not found user" });
+		}
 		if (userToSubscribe.newsletter === true) {
 			userToSubscribe.newsletter = false;
 			userToSubscribe.save();
@@ -123,8 +134,11 @@ router.post("/:userId/unsubscribe", async (req, res) => {
 			const emailBody =
 				"You've successfully unsubscribed from our newsletter!";
 			const userEmail = userToSubscribe.email;
-			console.log(userEmail);
-			sendEmail(emailSubject, emailBody, userEmail);
+			await sendEmail(emailSubject, emailBody, userEmail);
+			//Guardo el mensaje enviado en la db
+			const saveEmail = await Newsletter.create({ content: emailBody });
+			saveEmail.addUsers(userToSubscribe.id);
+			saveEmail.save();
 			res.json({
 				message:
 					"You've successfully unsubscribed from our newsletter!",
