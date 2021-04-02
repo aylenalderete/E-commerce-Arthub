@@ -36,6 +36,7 @@ import { getUserReviews } from "./Actions/reviews";
 import ShoppingCartPayment from './Components/ShoppingCart/ShoppingCartPayment';
 import ShoppingCartResponse from './Components/ShoppingCart/ShoppingCartResponse';
 import Request from './Views/Request/Request';
+import Favorites from './Views/Favorites/Favorites';
 
 function App() {
   const dispatch = useDispatch();
@@ -120,6 +121,8 @@ function App() {
         return null;
       }} />
       <Route path="/solicitar" component={Request} />
+      <Route path="/favoritos" component={Favorites} />
+
     </div>
   );
 }

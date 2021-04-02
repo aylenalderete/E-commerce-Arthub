@@ -152,6 +152,19 @@ server.get('/:id', async (req, res) => {
 
 });
 
+server.post('/array', async (req, res) => {
+
+	const { prodIds } = req.body;
+
+	let prods = []
+	for (let i = 0; i < prodIds.length; i++) {
+		prods.push(await Product.findByPk(prodIds[i].productIdProduct, {include: [User, Image]}));
+	}
+	res.json(prods);
+
+});
+
+
 // 7: Add category to product
 server.post("/:idProducto/category/:idCategorias", async (req, res) => {
 

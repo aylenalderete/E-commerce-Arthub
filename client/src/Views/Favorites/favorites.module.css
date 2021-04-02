@@ -1,0 +1,19 @@
+.mainContainer{
+    display: flex;
+}
+
+.title{
+    text-align: center;
+}
+
+.cardContainer{
+    display: flex;
+    height: auto;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    width: 100%;
+}
+
+.secondContainer{
+    flex-grow: 1;
+}

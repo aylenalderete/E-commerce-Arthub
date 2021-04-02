@@ -83,7 +83,6 @@ function ArtCard({ name, pic, artist, id, idArtist, price, stock, setFlag }) {
               ></img>
             </Link>
           )}
-
           {
             userType === "user" && !userData.wishlist.find(p => p.productIdProduct === id) &&
             <button className={style.btnFav} onClick={() => handleAddFav(id)}>

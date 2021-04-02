@@ -10,6 +10,7 @@ import getInitialProducts from "../../Actions/getInitialProducts";
 import PopUp from "../../Components/PopUpFilters/PopUp";
 import showFilters from "../../Actions/showFilters";
 import shoppingCartImg from "../../Images/shopping-cart.svg";
+import heart from "../../Images/heart.svg";
 import getUserOrder from "../../Actions/getUserOrder.js";
 import createProduct from "../../Images/add-product.svg";
 import setFilters from "../../Actions/setFilters";
@@ -153,29 +154,31 @@ function Collection() {
                   src={shoppingCartImg}
                   alt="my shopping cart"
                 />
-                {cart.length > 0 && <span>{cart.length < 10? cart.length : '9+'}</span>}
+                {cart.length > 0 && <span>{cart.length < 10 ? cart.length : '9+'}</span>}
               </div>
             </Link>
           ) : (
             <></>
           )}
+
           {userType !== "admin" ? (
-            <Link to="/favoritos">
-              <button className={style.btnFav}>
-              <i  class="fas fa-heart"></i>
-              <span>favoritos</span>
-              </button>
+            <Link to="/favoritos" className={style.favContainer}>
+              <div className={style.imgFavContainer}>
+                <img className={style.heart} src={heart} alt="favoritos" />
+                {/* <p>Favoritos</p> */}
+              </div>
             </Link>
           ) : (
             <></>
           )}
+
         </div>
 
         <div className={style.container}>
           {!filteredProducts[0] &&
-          !search[0] &&
-          isActiveFilters &&
-          selectedCategories[0] ? (
+            !search[0] &&
+            isActiveFilters &&
+            selectedCategories[0] ? (
             displayProducts([])
           ) : (
             <></>

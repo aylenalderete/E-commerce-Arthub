@@ -170,11 +170,15 @@ server.post("/", async function (req, res) {
 					birth,
 					type,
 					state: newState,
-				}).then((newuser) => {
+				}).then(async (newuser) => {
 					const token = jwt.sign({ id: newuser.id }, "secret_key", {
 						expiresIn: 60 * 60 * 24,
 					});
 					newuser.password = " ";
+					newuser.dataValues.wishlist = await Wishlist.findAll({
+						attributes: ['productIdProduct'],
+						where: { userId: newuser.id },
+					});
 					let obj = { user: newuser, auth: true, token };
 					console.log(obj);
 					res.json(obj);

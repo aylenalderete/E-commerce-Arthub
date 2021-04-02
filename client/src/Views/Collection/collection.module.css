@@ -44,20 +44,36 @@
     outline: none;
 }
 
-.btnFav{
-    border: 1px solid white;
-    background-color: black;
-    color: white;
-    cursor: pointer;
-    margin-left:40px;
-    padding: 10px;
-    text-decoration: none;
-    font-size: 1rem;
+.favContainer{
+    margin-left: 20px;
 }
 
-.btnFav span{
-    margin-left: 10px;
+.favContainer:active{
+    transform: scale(0.95);
 }
+
+.imgFavContainer{
+    display: flex;
+}
+
+.heart{
+    width: 40px;
+    height: 40px;
+}
+
+.imgContainer p{
+    display: none;
+}
+
+.imgContainer:hover p{
+    display: flex;
+}
+
+
+
+/* .btnFav span{
+    margin-left: 10px;
+} */
 
 .linkRefresh{
     cursor:pointer;
@@ -71,6 +87,7 @@
 }
 
 .shContainer{
+    display: flex;
     width:40px;
     height:100%;
     margin-left: 10px;
