@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Styles from "./CreateProduct.module.css";
+import Styles from "./requestAuction.module.css";
 import firebase from "firebase";
 import axios from "axios";
 import { setUrlImages } from "../../Actions/setUrlImage.js";
@@ -8,67 +8,60 @@ import { connect, useSelector } from "react-redux";
 import NavBar from "../NavBar/NavBar.jsx";
 import {Redirect} from 'react-router-dom';
 
-const firebaseConfig = {
-    apiKey: "AIzaSyDJ5J7_0pkNGDhDo1mIkVB0Gyrzvyk7J5U",
-    authDomain: "henry-art.firebaseapp.com",
-    projectId: "henry-art",
-    storageBucket: "henry-art.appspot.com",
-    messagingSenderId: "780293113241",
-    appId: "1:780293113241:web:89382d33be6a51b0cebf08",
-    measurementId: "G-HWGTY5PZ8T",
-};
+// const firebaseConfig = {
+//     apiKey: "AIzaSyDJ5J7_0pkNGDhDo1mIkVB0Gyrzvyk7J5U",
+//     authDomain: "henry-art.firebaseapp.com",
+//     projectId: "henry-art",
+//     storageBucket: "henry-art.appspot.com",
+//     messagingSenderId: "780293113241",
+//     appId: "1:780293113241:web:89382d33be6a51b0cebf08",
+//     measurementId: "G-HWGTY5PZ8T",
+// };
 
-firebase.initializeApp(firebaseConfig);
+// firebase.initializeApp(firebaseConfig);
 
-export const validate = (product) => {
+const validate = (auction) => {
 
     let errors = {};
-    if (!product.title) {
+    if (!auction.title) {
         errors.title = 'el título es obligatorio';
-    } else if (product.title.length > 40) {
+    } else if (auction.title.length > 40) {
         errors.title = 'el título debe tener menos de 40 caracteres';
 
     }
 
-    if (!product.description) {
+    if (!auction.description) {
         errors.description = 'la descripción es obligatoria';
     }
 
-    if (!product.price) {
+    if (!auction.price) {
         errors.price = 'el precio es obligatorio';
-    } else if (!/^\d+(\.\d+)?$/.test(product.price)) {
+    } else if (!/^\d+(\.\d+)?$/.test(auction.price)) {
         errors.price = 'el precio es invalido';
     }
 
-    if (!product.stock) {
-        errors.stock = 'el stock es obligatorio';
-    } else if (!/^\d+$/.test(product.stock)) {
-        errors.stock = 'el stock es invalido';
-    }
-
-    if (product.categories.length === 0) {
+    if (auction.categories.length === 0) {
         errors.categories = 'debe seleccionar por lo menos una categoria';
     }
-
-    // if (urlImages.length === 0) {
-    //     errors.images = 'debe cargar por lo menos una imagen'
-    // }
     return errors;
 };
 
-function CreateProduct(props) {
+function RequestAuction(props) {
     const [loading, setLoading] = useState(false)
-    const [product, setProduct] = useState({
+    const [auction, setAuction] = useState({
         title: "",
         description: "",
         price: "",
-        stock: "",
         categories: [],
     });
     const [errors, setErrors] = useState({});
     const [touched, setTouched] = useState({});
     const loggedUser = useSelector((state) => state.userData);
     const { urlImages } = useSelector((state) => state);
+
+    const userId = useSelector((state) => state.userData.id)
+
+
     //carga de imagenes
     const [upload, setUpload] = React.useState({
         process: 0,
@@ -113,6 +106,8 @@ function CreateProduct(props) {
         }
     }
 
+
+
     function onDelete(event) {
         console.log("imagen tocada:", event.target.value);
         let urlImages = props.urlImages.filter(
@@ -124,9 +119,9 @@ function CreateProduct(props) {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setProduct({ ...product, [name]: value, userId: loggedUser.id });
+        setAuction({ ...auction, [name]: value, userId: 3 });
         setErrors(validate({
-            ...product,
+            ...auction,
             [name]: value
         }));
     };
@@ -139,11 +134,8 @@ function CreateProduct(props) {
     }
 
     const sendProduct = () => {
-        // console.log(product, urlImages);
-        // if (product.title.length >= 40) {
-        //     alert('El titulo no puede tener mas de 40 caracteres');
-        // }
-        if (product.categories.length === 0) {
+     
+        if (auction.categories.length === 0) {
             alert('Debe seleccionar por lo menos una categoria');
         }
         else if (urlImages.length === 0) {
@@ -152,18 +144,21 @@ function CreateProduct(props) {
         } else {
 
             axios
-                .post(`http://localhost:3001/products`, { ...product, images: urlImages })
+                .post(`http://localhost:3001/auctions`, { 
+                    ...auction, images: urlImages, state : "pendiente", userId, 
+                    percentage: auction.price >= 1000 ? 100 : 50})
                 .then((res) => {
-                    alert("Producto creado");
+                    alert("Subasta solicitada");
                     console.log(res.data);
                 })
                 .catch((error) => {
-                    alert("No se pudo crear el producto");
+                    alert("No se pudo solicitar la subasta");
                     console.log(error);
                 });
             props.clearUrlImage();
         }
     };
+
 
     const handleSubmit = (e) => e.preventDefault();
 
@@ -185,19 +180,19 @@ function CreateProduct(props) {
     function handleChangeCat(ev) {
         setSelectedCat(ev.target.value);
         setErrors(validate({
-            ...product,
+            ...auction,
             [ev.target.name]: ev.target.value
         }));
     }
 
     function handleSubmitCat(ev) {
         ev.preventDefault();
-        if (product.categories.includes(selectedCat)) {
+        if (auction.categories.includes(selectedCat)) {
             alert(`Ya se agregó ${getNames([selectedCat])[0]} como categoria`);
         } else {
-            setProduct({
-                ...product,
-                categories: [...product.categories, selectedCat],
+            setAuction({
+                ...auction,
+                categories: [...auction.categories, selectedCat],
             });
         }
     }
@@ -220,7 +215,7 @@ if(loggedUser.type !== 'artist' && loggedUser.type !== 'admin') return <Redirect
         <div className={Styles.mainContainer}>
           <div className={Styles.secondContainer}>
             <div className={Styles.divTitle}>
-              <p>crear producto</p>
+              <p>Crear Subasta</p>
             </div>
             <form className={Styles.formCategory} onSubmit={handleSubmitCat}>
               <div className={Styles.alignForm}>
@@ -230,6 +225,7 @@ if(loggedUser.type !== 'artist' && loggedUser.type !== 'admin') return <Redirect
                   name="categories"
                   value={selectedCat}
                 >
+                    <option>Categorías</option>
                   {categories.map((c) => (
                     <option
                       onFocus={onFocus}
@@ -246,7 +242,7 @@ if(loggedUser.type !== 'artist' && loggedUser.type !== 'admin') return <Redirect
                 </button>
               </div>
               <div className={Styles.alignSelectedCat}>
-                {getNames(product.categories).map((c) => (
+                {getNames(auction.categories).map((c) => (
                   <p className={Styles.showCategory}>{c}</p>
                 ))}
               </div>
@@ -258,7 +254,7 @@ if(loggedUser.type !== 'artist' && loggedUser.type !== 'admin') return <Redirect
             <form className={Styles.containerForm2} onSubmit={handleSubmit}>
               <input
                 className={Styles.input}
-                value={product.title}
+                value={auction.title}
                 name="title"
                 onChange={handleChange}
                 placeholder="título"
@@ -268,7 +264,7 @@ if(loggedUser.type !== 'artist' && loggedUser.type !== 'admin') return <Redirect
               {errors.title && touched.title && <p>{errors.title}</p>}
               <input
                 className={Styles.input}
-                value={product.description}
+                value={auction.description}
                 name="description"
                 onChange={handleChange}
                 placeholder="descripción"
@@ -280,7 +276,7 @@ if(loggedUser.type !== 'artist' && loggedUser.type !== 'admin') return <Redirect
               )}
               <input
                 className={Styles.input}
-                value={product.price}
+                value={auction.price}
                 name="price"
                 onChange={handleChange}
                 placeholder="precio"
@@ -288,16 +284,6 @@ if(loggedUser.type !== 'artist' && loggedUser.type !== 'admin') return <Redirect
                 onFocus={onFocus}
               ></input>
               {errors.price && touched.price && <p>{errors.price}</p>}
-              <input
-                className={Styles.input}
-                value={product.stock}
-                name="stock"
-                onChange={handleChange}
-                placeholder="stock"
-                required
-                onFocus={onFocus}
-              ></input>
-              {errors.stock && touched.stock && <p>{errors.stock}</p>}
 
               <div className={Styles.file}>
                 <div className={Styles.containerImgs}>
@@ -344,7 +330,7 @@ if(loggedUser.type !== 'artist' && loggedUser.type !== 'admin') return <Redirect
             </form>
 
             <button className={Styles.btn} onClick={sendProduct}>
-              Crear producto
+              Crear subasta
             </button>
           </div>
         </div>
@@ -352,7 +338,7 @@ if(loggedUser.type !== 'artist' && loggedUser.type !== 'admin') return <Redirect
     );
 }
 
-function mapStateToProps(state) {
+function mapStateToProps(state) { 
     return {
         urlImages: state.urlImages, //Firebase
     };
@@ -366,4 +352,4 @@ function mapDispatchToProps(dispatch) {
     };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(CreateProduct);
+export default connect(mapStateToProps, mapDispatchToProps)(RequestAuction);

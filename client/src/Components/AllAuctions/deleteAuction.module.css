@@ -7,25 +7,19 @@
     right: 0;
     bottom: 0;
     margin: auto;
-    background-color: black;
+    background-color: rgba(0, 0, 0);
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     border: 1px solid white; 
-    z-index:9999;
-
+    z-index: 9999;
 }
 
-.textPop{
+.formLabel{
     font-size: 1.2rem;
     margin:2px;
  }
-
- .btnSelect{
-    display: flex;
-    justify-content: center;
-}
 
  .btn{
     padding-top: 5px;
@@ -50,20 +44,21 @@
     outline: none;
 }
 
-.btnClose{
-    cursor: pointer;
-    width:30px;
-    height:30px;
-    
-}
-
-.btnCloseContainer{
-    position:absolute;
+.btnCloseDiv{
+    background-color: transparent;
+    position: absolute;
     top:0;
     right:0;
-    width:fit-content;
-    margin:10px;
+    border: none;
+    margin: 10px;
+    cursor:pointer;
 
+
+}
+
+.close{
+    width: 25px;
+    height: 25px;
 }
 
 /*Key Frames*/

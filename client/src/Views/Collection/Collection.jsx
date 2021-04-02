@@ -133,6 +133,7 @@ function Collection() {
           </button>
           <SearchBar></SearchBar>
           {userType && userType === "artist" ? (
+            
             <Link className={style.linkCreate} to="/crearproducto">
               <img
                 className={style.createProduct}
@@ -145,7 +146,7 @@ function Collection() {
             <></>
           )}
 
-          {userType !== "artist" ? (
+          {userType !== "admin" ? (
             <Link className={style.shContainer} to="/carrito">
               <div className={style.imgContainer}>
                 <img

@@ -55,11 +55,11 @@ export const validate = (input) => {
   } else {
     errors.birth = "";
   }
-  if (!input.type) {
-    errors.type = "el tipo es obligatorio";
-  } else {
-    errors.type = "";
-  }
+  // if (!input.type) {
+  //   errors.type = "el tipo es obligatorio";
+  // } else {
+  //   errors.type = "";
+  // }
   return errors;
 };
 
@@ -82,7 +82,7 @@ function SignIn() {
     profilepic: "",
     email: "",
     birth: "",
-    type: "",
+    type: "user",
   });
   const [errors, setErrors] = useState({});
   const [touched, setTouched] = useState({});
@@ -166,8 +166,8 @@ function SignIn() {
       !errors.password &&
       !errors.name &&
       !errors.birth &&
-      !errors.lastname &&
-      !errors.type
+      !errors.lastname
+      // !errors.type
     ) {
       axios
         .post(`http://localhost:3001/users`, input)
@@ -317,35 +317,12 @@ function SignIn() {
               onChange={handleChange}
               placeholder="Fecha de nacimiento"
               type="date"
+              // min="1940-31-01"
+              // max="2004-01-01"
               onFocus={onFocus}
               required
             />
             <div className={Styles.contRadio}>
-              <div className={Styles.radio}>
-                <input
-                  id="type"
-                  name="type"
-                  onChange={handleChange}
-                  value="artist"
-                  type="radio"
-                  onFocus={onFocus}
-                  required
-                />
-                <label for="type">artista</label>
-              </div>
-
-              <div className={Styles.radio}>
-                <input
-                  id="type"
-                  name="type"
-                  onChange={handleChange}
-                  value="user"
-                  type="radio"
-                  onFocus={onFocus}
-                  required
-                />
-                <label for="type">comprador</label>
-              </div>
               <div className={Styles.radio}>
                 <label for="files">
                   <div className={Styles.containerProfilePic}>
@@ -356,7 +333,7 @@ function SignIn() {
                         {loading ? (
                           <div className={Styles.loadingPic}></div>
                         ) : (
-                          "Push to add"
+                          "Seleccionar foto de perfil"
                         )}
                       </div>
                     )}
@@ -373,7 +350,7 @@ function SignIn() {
             </div>
             {errors.birth && touched.birth && <p>{errors.birth}</p>}
 
-            <input className={Styles.btn} type="submit" value="Crear" />
+            <input className={Styles.btn} type="submit" value="Crear cuenta" />
           </form>
         </div>
       </div>

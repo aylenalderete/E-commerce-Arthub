@@ -72,6 +72,16 @@ const initialState = {
     linkmp: 'http://localhost:3000',
 
 
+    // artist sales
+    artistSales: [],
+
+    //AUCTION
+    auctions: [],
+    createAuction: false,
+    deleteAuction: false,
+    auctionView: {}
+
+
 };
 
 //reducer
@@ -79,6 +89,11 @@ const reducer = function (state = initialState, action) {
 
     switch (action.type) {
         //aca crear los switch cases de cada action
+        case "GET_AUCTION_VIEW":
+            return {
+                ...state,
+                auctionView: action.payload
+            };
         case "GET_PRODUCT_REVIEWS":
             return {
                 ...state,
@@ -429,6 +444,30 @@ const reducer = function (state = initialState, action) {
                     ...state.userData,
                     wishlist: state.userData.wishlist.filter(p => p.productIdProduct !== action.payload)
                 }
+            }
+
+        case 'GET_ARTIST_SALES':
+            return {
+                ...state,
+                artistSales: action.payload
+            }
+        case 'GET_AUCTIONS':
+            return {
+                ...state,
+                auctions: action.payload
+            }
+
+        case 'POP_UP_CREATE_AUCTION':
+            return {
+                ...state,
+                createAuction: action.payload
+            }
+
+        case 'POP_UP_DELETE_AUCTION':
+            return {
+                ...state,
+                deleteAuction: action.payload
+
             }
 
         default:

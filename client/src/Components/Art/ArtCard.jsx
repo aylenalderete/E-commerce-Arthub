@@ -68,8 +68,8 @@ function ArtCard({ name, pic, artist, id, idArtist, price, stock, setFlag }) {
           {stock > 0 ? (
             <h5 className={style.text}>{`Stock: ${stock}`}</h5>
           ) : (
-            <h5 className={style.noStock}>Sin stock</h5>
-          )}
+              <h5 className={style.noStock}>Sin stock</h5>
+            )}
           <Link className={style.linksA} to={`/artistas/${idArtist}`}>
             <h5 className={style.artist}>Artista: {artist}</h5>
           </Link>
@@ -101,8 +101,8 @@ function ArtCard({ name, pic, artist, id, idArtist, price, stock, setFlag }) {
     );
   }
 
-  // If user is artist type
-  else if (userType === "artist" || userType === "admin") {
+  // If user admin type
+  else if (userType === "admin") {
     return (
       <div className={style.cardContainer}>
         {isOpenDeleteProd === true && (
@@ -119,6 +119,7 @@ function ArtCard({ name, pic, artist, id, idArtist, price, stock, setFlag }) {
           <Link to={`/editarproducto/${id}`} className={style.btnEdit}>
             <img className={style.icon} src={editPiece} alt="edit item" />
           </Link>
+
           <div className={style.btnDelete}>
             <img
               className={style.icon}
@@ -140,6 +141,60 @@ function ArtCard({ name, pic, artist, id, idArtist, price, stock, setFlag }) {
         </div>
       </div>
     );
+  }
+  //User type artist 
+  else if (userType === 'artist') {
+    return (
+      <div className={style.cardContainer}>
+        {isOpenDeleteProd === true && (
+          <DeleteProduct
+            productId={productId}
+            setFlag={setFlag}
+          ></DeleteProduct>
+        )}
+        <div className={style.imgContainer}>
+          <Link className={style.linksA} to={`/coleccion/${id}`}>
+            <img className={style.cardImg} alt="artpic" src={pic}></img>
+          </Link>
+        </div>
+        <div className={style.linksArtCard}>
+          {userData.id === idArtist && (<Link to={`/editarproducto/${id}`} className={style.btnEdit}>
+            <img className={style.icon} src={editPiece} alt="edit item" />
+          </Link>)}
+          {userData.id === idArtist && (
+            <div className={style.btnDelete}>
+              <img
+                className={style.icon}
+                src={deletePiece}
+                alt="delete item"
+                onClick={() => handleDeleteClick(id)}
+              />
+            </div>)}
+          <Link className={style.linksA} to={`/coleccion/${id}`}>
+            <h5 className={style.name}>{name}</h5>
+          </Link>
+          <h5 className={style.text}>Precio: {"$ " + price}</h5>
+          {stock > 0 ? (
+            <h5 className={style.text}>{`Stock: ${stock}`}</h5>
+          ) : (
+              <h5 className={style.noStock}>Sin stock</h5>
+            )}
+          <Link className={style.linksA} to={`/artistas/${idArtist}`}>
+            <h5 className={style.artist}>Artista: {artist}</h5>
+          </Link>
+
+          {stock > 0 && idArtist !== userData.id && (
+            <Link className={style.cartCont} to="/carrito">
+              <img
+                onClick={() => handleClick(id)}
+                className={style.cart}
+                src={cart}
+              ></img>
+            </Link>
+          )}
+        </div>
+      </div>
+    )
   }
 }
 
