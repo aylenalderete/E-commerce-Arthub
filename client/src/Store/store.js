@@ -70,11 +70,16 @@ const initialState = {
     // link to mp
     linkmp: 'http://localhost:3000',
 
+
+    // artist sales
+    artistSales: [],
+
     //AUCTION
     auctions: [],
     createAuction: false,
     deleteAuction: false,
     auctionView : {}
+
 
 };
 
@@ -112,10 +117,10 @@ const reducer = function (state = initialState, action) {
             }
 
         case 'UPDATE_PRODUCT_REVIEW':
-             return {
-                 ...state,
-              userReviews: action.payload
-             }
+            return {
+                ...state,
+                userReviews: action.payload
+            }
 
         case "GET_PRODUCTS":
             if (state.filteredProducts.length > 0 && !state.search[0]) {
@@ -292,7 +297,7 @@ const reducer = function (state = initialState, action) {
                 isOpenDeleteProd: action.payload,
             };
 
-        
+
 
         case "PRODUCT_ID":
             return {
@@ -306,12 +311,12 @@ const reducer = function (state = initialState, action) {
                 userOrders: action.payload,
             };
 
-        
 
-        
-       
-        
-        
+
+
+
+
+
 
         case "RESET_CAROUSEL":
             return {
@@ -422,6 +427,12 @@ const reducer = function (state = initialState, action) {
                 linkmp: action.payload
             }
 
+
+        case 'GET_ARTIST_SALES':
+            return {
+                ...state,
+                artistSales: action.payload
+
         case 'GET_AUCTIONS':
             return {
                 ...state,
@@ -438,6 +449,7 @@ const reducer = function (state = initialState, action) {
             return {
                 ...state,
                 deleteAuction:action.payload
+
             }
 
         default:

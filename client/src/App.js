@@ -36,10 +36,12 @@ import { getUserReviews } from "./Actions/reviews";
 import ShoppingCartPayment from './Components/ShoppingCart/ShoppingCartPayment';
 import ShoppingCartResponse from './Components/ShoppingCart/ShoppingCartResponse';
 import Request from './Views/Request/Request';
+import MySales from './Views/MySales/mySales';
 import AllAuctionsAdmin from './Views/AllAuctionsAdmin/AllAuctionsAdmin'
 import RequestAuction from './Components/RequestAuction/requestAuction.jsx';
 import AuctionView from './Components/RequestAuction/auctionView'
 import AdminRequests from './Views/AdminRequests/AdminRequests';
+
 
 
 function App() {
@@ -125,10 +127,12 @@ function App() {
         return null;
       }} />
       <Route path="/solicitar" component={Request} />
+      <Route path="/misventas" component={MySales} />
       <Route path="/subastas" component={AllAuctionsAdmin} />
       <Route path="/auctionView/:id" component={AuctionView}/>
       <Route path="/requestAuction" component={RequestAuction} />
       <Route path="/solicitudes" component={AdminRequests} />
+
 
     </div>
   );
