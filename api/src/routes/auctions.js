@@ -1,5 +1,6 @@
 const server = require('express').Router();
-const { Auction, Image, User, Category} = require('../db.js');
+const { Auction, Image, User, Category, Auctionbuyer} = require('../db.js');
+
 
 
 server.post('/', async (req, res) => {
@@ -111,18 +112,14 @@ server.delete('/:idAuction', async (req, res) => {
 })
 
 
-server.put('/:idAuction/:idBuyer', async (req, res) => {
-    const { idBuyer,idAuction } = req.params;
+server.post('/:idAuction/:idUser', async (req, res) => {
+    const { idUser,idAuction } = req.params;
     const { price } = req.body
     try {
-        await Auction.update({
-            idBuyer,
+        await Auctionbuyer.create({
+            idUser,
             price
-        }, {
-            where: {
-                id_auction: idAuction
-            }
-        });
+        })
         res.json({ message: 'Auction successfully updated' });
     } catch (error) {
         res.status(400).json({ message: 'Error' });

@@ -230,6 +230,7 @@ if(loggedUser.type !== 'artist' && loggedUser.type !== 'admin') return <Redirect
                   name="categories"
                   value={selectedCat}
                 >
+                  <option>Categorías</option>
                   {categories.map((c) => (
                     <option
                       onFocus={onFocus}

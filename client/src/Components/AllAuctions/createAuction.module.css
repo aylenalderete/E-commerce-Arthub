@@ -21,9 +21,14 @@
     flex-direction: column;
 }
 
+.title h1{
+    margin-bottom: 0;
+    margin-top: 1rem;
+}
+
 .column1{
     display: flex;
-    margin: 5vh;
+    margin: 0 5vw;
     align-items: center;
     justify-content: center;
 }
@@ -41,8 +46,9 @@
     display: flex;
     justify-content: center;
     object-fit: cover;
-    width:180px;
-    height: 180px; 
+    max-height: 300px;
+    min-height: 200px ;
+    max-width: 300px;
 }
 
 .titles{

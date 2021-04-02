@@ -35,7 +35,7 @@ function CreateAuction(props) {
                 body: JSON.stringify({
                     price: theAuction.price,
                     state: 'subastando',
-                    percentage: theAuction.price*0.1,
+                    percentage: theAuction.price>= 1000 ? 100 : 50,
                 })
                 
             })
@@ -88,8 +88,8 @@ function CreateAuction(props) {
                         <p className={style.titles}>Precio inicial:</p>
                         <input className={style.input} name='price' value={theAuction?.price} onChange={handleChange} />
                         <p className={style.titles}>Monto de aumento:</p>
-                        <input className={style.input} name='percentage' value={ theAuction?.price>= 1000 ? 100 : 50
-                        } onChange={handleChange}/>
+                        <input className={style.input} name='percentage' value={theAuction?.percentage}
+                         onChange={handleChange}/>
 
 
                         </div>
