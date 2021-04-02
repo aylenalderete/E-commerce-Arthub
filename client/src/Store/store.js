@@ -432,7 +432,7 @@ const reducer = function (state = initialState, action) {
             return {
                 ...state,
                 artistSales: action.payload
-
+}
         case 'GET_AUCTIONS':
             return {
                 ...state,
