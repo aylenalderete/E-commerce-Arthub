@@ -2,7 +2,6 @@ const { Router } = require("express");
 const { User, Newsletter, Wishlist, Product } = require("../db.js");
 const router = Router();
 const path = require("path");
-
 //Funcion de enviar email --------------------- INICIO
 
 const nodemailer = require("nodemailer");
@@ -40,13 +39,10 @@ async function sendEmail(subject, body, to) {
 		const handlebarOptions = {
 			viewEngine: {
 				extName: ".handlebars",
-				partialsDir: path.resolve(__dirname, "/templates"),
+				partialsDir: __dirname + "/templates/",
 				defaultLayout: false,
 			},
-			viewPath: path.resolve(
-				__dirname,
-				"/home/aylen/Escritorio/henry/ecommerce-ft09-g02/api/src/routes/templates"
-			),
+			viewPath: __dirname + "/templates/",
 			extName: ".handlebars",
 		};
 
@@ -55,8 +51,7 @@ async function sendEmail(subject, body, to) {
 			from: "ArtHub <andres2661991@gmail.com>",
 			to: to,
 			subject: subject,
-			// html: body,
-			template: "sub",
+			template: body,
 		};
 
 		const result = await transport.sendMail(mailOptions);
@@ -69,10 +64,12 @@ async function sendEmail(subject, body, to) {
 
 //Funcion de enviar email --------------------- FINAL
 
+//RUTAS:
+
 //Devuelve todos los newsletter
 router.get("/", (req, res) => {
 	try {
-		Newsletter.findAll().then((result) => {
+		Newsletter.findAll({ include: [{ model: User }] }).then((result) => {
 			res.json(result);
 		});
 	} catch (error) {
@@ -118,18 +115,24 @@ router.post("/:userId/subscribe", async (req, res) => {
 	const { userId } = req.params;
 	try {
 		const userToSubscribe = await User.findByPk(userId);
-
+		if (!userToSubscribe) {
+			return res.json({ message: "Could not found user" });
+		}
 		if (
 			!userToSubscribe.newsletter ||
 			userToSubscribe.newsletter === false
 		) {
 			userToSubscribe.newsletter = true;
 			userToSubscribe.save();
-			const emailSubject = "Suscription";
-			const emailBody = "lalalalalal";
+			const emailSubject = "Arthub Newsletter";
+			const emailBody = "sub";
 			const userEmail = userToSubscribe.email;
-			console.log(userEmail);
-			sendEmail(emailSubject, emailBody, userEmail);
+			await sendEmail(emailSubject, emailBody, userEmail);
+			//Guardo el mensaje enviado en la db
+			const saveEmail = await Newsletter.create({ content: emailBody });
+			saveEmail.addUsers(userToSubscribe.id);
+			saveEmail.save();
+
 			res.json({
 				message: "You've successfully subscribed to our newsletter!",
 			});
@@ -148,15 +151,20 @@ router.post("/:userId/unsubscribe", async (req, res) => {
 	const { userId } = req.params;
 	try {
 		const userToSubscribe = await User.findByPk(userId);
+		if (!userToSubscribe) {
+			return res.json({ message: "Could not found user" });
+		}
 		if (userToSubscribe.newsletter === true) {
 			userToSubscribe.newsletter = false;
 			userToSubscribe.save();
 			const emailSubject = "Arthub Newsletter";
-			const emailBody =
-				"You've successfully unsubscribed from our newsletter!";
+			const emailBody = "unsub";
 			const userEmail = userToSubscribe.email;
-			console.log(userEmail);
-			sendEmail(emailSubject, emailBody, userEmail);
+			await sendEmail(emailSubject, emailBody, userEmail);
+			//Guardo el mensaje enviado en la db
+			const saveEmail = await Newsletter.create({ content: emailBody });
+			saveEmail.addUsers(userToSubscribe.id);
+			saveEmail.save();
 			res.json({
 				message:
 					"You've successfully unsubscribed from our newsletter!",
