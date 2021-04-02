@@ -2,6 +2,7 @@ const { Router } = require("express");
 const { User, Newsletter, Wishlist, Product } = require("../db.js");
 const router = Router();
 const path = require("path");
+
 //Funcion de enviar email --------------------- INICIO
 
 const nodemailer = require("nodemailer");
