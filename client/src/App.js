@@ -39,6 +39,9 @@ import Request from './Views/Request/Request';
 import AllAuctionsAdmin from './Views/AllAuctionsAdmin/AllAuctionsAdmin'
 import RequestAuction from './Components/RequestAuction/requestAuction.jsx';
 import AuctionView from './Components/RequestAuction/auctionView'
+import AdminRequests from './Views/AdminRequests/AdminRequests';
+
+
 function App() {
   const dispatch = useDispatch();
   const linkmp = useSelector(state => state.linkmp);
@@ -123,8 +126,10 @@ function App() {
       }} />
       <Route path="/solicitar" component={Request} />
       <Route path="/subastas" component={AllAuctionsAdmin} />
-      <Route path="/requestAuction" component={RequestAuction}/>
       <Route path="/auctionView/:id" component={AuctionView}/>
+      <Route path="/requestAuction" component={RequestAuction} />
+      <Route path="/solicitudes" component={AdminRequests} />
+
     </div>
   );
 }
