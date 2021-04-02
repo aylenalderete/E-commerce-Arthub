@@ -39,7 +39,7 @@ export default function ArtistUser() {
                         <button className={Styles.editProfile} onClick={() => history.push(`/editarperfil/`)}>
                             Editar perfil </button>
                         <br></br>
-                        <button className={style.editProfile} onClick={() => history.push(`/requestAuction/`)}>
+                        <button className={style.editProfile} onClick={() => history.push(`/solicitarSubasta/`)}>
                             Solicitar subasta </button>
                     </div>
                     <div className={Styles.containerPic}>

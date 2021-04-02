@@ -145,7 +145,10 @@ function RequestAuction(props) {
 
             axios
                 .post(`http://localhost:3001/auctions`, { 
-                    ...auction, images: urlImages, state : "pendiente", userId, 
+                    ...auction, 
+                    images: urlImages, 
+                    state : "pendiente", 
+                    userId, 
                     percentage: auction.price >= 1000 ? 100 : 50})
                 .then((res) => {
                     alert("Subasta solicitada");

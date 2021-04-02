@@ -16,6 +16,8 @@ function NavBar({ renderTop }) {
   }
   const dispatch = useDispatch();
 
+  const auctionView = useSelector(state=>state.auctionView)
+
   function clickHandler() {
     dispatch(signOutUsers())
     localStorage.removeItem('token')
@@ -57,6 +59,10 @@ function NavBar({ renderTop }) {
             <Link className={Styles.link2} to="/faq">
               <p className={Styles.secciones2}>faq</p>
             </Link>
+            <Link className={Styles.link2} to="/subastaActual/:id">
+              <p className={Styles.secciones2}>subasta</p>
+            </Link>
+          
 
           </div>
 

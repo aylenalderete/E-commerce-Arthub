@@ -89,7 +89,7 @@ function AllAuction() {
                                         <img className={style.icon} src={deleteauction} alt="edit item" />
                                     </div>
 
-                                    <Link to={`/auctionView/${a.id_auction}`}>
+                                    <Link to={`/subastaActual/${a.id_auction}`}>
                                         <div className={style.btnContainer} >
                                             <img className={style.icon} src={checkauction} alt="check item" />
                                         </div>
