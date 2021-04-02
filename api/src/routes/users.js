@@ -15,43 +15,51 @@ const {
 server.get("/compras/:iduser", (req, res) => {
 
 	try {
-		
+
 		let iduser = req.params.iduser;
 		Shoppingcart.findAll({
-			where: {state: 'fullfilled'},
+			where: { state: 'fullfilled' },
 			include: [{
 				model: Lineorder,
 				include: [{
 					model: Product,
 					include: [{
-						model: User, 
-						where: {id: iduser}
+						model: User,
+						where: { id: iduser }
 					}]
 				}]
 			}]
 		})
-		.then((cart)=>{
-			let finalCart = cart.map(order => ({
-				id_order: order.dataValues.id_order,
-				state: order.dataValues.state,
-				total_price: order.dataValues.total_price,
-				payment_status: order.dataValues.payment_status,
-				createdAt: order.dataValues.createdAt,
-				userId: order.dataValues.userId,
-				lineorders: order.dataValues.lineorders.map(l => ({
-					unit_price: l.dataValues.unit_price,
-					quantity: l.dataValues.quantity,
-					product: {title: l.dataValues.product?.title,
-						 stock: l.dataValues.product?.stock
+			.then(async (cart) => {
+				let finalCart = []
+
+				for (let i = 0; i < cart.length; i++) {
+					finalCart.push(
+						{
+							id_order: cart[i].dataValues.id_order,
+							state: cart[i].dataValues.state,
+							total_price: cart[i].dataValues.total_price,
+							payment_status: cart[i].dataValues.payment_status,
+							createdAt: cart[i].dataValues.createdAt,
+							userId: await User.findByPk(cart[i].dataValues.userId),
+							lineorders: cart[i].dataValues.lineorders.map(l => ({
+								unit_price: l.dataValues.unit_price,
+								quantity: l.dataValues.quantity,
+								product: {
+									title: l.dataValues.product?.title,
+									stock: l.dataValues.product?.stock
+								}
+
+							}))
 						}
-					
-				}))
-			}));
 
-			return res.json(finalCart)
+					)
+				}
 
-		})
-		
+				return res.json(finalCart)
+
+			})
+
 
 	} catch (error) {
 		res.json(error)

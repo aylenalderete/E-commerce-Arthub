@@ -6,6 +6,8 @@
     background-color: transparent;
     border-top: 1px solid white;
     margin-top: 50px;
+    height: fit-content;
+    margin-bottom: 20px;
 }
 
 .title{
