@@ -74,7 +74,7 @@ const initialState = {
     auctions: [],
     createAuction: false,
     deleteAuction: false,
-
+    auctionView : {}
 
 };
 
@@ -83,6 +83,11 @@ const reducer = function (state = initialState, action) {
 
     switch (action.type) {
         //aca crear los switch cases de cada action
+        case "GET_AUCTION_VIEW":
+            return {
+                ...state,
+                auctionView : action.payload
+            };
         case "GET_PRODUCT_REVIEWS":
             return {
                 ...state,

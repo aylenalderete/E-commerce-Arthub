@@ -62,8 +62,33 @@ server.get('/', async (req, res) => {
 })
 
 server.get('/:idAuction', async (req, res) => {
+    const {idAuction} = req.params
 
-    await Auction.findByPk(req.params.idAuction)
+    await Auction.findOne({
+        include: [
+            {
+                model: Image,
+                attributes: [
+                    "id",
+                    "url"
+                ]
+            },
+            {
+                model:User,
+                attributes: [
+                    "id",
+                    "username"
+                ]
+            },
+            {
+                model:Category
+            }
+
+        ],
+        where : {
+            id_auction:idAuction
+        }
+    })
         .then((result) => {
             console.log(result)
             res.json(result)
