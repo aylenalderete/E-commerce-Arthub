@@ -1,3 +1,151 @@
-.contenedor{
+.mainContainer{
     display: flex;
 }
+
+.contenedor{
+    display: flex;
+    margin-top: 2vh;
+}
+
+.column1{
+    display: flex;
+    flex-direction: column;
+    margin-right: 2vh;
+}
+
+.title{
+    display: flex;
+    justify-content: center;
+    font-size: 3vh;
+}
+
+.imgContainer{
+    display: flex;
+    justify-content: center;
+}
+
+.imgContainer img{
+    width: 50%;
+
+}
+
+.info{
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    border: 1px solid white;
+    margin-top: 3vh;
+    width: 70%;
+}
+
+.category{
+    display: flex;
+    justify-content:flex-end;
+    align-self: flex-end;
+
+}
+
+.info p{
+    font-size: 2vh;
+    text-align: end;
+    margin-right: 1vh;
+}
+
+.info h2{
+    font-size: 3vh;
+    font-style: italic;
+    margin: 1vh;
+    text-align: center;
+}
+
+.info h3{
+    font-size: 3vh;
+    text-align: center;
+}
+
+
+
+.actual{
+    text-align: center;
+    font-size: 3vh;
+    border-bottom: 1px solid white;
+}
+
+.initial{
+    text-align: center;
+    font-size: 2vh;
+}
+
+.ofert{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.ofert p{
+    font-size: 2vh;
+}
+
+.btnSelect{
+    display: flex;
+    justify-content: center;
+}
+
+.btn{
+   padding-top: 5px;
+   padding-bottom: 5px;
+   padding-right: 20px;
+   padding-left:20px;
+   margin-top:20px;
+   margin-right: 10px;
+   background-color: transparent;
+   color: white;
+   font-size: 4vh;
+   border:1px solid white;
+   cursor: pointer;
+   margin:20px;
+}
+
+
+.btn:hover{
+   animation: color 1s infinite;
+  
+   
+}
+
+.btn:focus{
+   outline: none;
+}
+
+
+/*Key Frames*/
+
+@keyframes color {
+   0% {
+         background-color: #f427ed78; 
+   }
+
+   20% {
+       background-color: #f427ed8a; 
+   }
+
+   40%{
+       background-color: #f427eda2; 
+       border-color:rgba(255, 255, 255, 0.657)
+   }
+
+   60%{
+       background-color: #f427edc4; 
+       border-color:rgba(255, 255, 255, 0.445)
+   }
+
+   80%{
+       background-color: #f427ede5; 
+       border-color:rgba(255, 255, 255, 0)
+   }
+ 
+   100% {
+       background-color: #f427ed; 
+       border-color:rgba(255, 255, 255, 0)
+   }
+ }

@@ -49,7 +49,8 @@ const {
 	Shoppingcart,
 	Review,
 	Request,
-	Auction
+	Auction,
+	Auctionbuyer,
 } = sequelize.models;
 
 // Aca vendrian las relaciones
@@ -96,6 +97,9 @@ Image.belongsTo(Auction);
 
 Auction.belongsToMany(Category, { through: "categoryauction" });
 Category.belongsToMany(Auction, { through: "categoryauction" });
+
+Auction.belongsToMany(Auctionbuyer, { through: "auctionbuyer" });
+Auctionbuyer.belongsToMany(Auction, { through: "auctionbuyer" });
 
 module.exports = {
 	...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');
