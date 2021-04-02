@@ -26,7 +26,6 @@ export default function Favorites() {
             <NavBar renderTop={false} />
             <div className={style.secondContainer}>
                 <h1 className={style.title}>Favoritos</h1>
-                {console.log(prodFav)}
                 <div className={style.cardContainer}>
 
                     {
