@@ -42,7 +42,7 @@ server.get('/', async (req, res) => {
             if (allRequests.length > 0) {
                 res.send(allRequests)
             } else {
-                res.json('Could not get requests')
+                res.json({ message: 'Could not get requests' })
             }
         }
     }
@@ -108,14 +108,25 @@ server.put('/:idRequest', async (req, res) => {
         const requestToEdit = await Request.findOne({
             where: {
                 id: idRequest
-            }
+            },
+            include: [{ model: User }],
         })
         if (requestToEdit) {
+            if (newState === 'approved') {
+
+                await User.findByPk(requestToEdit.user.id)
+                    .then((user) => {
+                        user.type = 'artist',
+                            user.save()
+                    })
+            }
+
             await Request.findByPk(idRequest)
                 .then((request) => {
                     request.state = newState,
                         request.save()
                 })
+
             res.json(`Request with id ${idRequest} succesfully modified`)
         } else {
             res.send(`Could not find request with id: ${idRequest}`)

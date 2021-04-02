@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useState } from 'react';
-import NavBar from './../../Components/NavBar/NavBar';
+import NavBar from '../../Components/NavBar/NavBar';
 import Styles from './Request.module.css';
 import { useSelector } from 'react-redux';
 import firebase from 'firebase';

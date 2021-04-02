@@ -38,6 +38,7 @@ import ShoppingCartResponse from './Components/ShoppingCart/ShoppingCartResponse
 import Request from './Views/Request/Request';
 import AllAuctionsAdmin from './Views/AllAuctionsAdmin/AllAuctionsAdmin'
 import RequestAuction from './Components/RequestAuction/requestAuction.jsx';
+import AdminRequests from './Views/AdminRequests/AdminRequests';
 
 function App() {
   const dispatch = useDispatch();
@@ -123,7 +124,8 @@ function App() {
       }} />
       <Route path="/solicitar" component={Request} />
       <Route path="/subastas" component={AllAuctionsAdmin} />
-      <Route path="/requestAuction" component={RequestAuction}/>
+      <Route path="/requestAuction" component={RequestAuction} />
+      <Route path="/solicitudes" component={AdminRequests} />
     </div>
   );
 }
