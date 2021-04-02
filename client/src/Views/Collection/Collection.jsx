@@ -166,6 +166,7 @@ function Collection() {
             <Link to="/favoritos" className={style.favContainer}>
               <div className={style.imgFavContainer}>
                 <img className={style.heart} src={heart} alt="favoritos" />
+                {userData.wishlist?.length > 0 && <span>{userData.wishlist?.length < 10 ? userData.wishlist.length : '9+'}</span>}
                 {/* <p>Favoritos</p> */}
               </div>
             </Link>
