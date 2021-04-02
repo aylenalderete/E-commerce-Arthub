@@ -1,5 +1,5 @@
 const { Router } = require("express");
-const { User, Newsletter, Wishlist ,Product} = require("../db.js");
+const { User, Newsletter, Wishlist, Product } = require("../db.js");
 const router = Router();
 const path = require("path");
 
@@ -13,8 +13,7 @@ const CLIENT_ID =
 const CLIENT_SECRET = "WqmGTBctdvzddpFsmu0_MwBV";
 const REDIRECT_URI = "https://developers.google.com/oauthplayground";
 const REFRESH_TOKEN =
-	"1//04VjdAu7ftOspCgYIARAAGAQSNwF-L9Irxx8NT_J7Zbe-8ahhQWzuEL5JdKgNFPc3cskLeZzmAOHquYKdxgMC0gv53CChhMqLrao";
-
+	"1//04fZsdreosgbrCgYIARAAGAQSNwF-L9IrqHuSDMvBIGRnXIkUilPVz99wzLB613MJ_AIIR87ry3-JOW-VXn1YrMuqnEbtPh16jA0";
 const oAuth2Client = new google.auth.OAuth2(
 	CLIENT_ID,
 	CLIENT_SECRET,
@@ -82,32 +81,37 @@ router.get("/", (req, res) => {
 });
 
 const sendEmailUpdateStock = async (idProduct) => {
-	const search = await Wishlist.findAll ({
-		include: [{
-			model: Product,
-			where: {
-				id_Product: idProduct
-			}
-		}]
-	})
-	console.log("-------------------------")
-	if(search&&search.length>0){console.log(search)}
-	console.log("-------------------------")
+	const search = await Wishlist.findAll({
+		where: { productIdProduct: idProduct },
+	});
+	console.log("-------------------------");
+	if (search && search.length > 0) {
+		let emailList = await Promise.all(
+			search.map(async (user) => {
+				let userEmail = await User.findByPk(user.dataValues.userId);
+				return userEmail.email;
+			})
+		);
+		console.log(emailList);
+		const emailBody = "sub";
+		const emailSubject = "Whislist";
+		emailList.forEach((email) => {
+			sendEmail(emailSubject, emailBody, email);
+		});
+	}
+	console.log("-------------------------");
+};
 
-
-}
 //Devuelve todos los newsletter
 router.get("/prueba", async (req, res) => {
 	try {
-		await sendEmailUpdateStock(1)
-		res.json("lalalalalal")
-		
+		await sendEmailUpdateStock(1);
+		res.json("lalalalalal");
 	} catch (error) {
-		console.log(error)
+		console.log(error);
 		res.json({ message: "Could not get newsletters" });
 	}
 });
-
 
 //Suscribe al user al Newsletter
 router.post("/:userId/subscribe", async (req, res) => {
@@ -166,9 +170,8 @@ router.post("/:userId/unsubscribe", async (req, res) => {
 	}
 });
 
-//Cuando se renueva el stock de un producto, 
+//Cuando se renueva el stock de un producto,
 //manda un email a los que tienen el producto en su wishlist
 
-
-module.exports = { sendEmailUpdateStock }
+module.exports = { sendEmailUpdateStock };
 module.exports = router;
