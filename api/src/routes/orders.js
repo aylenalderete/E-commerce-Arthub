@@ -1,6 +1,6 @@
 const server = require("express").Router();
 const nodemailer = require("nodemailer")
-const {google} = require("googleapis")
+const { google } = require("googleapis")
 const {
     User,
     Category,
@@ -12,27 +12,27 @@ const {
 const mercadopago = require('mercadopago');
 const { TOKEN_MP } = process.env;
 
-//Configuracion para envío de mail
+// Configuracion para envío de mail
 
 const CLIENT_ID = '58229968491-6sjdcgkqh0uog45rabbitouniqs182ch.apps.googleusercontent.com'
 const CLIENT_SECRET = 'WqmGTBctdvzddpFsmu0_MwBV'
 const REDIRECT_URI = 'https://developers.google.com/oauthplayground'
 const REFRESH_TOKEN = '1//04VjdAu7ftOspCgYIARAAGAQSNwF-L9Irxx8NT_J7Zbe-8ahhQWzuEL5JdKgNFPc3cskLeZzmAOHquYKdxgMC0gv53CChhMqLrao'
 
-const oAuth2Client = new google.auth.OAuth2(CLIENT_ID,CLIENT_SECRET,REDIRECT_URI)
-oAuth2Client.setCredentials({refresh_token:REFRESH_TOKEN})
+const oAuth2Client = new google.auth.OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI)
+oAuth2Client.setCredentials({ refresh_token: REFRESH_TOKEN })
 
-async function sendEmail (subject,body,to){
-    try{
+async function sendEmail(subject, body, to) {
+    try {
         const accessToken = await oAuth2Client.getAccessToken()
 
         const transport = nodemailer.createTransport({
             service: 'gmail',
             auth: {
                 type: 'OAuth2',
-                user:'andres2661991@gmail.com',
+                user: 'andres2661991@gmail.com',
                 clientId: CLIENT_ID,
-                clientSecret:CLIENT_SECRET,
+                clientSecret: CLIENT_SECRET,
                 refreshToken: REFRESH_TOKEN,
                 accessToken: accessToken
             }
@@ -41,38 +41,38 @@ async function sendEmail (subject,body,to){
         const mailOptions = {
 
             from: 'ArtHub <andres2661991@gmail.com>',
-            to :to,
-            subject:subject ,
-            html:body
+            to: to,
+            subject: subject,
+            html: body
         }
 
         const result = await transport.sendMail(mailOptions)
         return result
 
-    }catch (err){
+    } catch (err) {
         console.log(err)
         return err
     }
 }
 
-// MERCADO PAGO
+// Mercado Pago
 
 mercadopago.configure({
     access_token: TOKEN_MP
 });
 
 server.post('/mercadopago', async (req, res) => {
-    const { cart, idOrder, email , adress} = req.body;
+    const { cart, idOrder, email, address } = req.body;
     const order = parseInt(idOrder);
 
-    console.log(adress)
+    console.log(address)
 
-    console.log(typeof adress)
+    console.log(typeof address)
 
-    var inputAndress = adress.provincia + ' '+
-                       adress.localidad + ' '+
-                       adress.calle + ' '+
-                       adress.numero;
+    var inputAndress = address.provincia + ' ' +
+        address.localidad + ' ' +
+        address.calle + ' ' +
+        address.numero;
 
     let productsCart = cart.map(p => ({
         id: p.product.id_product,
@@ -92,7 +92,7 @@ server.post('/mercadopago', async (req, res) => {
                 pending: `http://localhost:3001/orders/mercadopago/pagos/${email}`,
                 failure: `http://localhost:3001/orders/mercadopago/pagos/${email}`,
             },
-            auto_return:'approved',
+            auto_return: 'approved',
         };
 
         const response = await mercadopago.preferences.create(preference)
@@ -100,7 +100,7 @@ server.post('/mercadopago', async (req, res) => {
         Shoppingcart.findByPk(idOrder)
             .then((order) => {
                 order.payment_link = response.body.init_point
-                order.adress = inputAndress
+                order.address = inputAndress
                 order.save()
             })
 
@@ -117,10 +117,6 @@ server.get("/mercadopago/pagos/:email", (req, res) => {
     const external_reference = req.query.external_reference
     const merchant_order_id = req.query.merchant_order_id
     const payment_method = 'mercadopago'
-
-    console.log('ESTO ES EXTERNAL REFERENCE',external_reference)
-
-    //Aquí edito el status de mi orden
 
     Shoppingcart.findByPk(external_reference, { include: [{ model: Lineorder, include: [{ model: Product }] }] })
         .then((order) => {
@@ -147,37 +143,31 @@ server.get("/mercadopago/pagos/:email", (req, res) => {
                 .then((_) => {
                     console.info('redirect success')
                     if (order.state === "fullfilled") {
-                        // agregar pop up compra realizada con exito
-                        //Envío de mail
                         const body = `<div>Hola,</div>
                                       <div>Tu compra se ha realizado con éxito</div>
                                       <div>El número de orden es : ${external_reference}</div>
                                       <div><h3>artHub</h3></div>
                                       <div>arte en su máxima expresión</div>`
-                        sendEmail('Compra exitosa',body,req.params.email)
+                        sendEmail('Compra exitosa', body, req.params.email)
                         return res.redirect(`http://localhost:3000/carritocomprado/${external_reference}/fullfilled`)
                     } else {
-                        // agregar pop up compra en estado pendiente
                         return res.redirect(`http://localhost:3000/carritocomprado/${external_reference}/pending`)
                     }
                 })
                 .catch((err) => {
-                    // console.error('Error al editar estado de la orden', err)
                     return res.redirect(`http://localhost:3000/miperfil`)
                 })
         })
         .catch(err => {
-            // console.error('Error al encontrar la orden', err)
             return res.redirect(`http://localhost:3000`)
         })
 
 })
 
-// FIN MERCADO PAGO
+// Fin Mercado Pago
 
 // 1: GET /orders
 // Esta ruta puede recibir el query string status y deberá devolver sólo las ordenes con ese status
-
 server.get("/", async (req, res) => {
     const { status } = req.query;
 
@@ -223,7 +213,7 @@ server.get("/", async (req, res) => {
 });
 
 // 2: GET /orders/:id
-// Ruta que retorne una orden en particular
+// Ruta que retorna una orden en particular
 server.get("/:id", async (req, res) => {
     const { id } = req.params;
 
@@ -250,7 +240,7 @@ server.get("/:id", async (req, res) => {
 });
 
 // 3: PUT /orders/:id
-// Ruta para modificar una Orden
+// Ruta para modificar una orden
 
 server.put("/:id", async (req, res) => {
     try {

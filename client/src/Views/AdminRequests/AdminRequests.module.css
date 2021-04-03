@@ -4,13 +4,40 @@
     min-height: 100vh;
 }
 
-.tableContainer{
-    width: 100%;
+.secondContainer {
+    align-items: center;
+    justify-content: center;
     display: flex;
     flex-direction: column;
+}
+
+.requestsContainer {
+    display: flex;
+    flex-wrap: wrap;
     align-items: center;
     justify-content: center;
 }
+
+.button{
+    background-color: transparent;
+    border:1px solid white;
+    padding: 5px 20px;
+    color: white;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+.requestContainer {
+    width:fit-content;
+    justify-content: space-between;
+    align-items: center;
+    border:1px solid white;
+    margin:10px;
+    font-size: 1rem;
+    padding: 1em 1em;
+    width: 40%;
+}
+
 
 .orderContainer{
     display: flex;

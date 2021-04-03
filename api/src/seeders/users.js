@@ -159,9 +159,9 @@ const arrayOfUsers = [
     {
         username: "matias",
         name: "Matias",
-        lastname: "Cheverry",
+        lastname: "Cheverri",
         profilepic: "https://i.imgur.com/LBFq1of.png",
-        email: "matiascheverry24@gmail.com",
+        email: "matias@gmail.com",
         password: "KlK738j%$%/(dasd",
         birth: 26061993,
         type: "user",
@@ -213,6 +213,7 @@ const arrayOfUsers = [
         birth: 21021999,
         type: "admin",
         state: "approved",
+        twoFactor: "",
     },
 ];
 
