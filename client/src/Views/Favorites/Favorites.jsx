@@ -41,6 +41,7 @@ export default function Favorites() {
                                 key={p.id_product}
                                 price={p.price}
                                 stock={p.stock}
+                                categories={p.categories}
                             // setFlag={setFlag}
                             />
                         ))

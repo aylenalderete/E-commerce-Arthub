@@ -16,6 +16,7 @@ function ArtCard({ name, pic, artist, id, idArtist, price, stock, setFlag, categ
 
   const userType = useSelector((state) => state.userData.type);
   const userData = useSelector((state) => state.userData);
+  
   const offers = useSelector((state) => state.offers);
 
   const [currentOffer, setCurrentOffer] = useState({});

@@ -34,6 +34,7 @@ function ArtistsProducts() {
                     id={piece.id_product}
                     userId={piece.userId}
                     key={piece.id_product}
+                    categories={piece.categories}
                     />
                     ))}
                 </div>
