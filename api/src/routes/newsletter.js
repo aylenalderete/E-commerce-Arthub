@@ -1,5 +1,12 @@
 const { Router } = require("express");
-const { User, Newsletter, Wishlist, Product } = require("../db.js");
+const {
+	User,
+	Newsletter,
+	Wishlist,
+	Product,
+	Image,
+	Category,
+} = require("../db.js");
 const router = Router();
 const path = require("path");
 
@@ -50,13 +57,7 @@ async function sendEmail(subject, body, to) {
 		};
 
 		transport.use("compile", hbs(handlebarOptions));
-		// const mailOptions = {
-		// 	from: "ArtHub <andres2661991@gmail.com>",
-		// 	to: to,
-		// 	subject: subject,
-		// 	template: body,
-		// };
-		//TEST
+
 		var source = fs.readFileSync(
 			path.join(__dirname, "templates/template.handlebars"),
 			"utf8"
@@ -65,8 +66,8 @@ async function sendEmail(subject, body, to) {
 		const mailOptions = {
 			from: "ArtHub <andres2661991@gmail.com>",
 			to: to,
-			subject: subject,
-			html: template(body), // Process template with locals - {passwordResetAddress}
+			subject: body.title,
+			html: template({ body }), // Process template with locals - {passwordResetAddress}
 		};
 		//TEST
 
@@ -98,7 +99,11 @@ const sendEmailUpdateStock = async (idProduct) => {
 	const search = await Wishlist.findAll({
 		where: { productIdProduct: idProduct },
 	});
+	const product = await Product.findByPk(parseInt(idProduct), {
+		include: [Image],
+	});
 	console.log("-------------------------");
+	console.log("SE ENVIARAN EMAILS A :");
 	if (search && search.length > 0) {
 		let emailList = await Promise.all(
 			search.map(async (user) => {
@@ -107,7 +112,18 @@ const sendEmailUpdateStock = async (idProduct) => {
 			})
 		);
 		console.log(emailList);
-		const emailBody = "xdxdxdxdxdxdxd";
+		// const emailBody = "xdxdxdxdxdxdxd";
+
+		const emailBody = {
+			title: "Un producto de tu wishList ahora esta en stock!",
+			product: {
+				title: product.title,
+				image: product.images[0].dataValues.url,
+				price: product.price,
+				description: product.description,
+				stock: product.stock,
+			},
+		};
 		const emailSubject = "Whislist";
 		emailList.forEach((email) => {
 			sendEmail(emailSubject, emailBody, email);
@@ -117,9 +133,9 @@ const sendEmailUpdateStock = async (idProduct) => {
 };
 
 //RUTA DE PRUEBA ELIMINAR - INICIO >>>>
-router.get("/prueba", async (req, res) => {
+router.get("/prueba/:idProduct", async (req, res) => {
 	try {
-		await sendEmailUpdateStock(1);
+		await sendEmailUpdateStock(parseInt(req.params.idProduct));
 		res.json("funcionó");
 	} catch (error) {
 		console.log(error);
