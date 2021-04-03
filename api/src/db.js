@@ -48,6 +48,7 @@ const {
 	Lineorder,
 	Shoppingcart,
 	Review,
+	Wishlist,
 	Request,
 	Auction,
 	Auctionbuyer,
@@ -61,6 +62,12 @@ Image.belongsTo(Product);
 
 Product.belongsToMany(Category, { through: "productcategory" });
 Category.belongsToMany(Product, { through: "productcategory" });
+
+Product.hasMany(Wishlist);
+Wishlist.belongsTo(Product);
+
+User.hasMany(Wishlist);
+Wishlist.belongsTo(User)
 
 User.hasMany(Product, {
 	foreignKey: { allowNull: false },

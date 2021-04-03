@@ -72,7 +72,6 @@ function ArtPiece({ artId }) {
   const dispatch = useDispatch();
   // state for reviews 
   const reviews = useSelector(state => state.reviewsProduct.reviews);
-  console.log(reviews)
 
   // contar en el array la lenght para ver cuantos usuarios dejaron reviews 
   // sumar todo y divirlo por la cantidad de usuarios 

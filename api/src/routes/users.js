@@ -9,7 +9,8 @@ const {
 	Shoppingcart,
 	Lineorder,
 	Product,
-	Review
+	Review,
+	Wishlist
 } = require("../db.js");
 
 //Variables usadas para envío de sms
@@ -114,6 +115,7 @@ server.get("/", (req, res) => {
 				"logType"
 			],
 		}).then((result) => {
+
 			res.json(result);
 		});
 	}
@@ -185,11 +187,15 @@ server.post("/", async function (req, res) {
 					birth,
 					type,
 					state: newState,
-				}).then((newuser) => {
+				}).then(async (newuser) => {
 					const token = jwt.sign({ id: newuser.id }, "secret_key", {
 						expiresIn: 60 * 60 * 24,
 					});
 					newuser.password = " ";
+					newuser.dataValues.wishlist = await Wishlist.findAll({
+						attributes: ['productIdProduct'],
+						where: { userId: newuser.id },
+					});
 					let obj = { user: newuser, auth: true, token };
 					console.log(obj);
 					res.json(obj);
@@ -224,6 +230,7 @@ server.get("/:id", (req, res) => {
 			"state",
 		],
 	}).then((result) => {
+
 		res.json(result);
 	});
 });
@@ -502,6 +509,11 @@ server.post("/signin/algo", async (req, res, next) => {
 						expiresIn: 60 * 60 * 24,
 					});
 					user.password = "";
+					user.dataValues.wishlist = await Wishlist.findAll({
+						attributes: ['productIdProduct'],
+						where: { userId: user.id },
+					});
+
 					res.json({
 						user: user,
 						auth: true,
@@ -523,8 +535,13 @@ server.post("/signin/algo", async (req, res, next) => {
 
 server.post("/userdata/token", verifyToken, (req, res, next) => {
 	User.findByPk(req.userId)
-		.then((user) => {
+		.then(async (user) => {
 			user.password = 0;
+			user.dataValues.wishlist = await Wishlist.findAll({
+				attributes: ['productIdProduct'],
+				where: { userId: req.userId },
+			});
+
 			res.json(user);
 		})
 		.catch((err) => {

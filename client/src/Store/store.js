@@ -36,6 +36,7 @@ const initialState = {
         birth: "",
         type: "",
         state: "",
+        wishlist: []
     },
     //carousel states
     carouselActive: 1,
@@ -78,7 +79,7 @@ const initialState = {
     auctions: [],
     createAuction: false,
     deleteAuction: false,
-    auctionView : {}
+    auctionView: {}
 
 
 };
@@ -91,7 +92,7 @@ const reducer = function (state = initialState, action) {
         case "GET_AUCTION_VIEW":
             return {
                 ...state,
-                auctionView : action.payload
+                auctionView: action.payload
             };
         case "GET_PRODUCT_REVIEWS":
             return {
@@ -427,12 +428,29 @@ const reducer = function (state = initialState, action) {
                 linkmp: action.payload
             }
 
+        case 'ADD_FAV':
+            return {
+                ...state,
+                userData: {
+                    ...state.userData,
+                    wishlist: [...state.userData.wishlist, { productIdProduct: action.payload }]
+                }
+            }
+
+        case 'REMOVE_FAV':
+            return {
+                ...state,
+                userData: {
+                    ...state.userData,
+                    wishlist: state.userData.wishlist.filter(p => p.productIdProduct !== action.payload)
+                }
+            }
 
         case 'GET_ARTIST_SALES':
             return {
                 ...state,
                 artistSales: action.payload
-}
+            }
         case 'GET_AUCTIONS':
             return {
                 ...state,
@@ -448,7 +466,7 @@ const reducer = function (state = initialState, action) {
         case 'POP_UP_DELETE_AUCTION':
             return {
                 ...state,
-                deleteAuction:action.payload
+                deleteAuction: action.payload
 
             }
 
