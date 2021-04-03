@@ -6,6 +6,7 @@ import close from '../../Images/cancel.svg'
 import createAuctionPU from '../../Actions/createAuctionPU';
 
 
+
 function CreateAuction(props) {
     const auctions = useSelector(state => state.auctions)
 
@@ -69,9 +70,11 @@ function CreateAuction(props) {
             <button onClick={()=>{onClose()}} className={style.btnCloseDiv}>
                 <img className={style.close} src={close} alt="close edit" />
             </button>
+           
             <div className={style.title}>
             <h1 >Editar subasta</h1>
             </div>
+            
         
             <div>
                 <div className={style.column1}>
