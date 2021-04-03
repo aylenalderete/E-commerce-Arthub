@@ -1,10 +1,8 @@
 const server = require('express').Router();
-const { Auction, Image, User, Category, Auctionbuyer} = require('../db.js');
-
-
+const { Auction, Image, User, Category, Auctionbuyer } = require('../db.js');
 
 server.post('/', async (req, res) => {
-    const { title, description, state, price, userId, percentage, images, categories} = req.body
+    const { title, description, state, price, userId, percentage, images, categories } = req.body
     try {
         const newAuction = await Auction.create({
             title,
@@ -38,14 +36,14 @@ server.get('/', async (req, res) => {
                     ]
                 },
                 {
-                    model:User,
+                    model: User,
                     attributes: [
                         "id",
                         "username"
                     ]
                 },
                 {
-                    model:Category
+                    model: Category
                 }
 
             ],
@@ -63,7 +61,7 @@ server.get('/', async (req, res) => {
 })
 
 server.get('/:idAuction', async (req, res) => {
-    const {idAuction} = req.params
+    const { idAuction } = req.params
 
     await Auction.findOne({
         include: [
@@ -75,19 +73,19 @@ server.get('/:idAuction', async (req, res) => {
                 ]
             },
             {
-                model:User,
+                model: User,
                 attributes: [
                     "id",
                     "username"
                 ]
             },
             {
-                model:Category
+                model: Category
             }
 
         ],
-        where : {
-            id_auction:idAuction
+        where: {
+            id_auction: idAuction
         }
     })
         .then((result) => {
@@ -113,7 +111,7 @@ server.delete('/:idAuction', async (req, res) => {
 
 
 server.post('/:idAuction/:idUser', async (req, res) => {
-    const { idUser,idAuction } = req.params;
+    const { idUser, idAuction } = req.params;
     const { price } = req.body
     try {
         await Auctionbuyer.create({
@@ -127,7 +125,7 @@ server.post('/:idAuction/:idUser', async (req, res) => {
 })
 server.put('/:idAuction', async (req, res) => {
     const { idAuction } = req.params;
-    const {  state, price,  percentage } = req.body
+    const { state, price, percentage } = req.body
     try {
         await Auction.update({
             price,

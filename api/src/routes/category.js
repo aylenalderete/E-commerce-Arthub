@@ -3,7 +3,6 @@ const { Category } = require('../db.js');
 const router = Router();
 
 router.post('/', async (req, res) => {
-
     try {
         let newCategory = await Category.create({
             name: req.body.name,
@@ -43,7 +42,6 @@ router.delete('/:id', async (req, res) => {
 });
 
 router.put('/:id', async (req, res) => {
-
     try {
         let updated = await Category.update({
             name: req.body.name,

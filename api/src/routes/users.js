@@ -124,7 +124,6 @@ server.get("/", (req, res) => {
 
 // 2: Create new user
 server.post("/", async function (req, res) {
-	console.log("entro en la ruta");
 	let {
 		username,
 		name,
@@ -197,13 +196,8 @@ server.post("/", async function (req, res) {
 						where: { userId: newuser.id },
 					});
 					let obj = { user: newuser, auth: true, token };
-					console.log(obj);
 					res.json(obj);
 				});
-				// const img = images.map(url => ({ url }))
-				// const userImage = await Image.bulkCreate(img)
-				// await newUser.setImages(userImage.map(i => i.dataValues.id))
-				// console.log(newUser)
 				console.log("User successfully created");
 			} catch (err) {
 				console.log(err);
@@ -235,6 +229,8 @@ server.get("/:id", (req, res) => {
 	});
 });
 
+
+// 4: Edit user
 server.put("/:id", async (req, res) => {
 
 	var finder = await User.findOne({
@@ -294,8 +290,8 @@ server.put("/:id", async (req, res) => {
 });
 
 
-//SoftDelete
-//To be used only to softDelete users
+// SoftDelete
+// To be used only to softDelete users
 server.put("/softdelete/:id", async (req, res) => {
 
 	try {
@@ -318,40 +314,9 @@ server.put("/softdelete/:id", async (req, res) => {
 });
 
 
-// esta funcion actualiza el precio total del carrito
-async function updateCartTotalPrice(userId) {
-	try {
-		const cartToUpdate = await Shoppingcart.findOne({
-			where: { userId, state: "pending" },
-			include: [
-				{
-					model: Lineorder,
-					include: [{ model: Product, include: [{ model: Image }] }],
-				},
-			],
-		});
-
-		if (cartToUpdate) {
-			var new_total_price = 0;
-			await cartToUpdate.lineorders.map((m) => {
-				var lineorder_total_price = parseInt(m.quantity * m.unit_price);
-				new_total_price += lineorder_total_price;
-			});
-			cartToUpdate.total_price = new_total_price;
-			await cartToUpdate.save();
-		} else {
-			return false;
-		}
-	} catch (e) {
-		console.log(e);
-	}
-}
-
-// 5: Trae la última ORDEN abierta que tenga el usuario.
-// Cuando el usuario haga el checkout, esa orden se cerrará y se creará una nueva orden vacía que este abierta.
+// Trae la última ORDEN abierta que tenga el usuario
 
 server.get("/:idUser/cart", async (req, res) => {
-	await updateCartTotalPrice(req.params.idUser);
 	await Shoppingcart.findOne({
 		where: { userId: req.params.idUser, state: "pending" },
 		include: [
@@ -375,85 +340,6 @@ server.get("/:idUser/cart", async (req, res) => {
 		});
 });
 
-// 6: Vacia el carrito: elimina los lineorders
-// que tenga y setea el precio a cero
-server.delete("/:idUser/cart", async (req, res) => {
-	try {
-		const cartToEmpty = await Shoppingcart.findOne({
-			where: { userId: req.params.idUser, state: "pending" },
-			include: [
-				{
-					model: Lineorder,
-					include: [{ model: Product }],
-				},
-			],
-		});
-		if (cartToEmpty === null) {
-			return res.json({
-				message: "Could not find specified ShoppingCart",
-			});
-		}
-		console.log(cartToEmpty.lineorders);
-		await cartToEmpty.removeLineorders(cartToEmpty.lineorders);
-		cartToEmpty.total_price = 0;
-		await cartToEmpty.save();
-		await cartToEmpty.reload();
-		res.json(cartToEmpty);
-	} catch {
-		(err) => {
-			console.log(err);
-			res.json(err);
-		};
-	}
-});
-
-// 8: Edita linea de orden
-server.put("/:idUser/cart", async (req, res) => {
-	const { idUser: userId } = req.params;
-	const { lineOrderId, quantity } = req.body;
-
-	try {
-		const cartToEdit = await Shoppingcart.findOne({
-			where: { userId, state: "pending" },
-			include: [
-				{
-					model: Lineorder,
-					where: { id_line: lineOrderId },
-				},
-			],
-		});
-		const quantityId = cartToEdit.lineorders[0].id_line;
-		const lineOrderToEdit = await Lineorder.findOne({
-			where: { id_line: quantityId },
-			include: [
-				{
-					model: Product,
-				},
-			],
-		});
-		const stock = parseInt(lineOrderToEdit.product.stock);
-
-		if (quantity > stock) {
-			return res.json({ message: "Not enough stock of this product" });
-		}
-		if (quantity < 1) {
-			return res.json({ message: "Quantity less than 1 is not allowed" });
-		} else {
-			lineOrderToEdit.quantity = parseInt(quantity);
-			await lineOrderToEdit.save();
-			await cartToEdit.save();
-
-			await cartToEdit.reload();
-			await lineOrderToEdit.reload();
-			// console.log(lineOrderToEdit);
-			res.json({ message: "Quantity Updated!" });
-		}
-	} catch (error) {
-		console.log(error);
-		res.status(500).send("Error");
-	}
-});
-
 server.post("/signin/algo", async (req, res, next) => {
 	const { username, password } = req.body;
 
@@ -471,29 +357,31 @@ server.post("/signin/algo", async (req, res, next) => {
 
 				if (comparer) {
 					//Verify by two factor auth
-					if(user.twoFactor){
-						console.log('se ejecuta two factor')
-						var code = Math.trunc(Math.random()*10000)
+					if (user.twoFactor) {
+						var code = Math.trunc(Math.random() * 10000)
 
 						const from = "Andres"
 						const to = user.phoneNumber
-                        const text = `Tu codigo de verificacion de ArtHub es ${code}`  
+						const text = `Tu codigo de verificacion de ArtHub es ${code}`
 
 						vonage.message.sendSms(from, to, text, (err, responseData) => {
 							if (err) {
 								console.log(err);
 								return res.json(err)
 							} else {
-								if(responseData.messages[0]['status'] === "0") {
+								if (responseData.messages[0]['status'] === "0") {
 									console.log("Message sent successfully.");
 
-									let twoToken = jwt.sign({ id: user.id, code}, "secret_key", {
-										expiresIn: 60 })
+									let twoToken = jwt.sign({ id: user.id, code }, "secret_key", {
+										expiresIn: 60
+									})
 
-									return res.json({ auth:false,
-													  token:'',
-													  authTwo:true,
-													  twoToken})
+									return res.json({
+										auth: false,
+										token: '',
+										authTwo: true,
+										twoToken
+									})
 
 								} else {
 									console.log(`Message failed with error: ${responseData.messages[0]['error-text']}`);
@@ -502,24 +390,24 @@ server.post("/signin/algo", async (req, res, next) => {
 							}
 						})
 
-					}else{
+					} else {
 
-					//create token
-					let token = jwt.sign({ id: user.id }, "secret_key", {
-						expiresIn: 60 * 60 * 24,
-					});
-					user.password = "";
-					user.dataValues.wishlist = await Wishlist.findAll({
-						attributes: ['productIdProduct'],
-						where: { userId: user.id },
-					});
+						//create token
+						let token = jwt.sign({ id: user.id }, "secret_key", {
+							expiresIn: 60 * 60 * 24,
+						});
+						user.password = "";
+						user.dataValues.wishlist = await Wishlist.findAll({
+							attributes: ['productIdProduct'],
+							where: { userId: user.id },
+						});
 
-					res.json({
-						user: user,
-						auth: true,
-						token,
-					});
-				   }
+						res.json({
+							user: user,
+							auth: true,
+							token,
+						});
+					}
 				} else {
 					res.json("contraseña incorrecta");
 				}
@@ -550,7 +438,7 @@ server.post("/userdata/token", verifyToken, (req, res, next) => {
 		});
 });
 
-// 9: Retorna todas las ordenes de usuario (id) pasado por params
+// Retorna todas las ordenes de usuario (id) pasado por params
 server.get("/:id/orders", async (req, res) => {
 	const { id } = req.params;
 
@@ -578,41 +466,7 @@ server.get("/:id/orders", async (req, res) => {
 	}
 });
 
-// 10: Elimina lineorder de shopping cart y actualiza precio total de order
-server.delete("/order/:idorder/lineorder/:idlineorder", async (req, res) => {
-	try {
-		await Lineorder.destroy({ where: { id_line: req.params.idlineorder } });
-
-		const cart = await Shoppingcart.findOne({
-			where: { id_order: req.params.idorder },
-			include: [{ model: Lineorder }],
-		});
-		let newTotal = 0;
-		cart.dataValues.lineorders.forEach((element) => {
-			newTotal +=
-				element.dataValues.unit_price * element.dataValues.quantity;
-		});
-
-		Shoppingcart.update(
-			{
-				total_price: newTotal,
-			},
-			{
-				where: { id_order: req.params.idorder },
-			}
-		);
-
-		res.send(`Line order with id ${req.params.idlineorder} was deleted`);
-	} catch {
-		(err) => {
-			console.log(err);
-			res.json(err);
-		};
-	}
-});
-
-
-//Retorna las reviews del usuario
+// Retorna las reviews del usuario
 server.get("/:id/reviews", async (req, res) => {
 	const { id } = req.params;
 	try {
@@ -624,7 +478,6 @@ server.get("/:id/reviews", async (req, res) => {
 				},
 			],
 		});
-		console.log(userReviews);
 		if (userReviews) {
 			return res.json(userReviews);
 		} else {
@@ -636,7 +489,7 @@ server.get("/:id/reviews", async (req, res) => {
 	}
 });
 
-// Crea carrito en base de datos
+// Crea carrito de LS en base de datos
 server.post("/:idUser/newcart", async (req, res) => {
 	const { idUser: userId } = req.params;
 	const { cart } = req.body;
@@ -664,78 +517,7 @@ server.post("/:idUser/newcart", async (req, res) => {
 	}
 })
 
-// 7: Agrega item a carrito
-
-server.post("/:idUser/cart", async (req, res) => {
-	const { idUser: userId } = req.params;
-	const { productId, quantity } = req.body;
-
-	try {
-		//Chequeamos que el usuario exista por ID para avisar en caso contrario
-		const userExists = await User.findByPk(userId);
-		if (!userExists) {
-			res.json({ message: "Could not find user" });
-		}
-		const productToAdd = await Product.findByPk(parseInt(productId));
-		const newLineorder = await Lineorder.create({
-			quantity,
-			unit_price: productToAdd.dataValues.price,
-		});
-
-		let cartNew = await Shoppingcart.findOne({
-			where: {
-				state: "pending",
-				userId,
-			},
-		});
-
-		if (!cartNew) {
-			cartNew = await Shoppingcart.create({
-				state: "pending",
-				total_price:
-					newLineorder.dataValues.unit_price *
-					newLineorder.dataValues.quantity,
-				userId,
-			});
-		} else {
-			cartNew.total_price = cartNew.total_price
-				+ newLineorder.dataValues.unit_price * newLineorder.dataValues.quantity
-
-			await cartNew.save();
-			await cartNew.reload();
-		}
-		//Chequeamos que el producto no este en el shoppingcart para no repetirlo
-		const alreadyInCart = await Shoppingcart.findOne({
-			where: { userId, state: "pending" },
-			include: [
-				{
-					model: Lineorder,
-
-					include: [
-						{ model: Product, where: { id_product: productId } },
-					],
-				},
-			],
-		});
-		// si alreadyInCart existe quiere decir que el producto ya esta en el carrito
-		if (alreadyInCart) {
-			return res.json({
-				message: "This product is already in your ShoppingCart!",
-			});
-		} else {
-			await productToAdd.addLineorder(newLineorder.dataValues.id_line);
-			await cartNew.addLineorder(newLineorder.dataValues.id_line);
-			await cartNew.save();
-			res.json(cartNew);
-		}
-	} catch (error) {
-		res.status(500).send(error);
-	}
-});
-
-
 server.post('/login/facebook', async (req, res) => {
-
 
 	const { username, email, userID, logType } = req.body;
 	const compare = async (userID, passwordDataBase) => {
@@ -779,8 +561,6 @@ server.post('/login/facebook', async (req, res) => {
 
 		const hashPass = await crypter(userID);
 
-
-		console.log('vamos a crear')
 		const newUser = await User.create({
 			username: req.body.name,
 			name: req.body.name,
@@ -853,7 +633,6 @@ server.post("/login/google", async (req, res) => {
 
 		const hashPass = await crypter(userID);
 
-		console.log("vamos a crear");
 		const newUser = await User.create({
 			username: username,
 			name: name,
