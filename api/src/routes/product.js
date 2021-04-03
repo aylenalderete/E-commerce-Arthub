@@ -6,22 +6,15 @@ server.get('/', (req, res) => {
 	Product.findAll(
 		{
 			include: [
-				// Si required es true, no trae todos los productos
-				// Aplicar filtro desde el front
-				// Para que solo se muestren los productos
-				// Con imagen y con categoria
 				{
-					model: Image,
-					// required: true
+					model: Image
 				},
 				{
-					model: Category,
-					// required: true
+					model: Category
 				},
 				{
-					model: User,
-					// required: true
-				} 
+					model: User
+				}
 			]
 		}
 	)
@@ -52,7 +45,6 @@ server.post('/', async function (req, res) {
 		res.json('New product added')
 	}
 	catch (err) {
-		console.log(err);
 		res.status(500).json({ message: err })
 	}
 });
@@ -62,7 +54,7 @@ server.put("/:id", async (req, res) => {
 
 	try {
 
-		await Image.destroy({ where: { productIdProduct: req.params.id }});
+		await Image.destroy({ where: { productIdProduct: req.params.id } });
 
 		const productToEdit = await Product.findByPk(parseInt(req.params.id));
 		productToEdit.title = req.body.title;
@@ -77,7 +69,6 @@ server.put("/:id", async (req, res) => {
 				}
 			})
 				.then(image => {
-					// Agrega imagenes a los productos
 					productToEdit.addImages(image[0].dataValues.id)
 				})
 		})
@@ -86,14 +77,12 @@ server.put("/:id", async (req, res) => {
 
 		await productToEdit.save();
 		const productToReturn = await productToEdit.reload();
-		console.log(productToReturn);
 
 		res.status(200).json(productToReturn);
 	} catch (e) {
 		res.status(400).json({ message: e });
 	}
 });
-
 
 // 4: Delete category from product
 server.delete("/:idProducto/category/:idCategorias", async (req, res) => {
@@ -152,20 +141,21 @@ server.get('/:id', async (req, res) => {
 
 });
 
+// 7: Send products to wishlist 
 server.post('/array', async (req, res) => {
 
 	const { prodIds } = req.body;
 
 	let prods = []
 	for (let i = 0; i < prodIds.length; i++) {
-		prods.push(await Product.findByPk(prodIds[i].productIdProduct, {include: [User, Image]}));
+		prods.push(await Product.findByPk(prodIds[i].productIdProduct, { include: [User, Image] }));
 	}
 	res.json(prods);
 
 });
 
 
-// 7: Add category to product
+// 8: Add category to product
 server.post("/:idProducto/category/:idCategorias", async (req, res) => {
 
 	const idProd = parseInt(req.params.idProducto)
@@ -183,7 +173,7 @@ server.post("/:idProducto/category/:idCategorias", async (req, res) => {
 	}
 });
 
-// 8: Search products from category
+// 9: Search products from category
 server.get('/categorias/:nombrecat', (req, res) => {
 
 	const { nombrecat } = req.params
@@ -217,7 +207,7 @@ server.get('/categorias/:nombrecat', (req, res) => {
 
 })
 
-// 9: Get products by user id
+// 10: Get products by user id
 server.get('/user/:id', (req, res) => {
 
 	const { id } = req.params
@@ -238,37 +228,35 @@ server.post('/:id/review', async (req, res) => {
 	const { description, qualification, userIdClient } = req.body;
 	try {
 		const reviewExists = await Review.findOne({
-			where: {userId : userIdClient},
-			include :[
+			where: { userId: userIdClient },
+			include: [
 				{
-				model: Product,
-				where : {id_product : id}
+					model: Product,
+					where: { id_product: id }
 				}
 			]
 		})
 		console.log(reviewExists)
-		if(!reviewExists){
+		if (!reviewExists) {
 
 			const newReview = await Review.create({
 				description,
 				qualification,
 			})
 			const product = await Product.findByPk(parseInt(id))
-	
+
 			const user = await User.findByPk(parseInt(userIdClient))
-	
+
 			await product.addReview(newReview.dataValues.id_review);
 			await user.addReview(newReview.dataValues.id_review)
-	
-			console.log(newReview)
-	
+
 			res.status(200).json({ message: 'review added successfully' })
-			
+
 		}
-		else{
-			res.json({message:'you have already reviewed this product'})
+		else {
+			res.json({ message: 'you have already reviewed this product' })
 		}
-	
+
 
 	} catch (error) {
 		console.log(error)
@@ -286,13 +274,13 @@ server.get('/:id/review', async (req, res) => {
 			},
 			include: [
 				{
-				model : Review,
-				include: [{ model: User }],
-			},
-			{
-				model : User
-			}
-		]
+					model: Review,
+					include: [{ model: User }],
+				},
+				{
+					model: User
+				}
+			]
 		})
 			.then((result) => {
 				res.json(result)
@@ -324,11 +312,11 @@ server.put('/:id/review/:idReview', async (req, res) => {
 				id_review: idReview,
 			}
 		});
-			
-			
+
+
 		await productReview.save();
 		await productReview.reload();
-		
+
 		res.status(200).json({ message: 'review successfully modified' })
 
 	} catch (error) {
@@ -347,9 +335,9 @@ server.delete("/:id/review/:idReview", async (req, res) => {
 			include: { model: Review },
 		});
 		await productReview.removeReview(idReview);
-		res.json({message:'review successfully removed'});
+		res.json({ message: 'review successfully removed' });
 	} catch (error) {
-		res.status(400).json({message:'Error'});
+		res.status(400).json({ message: 'Error' });
 	}
 });
 
