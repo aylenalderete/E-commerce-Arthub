@@ -37,7 +37,7 @@ module.exports = (sequelize) => {
                     isUrl: true
                 }
             },
-            adress:{
+            address:{
                 type: DataTypes.STRING
             }
         },

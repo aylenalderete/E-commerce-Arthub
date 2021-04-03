@@ -62,17 +62,17 @@ mercadopago.configure({
 });
 
 server.post('/mercadopago', async (req, res) => {
-    const { cart, idOrder, email , adress} = req.body;
+    const { cart, idOrder, email , address} = req.body;
     const order = parseInt(idOrder);
 
-    console.log(adress)
+    console.log(address)
 
-    console.log(typeof adress)
+    console.log(typeof address)
 
-    var inputAndress = adress.provincia + ' '+
-                       adress.localidad + ' '+
-                       adress.calle + ' '+
-                       adress.numero;
+    var inputAndress = address.provincia + ' '+
+                       address.localidad + ' '+
+                       address.calle + ' '+
+                       address.numero;
 
     let productsCart = cart.map(p => ({
         id: p.product.id_product,
@@ -100,7 +100,7 @@ server.post('/mercadopago', async (req, res) => {
         Shoppingcart.findByPk(idOrder)
             .then((order) => {
                 order.payment_link = response.body.init_point
-                order.adress = inputAndress
+                order.address = inputAndress
                 order.save()
             })
 
