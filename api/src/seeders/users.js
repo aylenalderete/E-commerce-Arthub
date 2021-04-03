@@ -210,6 +210,7 @@ const arrayOfUsers = [
     birth: 21021999,
     type: "admin",
     state: "approved",
+    twoFactor: ''
   },
 ];
 
