@@ -29,6 +29,8 @@ export default function Favorites() {
                 <div className={style.cardContainer}>
 
                     {
+                        prodFav.length>0
+                        ?
                         prodFav.map(p => (
                             <ArtCard
                                 name={p.title}
@@ -42,6 +44,8 @@ export default function Favorites() {
                             // setFlag={setFlag}
                             />
                         ))
+                        :
+                        <p>No hay productos en favoritos</p>
                     }
                 </div>
             </div>
