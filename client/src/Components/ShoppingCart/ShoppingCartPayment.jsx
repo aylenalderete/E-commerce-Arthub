@@ -23,7 +23,7 @@ function ShoppingCartPayment() {
     const [loading, setLoading] = useState(false);
     const [redirect, setRedirect] = useState(false);
     const [link, setLink] = useState('');
-    const [adress,setAdress] = useState({localidad:'',
+    const [address,setAddress] = useState({localidad:'',
                                          provincia:'',
                                          calle:'',
                                          numero:''});
@@ -46,7 +46,7 @@ function ShoppingCartPayment() {
                     calle:'',
                     numero:''})
 
-        setAdress({...adress,[name]:value})
+        setAddress({...address,[name]:value})
     }
 
     useEffect(() => {
@@ -57,14 +57,14 @@ function ShoppingCartPayment() {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        if(!adress.provincia){
+        if(!address.provincia){
             setError({...error,provincia:'El campo provincia es requerido'})
-        }else if(!adress.localidad){
+        }else if(!address.localidad){
             setError({...error,localidad:'El campo localidad es requerido'})
             alert('El campo localidad es requerido')
-        }else if(!adress.calle){
+        }else if(!address.calle){
             setError({...error,calle:'El campo calle es requerido'})
-        }else if(!adress.numero){
+        }else if(!address.numero){
             setError({...error,numero:'El campo número es requerido'})
         }else{  
                
@@ -74,7 +74,7 @@ function ShoppingCartPayment() {
                 axios.post(`http://localhost:3001/users/${id}/newcart`, { cart })
                     .then((newCart) => {
 
-                        axios.post(`http://localhost:3001/orders/mercadopago`, { cart, idOrder: newCart.data.id_order,email,adress })
+                        axios.post(`http://localhost:3001/orders/mercadopago`, { cart, idOrder: newCart.data.id_order,email,address })
                             .then(async response => {
                                 // console.log('ESTE ES EL LINK MP',response.data.mpLink);
                                 dispatch(linkSet(response.data.mpLink));
@@ -121,28 +121,28 @@ function ShoppingCartPayment() {
                             <p className={style.label}>Dirección de envío: </p>
                             <div>
                                 <p className={style.label}>Provincia: </p>                                    
-                                <input type='text' value={adress.provincia} name='provincia' onChange={onChange}></input>
+                                <input type='text' value={address.provincia} name='provincia' onChange={onChange}></input>
                                 {error.provincia ? (
                                 <div className={style.link}>{error.provincia}</div>
                                 ) : null}
                             </div>
                             <div>
                                 <p className={style.label}>Localidad: </p>                                    
-                                <input type='text' value={adress.localidad} name='localidad' onChange={onChange}></input>
+                                <input type='text' value={address.localidad} name='localidad' onChange={onChange}></input>
                                 {error.localidad ? (
                                 <div className={style.link}>{error.localidad}</div>
                                 ) : null}
                             </div>
                             <div>
                                 <p className={style.label}>Calle: </p>                                    
-                                <input type='text' value={adress.calle} name='calle' onChange={onChange}></input>
+                                <input type='text' value={address.calle} name='calle' onChange={onChange}></input>
                                 {error.calle ? (
                                 <div className={style.link}>{error.calle}</div>
                                 ) : null}
                             </div>
                             <div>
                                 <p className={style.label}>Número: </p>                                    
-                                <input type='text' value={adress.numero} name='numero' onChange={onChange} className={style.shortInput}></input>
+                                <input type='text' value={address.numero} name='numero' onChange={onChange} className={style.shortInput}></input>
                                 {error.numero ? (
                                 <div className={style.link}>{error.numero}</div>
                                 ) : null}
