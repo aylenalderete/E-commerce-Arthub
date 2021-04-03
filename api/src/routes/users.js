@@ -12,6 +12,16 @@ const {
 	Review,
 	Wishlist
 } = require("../db.js");
+
+//Variables usadas para envío de sms
+
+const Vonage = require('@vonage/server-sdk')
+
+const vonage = new Vonage({
+	apiKey: "d1d5cd67",
+	apiSecret: "DjivGpVI8mxXEGdl"
+})
+
 // retorna compras realizadas a un determinado artista
 server.get("/compras/:iduser", (req, res) => {
 
@@ -456,10 +466,43 @@ server.post("/signin/algo", async (req, res, next) => {
 	})
 		.then(async (user) => {
 			if (user) {
+				//Verify if password is correct
 				const comparer = await compare(password, user.password);
 
 				if (comparer) {
-					//Verify if password is correct
+					//Verify by two factor auth
+					if(user.twoFactor){
+						console.log('se ejecuta two factor')
+						var code = Math.trunc(Math.random()*10000)
+
+						const from = "Andres"
+						const to = user.phoneNumber
+                        const text = `Tu codigo de verificacion de ArtHub es ${code}`  
+
+						vonage.message.sendSms(from, to, text, (err, responseData) => {
+							if (err) {
+								console.log(err);
+								return res.json(err)
+							} else {
+								if(responseData.messages[0]['status'] === "0") {
+									console.log("Message sent successfully.");
+
+									let twoToken = jwt.sign({ id: user.id, code}, "secret_key", {
+										expiresIn: 60 })
+
+									return res.json({ auth:false,
+													  token:'',
+													  authTwo:true,
+													  twoToken})
+
+								} else {
+									console.log(`Message failed with error: ${responseData.messages[0]['error-text']}`);
+									return res.json(`Message failed with error: ${responseData.messages[0]['error-text']}`)
+								}
+							}
+						})
+
+					}else{
 
 					//create token
 					let token = jwt.sign({ id: user.id }, "secret_key", {
@@ -476,6 +519,7 @@ server.post("/signin/algo", async (req, res, next) => {
 						auth: true,
 						token,
 					});
+				   }
 				} else {
 					res.json("contraseña incorrecta");
 				}

@@ -19,6 +19,7 @@ function LogIn() {
 
   const [error, setError] = useState();
   const [redirect, setRedirect] = useState(false);
+  const [redirectAuth, setRedirectAuth] = useState(false);
   const [errorreq, setErrorreq] = useState({
     username : '',
     password : ''
@@ -74,6 +75,10 @@ const submitHandler = async (event) => {
             localStorage.setItem("token", result.data.token);
             setRedirect(true);
             dispatch(signInUsers(result.data));
+          }else if(result.data.authTwo){
+            localStorage.setItem("twoToken", result.data.twoToken);
+            setRedirectAuth(true)
+            alert('El mensaje con el codigo de acceso se ha enviado a tu telefono')
           } else setError(result.data);
         });
     }
@@ -108,6 +113,9 @@ const dispatch = useDispatch()
 if(redirect){
   return <Redirect to="coleccion"></Redirect>;
 }    
+if(redirectAuth){
+  return <Redirect to="twofactor"></Redirect>;
+}
 return (
   <div className={style.mainContainer}>
     <div className={style.alignForm}>
