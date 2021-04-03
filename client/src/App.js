@@ -41,8 +41,7 @@ import AllAuctionsAdmin from './Views/AllAuctionsAdmin/AllAuctionsAdmin'
 import AuctionView from './Components/RequestAuction/auctionView'
 import AdminRequests from './Views/AdminRequests/AdminRequests';
 import RequestAuction from './Components/RequestAuction/requestAuction'
-
-
+import TwoFactorForm from './Components/TwoFactorForm/TwoFactorForm'
 
 function App() {
   const dispatch = useDispatch();
@@ -132,7 +131,7 @@ function App() {
       <Route path="/subastaActual/:id" component={AuctionView}/>
       <Route path="/solicitarSubasta" component={RequestAuction} />
       <Route path="/solicitudes" component={AdminRequests} />
-
+      <Route path="/twofactor" component={TwoFactorForm}/>
 
     </div>
   );

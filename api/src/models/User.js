@@ -56,6 +56,12 @@ module.exports = (sequelize) => {
         logType: {
           type: DataTypes.ENUM(["facebook", "github", "google"]),
         },
+        twoFactor:{
+          type: DataTypes.STRING,
+        },
+        phoneNumber:{
+          type: DataTypes.STRING,
+        }
       },
       {
         timestamps: false,

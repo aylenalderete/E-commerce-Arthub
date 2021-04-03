@@ -9,7 +9,7 @@ const searchuserRouter = require("./searchuser.js")
 const mailer = require("./mailer.js");
 const requestRouter = require("./request.js");
 const auctionRouter = require("./auctions.js");
-
+const twoFactorAuth = require("./twoFactorAuth.js")
 const router = Router();
 
 /// load each router on a route
@@ -24,5 +24,6 @@ router.use("/searchuser", searchuserRouter);
 router.use("/mailer", mailer);
 router.use("/request", requestRouter);
 router.use("/auctions", auctionRouter);
+router.use("/twofactor", twoFactorAuth)
 
 module.exports = router;
