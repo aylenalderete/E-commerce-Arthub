@@ -1,5 +1,6 @@
 const server = require('express').Router();
-const { Auction, Image, User, Category, Auctionbuyer } = require('../db.js');
+const { Auction, Image, User, Category, Auctionb } = require('../db.js');
+
 
 server.post('/', async (req, res) => {
     const { title, description, state, price, userId, percentage, images, categories } = req.body
@@ -112,17 +113,70 @@ server.delete('/:idAuction', async (req, res) => {
 
 server.post('/:idAuction/:idUser', async (req, res) => {
     const { idUser, idAuction } = req.params;
-    const { price } = req.body
+    const { finalPrice } = req.body
     try {
-        await Auctionbuyer.create({
-            idUser,
-            price
+        // const auction = await Auction.findAll({
+        //     include: [
+        //         {
+        //             model: Image,
+        //             attributes: [
+        //                 "id",
+        //                 "url"
+        //             ]
+        //         },
+        //         {
+        //             model: User,
+        //             attributes: [
+        //                 "id",
+        //                 "username"
+        //             ]
+        //         },
+        //         {
+        //             model: Category
+        //         }
+    
+        //     ],
+        //     where: {
+        //         id_auction: idAuction
+        //     }
+
+        // })
+
+        const auctionBuyer =  await Auctionb.create({
+            finalPrice,
+            buyer_id : idUser
         })
-        res.json({ message: 'Auction successfully updated' });
+      await  auctionBuyer.setAuctions(idAuction)
+    await auctionBuyer.setUsers(idUser)
+
+        res.json({ message: 'AuctionBuyer successfully updated' });
     } catch (error) {
         res.status(400).json({ message: 'Error' });
     }
 })
+
+server.get('/:idAuction/:idUser', async (req, res) => {
+    
+    try {
+        Auctionb.findAll({
+            include : [
+                {
+                    model : Auction
+                },
+                {
+                    model : User
+                }
+            ]
+        })
+    .then((result) => {
+        res.json(result)
+    })
+    } catch (error) {
+        res.json({message:'Error'})
+    }
+    
+})
+
 server.put('/:idAuction', async (req, res) => {
     const { idAuction } = req.params;
     const { state, price, percentage } = req.body
