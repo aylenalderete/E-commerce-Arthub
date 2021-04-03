@@ -4,6 +4,8 @@ import {useSelector, useDispatch} from 'react-redux'
 import getAuctions from '../../Actions/getAuctions'
 import deleteAuctionPU from '../../Actions/deleteAuctionPU'
 import close from '../../Images/cancel.svg'
+import {Link} from 'react-router-dom'
+import { useHistory } from "react-router-dom";
 
 
 function DeleteAuction(props) {
@@ -12,6 +14,8 @@ function DeleteAuction(props) {
     const auctions = useSelector(state=> state.auctions)
 
     const dispatch = useDispatch()
+
+    const history = useHistory();
 
     useEffect(() => {
         dispatch(getAuctions())
@@ -45,7 +49,7 @@ function DeleteAuction(props) {
 
         dispatch(deleteAuctionPU(false));
         dispatch(getAuctions())
-        
+        history.push('/miperfil');
     }
 
     const onClose = () =>{
@@ -61,9 +65,11 @@ function DeleteAuction(props) {
                 estás seguro de querer eliminar la subasta?
             </div>        
             <div className = {style.btnSelect}>
+                
                 <button className={style.btn} onClick = {() => handleSubmit()}>
                     eliminar
                 </button>
+                
             </div>
         </div>
     )

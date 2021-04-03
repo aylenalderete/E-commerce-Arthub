@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import style from './countdown.module.css'
 
 
-function Countdown() {
+function Countdown(props) {
 
   const [time, setTime] = useState({
     date: ""
@@ -11,12 +11,13 @@ function Countdown() {
   console.log("año " + time.date.slice(0, 4))
   console.log("mes " + time.date.slice(5, 7))
   console.log("dia " + time.date.slice(8, 10))
-
+  console.log(props.competitor)
   const calculateTimeLeft = () => {
 
-    let difference = +new Date(`${time.date.slice(5, 7)}/${time.date.slice(8, 10)}/${time.date.slice(0, 4)}`) - +new Date();
-    let timeLeft = {};
-    console.log(+new Date)
+    let difference = +new Date(`${time.date.slice(5, 7)} 04 2021`) - +new Date();
+    //let difference = +new Date(`${time.date.slice(5, 7)}/${time.date.slice(8, 10)}/${time.date.slice(0, 4)}`) - +new Date();
+    let timeLeft = {}; 
+  
 
     if (difference > 0) {
       timeLeft = {
@@ -36,7 +37,7 @@ function Countdown() {
 
 
   useEffect(() => {
-    if (time.date) {
+  
       const timer = setTimeout(() => {
         setTimeLeft(calculateTimeLeft());
         setYear(new Date().getFullYear());
@@ -44,9 +45,7 @@ function Countdown() {
 
       // Clear timeout if the component is unmounted
       return () => clearTimeout(timer);
-    } else {
-      console.log("nada")
-    }
+   
 
 
 
@@ -76,7 +75,7 @@ function Countdown() {
 
   return (
     <div>
-      {timerComponents ?
+      {timerComponents.length ?
         <div className={style.containerG}>
           <div className={style.container}>
             <p>{timerComponents[0] ? timerComponents[0] : 0}</p>
@@ -99,7 +98,20 @@ function Countdown() {
             <p className={style.text}>Segundos</p>
           </div>
         </div>
-        : <span>Ganador</span>}
+        : 
+        <div>
+        {
+          !timerComponents ?
+          <span>{() => alert("El ganador es: " + props.competitor)}</span>
+          :
+          <div></div>
+        }
+        </div>
+      }
+
+        
+        
+        
       <input
 
         value={time.date}
