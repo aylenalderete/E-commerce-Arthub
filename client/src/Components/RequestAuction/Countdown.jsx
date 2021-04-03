@@ -1,21 +1,30 @@
 import React, { useEffect, useState } from "react";
 import style from './countdown.module.css'
+import { useHistory } from 'react-router-dom'
 
 
 function Countdown(props) {
+
+  const history = useHistory();
 
   const [time, setTime] = useState({
     date: ""
 
   })
-  console.log("año " + time.date.slice(0, 4))
-  console.log("mes " + time.date.slice(5, 7))
-  console.log("dia " + time.date.slice(8, 10))
-  console.log(props.competitor)
+  
+  if (time.date!==""){
+    localStorage.setItem('año', time.date.slice(0, 4));
+    localStorage.setItem('mes', time.date.slice(5, 7));
+    localStorage.setItem('dia', time.date.slice(8, 10));
+  }
+
+  let anho = parseInt(localStorage.getItem('año'))
+  let mes = parseInt(localStorage.getItem('mes'))
+  let dia = parseInt(localStorage.getItem('dia'))
+
   const calculateTimeLeft = () => {
 
-    let difference = +new Date(`${time.date.slice(5, 7)} 04 2021`) - +new Date();
-    //let difference = +new Date(`${time.date.slice(5, 7)}/${time.date.slice(8, 10)}/${time.date.slice(0, 4)}`) - +new Date();
+    let difference = +new Date(`${mes}/${dia}/${anho}`) - +new Date();
     let timeLeft = {}; 
   
 
@@ -33,37 +42,18 @@ function Countdown(props) {
   }
 
   const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
-  const [year, setYear] = useState();
-
-
+ 
   useEffect(() => {
-  
-      const timer = setTimeout(() => {
-        setTimeLeft(calculateTimeLeft());
-        setYear(new Date().getFullYear());
-      }, 1000);
 
-      // Clear timeout if the component is unmounted
-      return () => clearTimeout(timer);
-   
+    const timer = setTimeout(() => {
+      setTimeLeft(calculateTimeLeft());
+      
+    }, 1000);
+    
+    return () => clearTimeout(timer);
 
+},[timeLeft]);
 
-
-  });
-
-  const timerComponents = [];
-
-  Object.keys(timeLeft).forEach((interval) => {
-    // if (!timeLeft[interval]) {
-    //   return;
-    // }
-
-    timerComponents.push(
-      <span>
-        {timeLeft[interval]}
-      </span>
-    );
-  });
 
   function handleChange(e) {
     setTime({
@@ -72,56 +62,58 @@ function Countdown(props) {
     })
   }
 
+  function clear(){
+    localStorage.clear();
+    history.go(0);
+  }
+
 
   return (
     <div>
-      {timerComponents.length ?
+      {timeLeft ?
         <div className={style.containerG}>
-          <div className={style.container}>
-            <p>{timerComponents[0] ? timerComponents[0] : 0}</p>
-            <br/>
-            <p className={style.text}>Días</p>
-          </div>
-          <div className={style.container}>
-            <p>{timerComponents[1] ? timerComponents[1] : 0}</p>
-            <br/>
-            <p className={style.text}>Horas</p>
-          </div>
-          <div className={style.container}>
-            <p>{timerComponents[2] ? timerComponents[2] : 0}</p>
-            <br/>
-            <p className={style.text}>Minutos</p>
-          </div>
-          <div className={style.container}>
-            <p>{timerComponents[3] ? timerComponents[3] : 0}</p>
-            <br/>
-            <p className={style.text}>Segundos</p>
-          </div>
+        <div className={style.container}>
+          <p>{timeLeft.Dias ? timeLeft.Dias : 0}</p>
+          <br/>
+          <p className={style.text}>Días</p>
         </div>
+        <div className={style.container}>
+          <p>{timeLeft.Horas ? timeLeft.Horas : 0}</p>
+          <br/>
+          <p className={style.text}>Horas</p>
+        </div>
+        <div className={style.container}>
+          <p>{timeLeft.Minutos ? timeLeft.Minutos : 0}</p>
+          <br/>
+          <p className={style.text}>Minutos</p>
+        </div>
+        <div className={style.container}>
+          <p>{timeLeft.Segundos ? timeLeft.Segundos : 0}</p>
+          <br/>
+          <p className={style.text}>Segundos</p>
+        </div>
+      </div>
         : 
         <div>
         {
-          !timerComponents ?
-          <span>{() => alert("El ganador es: " + props.competitor)}</span>
+          !timeLeft ? 
+          <span>{() => alert("El ganador es:... " )}</span>
           :
           <div></div>
         }
         </div>
       }
 
-        
-        
-        
       <input
 
         value={time.date}
         className={style.date}
         name="date"
         onChange={handleChange}
-        placeholder="Fecha de nacimiento"
         type="date"
         required
       />
+      <button onClick={clear}>Reset</button>
     </div>
   );
 }
