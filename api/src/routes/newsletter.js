@@ -6,7 +6,9 @@ const path = require("path");
 //Funcion de enviar email --------------------- INICIO
 
 const nodemailer = require("nodemailer");
+const fs = require("fs");
 const { google } = require("googleapis");
+const Handlebars = require("handlebars");
 const hbs = require("nodemailer-express-handlebars");
 const CLIENT_ID =
 	"58229968491-6sjdcgkqh0uog45rabbitouniqs182ch.apps.googleusercontent.com";
@@ -48,12 +50,25 @@ async function sendEmail(subject, body, to) {
 		};
 
 		transport.use("compile", hbs(handlebarOptions));
+		// const mailOptions = {
+		// 	from: "ArtHub <andres2661991@gmail.com>",
+		// 	to: to,
+		// 	subject: subject,
+		// 	template: body,
+		// };
+		//TEST
+		var source = fs.readFileSync(
+			path.join(__dirname, "templates/template.handlebars"),
+			"utf8"
+		);
+		var template = Handlebars.compile(source);
 		const mailOptions = {
 			from: "ArtHub <andres2661991@gmail.com>",
 			to: to,
 			subject: subject,
-			template: body,
+			html: template(body), // Process template with locals - {passwordResetAddress}
 		};
+		//TEST
 
 		const result = await transport.sendMail(mailOptions);
 		return result;
@@ -77,7 +92,8 @@ router.get("/", (req, res) => {
 		res.status(500).res.json({ message: "Could not get newsletters" });
 	}
 });
-
+// Esta funcion busca los usuarios que tenian el producto en la whishlist y les envia un email avisando
+// Recibe como argumento el id del producto que va a entrar en oferta o que renovo el stock
 const sendEmailUpdateStock = async (idProduct) => {
 	const search = await Wishlist.findAll({
 		where: { productIdProduct: idProduct },
@@ -91,7 +107,7 @@ const sendEmailUpdateStock = async (idProduct) => {
 			})
 		);
 		console.log(emailList);
-		const emailBody = "sub";
+		const emailBody = "xdxdxdxdxdxdxd";
 		const emailSubject = "Whislist";
 		emailList.forEach((email) => {
 			sendEmail(emailSubject, emailBody, email);
@@ -100,16 +116,17 @@ const sendEmailUpdateStock = async (idProduct) => {
 	console.log("-------------------------");
 };
 
-//Devuelve todos los newsletter
+//RUTA DE PRUEBA ELIMINAR - INICIO >>>>
 router.get("/prueba", async (req, res) => {
 	try {
 		await sendEmailUpdateStock(1);
-		res.json("lalalalalal");
+		res.json("funcionó");
 	} catch (error) {
 		console.log(error);
-		res.json({ message: "Could not get newsletters" });
+		res.json({ message: "se rompio algo" });
 	}
 });
+//<<<<RUTA DE PRUEBA ELIMINAR - FIN
 
 //Suscribe al user al Newsletter
 router.post("/:userId/subscribe", async (req, res) => {
