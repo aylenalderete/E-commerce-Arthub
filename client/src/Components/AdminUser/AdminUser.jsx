@@ -7,7 +7,7 @@ import userPic from '../../Images/elcapitan.jpg';
 import CarouselCategories from '../CarouselCategories/carouselCategories';
 import Edit from '../../Images/edit.svg';
 import Add from '../../Images/add-file.svg';
-import noProfPic  from '../Assets/profPic.jpg';
+import noProfPic from '../Assets/profPic.jpg';
 import ProductsAdmin from '../ProductsAdmin/productsAdmin';
 function AdminUser() {
 
@@ -29,29 +29,36 @@ function AdminUser() {
             <br></br>
             <button className={style.editProfile} onClick={() => history.push(`/ordenes/`)}>
               Ordenes </button>
-              <br></br>
+            <br></br>
             <button className={style.editProfile} onClick={() => history.push(`/usuarios/`)}>
               Editar usuarios </button>
+            <br></br>
+            <button className={style.editProfile} onClick={() => history.push(`/subastas/`)}>
+              Subastas </button>
+            <br></br>
+            <button className={style.editProfile} onClick={() => history.push(`/solicitudes/`)}>
+              Solicitudes </button>
+
 
           </div>
           <div className={style.containerPic}>
-            <img className={style.userPic} src={userData.profilepic ? userData.profilepic : noProfPic } alt='User Pic'/>
-            <button onClick={()=> history.push('/editarperfil')} className={style.editBtn}>
+            <img className={style.userPic} src={userData.profilepic ? userData.profilepic : noProfPic} alt='User Pic' />
+            <button onClick={() => history.push('/editarperfil')} className={style.editBtn}>
               <img className={style.edit} src={Edit} alt="" />
             </button>
           </div>
         </div>
         <div className={style.categories}>
           <div className={style.alignTitle}>
-          <h2 className={style.title}>Categorias</h2>
-          <Link className={style.linkAdd} to='/crearcategorias'>
-            <img className={style.addCategory} src={Add} alt='Agrega nueva categoría'/>
-            <p className={style.addText}>Agregar categoría</p>
-          </Link>
+            <h2 className={style.title}>Categorias</h2>
+            <Link className={style.linkAdd} to='/crearcategorias'>
+              <img className={style.addCategory} src={Add} alt='Agrega nueva categoría' />
+              <p className={style.addText}>Agregar categoría</p>
+            </Link>
           </div>
           <CarouselCategories />
           <Link className={style.link} to='/categorias'>Administrar todas</Link>
-           <ProductsAdmin/>
+          <ProductsAdmin />
         </div>
       </div>
 

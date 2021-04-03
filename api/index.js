@@ -27,6 +27,7 @@ const {
   User,
   Shoppingcart,
   Lineorder,
+  Auction,
 } = require("./src/db.js");
 
 // Categorias
@@ -40,6 +41,9 @@ const arrayOfUsers = require("./src/seeders/users.js");
 const arrayShopping = require("./src/seeders/shoppingcart.js");
 const arrayOfShoppingcart = require("./src/seeders/shoppingcart.js");
 
+//Auctions
+const arrayAuctions = require("./src/seeders/auctions.js")
+
 // Syncing all the models at once.
 conn.sync({ force: true }).then(() => {
   server.listen(3001, () => {
@@ -47,7 +51,12 @@ conn.sync({ force: true }).then(() => {
   });
   // Creacion de usuarios
   const seeder = async function () {
-    await User.bulkCreate(arrayOfUsers)
+    // await Auction.bulkCreate(arrayAuctions)
+    //   .then(async () => {
+    //       console.log("Auctions created");
+    //       // Creacion de categorias
+         await User.bulkCreate(arrayOfUsers)
+      // })
       .then(async () => {
         console.log("Users created");
         // Creacion de categorias
