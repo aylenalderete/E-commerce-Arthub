@@ -12,10 +12,32 @@ import { addItem, getOrCreateCart } from "../../Actions/shoppingCart"
 import { useHistory } from 'react-router';
 import { addFav, removeFav } from '../../Actions/wishlist';
 
-function ArtCard({ name, pic, artist, id, idArtist, price, stock, setFlag }) {
+function ArtCard({ name, pic, artist, id, idArtist, price, stock, setFlag, categories }) {
 
   const userType = useSelector((state) => state.userData.type);
   const userData = useSelector((state) => state.userData);
+  const offers = useSelector((state) => state.offers);
+
+  const [currentOffer, setCurrentOffer] = useState({});
+  const [isInOffer, setIsInOffer] = useState(false);
+
+  const date = new Date();
+
+  useEffect(() => {
+    const matchCat = () => {
+      categories.forEach(cat => {
+        offers.forEach(offer => {
+          if (+offer.categoryId === +cat.id && +offer.day === +date.getDay()) {
+            console.log('entro');
+            setCurrentOffer(offer);
+            setIsInOffer(true);
+          }
+        });
+      });
+    }
+    matchCat();
+
+  }, [offers]);
 
   const history = useHistory();
   const dispatch = useDispatch();
@@ -43,14 +65,14 @@ function ArtCard({ name, pic, artist, id, idArtist, price, stock, setFlag }) {
   }
 
   // Wishlist
-  function handleAddFav(idprod){
+  function handleAddFav(idprod) {
     dispatch(addFav(idprod, userData.id))
   }
 
-  function handleRemoveFav(idprod){
+  function handleRemoveFav(idprod) {
     dispatch(removeFav(idprod, userData.id))
   }
-
+  const newPrice = isInOffer ? price - price * currentOffer.discount / 100 : price;
   // if user is unlogged or buyer type
   if (!userType || userType === "user") {
     return (
@@ -64,12 +86,14 @@ function ArtCard({ name, pic, artist, id, idArtist, price, stock, setFlag }) {
           <Link className={style.linksA} to={`/coleccion/${id}`}>
             <h5 className={style.name}>{name}</h5>
           </Link>
-          <h5 className={style.text}>Precio: {"$ " + price}</h5>
+          {/* <h5 className={style.text}>Precio: {"$ " + price}</h5> */}
+          <h5 className={style.text}>Precio: $ { newPrice }{isInOffer && `${currentOffer.discount}% off!!!!`}</h5>
+
           {stock > 0 ? (
             <h5 className={style.text}>{`Stock: ${stock}`}</h5>
           ) : (
-              <h5 className={style.noStock}>Sin stock</h5>
-            )}
+            <h5 className={style.noStock}>Sin stock</h5>
+          )}
           <Link className={style.linksA} to={`/artistas/${idArtist}`}>
             <h5 className={style.artist}>Artista: {artist}</h5>
           </Link>
@@ -86,13 +110,13 @@ function ArtCard({ name, pic, artist, id, idArtist, price, stock, setFlag }) {
           {
             userType === "user" && !userData.wishlist.find(p => p.productIdProduct === id) &&
             <button className={style.btnFav} onClick={() => handleAddFav(id)}>
-              <i  class="far fa-heart"></i>
+              <i class="far fa-heart"></i>
             </button>
           }
-           {
+          {
             userType === "user" && userData.wishlist.find(p => p.productIdProduct === id) &&
             <button className={`${style.btnFav} ${style.pink}`} onClick={() => handleRemoveFav(id)}>
-              <i  class="fas fa-heart"></i>
+              <i class="fas fa-heart"></i>
             </button>
           }
 
@@ -134,7 +158,9 @@ function ArtCard({ name, pic, artist, id, idArtist, price, stock, setFlag }) {
           <h5 className={style.text}>
             {stock > 0 ? `Stock: ${stock}` : "Producto no disponible"}
           </h5>
-          <h5 className={style.text}>Precio: {"$ " + price}</h5>
+          {/* <h5 className={style.text}>Precio: {"$ " + price}</h5> */}
+          <h5 className={style.text}>Precio: $ { newPrice } {isInOffer && `${currentOffer.discount}% off!!!!`}</h5>
+
           <Link className={style.linksA} to={`/artistas/${idArtist}`}>
             <h5 className={style.text}>Artista: {artist}</h5>
           </Link>
@@ -177,8 +203,8 @@ function ArtCard({ name, pic, artist, id, idArtist, price, stock, setFlag }) {
           {stock > 0 ? (
             <h5 className={style.text}>{`Stock: ${stock}`}</h5>
           ) : (
-              <h5 className={style.noStock}>Sin stock</h5>
-            )}
+            <h5 className={style.noStock}>Sin stock</h5>
+          )}
           <Link className={style.linksA} to={`/artistas/${idArtist}`}>
             <h5 className={style.artist}>Artista: {artist}</h5>
           </Link>
