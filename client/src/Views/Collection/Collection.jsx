@@ -109,6 +109,7 @@ function Collection() {
           price={piece.price}
           stock={piece.stock}
           setFlag={setFlag}
+          categories={piece.categories}
         />
       );
     });

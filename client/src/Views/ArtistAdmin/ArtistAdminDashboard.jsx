@@ -31,7 +31,7 @@ function ArtistAdminDashboard() {
                 <div className={style.cards}>
                     {console.log(AdminProducts)}
                     {AdminProducts.map((p) => (
-                        <ArtCard pic={p.images[0]?.url} name={p.title} id={p.id_product} admin={true}/>
+                        <ArtCard pic={p.images[0]?.url} name={p.title} id={p.id_product} admin={true} categories={p.categories}/>
                     ))}
                 </div>
             </div>

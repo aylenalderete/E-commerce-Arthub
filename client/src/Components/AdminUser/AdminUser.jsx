@@ -134,6 +134,9 @@ function AdminUser() {
             <br></br>
             <button className={style.editProfile} onClick={() => history.push(`/solicitudes/`)}>
               Solicitudes </button>
+            <br></br>
+            <button className={style.editProfile} onClick={() => history.push(`/ofertas/`)}>
+              Ofertas </button>
             {/* Autenticacion de dos factores */}
             {!(userData.twoFactor) && !inputPhone.deactivate ?
               <div>
