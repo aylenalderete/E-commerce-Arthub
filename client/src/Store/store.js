@@ -22,7 +22,7 @@ const initialState = {
     artistsProducts: [],
     //filters states
     isActiveFilters: false,
-
+    suggestions: [],
     // Carrito
 
     cart: JSON.parse(localStorage.getItem('cart')) || [],
@@ -91,6 +91,7 @@ const initialState = {
 const reducer = function (state = initialState, action) {
 
     switch (action.type) {
+
         //aca crear los switch cases de cada action
         case "GET_AUCTION_VIEW":
             return {
@@ -137,6 +138,12 @@ const reducer = function (state = initialState, action) {
                 ...state,
                 search: action.payload,
             };
+         case "GET_SUGGESTIONS":
+        
+          return {
+            ...state,
+            suggestions: action.payload,
+          };
 
         case "GET_INITIAL_PRODUCTS":
             return {
@@ -482,6 +489,7 @@ const reducer = function (state = initialState, action) {
 
         default:
             return state;
+
     }
 
 };
