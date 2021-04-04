@@ -6,11 +6,11 @@ import { useSelector, useDispatch } from 'react-redux';
 import signOutUsers from '../../Actions/signOutUsers'
 import profPic from '../Assets/profPic.jpg'
 
-import getAuctionView from '../../Actions/getAuctionView'
+import getAuctions from '../../Actions/getAuctions'
 
 function NavBar({ renderTop }) {
   const loggedUser = useSelector(state => state.userData);
-  const idAuction = useSelector(state => state.auctionView.id_auction)
+  const Auctions = useSelector(state => state.auctions)
   // console.log(loggedUser);
   const history = useHistory();
   const [redirect, setRedirect] = useState(false);
@@ -26,11 +26,23 @@ function NavBar({ renderTop }) {
   }
 
   useEffect(() => {
-    if(idAuction){
-      dispatch(getAuctionView(idAuction))
-    }
-
+      dispatch(getAuctions())
   },[])
+
+// inicio busqueda del id Auction 
+var idAuction = 0;
+for (var i = 0; i < Auctions.length; i++) {
+    console.log("acaà")
+    if (Auctions[i].state == 'subastando') {
+        console.log("entró")
+        idAuction += Auctions[i].id_auction
+
+    }
+}
+//console.log("idAuction: ",parseInt(idAuction))
+// fin de busqueda del id auction
+
+
 
   if (redirect) return <Redirect to="/ingresar"></Redirect>
   return (
@@ -68,7 +80,7 @@ function NavBar({ renderTop }) {
             <Link className={Styles.link2} to="/faq">
               <p className={Styles.secciones2}>faq</p>
             </Link>
-            {idAuction && loggedUser.username ?
+            {idAuction > 0 && loggedUser.username ?
              <Link className={Styles.link2} to={`/subastaActual/${idAuction}`}>
              <p className={Styles.secciones2}>subasta</p>
            </Link>

@@ -43,6 +43,9 @@ import AuctionView from './Components/RequestAuction/auctionView'
 import AdminRequests from './Views/AdminRequests/AdminRequests';
 import RequestAuction from './Components/RequestAuction/requestAuction'
 import TwoFactorForm from './Components/TwoFactorForm/TwoFactorForm'
+import Offers from './Views/Offers/Offers';
+import getCategories from './Actions/filter';
+import { getOffer } from './Actions/offers';
 
 function App() {
   const dispatch = useDispatch();
@@ -72,6 +75,9 @@ function App() {
       }
     }
     request();
+    dispatch(getCategories());
+    dispatch(getOffer());
+
   }, []);
 
   return (
@@ -134,6 +140,8 @@ function App() {
       <Route path="/solicitarSubasta" component={RequestAuction} />
       <Route path="/solicitudes" component={AdminRequests} />
       <Route path="/twofactor" component={TwoFactorForm}/>
+      <Route path="/ofertas" component={Offers}/>
+
 
     </div>
   );

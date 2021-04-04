@@ -493,7 +493,7 @@ server.get("/:id/reviews", async (req, res) => {
 server.post("/:idUser/newcart", async (req, res) => {
 	const { idUser: userId } = req.params;
 	const { cart } = req.body;
-
+	
 	try {
 		let totalPrice = cart.reduce((acc, prod) => acc + prod.quantity * prod.product.price, 0)
 		let newCart = await Shoppingcart.create({
@@ -505,7 +505,7 @@ server.post("/:idUser/newcart", async (req, res) => {
 			const productToAdd = await Product.findByPk(parseInt(cart[i].product.id_product));
 			const newLineorder = await Lineorder.create({
 				quantity: cart[i].quantity,
-				unit_price: productToAdd.dataValues.price,
+				unit_price: cart[i].product.price,
 			});
 			await productToAdd.addLineorder(newLineorder.dataValues.id_line);
 			await newCart.addLineorder(newLineorder.dataValues.id_line);

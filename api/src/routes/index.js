@@ -12,6 +12,7 @@ const wishlistRouter = require("./wishList.js");
 const newsletter = require("./newsletter.js");
 const requestRouter = require("./request.js");
 const twoFactorAuth = require("./twoFactorAuth.js")
+const offerRouter = require("./offer.js")
 const router = Router();
 
 /// load each router on a route
@@ -29,5 +30,7 @@ router.use("/auctions", auctionRouter);
 router.use("/newsletter", newsletter);
 router.use("/request", requestRouter);
 router.use("/twofactor", twoFactorAuth)
+router.use("/offer", offerRouter)
+
 
 module.exports = router;

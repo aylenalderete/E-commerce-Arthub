@@ -53,11 +53,15 @@ const {
 	Request,
 	Auction,
 	Auctionbuyer,
+	Offer,
 	Auctionb,
 } = sequelize.models;
 
 // Aca vendrian las relaciones
 // Product.hasMany(Reviews);
+
+Category.hasMany(Offer);
+Offer.belongsTo(Category);
 
 Product.hasMany(Image);
 Image.belongsTo(Product);
