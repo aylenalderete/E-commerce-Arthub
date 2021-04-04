@@ -52,6 +52,7 @@ function ArtistProfile({ artistId }) {
                                     key={piece.id_product}
                                     price={piece.price}
                                     stock={piece.stock}
+                                    categories={piece.categories}
                                 />
                             ))
                                 :
