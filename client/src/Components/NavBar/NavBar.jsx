@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import Styles from "./navBar.module.css";
 import { useHistory } from "react-router-dom";
@@ -6,8 +6,11 @@ import { useSelector, useDispatch } from 'react-redux';
 import signOutUsers from '../../Actions/signOutUsers'
 import profPic from '../Assets/profPic.jpg'
 
+import getAuctionView from '../../Actions/getAuctionView'
+
 function NavBar({ renderTop }) {
   const loggedUser = useSelector(state => state.userData);
+  const idAuction = useSelector(state => state.auctionView.id_auction)
   // console.log(loggedUser);
   const history = useHistory();
   const [redirect, setRedirect] = useState(false);
@@ -16,13 +19,19 @@ function NavBar({ renderTop }) {
   }
   const dispatch = useDispatch();
 
-  const auctionView = useSelector(state=>state.auctionView)
-
   function clickHandler() {
     dispatch(signOutUsers())
     localStorage.removeItem('token')
     setRedirect(true)
   }
+
+  useEffect(() => {
+    if(idAuction){
+      dispatch(getAuctionView(idAuction))
+    }
+
+  },[])
+
   if (redirect) return <Redirect to="/ingresar"></Redirect>
   return (
     <nav className={renderTop === true ? Styles.navMain : Styles.navMain2}>
@@ -59,9 +68,13 @@ function NavBar({ renderTop }) {
             <Link className={Styles.link2} to="/faq">
               <p className={Styles.secciones2}>faq</p>
             </Link>
-            <Link className={Styles.link2} to="/subastaActual/:id">
-              <p className={Styles.secciones2}>subasta</p>
-            </Link>
+            {idAuction && loggedUser.username ?
+             <Link className={Styles.link2} to={`/subastaActual/${idAuction}`}>
+             <p className={Styles.secciones2}>subasta</p>
+           </Link>
+           :
+           <></>
+             }
           
 
           </div>

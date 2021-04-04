@@ -36,6 +36,7 @@ import { getUserReviews } from "./Actions/reviews";
 import ShoppingCartPayment from './Components/ShoppingCart/ShoppingCartPayment';
 import ShoppingCartResponse from './Components/ShoppingCart/ShoppingCartResponse';
 import Request from './Views/Request/Request';
+import Favorites from './Views/Favorites/Favorites';
 import MySales from './Views/MySales/mySales';
 import AllAuctionsAdmin from './Views/AllAuctionsAdmin/AllAuctionsAdmin'
 import AuctionView from './Components/RequestAuction/auctionView'
@@ -126,6 +127,7 @@ function App() {
         return null;
       }} />
       <Route path="/solicitar" component={Request} />
+      <Route path="/favoritos" component={Favorites} />
       <Route path="/misventas" component={MySales} />
       <Route path="/subastas" component={AllAuctionsAdmin} />
       <Route path="/subastaActual/:id" component={AuctionView}/>

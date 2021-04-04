@@ -1,12 +1,16 @@
 import axios from 'axios';
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import NavBar from './../../Components/NavBar/NavBar';
 import style from './AdminRequests.module.css'
-import { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { Link, Redirect } from 'react-router-dom';
+import { useHistory } from 'react-router';
 
 function AdminRequests() {
 
     const [requests, setRequests] = useState();
+    const userData = useSelector((state) => state.userData);
+    const history = useHistory();
 
     useEffect(() => {
         axios.get('http://localhost:3001/request/').then(d => setRequests(d.data))
@@ -24,35 +28,44 @@ function AdminRequests() {
             .catch(err => alert(err))
     }
 
-
-    return (
-        <div className={style.mainContainer}>
-            <NavBar renderTop={false} />
-            {
-
-                !requests?.message ? requests?.map(r => (
-                    <div>
-                        <p>Nombre de usuario</p>
-                        {r.user.username}
-                        <p>Nombre y apellido</p>
-                        {r.user.name + " " + r.user.lastname}
-                        <p>Curriculum</p>
-                        {r.cv ? r.cv : null}
-                        <p>Links relevantes</p>
-                        {r.links}
-                        <p>Fundamento</p>
-                        {r.fundament}
-                        <button value='approved' onClick={() => handleApproved(r.id)}>
-                            Aceptar
+    if (userData.type !== "admin") return <Redirect to='/miperfil'></Redirect>
+    if (userData.type === "admin") {
+        return (
+            <div className={style.mainContainer}>
+                <NavBar renderTop={false} />
+                <div className={style.secondContainer}>
+                    <h2 className={style.title}>Solicitudes</h2>
+                    <div className={style.requestsContainer}>
+                        {
+                            !requests?.message ? requests?.map(r => (
+                                <div className={style.requestContainer}>
+                                    <h3>Solicitud #{r.id}</h3>
+                                    <p>Nombre de usuario: {r.user.username}</p>
+                                    <p>Nombre y apellido: {r.user.name + " " + r.user.lastname}</p>
+                                    {/* <Link to={r.cv}>Ver CV</Link> */}
+                                    <button onClick={() => window.location.href = r.cv} className={style.button}>Ver CV</button>
+                                    <p>Links relevantes: {r.links}</p>
+                                    <p>Fundamento: {r.fundament}</p>
+                                    {r.state === "pending" ?
+                                        <div>
+                                            <button className={style.button} value='approved' onClick={() => handleApproved(r.id)}>
+                                                Aceptar
                     </button>
-                        <button value='declined' onClick={() => handleDeclined(r.id)}>
-                            Rechazar
+                                            <button className={style.button} value='declined' onClick={() => handleDeclined(r.id)}>
+                                                Rechazar
                     </button>
+                                        </div>
+                                        : <p> Esta orden ya ha sido evaluada, su estado es "{r.state}".</p>}
+
+                                </div>
+                            )) : <div>No hay solicitudes </div>
+                        }
                     </div>
-                )) : <div>No hay solicitudes </div>
-            }
-        </div>
-    )
+                </div>
+            </div>
+
+        )
+    }
 }
 
 export default AdminRequests

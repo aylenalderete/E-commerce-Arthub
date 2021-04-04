@@ -84,10 +84,11 @@ function AllAuction() {
                                     <div className={style.btnContainer} onClick={() => handleClickEdit(a.id_auction)}>
                                         <img className={style.icon} src={edit} alt="edit item" />
                                     </div>
-
+                              
                                     <div className={style.btnContainer} onClick={() => handleDeleteClick(a.id_auction)} >
-                                        <img className={style.icon} src={deleteauction} alt="edit item" />
+                                        <img className={style.icon} src={deleteauction} alt="delete item" />
                                     </div>
+                                
 
                                     <Link to={`/subastaActual/${a.id_auction}`}>
                                         <div className={style.btnContainer} >

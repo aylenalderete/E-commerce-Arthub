@@ -7,6 +7,7 @@ const userRouter = require("./users.js");
 const orderRouter = require("./orders.js");
 const searchuserRouter = require("./searchuser.js")
 const mailer = require("./mailer.js");
+const wishlistRouter = require("./wishList.js");
 const requestRouter = require("./request.js");
 const auctionRouter = require("./auctions.js");
 const twoFactorAuth = require("./twoFactorAuth.js")
@@ -15,6 +16,7 @@ const router = Router();
 /// load each router on a route
 // i.e: router.use('/auth', authRouter);
 // router.use('/auth', authRouter);
+router.use("/wishlist", wishlistRouter);
 router.use("/products/category", categoryRouter);
 router.use("/products", productRouter);
 router.use("/search", searchRouter);

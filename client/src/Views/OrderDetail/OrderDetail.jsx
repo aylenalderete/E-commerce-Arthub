@@ -96,6 +96,9 @@ function OrderDetail() {
                                         <p className={style.infoProduct}>Producto: {l.product.title} </p>
                                         <p className={style.infoProduct}>Cantidad: {l.quantity}</p>
                                         <p className={style.infoProduct}>Precio: $ {l.product.price}</p>
+                                        <div className={style.address}>
+                                            <p className={style.infoProduct}>Dirección de envío: {orderDetail.address}</p>
+                                        </div>
                                     </div>
 
                                     <div className={style.containerImg}>

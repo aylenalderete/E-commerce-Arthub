@@ -175,7 +175,6 @@ function SignIn() {
 
           if (res.data.auth === true) {
             await dispatch(signInUsers(res.data.user));
-            // console.log('ESTE ES EL CONSOLE LOG', res.data.user.id);
             alert("Cuenta registrada");
             localStorage.setItem("token", res.data.token);
 
