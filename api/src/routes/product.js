@@ -1,6 +1,6 @@
 const server = require('express').Router();
 const { Product, Image, Category, User, productcategory, Review } = require('../db.js');
-const { sendEmailUpdateStock } = require('./newsletter.js');
+const { sendEmailUpdateStock } = require('./newsletterFunction.js');
 
 // 1: Get all products 
 server.get('/', (req, res) => {
@@ -57,12 +57,15 @@ server.post('/', async function (req, res) {
 		res.status(500).json({ message: err })
 	}
 });
+console.log("____________________------------------________________________-")
+console.log(sendEmailUpdateStock)
+console.log("____________________------------------________________________-")
 
 // 3: Edit product
 server.put("/:id", async (req, res) => {
 	productStock = await Product.findByPk(parseInt(req.params.id))	
 	if (productStock.dataValues.stock === 0 && req.body.stock > 0) {
-		 await sendEmailUpdateStock(req.params.id)
+		 await sendEmailUpdateStock(parseInt(req.params.id))
 	}
 	
 	try {

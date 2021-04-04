@@ -199,5 +199,4 @@ router.post("/:userId/unsubscribe", async (req, res) => {
 //Cuando se renueva el stock de un producto,
 //manda un email a los que tienen el producto en su wishlist
 
-module.exports = { sendEmailUpdateStock };
-module.exports = router;
+module.exports = router
