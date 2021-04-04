@@ -29,7 +29,6 @@ function ArtCard({ name, pic, artist, id, idArtist, price, stock, setFlag, categ
       categories.forEach(cat => {
         offers.forEach(offer => {
           if (+offer.categoryId === +cat.id && +offer.day === +date.getDay()) {
-            console.log('entro');
             setCurrentOffer(offer);
             setIsInOffer(true);
           }
@@ -51,7 +50,7 @@ function ArtCard({ name, pic, artist, id, idArtist, price, stock, setFlag, categ
 
   function handleClick(id) {
     // dispatch(getOrCreateCart())
-    dispatch(addItem(id))
+    dispatch(addItem(id, newPrice));
     // history.push('/carrito')
   }
 
@@ -88,7 +87,7 @@ function ArtCard({ name, pic, artist, id, idArtist, price, stock, setFlag, categ
             <h5 className={style.name}>{name}</h5>
           </Link>
           {/* <h5 className={style.text}>Precio: {"$ " + price}</h5> */}
-          <h5 className={style.text}>Precio: $ { newPrice }{isInOffer && `${currentOffer.discount}% off!!!!`}</h5>
+          <h5 className={style.text}>Precio: $ { newPrice } {isInOffer && `${currentOffer.discount}% off!`}</h5>
 
           {stock > 0 ? (
             <h5 className={style.text}>{`Stock: ${stock}`}</h5>
@@ -160,7 +159,7 @@ function ArtCard({ name, pic, artist, id, idArtist, price, stock, setFlag, categ
             {stock > 0 ? `Stock: ${stock}` : "Producto no disponible"}
           </h5>
           {/* <h5 className={style.text}>Precio: {"$ " + price}</h5> */}
-          <h5 className={style.text}>Precio: $ { newPrice } {isInOffer && `${currentOffer.discount}% off!!!!`}</h5>
+          <h5 className={style.text}>Precio: $ { newPrice } {isInOffer && `${currentOffer.discount}% off!`}</h5>
 
           <Link className={style.linksA} to={`/artistas/${idArtist}`}>
             <h5 className={style.text}>Artista: {artist}</h5>

@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export const addItem = (id) => {
+export const addItem = (id,newPrice) => {
     let cart = JSON.parse(localStorage.getItem('cart')) || [];
     if (cart.length === 0) {
         localStorage.setItem("cart", JSON.stringify([]));
@@ -16,8 +16,9 @@ export const addItem = (id) => {
         return function (dispatch) {
             axios.get(`http://localhost:3001/products/${id}`)
                 .then(r => {
-                    item.product = r.data
-                    item.subTotal = item.product.price * item.quantity
+                    r.data.price = newPrice;
+                    item.product = r.data;
+                    item.subTotal = item.product.price * item.quantity;
                     return item
                 })
                 .then(item => {

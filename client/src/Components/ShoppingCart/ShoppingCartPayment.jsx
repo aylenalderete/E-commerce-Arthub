@@ -70,7 +70,6 @@ function ShoppingCartPayment() {
                
             if (method === 'mp') {
                 setLoading(!loading)
-
                 axios.post(`http://localhost:3001/users/${id}/newcart`, { cart })
                     .then((newCart) => {
 
