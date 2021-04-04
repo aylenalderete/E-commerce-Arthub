@@ -49,9 +49,6 @@ server.post('/', async function (req, res) {
 		res.status(500).json({ message: err })
 	}
 });
-console.log("____________________------------------________________________-")
-console.log(sendEmailUpdateStock)
-console.log("____________________------------------________________________-")
 
 // 3: Edit product
 server.put("/:id", async (req, res) => {
