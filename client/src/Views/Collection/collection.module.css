@@ -44,20 +44,53 @@
     outline: none;
 }
 
-.btnFav{
-    border: 1px solid white;
-    background-color: black;
-    color: white;
-    cursor: pointer;
-    margin-left:40px;
-    padding: 10px;
-    text-decoration: none;
-    font-size: 1rem;
+.favContainer{
+    margin-left: 30px;
 }
 
-.btnFav span{
-    margin-left: 10px;
+/* .favContainer:active{
+    transform: scale(0.95);
+} */
+
+.imgFavContainer{
+    display: flex;
+    position: relative;
+
 }
+
+.imgFavContainer span{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: -13px;
+    right: -22px;
+    width: 15px;
+    height: 15px;
+    background-color: #F427EC;
+    color: white;
+    padding: 5px;
+    border-radius: 100px;
+}
+
+.heart{
+    width: 40px;
+    height: 40px;
+}
+
+.imgContainer p{
+    display: none;
+}
+
+.imgContainer:hover p{
+    display: flex;
+}
+
+
+
+/* .btnFav span{
+    margin-left: 10px;
+} */
 
 .linkRefresh{
     cursor:pointer;
@@ -71,6 +104,7 @@
 }
 
 .shContainer{
+    display: flex;
     width:40px;
     height:100%;
     margin-left: 10px;

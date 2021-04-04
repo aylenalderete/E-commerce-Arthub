@@ -72,62 +72,69 @@ function Request() {
     }
 
     // Firebase end
-    // if (loggedUser.type !== 'user') return <Redirect to='/miperfil'></Redirect>
-    return (
-        <div className={Styles.navBar}>
-            <NavBar renderTop={false}></NavBar>
-            <div className={Styles.mainContainer}>
-                <div className={Styles.secondContainer}>
-                    <div className={Styles.divTitle}>
-                        <p>Quiero vender mis productos en arthub</p>
+
+    if (loggedUser.type !== "user") return <Redirect to='/miperfil'></Redirect>
+    if (loggedUser.type === "user") {
+        return (
+            <div className={Styles.navBar}>
+                <NavBar renderTop={false}></NavBar>
+                <div className={Styles.mainContainer}>
+                    <div className={Styles.secondContainer}>
+                        <div className={Styles.divTitle}>
+                            <p>Quiero vender mis productos en arthub</p>
+                            <p className={Styles.paragraph}>Gracias por tu interés en ser parte de arthub!
+                                Completa este formulario para que podamos evaluar tu solicitud</p>
+                        </div>
+                        <form onSubmit={handleSubmit}>
+                            <label className={Styles.alignForm}>
+                                <label for="files">
+                                    <div>
+                                        {loading ? (
+                                            <div></div>
+                                        ) : (
+                                            ""
+                                        )}
+                                    </div>
+                                </label>
+                                <label>
+                                    <div>Curriculum vitae</div>
+                                    <input
+                                        className={Styles.input}
+                                        type="file"
+                                        id="files"
+                                        onChange={handleUpload}
+                                        required
+                                    />
+                                </label>
+                                <label>
+                                    <p>Links relevantes</p>
+                                    <input
+                                        className={Styles.input}
+                                        name="links"
+                                        onChange={handleChange}
+                                        placeholder="Ej: link de RRSS"
+                                        required
+                                    ></input>
+                                </label>
+                                <label>
+                                    <p>¿Por qué queres vender tus productos en arthub?</p>
+                                    <input
+                                        className={Styles.input}
+                                        name="fundament"
+                                        type="textarea"
+                                        onChange={handleChange}
+                                        placeholder="Escribi acá"
+                                        required
+                                    ></input>
+                                </label>
+                            </label>
+                            <button type='submit' className={Styles.btn}>Enviar solicitud</button>
+                        </form>
                     </div>
-                    <form onSubmit={handleSubmit}>
-                        <label className={Styles.alignForm}>
-                            <label for="files">
-                                <div>
-                                    {loading ? (
-                                        <div></div>
-                                    ) : (
-                                        ""
-                                    )}
-                                </div>
-                                <div>Curriculum vitae</div>
-                            </label>
-                            <label>
-                                <input
-                                    className={Styles.input}
-                                    type="file"
-                                    id="files"
-                                    onChange={handleUpload}
-                                />
-                            </label>
-                            <label>
-                                <p>Links relevantes</p>
-                                <input
-                                    className={Styles.input}
-                                    name="links"
-                                    onChange={handleChange}
-                                    placeholder="links relevantes"
-                                    required
-                                ></input>
-                            </label>
-                            <label>
-                                <p>Fundamento</p>
-                                <input
-                                    className={Styles.input}
-                                    name="fundament"
-                                    onChange={handleChange}
-                                    placeholder="fundamento de la solicitud"
-                                    required
-                                ></input>
-                            </label>
-                        </label>
-                        <button type='submit' className={Styles.btn}>Enviar solicitud</button>
-                    </form>
                 </div>
             </div>
-        </div>
-    )
+        )
+    }
 }
 
 export default Request

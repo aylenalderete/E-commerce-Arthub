@@ -168,6 +168,16 @@
     
 }
 
+.checkTwoFactor{
+    display: flex;
+    flex-direction: row;
+    margin-top: 40px;
+}
+
+.inputNumero{
+    margin-top: 20px; 
+}
+
 @keyframes fadein {
     0% {
         opacity:0;
