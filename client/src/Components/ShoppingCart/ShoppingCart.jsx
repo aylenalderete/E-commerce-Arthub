@@ -10,6 +10,7 @@ function ShoppingCart() {
 
 	let cart = useSelector((state) => state.cart);
 	let { id } = useSelector((state) => state.userData);
+	let offers = useSelector((state) => state.offers);
 	const cartL = JSON.parse(localStorage.getItem("cart"));
 	const dispatch = useDispatch();
 	const history = useHistory();
@@ -45,7 +46,7 @@ function ShoppingCart() {
 	return (
 		<div className={style.mainContainer}>
 			<NavBar renderTop={false} />
-			
+
 			<div className={style.secondContainer}>
 
 				<h1 className={style.title}>Paso 1: Detalle del carrito</h1>
@@ -62,15 +63,14 @@ function ShoppingCart() {
 							<div className={style.info}>
 
 								<div>
-									<form>
-										<label className={style.labelInput} htmlFor="discount">Ingrese cupon de descuento: </label>
-										<input className={style.input} id='discount' type="text" />
-										<button className={style.btn} type="submit">Calcular</button>
-									</form>
+									
+									<p className={style.total}>Subtotal: ${total}</p>
+									<p className={style.discount}>Descuento: </p>
+									<p className={style.total}>Total: </p>
+
 								</div>
 
 
-								<p className={style.total}>Subtotal: ${total}</p>
 
 
 								<button className={`${style.btn} ${style.p}`} onClick={() => history.push('/coleccion')}>Volver</button>
