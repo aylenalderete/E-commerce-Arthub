@@ -35,3 +35,46 @@
 
     font-size: 40px;
 }
+span{
+    color:white
+}
+
+.ganador{
+    
+        display: flex;
+        flex-direction: column;
+        align-self: center;
+        border: 1px solid white;
+        margin-top: 3vh;
+        width: 70%;
+        height: 100px;
+        text-align: center;
+   
+}
+
+.hour{
+    margin: 10px 0;
+    color: white;
+    background-color: transparent;
+    cursor: pointer;
+    outline: none;
+    border-bottom: 1px solid white;
+    font-size: 1rem;
+    line-height: 1.9rem;   
+    width: 80px;
+}
+
+.btn{
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-right: 10px;
+    padding-left:10px;
+    margin-top:20px;
+    margin-right: 10px;
+    background-color: transparent;
+    color: white;
+    font-size: 4vh;
+    border:1px solid white;
+    cursor: pointer;
+    margin:20px;
+ }
