@@ -2,6 +2,10 @@
     width:100%;
     display: flex;
     flex-direction: row;
+    min-height: 100vh;
+    
+    
+    
 }
 .wrapper{
     display: flex;
@@ -114,7 +118,9 @@
     align-items: flex-start;
     height: auto;
     border-top: 1px solid white;
-    margin:50px;
+    margin-top:50px;
+    margin-bottom:50px;
+
 }
 .title{
     font-size:2rem;
@@ -157,6 +163,13 @@
     animation: fadein ease 0.5s;
     animation-fill-mode: forwards;
     
+}
+
+.sales{
+    width: 90%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 @keyframes fadein {

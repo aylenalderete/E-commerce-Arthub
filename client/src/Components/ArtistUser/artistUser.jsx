@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import NavBar from '../NavBar/NavBar';
 import Styles from './artistUser.module.css';
 import table from '../BuyUser/buyUser.module.css';
@@ -10,6 +10,7 @@ import Edit from '../../Images/edit.svg';
 import Add from '../../Images/add-file.svg';
 import CarouselCategories from '../CarouselCategories/carouselCategories';
 import getUserOrders from '../../Actions/getUserOrders';
+import Sales from './sales.jsx';
 
 export default function ArtistUser() {
 
@@ -17,10 +18,11 @@ export default function ArtistUser() {
     const artistProducts = useSelector(state => state.artistProducts);
     const userOrders = useSelector(state => state.userOrders);
     const history = useHistory();
-    const dispatch= useDispatch();
+    const dispatch = useDispatch();
 
     useEffect(() => {
         dispatch(getUserOrders(userData.id));
+
     }, []);
 
     return (
@@ -36,12 +38,16 @@ export default function ArtistUser() {
                         <p className={Styles.rol}>Rol:{userData.type} </p>
                         <button className={Styles.editProfile} onClick={() => history.push(`/editarperfil/`)}>
                             Editar perfil </button>
+                        <br></br>
+                        <button className={style.editProfile} onClick={() => history.push(`/solicitarSubasta/`)}>
+                            Solicitar subasta </button>
                     </div>
                     <div className={Styles.containerPic}>
                         <img className={Styles.userPic} src={userData.profilepic ? userData.profilepic : noProfPic} alt='User Pic' />
                         <button onClick={() => history.push('/editarperfil')} className={Styles.editBtn}>
                             <img className={Styles.edit} src={Edit} alt="" />
                         </button>
+                        
                     </div>
                 </div>
                 {/* Productos */}
@@ -85,6 +91,10 @@ export default function ArtistUser() {
                             </p>
                         </div>
                     }
+                </div>
+                {/* Ventas */}
+                <div className={Styles.sales}>
+                    <Sales />
                 </div>
 
             </div>
