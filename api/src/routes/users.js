@@ -541,6 +541,10 @@ server.post('/login/facebook', async (req, res) => {
 			let token = jwt.sign({ id: finder.id }, "secret_key", {
 				expiresIn: 60 * 60 * 24,
 			});
+			finder.dataValues.wishlist = await Wishlist.findAll({
+				attributes: ['productIdProduct'],
+				where: { userId: finder.id },
+			});
 			finder.password = "";
 			res.json({
 				user: finder,
@@ -577,6 +581,10 @@ server.post('/login/facebook', async (req, res) => {
 		})
 
 		newUser.password = ''
+		newUser.dataValues.wishlist = await Wishlist.findAll({
+			attributes: ['productIdProduct'],
+			where: { userId: newUser.id },
+		});
 		res.json({
 			user: newUser,
 			auth: true,
@@ -617,6 +625,11 @@ server.post("/login/google", async (req, res) => {
 				expiresIn: 60 * 60 * 24,
 			});
 			finder.password = "";
+			
+			finder.dataValues.wishlist = await Wishlist.findAll({
+				attributes: ['productIdProduct'],
+				where: { userId: finder.id },
+			});
 			res.json({
 				user: finder,
 				auth: true,
@@ -649,6 +662,10 @@ server.post("/login/google", async (req, res) => {
 		});
 
 		newUser.password = "";
+		newUser.dataValues.wishlist = await Wishlist.findAll({
+			attributes: ['productIdProduct'],
+			where: { userId: newUser.id },
+		});
 		res.json({
 			user: newUser,
 			auth: true,
