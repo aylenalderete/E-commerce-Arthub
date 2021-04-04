@@ -4,7 +4,7 @@ const arrayOfProducts = [
         price: 500,
         description:
             "Parte de la colección de Granja, un pequeño caballo en acuarela.",
-        stock: 3,
+        stock: 0,
         userId: 2,
         images: ["https://i.imgur.com/XVfLCqe.jpg"],
         category: [1],
