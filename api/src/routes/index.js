@@ -8,11 +8,13 @@ const orderRouter = require("./orders.js");
 const searchuserRouter = require("./searchuser.js");
 const mailer = require("./mailer.js");
 const newsletter = require("./newsletter.js");
+const auctionRouter = require("./auctions.js");
 const wishlistRouter = require("./wishList.js");
 const requestRouter = require("./request.js");
 const auctionRouter = require("./auctions.js");
 const twoFactorAuth = require("./twoFactorAuth.js");
 const offerRouter = require("./offer.js");
+
 const router = Router();
 
 /// load each router on a route
@@ -26,9 +28,9 @@ router.use("/users", userRouter);
 router.use("/orders", orderRouter);
 router.use("/searchuser", searchuserRouter);
 router.use("/mailer", mailer);
+router.use("/auctions", auctionRouter);
 router.use("/newsletter", newsletter);
 router.use("/request", requestRouter);
-router.use("/auctions", auctionRouter);
 router.use("/twofactor", twoFactorAuth);
 router.use("/offer", offerRouter);
 
