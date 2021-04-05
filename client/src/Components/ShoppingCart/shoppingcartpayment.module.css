@@ -19,8 +19,6 @@
     border: 2px solid white;
     padding: 30px 50px;
     max-width: 410px;
-    /* width: 460px; */
-
 }
 
 .title{
@@ -57,18 +55,40 @@
     background-color: transparent;
     padding: 5px 10px;
     color: white;
+    font-family: inherit;
 }
+
 .label{
     display: inline-block;
     margin-right: 15px;
+    width: 40%;
+}
+
+.longInput {
+    color:white;
+    margin: 10px 10px;
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid white;
+    padding: 5px 10px;
+    width: 40%;
+    font-size: 1em;
 }
 
 .option{
     background-color: black;
+    font-family: inherit;
 }
 
 .shortInput{
-    width: 40px;
+    width: 20%;
+    color:white;
+    margin: 10px 10px;
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid white;
+    padding: 5px 10px;
+    font-size: 1em;
 }
 
 .link{
