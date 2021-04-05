@@ -139,7 +139,7 @@ const arrayOfUsers = [
     name: "Aylen",
     lastname: "Alderete",
     profilepic: "https://i.imgur.com/LBFq1of.png",
-    email: "aylenalderete@hotmail.com",
+    email: "aylen@mail.com",
     password: "KlK738j%$%/(dasd",
     birth: 02072001,
     type: "user",

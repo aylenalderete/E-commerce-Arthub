@@ -17,12 +17,13 @@ const fs = require("fs");
 const { google } = require("googleapis");
 const Handlebars = require("handlebars");
 const hbs = require("nodemailer-express-handlebars");
-const CLIENT_ID =
-	"58229968491-6sjdcgkqh0uog45rabbitouniqs182ch.apps.googleusercontent.com";
-const CLIENT_SECRET = "WqmGTBctdvzddpFsmu0_MwBV";
-const REDIRECT_URI = "https://developers.google.com/oauthplayground";
-const REFRESH_TOKEN =
-	"1//04fZsdreosgbrCgYIARAAGAQSNwF-L9IrqHuSDMvBIGRnXIkUilPVz99wzLB613MJ_AIIR87ry3-JOW-VXn1YrMuqnEbtPh16jA0";
+const { CLIENT_ID, CLIENT_SECRET, REDIRECT_URI, REFRESH_TOKEN} = process.env
+// const CLIENT_ID =
+// 	"58229968491-6sjdcgkqh0uog45rabbitouniqs182ch.apps.googleusercontent.com";
+// const CLIENT_SECRET = "WqmGTBctdvzddpFsmu0_MwBV";
+// const REDIRECT_URI = "https://developers.google.com/oauthplayground";
+// const REFRESH_TOKEN =
+// 	"1//04fZsdreosgbrCgYIARAAGAQSNwF-L9IrqHuSDMvBIGRnXIkUilPVz99wzLB613MJ_AIIR87ry3-JOW-VXn1YrMuqnEbtPh16jA0";
 const oAuth2Client = new google.auth.OAuth2(
 	CLIENT_ID,
 	CLIENT_SECRET,
@@ -111,9 +112,6 @@ const sendEmailUpdateStock = async (idProduct) => {
 				return userEmail.email;
 			})
 		);
-		console.log(emailList);
-		// const emailBody = "xdxdxdxdxdxdxd";
-
 		const emailBody = {
 			title: "Un producto de tu wishList ahora esta en stock!",
 			product: {
@@ -124,6 +122,7 @@ const sendEmailUpdateStock = async (idProduct) => {
 				stock: product.stock,
 			},
 		};
+		console.log(emailBody)
 		const emailSubject = "Whislist";
 		emailList.forEach((email) => {
 			sendEmail(emailSubject, emailBody, email);
@@ -215,5 +214,4 @@ router.post("/:userId/unsubscribe", async (req, res) => {
 //Cuando se renueva el stock de un producto,
 //manda un email a los que tienen el producto en su wishlist
 
-module.exports = { sendEmailUpdateStock };
 module.exports = router;

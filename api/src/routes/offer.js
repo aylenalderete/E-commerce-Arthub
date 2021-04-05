@@ -18,7 +18,7 @@ server.post('/', async (req, res) => {
     offer[0].discount = discount;
     await offer[0].save();
     //newsletter-wishlist
-    let productsWithOffer = await Product.findAll({
+    let productsWithOffer = await Product.findAll({ 
         include: [
             {
                 model: Category,
