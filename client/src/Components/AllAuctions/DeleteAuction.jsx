@@ -17,6 +17,10 @@ function DeleteAuction(props) {
 
     const history = useHistory();
 
+    const auctionActual = useSelector(state => state.auctionActual)
+
+    const [initialValue, setInitialValue] = useState(auctionActual)
+
     useEffect(() => {
         dispatch(getAuctions())
     }, []);
@@ -39,8 +43,7 @@ function DeleteAuction(props) {
                 .then((res) => {
                     res.json()
                 })     
-                
-                console.log(theAuction.id_auction)
+
 
         } catch (error) {
             console.log(error);
@@ -49,7 +52,9 @@ function DeleteAuction(props) {
 
         dispatch(deleteAuctionPU(false));
         dispatch(getAuctions())
-        history.push('/miperfil');
+        history.push('/subastas');
+        setInitialValue([])
+
     }
 
     const onClose = () =>{

@@ -90,7 +90,6 @@ server.get('/:idAuction', async (req, res) => {
         }
     })
         .then((result) => {
-            console.log(result)
             res.json(result)
         })
 })
@@ -115,41 +114,36 @@ server.post('/:idAuction/:idUser', async (req, res) => {
     const { idUser, idAuction } = req.params;
     const { finalPrice } = req.body
     try {
-        // const auction = await Auction.findAll({
-        //     include: [
-        //         {
-        //             model: Image,
-        //             attributes: [
-        //                 "id",
-        //                 "url"
-        //             ]
-        //         },
-        //         {
-        //             model: User,
-        //             attributes: [
-        //                 "id",
-        //                 "username"
-        //             ]
-        //         },
-        //         {
-        //             model: Category
-        //         }
-    
-        //     ],
-        //     where: {
-        //         id_auction: idAuction
-        //     }
-
-        // })
-
-        const auctionBuyer =  await Auctionb.create({
-            finalPrice,
-            buyer_id : idUser
+        const lastAuction= await Auctionb.findAll({
+            order: [
+                ['finalPrice', 'ASC'],
+            ],
+            include : [
+                {
+                    model : Auction
+                },
+                {
+                    model : User
+                }
+            ],
+            
         })
-      await  auctionBuyer.setAuctions(idAuction)
-    await auctionBuyer.setUsers(idUser)
-
+        // si el ultimo es mas grande que el nuevo final price, no posteo nada
+        if(lastAuction.length === 0 || lastAuction[lastAuction.length-1].dataValues.finalPrice<finalPrice){
+            const auctionBuyer =  await Auctionb.create({
+                finalPrice,
+                buyer_id : idUser,
+                auction_id : idAuction
+            })
+          await  auctionBuyer.setAuctions(idAuction)
+        await auctionBuyer.setUsers(idUser)
         res.json({ message: 'AuctionBuyer successfully updated' });
+        }else{
+            res.json({ message: 'AuctionBuyer could not be updated' });
+        }
+        
+
+       
     } catch (error) {
         res.status(400).json({ message: 'Error' });
     }
@@ -159,6 +153,9 @@ server.get('/:idAuction/:idUser', async (req, res) => {
     
     try {
         Auctionb.findAll({
+            order: [
+                ['finalPrice', 'ASC'],
+            ],
             include : [
                 {
                     model : Auction
@@ -166,10 +163,12 @@ server.get('/:idAuction/:idUser', async (req, res) => {
                 {
                     model : User
                 }
-            ]
+            ],
+            
         })
     .then((result) => {
         res.json(result)
+        
     })
     } catch (error) {
         res.json({message:'Error'})

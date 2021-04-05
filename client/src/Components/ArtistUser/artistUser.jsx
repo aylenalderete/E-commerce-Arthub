@@ -12,6 +12,7 @@ import CarouselCategories from '../CarouselCategories/carouselCategories';
 import getUserOrders from '../../Actions/getUserOrders';
 import Sales from './sales.jsx';
 import axios from 'axios'
+import ArtistAuctions from './artistAuctions'
 
 export default function ArtistUser() {
 
@@ -228,6 +229,11 @@ setErrors({...errors,code:result.data.msg})
                 <div className={Styles.sales}>
                     <Sales />
                 </div>
+                {/* Subastas */}
+                <div className={Styles.sales}>
+                    <ArtistAuctions />
+                </div>
+
 
             </div>
 

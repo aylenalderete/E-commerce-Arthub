@@ -4,7 +4,9 @@ import { useSelector, useDispatch } from "react-redux";
 import NavBar from "../NavBar/NavBar.jsx";
 import getAuctionView from '../../Actions/getAuctionView'
 import Countdown from "./Countdown";
-import axios from "axios";
+import getAuctionPriceTotal from '../../Actions/getAuctionPriceTotal';
+import postAuction from '../../Actions/postAuction'
+
 
 
 export default function AuctionView(props) {
@@ -15,24 +17,32 @@ export default function AuctionView(props) {
     const dispatch = useDispatch();
     const userDataId = useSelector(state => state.userData.id)
     const userDataName = useSelector(state => state.userData.username)
-    console.log(value)
-    useEffect(() => {
+    const totalPrice = useSelector(state => state.auctionActual)
+
+    // const [participants, setParticipants] = useState([])
+
+    // useEffect(
+    //     () => {
+    //         axios
+    //             .get(`http://localhost:3001/`)
+    //             .then((result) => setParticipants(result.data));
+    // }, [])
+
+    useEffect(async () => {
         dispatch(getAuctionView(props.match.params.id))
+       await  dispatch(getAuctionPriceTotal(auctionView.id_auction,userDataId))
     }, [])
 
-    function handleSubmit(element) {
-
-        axios
-            .post(`http://localhost:3001/auctions/${auctionView.id_auction}/${userDataId}`, {
-                finalPrice: auctionView.price > 1000 ? auctionView.price + 100 + value : auctionView.price + 50 + value
-            })
-          
-            .catch((error) => {
-                alert("No se pudo solicitar la subasta");
-                console.log(error);
-            });
-
+  async function handleSubmit(element) {
+    if(totalPrice && totalPrice.length !==0 && totalPrice[totalPrice.length-1].finalPrice){    
+        var finalPrice = totalPrice[totalPrice.length-1].finalPrice >= 1000 ? totalPrice[totalPrice.length-1].finalPrice + 100 : totalPrice[totalPrice.length-1].finalPrice + 50
+    }else{
+        var finalPrice = auctionView.price 
+    }
+     
+        await  dispatch(postAuction(auctionView.id_auction,userDataId, finalPrice))
         setValue(element)
+        dispatch(getAuctionPriceTotal(auctionView.id_auction,userDataId))
     }
 
     function mounthData() {
@@ -55,6 +65,32 @@ export default function AuctionView(props) {
         return newMonth
         
       } 
+
+       // inicio busqueda de precio total
+    var priceTotal = [];
+    var participants = [];
+    for (var i = 0; i < totalPrice.length; i++) {
+        // console.log("acaà")
+        if (totalPrice[i].auction_id == auctionView.id_auction) {
+            // console.log("entró")
+            priceTotal.push(totalPrice[i].finalPrice)
+            participants.push(totalPrice[i].users[0].username)
+            var winner = participants[participants.length-1]
+        }
+        console.log(winner)
+    }
+
+
+
+    
+
+    // console.log(priceTotal[priceTotal.length-1])
+    // if(totalPrice && totalPrice.length !==0 && totalPrice[totalPrice.length-1].finalPrice){    
+    //     console.log(totalPrice[totalPrice.length-1].finalPrice)
+    // }
+    
+
+    // fin de busqueda precio total
    
 
 
@@ -90,24 +126,34 @@ export default function AuctionView(props) {
                             <h1>Subasta {mounthData()} </h1>
                         </div>
                         <div className={style.actual}>
-                            <p>Oferta Actual: {auctionView.price + value} </p>
+                            <p>Oferta Actual: {priceTotal[priceTotal.length-1]} </p>
                         </div>
                         <div className={style.initial}>
-                            <p>Valor Inicial {auctionView.price}</p>
+                            <p>Valor Inicial: {auctionView.price}</p>
                         </div>
                         <div className={style.ofert}>
-                            <p>Siguiente oferta {auctionView.price >= 1000 ?
-                                auctionView.price + 100 + value
-                                : auctionView.price + 50 + value}
+                            <p>Siguiente oferta: {totalPrice && 
+                                totalPrice.length !==0 && totalPrice[totalPrice.length-1].finalPrice ?
+
+                                totalPrice[totalPrice.length-1].finalPrice >= 1000 ? totalPrice[totalPrice.length-1].finalPrice + 100 
+                                : totalPrice[totalPrice.length-1].finalPrice + 50
+                                :
+                                auctionView.price + 100
+                                }
+                            {/* {                                
+                            totalPrice[totalPrice.length-1].finalPrice > 1000 ?
+                             totalPrice[totalPrice.length-1].finalPrice + 100 : 
+                             totalPrice[totalPrice.length-1].finalPrice + 50} */}
+    
                             </p>
                             <div className={style.btnSelect}>
                                 <button className={style.btn} onClick={() => handleSubmit(value + auctionView.percentage)}>Ofertar</button>
                             </div>
                         </div>
                         <div >
-                            <Countdown competitor={userDataName} total = {auctionView.price + value}/>
+                            <Countdown winner={winner} idAuct={auctionView.id_auction}/>
                         </div>
-                    </div>
+                    </div> 
                 </div>
             </div>
         )

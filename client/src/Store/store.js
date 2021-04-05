@@ -80,6 +80,10 @@ const initialState = {
     createAuction: false,
     deleteAuction: false,
     auctionView: {},
+    auctionActual: [],
+
+    //artist auctions
+    artistAuctions: [],
 
     //Offers
     offers: []
@@ -480,11 +484,29 @@ const reducer = function (state = initialState, action) {
 
             }
 
+        case "GET_AUCTION_ACTUAL" :
+            return {
+                ...state,
+                auctionActual : action.payload
+            }
+
+        case "POST_AUCTION" :
+            return{
+                ...state
+            }
+
         case 'SET_OFFER':
             
             return{
                 ...state,
                 offers: action.payload
+            }
+
+        case 'GET_ARTIST_AUCTIONS':
+
+            return{
+                ...state,
+                artistAuctions: action.payload
             }
 
         default:
