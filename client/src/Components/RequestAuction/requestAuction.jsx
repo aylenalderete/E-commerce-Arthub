@@ -218,7 +218,7 @@ if(loggedUser.type !== 'artist' && loggedUser.type !== 'admin') return <Redirect
         <div className={Styles.mainContainer}>
           <div className={Styles.secondContainer}>
             <div className={Styles.divTitle}>
-              <p>Crear Subasta</p>
+              <p>Solicitar subasta</p>
             </div>
             <form className={Styles.formCategory} onSubmit={handleSubmitCat}>
               <div className={Styles.alignForm}>
@@ -228,7 +228,7 @@ if(loggedUser.type !== 'artist' && loggedUser.type !== 'admin') return <Redirect
                   name="categories"
                   value={selectedCat}
                 >
-                    <option>Categorías</option>
+                    <option className={Styles.options}>Categorías</option>
                   {categories.map((c) => (
                     <option
                       onFocus={onFocus}
@@ -333,7 +333,7 @@ if(loggedUser.type !== 'artist' && loggedUser.type !== 'admin') return <Redirect
             </form>
 
             <button className={Styles.btn} onClick={sendProduct}>
-              Crear subasta
+              Solicitar subasta
             </button>
           </div>
         </div>

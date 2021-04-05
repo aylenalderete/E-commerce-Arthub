@@ -64,7 +64,6 @@ function AllAuction() {
                         <th>imagen</th>
                         <th>título</th>
                         <th>artista</th>
-                        <th>descripción</th>
                         <th>estado</th>
                     </tr>
 
@@ -76,7 +75,6 @@ function AllAuction() {
                             </td>
                             <td>{a.title}</td>
                             <td>{a.users[0].username}</td>
-                            <td>{a.description}</td>
                             <td>{a.state}</td>
 
                             <th className={style.th}>
