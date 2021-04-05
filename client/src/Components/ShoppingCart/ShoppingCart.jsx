@@ -10,12 +10,18 @@ function ShoppingCart() {
 
 	let cart = useSelector((state) => state.cart);
 	let { id } = useSelector((state) => state.userData);
+	let offers = useSelector((state) => state.offers);
+	let categories = useSelector((state) => state.categories);
+
 	const cartL = JSON.parse(localStorage.getItem("cart"));
 	const dispatch = useDispatch();
 	const history = useHistory();
 
 	const [total, setTotal] = useState(0);
+	const [newTotal, setNewTotal] = useState(0);
 
+	
+	
 	const handlePayment = () => {
 		//toda la logica futura para un pago
 		if (!localStorage.getItem('token')) {
@@ -23,29 +29,19 @@ function ShoppingCart() {
 			history.push('/ingresar');
 		} else {
 			if (cartL.length > 0) {
-				// let confirm = window.confirm('¿Desea confirmar su compra?');
-				// if (confirm) {
-				history.push('/pago');
-				// axios.post(`http://localhost:3001/users/${id}/newcart`, { cart: cartL }).catch(err => console.log(err))
-				// .then(() => {
-
-				// localStorage.setItem('cart', JSON.stringify([]));
-				// dispatch(emptyCart());
-
-				// })
-				// }
+				history.push('/pago');				
 			}
 		}
 	}
-
+	
 	useEffect(() => {
-		setTotal(cart.reduce((acc, current) => acc += current.subTotal, 0))
+		setTotal(cart.reduce((acc, current) => acc += current.subTotal, 0));
 	}, [cart])
-
+		
 	return (
 		<div className={style.mainContainer}>
 			<NavBar renderTop={false} />
-			
+
 			<div className={style.secondContainer}>
 
 				<h1 className={style.title}>Paso 1: Detalle del carrito</h1>
@@ -62,15 +58,11 @@ function ShoppingCart() {
 							<div className={style.info}>
 
 								<div>
-									<form>
-										<label className={style.labelInput} htmlFor="discount">Ingrese cupon de descuento: </label>
-										<input className={style.input} id='discount' type="text" />
-										<button className={style.btn} type="submit">Calcular</button>
-									</form>
+									
+									<p className={style.total}>Total: ${total}</p>
 								</div>
 
 
-								<p className={style.total}>Subtotal: ${total}</p>
 
 
 								<button className={`${style.btn} ${style.p}`} onClick={() => history.push('/coleccion')}>Volver</button>

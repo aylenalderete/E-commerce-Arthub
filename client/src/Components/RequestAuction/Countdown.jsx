@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import style from './countdown.module.css'
 import { useHistory } from 'react-router-dom'
+import {useSelector, useDispatch} from 'react-redux'
 
 
 function Countdown(props) {
@@ -8,25 +9,34 @@ function Countdown(props) {
   const history = useHistory();
 
   const [time, setTime] = useState({
-    date: ""
+    date: "",
+    hour: "",
+    minut: ""
 
   })
-  
-  if (time.date!==""){
+
+  const userData = useSelector(state => state.userData)
+
+  if (time.date !== "") {
     localStorage.setItem('año', time.date.slice(0, 4));
     localStorage.setItem('mes', time.date.slice(5, 7));
     localStorage.setItem('dia', time.date.slice(8, 10));
+    localStorage.setItem('hour', time.hour);
+    localStorage.setItem('minut', time.minut);
   }
 
   let anho = parseInt(localStorage.getItem('año'))
   let mes = parseInt(localStorage.getItem('mes'))
   let dia = parseInt(localStorage.getItem('dia'))
+  let hora = parseInt(localStorage.getItem('hour'))
+  let minuto = parseInt(localStorage.getItem('minut'))
+
 
   const calculateTimeLeft = () => {
 
-    let difference = +new Date(`${mes}/${dia}/${anho}`) - +new Date();
-    let timeLeft = {}; 
-  
+    let difference = +new Date(`${mes}/${dia}/${anho} ${hora}:${minuto}`) - +new Date();
+    let timeLeft = {};
+
 
     if (difference > 0) {
       timeLeft = {
@@ -36,23 +46,24 @@ function Countdown(props) {
         Segundos: ('0' + Math.floor((difference / 1000) % 60)).slice(-2)
       };
     }
-
     return timeLeft;
 
   }
 
+
+
   const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
- 
+
   useEffect(() => {
 
     const timer = setTimeout(() => {
       setTimeLeft(calculateTimeLeft());
-      
+
     }, 1000);
-    
+
     return () => clearTimeout(timer);
 
-},[timeLeft]);
+  }, [timeLeft]);
 
 
   function handleChange(e) {
@@ -62,58 +73,80 @@ function Countdown(props) {
     })
   }
 
-  function clear(){
+  function clear() {
     localStorage.clear();
     history.go(0);
   }
 
 
+
+
   return (
-    <div>
-      {timeLeft ?
-        <div className={style.containerG}>
+    <div className={style.mainContainer}>
+      {timeLeft.Segundos ?
+      <div className={style.containerG}>
         <div className={style.container}>
           <p>{timeLeft.Dias ? timeLeft.Dias : 0}</p>
-          <br/>
-          <p className={style.text}>Días</p>
+          <p className={style.text}>d</p>
         </div>
         <div className={style.container}>
           <p>{timeLeft.Horas ? timeLeft.Horas : 0}</p>
-          <br/>
-          <p className={style.text}>Horas</p>
+          <p className={style.text}>h</p>
         </div>
         <div className={style.container}>
           <p>{timeLeft.Minutos ? timeLeft.Minutos : 0}</p>
-          <br/>
-          <p className={style.text}>Minutos</p>
+          <p className={style.text}>m</p>
         </div>
         <div className={style.container}>
           <p>{timeLeft.Segundos ? timeLeft.Segundos : 0}</p>
-          <br/>
-          <p className={style.text}>Segundos</p>
+          <p className={style.text}>s</p>
         </div>
-      </div>
-        : 
+        {/* <input id="appt-time" type="time" name="appt" value={time.appt} onChange={handleChange}
+          className={style.date} /> */}
+        {userData.type === 'admin' ?
         <div>
-        {
-          !timeLeft ? 
-          <span>{() => alert("El ganador es:... " )}</span>
-          :
-          <div></div>
-        }
+          <button onClick={clear} className={style.btn}>Restablecer</button>
         </div>
+        :
+        <></>
+        }
+      </div>
+      :
+      <div>
+        <div className={style.ganador} id="myGlower">
+        {/* <script type="text/javascript">
+          $(function() {  
+          var glower = $('#myGlower');
+          window.setInterval(function() {  
+          glower.toggleClass('active');
+          }, 1000);
+          });
+        </script> */}
+          <h2>La mejor oferta pertenece a :  </h2>
+          <h1>{props.winner}</h1>
+       </div>
+      <div>
+        {userData.type === 'admin'?
+        <div>
+          <input value={time.date} className={style.date} name="date" onChange={handleChange} type="date" required />
+
+          <input value={time.hour} className={style.hour} min="0" max="23" name="hour" placeholder="Hora"
+            onChange={handleChange} type="number" required />
+
+          <input value={time.minut} className={style.hour} min="0" max="59" name="minut" placeholder="Minutos"
+            onChange={handleChange} type="number" required />
+        </div>
+        :
+        <></>
+        }
+
+      </div>
+
+      </div>
       }
 
-      <input
 
-        value={time.date}
-        className={style.date}
-        name="date"
-        onChange={handleChange}
-        type="date"
-        required
-      />
-      <button onClick={clear}>Reset</button>
+
     </div>
   );
 }

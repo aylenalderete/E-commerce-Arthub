@@ -493,7 +493,7 @@ server.get("/:id/reviews", async (req, res) => {
 server.post("/:idUser/newcart", async (req, res) => {
 	const { idUser: userId } = req.params;
 	const { cart } = req.body;
-
+	
 	try {
 		let totalPrice = cart.reduce((acc, prod) => acc + prod.quantity * prod.product.price, 0)
 		let newCart = await Shoppingcart.create({
@@ -505,7 +505,7 @@ server.post("/:idUser/newcart", async (req, res) => {
 			const productToAdd = await Product.findByPk(parseInt(cart[i].product.id_product));
 			const newLineorder = await Lineorder.create({
 				quantity: cart[i].quantity,
-				unit_price: productToAdd.dataValues.price,
+				unit_price: cart[i].product.price,
 			});
 			await productToAdd.addLineorder(newLineorder.dataValues.id_line);
 			await newCart.addLineorder(newLineorder.dataValues.id_line);
@@ -540,6 +540,10 @@ server.post('/login/facebook', async (req, res) => {
 			//create token
 			let token = jwt.sign({ id: finder.id }, "secret_key", {
 				expiresIn: 60 * 60 * 24,
+			});
+			finder.dataValues.wishlist = await Wishlist.findAll({
+				attributes: ['productIdProduct'],
+				where: { userId: finder.id },
 			});
 			finder.password = "";
 			res.json({
@@ -577,6 +581,10 @@ server.post('/login/facebook', async (req, res) => {
 		})
 
 		newUser.password = ''
+		newUser.dataValues.wishlist = await Wishlist.findAll({
+			attributes: ['productIdProduct'],
+			where: { userId: newUser.id },
+		});
 		res.json({
 			user: newUser,
 			auth: true,
@@ -617,6 +625,11 @@ server.post("/login/google", async (req, res) => {
 				expiresIn: 60 * 60 * 24,
 			});
 			finder.password = "";
+			
+			finder.dataValues.wishlist = await Wishlist.findAll({
+				attributes: ['productIdProduct'],
+				where: { userId: finder.id },
+			});
 			res.json({
 				user: finder,
 				auth: true,
@@ -649,6 +662,10 @@ server.post("/login/google", async (req, res) => {
 		});
 
 		newUser.password = "";
+		newUser.dataValues.wishlist = await Wishlist.findAll({
+			attributes: ['productIdProduct'],
+			where: { userId: newUser.id },
+		});
 		res.json({
 			user: newUser,
 			auth: true,

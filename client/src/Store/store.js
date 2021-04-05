@@ -22,7 +22,7 @@ const initialState = {
     artistsProducts: [],
     //filters states
     isActiveFilters: false,
-
+    suggestions: [],
     // Carrito
 
     cart: JSON.parse(localStorage.getItem('cart')) || [],
@@ -79,7 +79,14 @@ const initialState = {
     auctions: [],
     createAuction: false,
     deleteAuction: false,
-    auctionView: {}
+    auctionView: {},
+    auctionActual: [],
+
+    //artist auctions
+    artistAuctions: [],
+
+    //Offers
+    offers: []
 
 
 };
@@ -88,6 +95,7 @@ const initialState = {
 const reducer = function (state = initialState, action) {
 
     switch (action.type) {
+
         //aca crear los switch cases de cada action
         case "GET_AUCTION_VIEW":
             return {
@@ -134,6 +142,12 @@ const reducer = function (state = initialState, action) {
                 ...state,
                 search: action.payload,
             };
+         case "GET_SUGGESTIONS":
+        
+          return {
+            ...state,
+            suggestions: action.payload,
+          };
 
         case "GET_INITIAL_PRODUCTS":
             return {
@@ -470,8 +484,34 @@ const reducer = function (state = initialState, action) {
 
             }
 
+        case "GET_AUCTION_ACTUAL" :
+            return {
+                ...state,
+                auctionActual : action.payload
+            }
+
+        case "POST_AUCTION" :
+            return{
+                ...state
+            }
+
+        case 'SET_OFFER':
+            
+            return{
+                ...state,
+                offers: action.payload
+            }
+
+        case 'GET_ARTIST_AUCTIONS':
+
+            return{
+                ...state,
+                artistAuctions: action.payload
+            }
+
         default:
             return state;
+
     }
 
 };

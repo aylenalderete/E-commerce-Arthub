@@ -148,7 +148,7 @@ server.post('/array', async (req, res) => {
 
 	let prods = []
 	for (let i = 0; i < prodIds.length; i++) {
-		prods.push(await Product.findByPk(prodIds[i].productIdProduct, { include: [User, Image] }));
+		prods.push(await Product.findByPk(prodIds[i].productIdProduct, { include: [User, Image, Category] }));
 	}
 	res.json(prods);
 
