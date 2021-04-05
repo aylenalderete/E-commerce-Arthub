@@ -111,9 +111,6 @@ const sendEmailUpdateStock = async (idProduct) => {
 				return userEmail.email;
 			})
 		);
-		console.log(emailList);
-		// const emailBody = "xdxdxdxdxdxdxd";
-
 		const emailBody = {
 			title: "Un producto de tu wishList ahora esta en stock!",
 			product: {
@@ -124,6 +121,7 @@ const sendEmailUpdateStock = async (idProduct) => {
 				stock: product.stock,
 			},
 		};
+		console.log(emailBody)
 		const emailSubject = "Whislist";
 		emailList.forEach((email) => {
 			sendEmail(emailSubject, emailBody, email);
@@ -215,5 +213,4 @@ router.post("/:userId/unsubscribe", async (req, res) => {
 //Cuando se renueva el stock de un producto,
 //manda un email a los que tienen el producto en su wishlist
 
-module.exports = { sendEmailUpdateStock };
 module.exports = router;

@@ -1,5 +1,5 @@
 const { Router } = require("express");
-const { User, Newsletter, Wishlist, Product } = require("../db.js");
+const { User, Newsletter, Wishlist, Product, Image } = require("../db.js");
 const router = Router();
 const path = require("path");
 
@@ -65,8 +65,8 @@ async function sendEmail(subject, body, to) {
 		const mailOptions = {
 			from: "ArtHub <andres2661991@gmail.com>",
 			to: to,
-			subject: subject,
-			html: template(body), // Process template with locals - {passwordResetAddress}
+			subject: body.title,
+			html: template({ body }), // Process template with locals - {passwordResetAddress}
 		};
 		//TEST
 
@@ -84,9 +84,11 @@ async function sendEmail(subject, body, to) {
 // Esta funcion busca los usuarios que tenian el producto en la whishlist y les envia un email avisando
 // Recibe como argumento el id del producto que va a entrar en oferta o que renovo el stock
 const sendEmailUpdateStock = async (idProduct) => {
-    console.log(idProduct)
 	const search = await Wishlist.findAll({
 		where: { productIdProduct: idProduct },
+	});
+	const product = await Product.findByPk(parseInt(idProduct), {
+		include: [Image],
 	});
 	console.log("-------------------------");
 	if (search && search.length > 0) {
@@ -96,9 +98,18 @@ const sendEmailUpdateStock = async (idProduct) => {
 				return userEmail.email;
 			})
 		);
+		const emailBody = {
+			title: "Un producto de tu wishList ahora esta en stock!",
+			product: {
+				title: product.title,
+				image: product.images[0].dataValues.url,
+				price: product.price,
+				description: product.description,
+				stock: product.stock,
+			},
+		};
 		console.log(emailList);
-		const emailBody = "xdxdxdxdxdxdxd";
-		const emailSubject = "Whislist";
+		const emailSubject = "Wishlist";
 		emailList.forEach((email) => {
 			sendEmail(emailSubject, emailBody, email);
 		});
