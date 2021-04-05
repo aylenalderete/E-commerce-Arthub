@@ -12,7 +12,7 @@ import linkSet from '../../Actions/linkset';
 
 function ShoppingCartPayment() {
 
-    const { id,email } = useSelector((state) => state.userData);
+    const { id, email } = useSelector((state) => state.userData);
 
     const history = useHistory();
 
@@ -23,14 +23,18 @@ function ShoppingCartPayment() {
     const [loading, setLoading] = useState(false);
     const [redirect, setRedirect] = useState(false);
     const [link, setLink] = useState('');
-    const [address,setAddress] = useState({localidad:'',
-                                         provincia:'',
-                                         calle:'',
-                                         numero:''});
-    const [error,setError] = useState({localidad:'',
-                                        provincia:'',
-                                        calle:'',
-                                        numero:''})
+    const [address, setAddress] = useState({
+        localidad: '',
+        provincia: '',
+        calle: '',
+        numero: ''
+    });
+    const [error, setError] = useState({
+        localidad: '',
+        provincia: '',
+        calle: '',
+        numero: ''
+    })
 
     const cart = useSelector((state) => state.cart);
 
@@ -38,15 +42,17 @@ function ShoppingCartPayment() {
         setMethod(e.target.value);
     }
 
-    function onChange (e){
+    function onChange(e) {
         const name = e.target.name;
         const value = e.target.value;
-        setError({localidad:'',
-                    provincia:'',
-                    calle:'',
-                    numero:''})
+        setError({
+            localidad: '',
+            provincia: '',
+            calle: '',
+            numero: ''
+        })
 
-        setAddress({...address,[name]:value})
+        setAddress({ ...address, [name]: value })
     }
 
     useEffect(() => {
@@ -57,23 +63,23 @@ function ShoppingCartPayment() {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        if(!address.provincia){
-            setError({...error,provincia:'El campo provincia es requerido'})
-        }else if(!address.localidad){
-            setError({...error,localidad:'El campo localidad es requerido'})
+        if (!address.provincia) {
+            setError({ ...error, provincia: 'El campo provincia es requerido' })
+        } else if (!address.localidad) {
+            setError({ ...error, localidad: 'El campo localidad es requerido' })
             alert('El campo localidad es requerido')
-        }else if(!address.calle){
-            setError({...error,calle:'El campo calle es requerido'})
-        }else if(!address.numero){
-            setError({...error,numero:'El campo número es requerido'})
-        }else{  
-               
+        } else if (!address.calle) {
+            setError({ ...error, calle: 'El campo calle es requerido' })
+        } else if (!address.numero) {
+            setError({ ...error, numero: 'El campo número es requerido' })
+        } else {
+
             if (method === 'mp') {
                 setLoading(!loading)
                 axios.post(`http://localhost:3001/users/${id}/newcart`, { cart })
                     .then((newCart) => {
 
-                        axios.post(`http://localhost:3001/orders/mercadopago`, { cart, idOrder: newCart.data.id_order,email,address })
+                        axios.post(`http://localhost:3001/orders/mercadopago`, { cart, idOrder: newCart.data.id_order, email, address })
                             .then(async response => {
                                 // console.log('ESTE ES EL LINK MP',response.data.mpLink);
                                 dispatch(linkSet(response.data.mpLink));
@@ -109,51 +115,50 @@ function ShoppingCartPayment() {
                         <div className={style.info}>
 
 
-                            <p className={style.label}>Elegir metodo de pago: </p>
+                            <p className={style.label}>Método de pago: </p>
                             <select className={style.select} onChange={e => handleChange(e)} required >
-                                <option className={style.option}>Seleccionar metodo de pago</option>
+                                <option className={style.option}>Seleccionar</option>
                                 <option className={style.option} value="mp">MercadoPago</option>
-                                <option className={style.option} value="paypal">Paypal</option>
 
                             </select>
 
                             <p className={style.label}>Dirección de envío: </p>
                             <div>
-                                <p className={style.label}>Provincia: </p>                                    
-                                <input type='text' value={address.provincia} name='provincia' onChange={onChange}></input>
+                                <p className={style.label}>Provincia: </p>
+                                <input type='text' value={address.provincia} name='provincia' onChange={onChange} className={style.longInput}></input>
                                 {error.provincia ? (
-                                <div className={style.link}>{error.provincia}</div>
+                                    <div className={style.link}>{error.provincia}</div>
                                 ) : null}
                             </div>
                             <div>
-                                <p className={style.label}>Localidad: </p>                                    
-                                <input type='text' value={address.localidad} name='localidad' onChange={onChange}></input>
+                                <p className={style.label}>Localidad: </p>
+                                <input type='text' value={address.localidad} name='localidad' onChange={onChange} className={style.longInput}></input>
                                 {error.localidad ? (
-                                <div className={style.link}>{error.localidad}</div>
+                                    <div className={style.link}>{error.localidad}</div>
                                 ) : null}
                             </div>
                             <div>
-                                <p className={style.label}>Calle: </p>                                    
-                                <input type='text' value={address.calle} name='calle' onChange={onChange}></input>
+                                <p className={style.label}>Calle: </p>
+                                <input type='text' value={address.calle} name='calle' onChange={onChange} className={style.longInput}></input>
                                 {error.calle ? (
-                                <div className={style.link}>{error.calle}</div>
+                                    <div className={style.link}>{error.calle}</div>
                                 ) : null}
                             </div>
                             <div>
-                                <p className={style.label}>Número: </p>                                    
-                                <input type='text' value={address.numero} name='numero' onChange={onChange} className={style.shortInput}></input>
+                                <p className={style.label}>Número: </p>
+                                <input type='number' value={address.numero} name='numero' min='0' max='10000' onChange={onChange} className={style.shortInput}></input>
                                 {error.numero ? (
-                                <div className={style.link}>{error.numero}</div>
+                                    <div className={style.link}>{error.numero}</div>
                                 ) : null}
                             </div>
-                            
+
                             <p className={style.total}>Total: ${total}</p>
                             <button className={`${style.btn} ${style.p}`} onClick={() => history.push('/carrito')}>Volver</button>
 
                             <button className={`${style.btn}`} disabled={loading ? true : null} onClick={handleSubmit}>{loading ? <i class="fas fa-spinner fa-spin"></i> : 'Pagar'}</button>
                             {
                                 method === 'mp' &&
-                                <p>Al hacer click en "Pagar" vas a ser redirigido a otro sitio. Luego de finalizar el pago, volveras a arthub</p>
+                                <p>Al hacer click en "Pagar" serás redirigido a otro sitio. Luego de finalizar el pago, volveras a arthub</p>
                             }
 
                         </div>
