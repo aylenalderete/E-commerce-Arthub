@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import style from './countdown.module.css'
 import { useHistory } from 'react-router-dom'
+import {useSelector, useDispatch} from 'react-redux'
 
 
 function Countdown(props) {
@@ -13,6 +14,8 @@ function Countdown(props) {
     minut: ""
 
   })
+
+  const userData = useSelector(state => state.userData)
 
   if (time.date !== "") {
     localStorage.setItem('año', time.date.slice(0, 4));
@@ -43,7 +46,6 @@ function Countdown(props) {
         Segundos: ('0' + Math.floor((difference / 1000) % 60)).slice(-2)
       };
     }
-    console.log(timeLeft)
     return timeLeft;
 
   }
@@ -77,86 +79,72 @@ function Countdown(props) {
   }
 
 
+
+
   return (
-    <div>
-      {timeLeft.Segundos > 1 ?
+    <div className={style.mainContainer}>
+      {timeLeft.Segundos ?
+      <div className={style.containerG}>
+        <div className={style.container}>
+          <p>{timeLeft.Dias ? timeLeft.Dias : 0}</p>
+          <p className={style.text}>d</p>
+        </div>
+        <div className={style.container}>
+          <p>{timeLeft.Horas ? timeLeft.Horas : 0}</p>
+          <p className={style.text}>h</p>
+        </div>
+        <div className={style.container}>
+          <p>{timeLeft.Minutos ? timeLeft.Minutos : 0}</p>
+          <p className={style.text}>m</p>
+        </div>
+        <div className={style.container}>
+          <p>{timeLeft.Segundos ? timeLeft.Segundos : 0}</p>
+          <p className={style.text}>s</p>
+        </div>
+        {/* <input id="appt-time" type="time" name="appt" value={time.appt} onChange={handleChange}
+          className={style.date} /> */}
+        {userData.type === 'admin' ?
         <div>
-          <div className={style.containerG}>
-            <div className={style.container}>
-              <p>{timeLeft.Dias ? timeLeft.Dias : 0}</p>
-              <br />
-              <p className={style.text}>Días</p>
-            </div>
-            <div className={style.container}>
-              <p>{timeLeft.Horas ? timeLeft.Horas : 0}</p>
-              <br />
-              <p className={style.text}>Horas</p>
-            </div>
-            <div className={style.container}>
-              <p>{timeLeft.Minutos ? timeLeft.Minutos : 0}</p>
-              <br />
-              <p className={style.text}>Minutos</p>
-            </div>
-            <div className={style.container}>
-              <p>{timeLeft.Segundos ? timeLeft.Segundos : 0}</p>
-              <br />
-              <p className={style.text}>Segundos</p>
-            </div>
-          </div>
-
-
-
-          {/* <input
-        id="appt-time"
-        type="time"
-        name="appt"
-        value={time.appt}
-        onChange={handleChange}
-        className={style.date}
-      /> */}
-
-          <button onClick={clear} className={style.btn}>Reset</button>
+          <button onClick={clear} className={style.btn}>Restablecer</button>
         </div>
         :
+        <></>
+        }
+      </div>
+      :
+      <div>
+        <div className={style.ganador} id="myGlower">
+        {/* <script type="text/javascript">
+          $(function() {  
+          var glower = $('#myGlower');
+          window.setInterval(function() {  
+          glower.toggleClass('active');
+          }, 1000);
+          });
+        </script> */}
+          <h2>La mejor oferta pertenece a :  </h2>
+          <h1>{props.winner}</h1>
+       </div>
+      <div>
+        {userData.type === 'admin'?
         <div>
-        <div className={style.ganador}>El ganador es: {props.competitor}</div>
-        <input
-        value={time.date}
-        className={style.date}
-        name="date"
-        onChange={handleChange}
-        type="date"
-        required
-      />
+          <input value={time.date} className={style.date} name="date" onChange={handleChange} type="date" required />
 
-      <input
-        value={time.hour}
-        className={style.hour}
-        min="0"
-        max="23"
-        name="hour"
-        placeholder="Hora"
-        onChange={handleChange}
-        type="number"
-        required
-      />
+          <input value={time.hour} className={style.hour} min="0" max="23" name="hour" placeholder="Hora"
+            onChange={handleChange} type="number" required />
 
-      <input
-        value={time.minut}
-        className={style.hour}
-        min="0"
-        max="59"
-        name="minut"
-        placeholder="Minutos"
-        onChange={handleChange}
-        type="number"
-        required
-      />
+          <input value={time.minut} className={style.hour} min="0" max="59" name="minut" placeholder="Minutos"
+            onChange={handleChange} type="number" required />
         </div>
+        :
+        <></>
+        }
 
+      </div>
+
+      </div>
       }
 
-      
 
 
     </div>

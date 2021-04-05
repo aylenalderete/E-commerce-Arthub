@@ -11,7 +11,6 @@ import getAuctions from '../../Actions/getAuctions'
 function NavBar({ renderTop }) {
   const loggedUser = useSelector(state => state.userData);
   const Auctions = useSelector(state => state.auctions)
-  // console.log(loggedUser);
   const history = useHistory();
   const [redirect, setRedirect] = useState(false);
   function handleGoBack() {
@@ -32,9 +31,7 @@ function NavBar({ renderTop }) {
 // inicio busqueda del id Auction 
 var idAuction = 0;
 for (var i = 0; i < Auctions.length; i++) {
-    console.log("acaà")
     if (Auctions[i].state == 'subastando') {
-        console.log("entró")
         idAuction += Auctions[i].id_auction
 
     }

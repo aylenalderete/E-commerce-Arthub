@@ -1,3 +1,9 @@
+.mainContainer{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
 .date{
     margin: 10px 0;
     color: white;
@@ -12,28 +18,26 @@
 
 .containerG {
     display: flex;
-    flex-wrap: wrap;
+    width: fit-content;
+    justify-content: center;
+    
 
 }
 
 .container {
-	background: #fff;
-	width: 120px;
-	height: 120px;
-	margin: 0 20px;
-	border-radius: 5px;
     display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
 	align-items: center;
-    justify-content: center;
-    color:black;
-    font-size: 40px;
+	background: transparent;
+	width:fit-content;
+    margin-right: 2vh;
+	border-radius: 5px;
+    color:rgb(251, 250, 250);
+    font-size:5vh;
 }
 
 .text{
 
-    font-size: 40px;
+    font-size: 5vh;
 }
 span{
     color:white
@@ -41,14 +45,20 @@ span{
 
 .ganador{
     
-        display: flex;
-        flex-direction: column;
-        align-self: center;
-        border: 1px solid white;
-        margin-top: 3vh;
-        width: 70%;
-        height: 100px;
-        text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    margin-top: 3vh;
+    width: 350px;
+    text-align: center;
+        border:1px solid #f427ec;
+        outline:none;
+        animation-name: greenPulse;
+        animation-duration: 2s;
+        animation-iteration-count: infinite;
+    
+    
+
    
 }
 
@@ -78,3 +88,9 @@ span{
     cursor: pointer;
     margin:20px;
  }
+
+ @keyframes greenPulse {
+    from { -webkit-box-shadow: 0 0 1px #f427ed; }
+    50% {  -webkit-box-shadow: 0 0 18px #f427edc4; }
+    to {-webkit-box-shadow: 0 0 9px #f427eda2; }
+    }
