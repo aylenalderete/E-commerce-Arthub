@@ -11,7 +11,6 @@ const newsletter = require("./newsletter.js");
 const auctionRouter = require("./auctions.js");
 const wishlistRouter = require("./wishList.js");
 const requestRouter = require("./request.js");
-const auctionRouter = require("./auctions.js");
 const twoFactorAuth = require("./twoFactorAuth.js");
 const offerRouter = require("./offer.js");
 
