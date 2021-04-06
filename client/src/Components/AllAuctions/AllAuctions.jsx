@@ -48,7 +48,6 @@ function AllAuction() {
         return <Redirect to="/ingresar"></Redirect>;
     }
 
-    console.log(auctionId)
 
 
     return (

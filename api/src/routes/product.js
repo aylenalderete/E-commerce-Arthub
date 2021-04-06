@@ -236,7 +236,6 @@ server.post('/:id/review', async (req, res) => {
 				}
 			]
 		})
-		console.log(reviewExists)
 		if (!reviewExists) {
 
 			const newReview = await Review.create({

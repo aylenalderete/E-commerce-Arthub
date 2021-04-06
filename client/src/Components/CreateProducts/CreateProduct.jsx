@@ -79,7 +79,7 @@ function CreateProduct(props) {
     function handleUpload(event) {
         setLoading(true)
         const file = event.target.files[0];
-        console.log(event.target.files);
+      
 
         if (event.target.files.length) {
             const storageRef = firebase.storage().ref(`/images/${file.name}`);
@@ -100,11 +100,9 @@ function CreateProduct(props) {
                 },
                 () => {
                     storageRef.getDownloadURL().then((url) => {
-                        console.log("la url es: ", url);
                         let arrayImages = props.urlImages;
                         arrayImages.push(url);
                         props.setUrlImages(arrayImages);
-                        console.log("termino1", props.urlImages);
                         setRefresh([1, 2]);
                         setLoading(false)
                     });
@@ -114,12 +112,12 @@ function CreateProduct(props) {
     }
 
     function onDelete(event) {
-        console.log("imagen tocada:", event.target.value);
+       
         let urlImages = props.urlImages.filter(
             (value) => value != event.target.value
         );
         props.setUrlImages(urlImages);
-        console.log("restante:", urlImages);
+     
     }
 
     const handleChange = (e) => {
@@ -139,10 +137,6 @@ function CreateProduct(props) {
     }
 
     const sendProduct = () => {
-        // console.log(product, urlImages);
-        // if (product.title.length >= 40) {
-        //     alert('El titulo no puede tener mas de 40 caracteres');
-        // }
         if (product.categories.length === 0) {
             alert('Debe seleccionar por lo menos una categoria');
         }
@@ -155,7 +149,7 @@ function CreateProduct(props) {
                 .post(`http://localhost:3001/products`, { ...product, images: urlImages })
                 .then((res) => {
                     alert("Producto creado");
-                    console.log(res.data);
+              
                 })
                 .catch((error) => {
                     alert("No se pudo crear el producto");

@@ -38,7 +38,6 @@ server.get('/', async (req, res) => {
                     "state"
                 ]
             })
-            console.log(allRequests)
             if (allRequests.length > 0) {
                 res.send(allRequests)
             } else {

@@ -120,7 +120,7 @@ function SignIn() {
         (snapshot) => {
           let percentage =
             (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          console.log(percentage);
+        
           setUpload({
             process: percentage,
           });

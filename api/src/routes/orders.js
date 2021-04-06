@@ -61,9 +61,6 @@ server.post('/mercadopago', async (req, res) => {
     const { cart, idOrder, email, address } = req.body;
     const order = parseInt(idOrder);
 
-    console.log(address)
-
-    console.log(typeof address)
 
     var inputAndress = address.provincia + ' ' +
         address.localidad + ' ' +
@@ -250,7 +247,6 @@ server.put("/:id", async (req, res) => {
         orderToEdit.total_price = total_price;
         await orderToEdit.save();
         await orderToEdit.reload();
-        console.log(orderToEdit);
         res.json(orderToEdit);
     } catch {
         (err) => {
