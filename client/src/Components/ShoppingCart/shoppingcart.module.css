@@ -42,7 +42,10 @@
     color: white;
     font-size: 15px;
     border:1px solid white;
-    cursor: pointer;
+    cursor: pointer;   
+}
+.btn:hover {
+    background-color: #F427EC;
 }
 
 .noProductsMessage {
@@ -86,8 +89,28 @@
     margin-bottom: 20px;
 }
 
+.subTotal, .discount, .total{
+    font-size: 20px;
+    display: inline;
+}
+
+.priceContainer{
+    display: flex;
+    justify-content: space-between;
+}
+
+.line{
+    margin-top: 20px;
+    color: #F427EC;
+}
+
+.detailTitle{
+    margin-bottom: 20px;
+    text-align: center;
+}
+
 .total{
-    font-size: 30px;
+    font-size: 28px;
     margin: 20px 0;
     /* margin: 0; */
 }

@@ -19,26 +19,26 @@ const useStyles = makeStyles((theme) => ({
     '& > * + *': {
       marginTop: theme.spacing(1),
 
-      
+
     },
-    ['@media (max-width:480px)']: { 
-     marginBottom: '5px'
+    ['@media (max-width:480px)']: {
+      marginBottom: '5px'
     }
-    
+
   },
   border: {
     color: '#ffb400',
-    
+
   },
-  
-  stars:{
+
+  stars: {
     fontSize: '2rem',
-    ['@media (max-width:480px)']: { 
-     fontSize:'1.2rem'
+    ['@media (max-width:480px)']: {
+      fontSize: '1.2rem'
     }
-    
+
   }
-  
+
 
 }));
 //---start
@@ -55,7 +55,13 @@ function ArtPiece({ artId }) {
     ],
   });
   const userData = useSelector((state) => state.userData);
+  const [currentOffer, setCurrentOffer] = useState({});
+  const offers = useSelector((state) => state.offers);
+  const categories = useSelector((state)=> state.categories);
 
+  const [isInOffer, setIsInOffer] = useState(false);
+
+  const date = new Date();
 
   let history = useHistory()
 
@@ -68,6 +74,21 @@ function ArtPiece({ artId }) {
       .get(`http://localhost:3001/products/${artId}`)
       .then((result) => setDetailed(result.data));
   }, []);
+
+  useEffect(() => {
+    const matchCat = () => {
+      categories.forEach(cat => {
+        offers.forEach(offer => {
+          if (+offer.categoryId === +cat.id && +offer.day === +date.getDay()) {
+            setCurrentOffer(offer);
+            setIsInOffer(true);
+          }
+        });
+      });
+    }
+    matchCat();
+
+  }, [offers, categories]);
 
   const dispatch = useDispatch();
   // state for reviews 
@@ -84,12 +105,12 @@ function ArtPiece({ artId }) {
     if (average > 0) {
       finalAverage = average / reviews.length
     }
-    
+
   }
 
 
 
-
+  const newPrice = isInOffer ? detailed.price - detailed.price * currentOffer.discount / 100 : detailed.price;
 
 
 
@@ -124,7 +145,7 @@ function ArtPiece({ artId }) {
                     detailed.categories.map((x) => <div className={style.catContainer}><p>{x.name}</p></div>)}
                 </div>
 
-                <h3>{`Precio: $` + `${detailed.price}`}</h3>
+                <h3>{`Precio: $` + `${newPrice}`}</h3>
                 <p className={style.description}>{detailed.description}</p>
               </div>
 
@@ -132,7 +153,7 @@ function ArtPiece({ artId }) {
               <div className={style.containerButtons}>
                 <Link to="/carrito">
                   <button
-                    onClick={() => dispatch(addItem(artId))}
+                    onClick={() => dispatch(addItem(artId, newPrice))}
                     className={style.button}>
                     Añadir al carrito
               </button>
