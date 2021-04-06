@@ -8,7 +8,6 @@ import getAuctionPriceTotal from '../../Actions/getAuctionPriceTotal';
 import postAuction from '../../Actions/postAuction'
 
 
-
 export default function AuctionView(props) {
 
 
@@ -18,19 +17,12 @@ export default function AuctionView(props) {
     const userDataId = useSelector(state => state.userData.id)
     const userDataName = useSelector(state => state.userData.username)
     const totalPrice = useSelector(state => state.auctionActual)
+    const [finished, setFinished] = useState (false)
 
-    // const [participants, setParticipants] = useState([])
 
-    // useEffect(
-    //     () => {
-    //         axios
-    //             .get(`http://localhost:3001/`)
-    //             .then((result) => setParticipants(result.data));
-    // }, [])
-
-    useEffect(async () => {
+    useEffect(() => {
         dispatch(getAuctionView(props.match.params.id))
-       await  dispatch(getAuctionPriceTotal(auctionView.id_auction,userDataId))
+        dispatch(getAuctionPriceTotal(auctionView.id_auction,userDataId))
     }, [])
 
   async function handleSubmit(element) {
@@ -67,6 +59,7 @@ export default function AuctionView(props) {
       } 
 
        // inicio busqueda de precio total
+    var email = []
     var priceTotal = [];
     var participants = [];
     for (var i = 0; i < totalPrice.length; i++) {
@@ -75,22 +68,14 @@ export default function AuctionView(props) {
             // console.log("entró")
             priceTotal.push(totalPrice[i].finalPrice)
             participants.push(totalPrice[i].users[0].username)
+            email.push(totalPrice[i].users[0].email)
             var winner = participants[participants.length-1]
+            var emailWinner = email[email.length-1]
         }
-        console.log(winner)
     }
 
 
 
-    
-
-    // console.log(priceTotal[priceTotal.length-1])
-    // if(totalPrice && totalPrice.length !==0 && totalPrice[totalPrice.length-1].finalPrice){    
-    //     console.log(totalPrice[totalPrice.length-1].finalPrice)
-    // }
-    
-
-    // fin de busqueda precio total
    
 
 
@@ -138,7 +123,7 @@ export default function AuctionView(props) {
                                 totalPrice[totalPrice.length-1].finalPrice >= 1000 ? totalPrice[totalPrice.length-1].finalPrice + 100 
                                 : totalPrice[totalPrice.length-1].finalPrice + 50
                                 :
-                                auctionView.price + 100
+                                auctionView.price >= 1000 ? auctionView.price + 100 : auctionView.price +50
                                 }
                             {/* {                                
                             totalPrice[totalPrice.length-1].finalPrice > 1000 ?
@@ -147,11 +132,16 @@ export default function AuctionView(props) {
     
                             </p>
                             <div className={style.btnSelect}>
-                                <button className={style.btn} onClick={() => handleSubmit(value + auctionView.percentage)}>Ofertar</button>
+                            {finished === false ? 
+                        <button className={style.btn} onClick={() => handleSubmit(value + auctionView.percentage)}>Ofertar</button>
+                        
+                        :
+                                <></>
+                        }
                             </div>
                         </div>
                         <div >
-                            <Countdown winner={winner} idAuct={auctionView.id_auction}/>
+                            <Countdown winner={winner} idAuct={auctionView.id_auction} setFinished={setFinished} email={emailWinner}/>
                         </div>
                     </div> 
                 </div>

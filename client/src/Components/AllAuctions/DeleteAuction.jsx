@@ -6,6 +6,7 @@ import deleteAuctionPU from '../../Actions/deleteAuctionPU'
 import close from '../../Images/cancel.svg'
 import {Link} from 'react-router-dom'
 import { useHistory } from "react-router-dom";
+import deleteAuctionFinish from '../../Actions/deleteAuctionFinish'
 
 
 function DeleteAuction(props) {
@@ -17,9 +18,6 @@ function DeleteAuction(props) {
 
     const history = useHistory();
 
-    const auctionActual = useSelector(state => state.auctionActual)
-
-    const [initialValue, setInitialValue] = useState(auctionActual)
 
     useEffect(() => {
         dispatch(getAuctions())
@@ -50,10 +48,10 @@ function DeleteAuction(props) {
             alert('No se pudo eliminar')
         }
 
+        dispatch(deleteAuctionFinish(theAuction.id_auction))
         dispatch(deleteAuctionPU(false));
         dispatch(getAuctions())
         history.push('/subastas');
-        setInitialValue([])
 
     }
 

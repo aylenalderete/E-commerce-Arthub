@@ -9,8 +9,9 @@ import createAuctionPU from '../../Actions/createAuctionPU'
 import CreateAuction from './CreateAuction'
 import DeleteAuction from './DeleteAuction'
 import deleteAuctionPU from '../../Actions/deleteAuctionPU'
-import { Redirect, Link } from 'react-router-dom';
+import { Redirect, Link, useHistory } from 'react-router-dom';
 import checkauction from '../../Images/comment.svg'
+
 
 function AllAuction() {
     const auctions = useSelector(state => state.auctions)
@@ -28,6 +29,8 @@ function AllAuction() {
     const userData = useSelector(state => state.userData)
 
     const [loading, setLoading] = useState(false)
+
+    const history = useHistory();
 
     useEffect(() => {
         dispatch(getAuctions())
@@ -58,6 +61,10 @@ function AllAuction() {
                 <div className={style.column}>
                     <h1>Subastas:</h1>
                 </div>
+
+                <br></br>
+                        <button className={style.editProfile} onClick={() => history.push(`/solicitarSubasta/`)}>
+                            Solicitar subasta </button>
                 <table className={style.table}>
                     <tr className={style.head}>
                         <th>imagen</th>

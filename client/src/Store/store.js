@@ -81,6 +81,7 @@ const initialState = {
     deleteAuction: false,
     auctionView: {},
     auctionActual: [],
+    auctionEmailPU: false,
 
     //artist auctions
     artistAuctions: [],
@@ -494,7 +495,30 @@ const reducer = function (state = initialState, action) {
             return{
                 ...state
             }
+            
+        case 'GET_ARTIST_AUCTIONS':
+    
+            return{
+                ...state,
+                artistAuctions: action.payload
+            }
+    
+        case "DELETE_AUCTION_FINISH" :
+            return {
+                ...state,
+            }
 
+        case "SEND_MAIL_AUCTION":
+            return {
+                ...state,
+            }
+
+        case 'POP_UP_AUCTION_EMAIL':
+            return {
+                ...state,
+                auctionEmailPU: action.payload
+            }
+                
         case 'SET_OFFER':
             
             return{
@@ -502,12 +526,6 @@ const reducer = function (state = initialState, action) {
                 offers: action.payload
             }
 
-        case 'GET_ARTIST_AUCTIONS':
-
-            return{
-                ...state,
-                artistAuctions: action.payload
-            }
 
         default:
             return state;

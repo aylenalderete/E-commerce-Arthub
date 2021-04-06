@@ -149,6 +149,37 @@ server.post('/:idAuction/:idUser', async (req, res) => {
     }
 })
 
+server.delete('/subastado/:idAuctionb', async(req,res) => {
+    const {idAuctionb} = req.params;
+    try {
+
+        await  Auctionb.destroy(
+              {
+                  where: { auction_id: idAuctionb }
+              });
+          res.json({ message: 'Auction successfully removed' });
+      } catch (error) {
+          res.status(400).json({ message: 'Error' });
+      }
+})
+
+server.get('/art/:idArt' , async (req,res) => {
+    const {idArt} = req.params
+
+    await User.findAll({
+        where : {id:idArt},
+        include :[
+            {
+                model : Auction
+            }
+        ]
+        
+    })
+    .then((result) => {
+        res.json(result)
+    })
+})
+
 server.get('/:idAuction/:idUser', async (req, res) => {
     
     try {

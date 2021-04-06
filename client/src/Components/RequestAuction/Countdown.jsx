@@ -2,11 +2,21 @@ import React, { useEffect, useState } from "react";
 import style from './countdown.module.css'
 import { useHistory } from 'react-router-dom'
 import {useSelector, useDispatch} from 'react-redux'
+import mailingAuction from "../../Actions/mailingAuction";
+import emailInformation from '../../Actions/emailInformation'
+import informationEmail from "./informationEmail";
 
 
 function Countdown(props) {
 
   const history = useHistory();
+  const dispatch = useDispatch()
+  const auctionEmailPU = useSelector(state => state.auctionEmailPU)
+  const totalPrice = useSelector(state => state.auctionActual)
+  const auctionView = useSelector(state => state.auctionView)
+
+
+
 
   const [time, setTime] = useState({
     date: "",
@@ -61,9 +71,17 @@ function Countdown(props) {
 
     }, 1000);
 
-    return () => clearTimeout(timer);
+    if(!timeLeft.Segundos){
+      props.setFinished(true)
+    }else{
+      props.setFinished(false)
+    }
 
+    auctionEmailPU === false ? dispatch(emailInformation(true)) : dispatch(emailInformation(false));
+    return () => clearTimeout(timer);
   }, [timeLeft]);
+
+
 
 
   function handleChange(e) {
@@ -78,11 +96,21 @@ function Countdown(props) {
     history.go(0);
   }
 
+  var email = []
+  for (var i = 0; i < totalPrice.length; i++) {
+    // console.log("acaà")
+    if (totalPrice[i].auction_id == auctionView.id_auction) {
+        email.push(totalPrice[i].users[0].email)
+        var emailWinner = email[email.length-1]
+    }
+}
 
 
 
   return (
     <div className={style.mainContainer}>
+      {auctionEmailPU === true && <informationEmail email={emailWinner} />}
+
       {timeLeft.Segundos ?
       <div className={style.containerG}>
         <div className={style.container}>
@@ -113,18 +141,11 @@ function Countdown(props) {
       </div>
       :
       <div>
-        <div className={style.ganador} id="myGlower">
-        {/* <script type="text/javascript">
-          $(function() {  
-          var glower = $('#myGlower');
-          window.setInterval(function() {  
-          glower.toggleClass('active');
-          }, 1000);
-          });
-        </script> */}
+        <div className={style.ganador} >
           <h2>La mejor oferta pertenece a :  </h2>
           <h1>{props.winner}</h1>
        </div>
+       
       <div>
         {userData.type === 'admin'?
         <div>
