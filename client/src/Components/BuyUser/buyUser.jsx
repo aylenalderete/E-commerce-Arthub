@@ -25,6 +25,37 @@ export default function BuyUser() {
     //get user orders
     const userOrders = useSelector(state => state.userOrders);
 
+    //newsletter
+    const suscribeNewsletter = () => {
+    var answer = window.confirm("Estás seguro?");
+    if (answer) {
+        axios.post(`http://localhost:3001/newsletter/${userData.id}/subscribe`)
+        .then((res) => {
+            console.log({type: 'SIGN_IN', payload: {...userData, newsletter: true}})
+            dispatch({type: 'SIGN_IN_REFRESH', payload: {...userData, newsletter: true}})
+            console.log(res.data)
+        })
+        .catch((error) => {
+            console.log(error)
+        })
+    }   
+    }
+
+    const unsuscribeNewsletter = () => {
+        var answer = window.confirm("Estás seguro?");
+        if (answer) {
+            axios.post(`http://localhost:3001/newsletter/${userData.id}/unsubscribe`)
+            .then((res) => {
+                console.log({type: 'SIGN_IN', payload: {...userData, newsletter: false}})
+                dispatch({type: 'SIGN_IN_REFRESH', payload: {...userData, newsletter: false}})
+                console.log(res.data)
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+        }   
+        }
+
     let history = useHistory()
 
     //Autenticacion de 2 factores
@@ -133,6 +164,17 @@ export default function BuyUser() {
                             {userData.birth ? <p>Cumpleaños: {userData.birth && userData.birth.slice(5, 10)} </p> : null}
                             <p>Correo electrónico: {userData.email} </p>
                         </div>
+                        { !userData.newsletter ? 
+                        <div>
+                            <p>Te gustaría suscribirte a nuestro newsletter?</p> 
+                            <a className={table.links} onClick={suscribeNewsletter}>click aqui</a>
+                        </div>
+                        : 
+                        <div>
+                            <p>¡Estas suscripto a nuestro newsletter! deseas desuscribirte?</p> 
+                            <a className={table.links} onClick={unsuscribeNewsletter}>click aqui</a>
+                        </div>
+                        }
 
                         <p>¿Queres ser artista y vender tus obras? Solicitalo <Link className={table.links} to='/solicitar'>acá.</Link></p>
 
