@@ -9,6 +9,7 @@ import NavBar from '../NavBar/NavBar';
 function ShoppingCart() {
 
 	let cart = useSelector((state) => state.cart);
+	const products = useSelector(state => state.products);
 	let { id } = useSelector((state) => state.userData);
 	let offers = useSelector((state) => state.offers);
 	let categories = useSelector((state) => state.categories);
@@ -18,10 +19,8 @@ function ShoppingCart() {
 	const history = useHistory();
 
 	const [total, setTotal] = useState(0);
-	const [newTotal, setNewTotal] = useState(0);
+	const [subTotal, setSubTotal] = useState(0);
 
-	
-	
 	const handlePayment = () => {
 		//toda la logica futura para un pago
 		if (!localStorage.getItem('token')) {
@@ -29,22 +28,33 @@ function ShoppingCart() {
 			history.push('/ingresar');
 		} else {
 			if (cartL.length > 0) {
-				history.push('/pago');				
+				history.push('/pago');
 			}
 		}
 	}
-	
+
+	useEffect(() => {
+		let cartDefault = [];
+		cart.forEach(p => {
+			let found = products.find(prod => prod.id_product === p.product.id_product);
+			if (found) {
+				cartDefault.push({ product: found, quantity: p.quantity });
+			}
+		})
+		!cartDefault.includes(undefined) && setSubTotal(cartDefault.reduce((acc, current) => acc += current.product.price * current.quantity, 0));
+	}, [products, cart])
+
 	useEffect(() => {
 		setTotal(cart.reduce((acc, current) => acc += current.subTotal, 0));
 	}, [cart])
-		
+
 	return (
 		<div className={style.mainContainer}>
 			<NavBar renderTop={false} />
 
 			<div className={style.secondContainer}>
 
-				<h1 className={style.title}>Paso 1: Detalle del carrito</h1>
+				<h1 className={style.title}>Paso 1: Carrito</h1>
 				{
 					cart.length > 0
 						?
@@ -58,8 +68,21 @@ function ShoppingCart() {
 							<div className={style.info}>
 
 								<div>
-									
-									<p className={style.total}>Total: ${total}</p>
+									<h1 className={style.detailTitle}>Detalle de la compra</h1>
+									<div className={style.priceContainer}>
+										<p className={style.subTotal}>Subtotal:</p>
+										<p className={style.subTotal}>${subTotal}</p>
+									</div>
+									<div className={style.priceContainer}>
+										<p className={style.discount}>Descuento:</p>
+										<p className={style.discount}>${subTotal - total}</p>
+									</div>
+									<hr className={style.line}/>
+									<div className={style.priceContainer}>
+										<p className={style.total}>Total:</p>
+										<p className={style.total}>${total}</p>
+
+									</div>
 								</div>
 
 
