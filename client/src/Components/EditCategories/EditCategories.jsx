@@ -5,6 +5,7 @@ import getCategories from '../../Actions/filter'
 import opencategory from '../../Actions/opencategory'
 import firebase from 'firebase';
 import close from '../../Images/cancel.svg'
+import axios from 'axios'
 
 function EditCategories(props) {
 
@@ -71,17 +72,17 @@ function EditCategories(props) {
 
         ev.preventDefault();
         try {
-            fetch(`http://localhost:3001/products/category/${theCategory.id}`, {
+            axios(`http://localhost:3001/products/category/${theCategory.id}`, {
                 method: 'PUT',
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({
-                    name: theCategory.name,
-                    description: theCategory.description,
-                    image: theCategory.image
-                })
+                // body: JSON.stringify({
+                //     name: theCategory.name,
+                //     description: theCategory.description,
+                //     image: theCategory.image
+                //})
             })
                 .then((res) => res.json())
                 .then(response => props.flag(true))

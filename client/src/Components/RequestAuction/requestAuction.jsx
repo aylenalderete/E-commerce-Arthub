@@ -72,7 +72,6 @@ function RequestAuction(props) {
     function handleUpload(event) {
         setLoading(true)
         const file = event.target.files[0];
-        console.log(event.target.files);
 
         if (event.target.files.length) {
             const storageRef = firebase.storage().ref(`/images/${file.name}`);
@@ -83,7 +82,6 @@ function RequestAuction(props) {
                 (snapshot) => {
                     let percentage =
                         (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                    console.log(snapshot);
                     setUpload({
                         process: percentage,
                     });
@@ -152,7 +150,6 @@ function RequestAuction(props) {
                     percentage: auction.price >= 1000 ? 100 : 50})
                 .then((res) => {
                     alert("Subasta solicitada");
-                    console.log(res.data);
                 })
                 .catch((error) => {
                     alert("No se pudo solicitar la subasta");

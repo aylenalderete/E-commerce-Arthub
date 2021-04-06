@@ -8,7 +8,7 @@ const {google} = require("googleapis")
 const CLIENT_ID = '58229968491-6sjdcgkqh0uog45rabbitouniqs182ch.apps.googleusercontent.com'
 const CLIENT_SECRET = 'WqmGTBctdvzddpFsmu0_MwBV'
 const REDIRECT_URI = 'https://developers.google.com/oauthplayground'
-const REFRESH_TOKEN = '1//04VjdAu7ftOspCgYIARAAGAQSNwF-L9Irxx8NT_J7Zbe-8ahhQWzuEL5JdKgNFPc3cskLeZzmAOHquYKdxgMC0gv53CChhMqLrao'
+const REFRESH_TOKEN = '1//04FLtJ0C9p1TJCgYIARAAGAQSNwF-L9IrnnktsAFl4t3zIL0Yhb9Y2h2xKIheOvGHj-HFi0Fc9kQUglrm7XPCjQg-1fWQTfRtWso'
 
 const oAuth2Client = new google.auth.OAuth2(CLIENT_ID,CLIENT_SECRET,REDIRECT_URI)
 oAuth2Client.setCredentials({refresh_token:REFRESH_TOKEN})
@@ -150,5 +150,24 @@ server.post("/resetpassword/:password", verifyTokenResetPw, async (req, res, nex
     }
    
 });
+
+//mailer auction
+server.post('/auction/:email', (req, res) => {
+    const { email } = req.params;
+    try {
+        var body = `<p>Has sido el ganador de la subasta, Felicitaciones te desea Arthub</p>
+                <div>Por favor responder a este correo con la direccion donde deseas recibir tu cuadro</div>`
+
+        sendEmail('auction winner', body, email)
+            .then(() => {
+                res.json({ menssage: 'mail sent successfully' })
+            })
+
+    } catch (error) {
+        res.status(400).json({ message: 'Error' })
+
+    }
+
+})
 
 module.exports = server;
