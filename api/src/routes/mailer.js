@@ -7,12 +7,9 @@ const { google } = require("googleapis")
 const { CLIENT_ID, CLIENT_SECRET, REDIRECT_URI, REFRESH_TOKEN } = process.env;
 
 
-const CLIENT_ID = '58229968491-6sjdcgkqh0uog45rabbitouniqs182ch.apps.googleusercontent.com'
-const CLIENT_SECRET = 'WqmGTBctdvzddpFsmu0_MwBV'
-const REDIRECT_URI = 'https://developers.google.com/oauthplayground'
-const REFRESH_TOKEN = '1//04FLtJ0C9p1TJCgYIARAAGAQSNwF-L9IrnnktsAFl4t3zIL0Yhb9Y2h2xKIheOvGHj-HFi0Fc9kQUglrm7XPCjQg-1fWQTfRtWso'
-const oAuth2Client = new google.auth.OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI)
-oAuth2Client.setCredentials({ refresh_token: REFRESH_TOKEN })
+const oAuth2Client = new google.auth.OAuth2(CLIENT_ID,CLIENT_SECRET,REDIRECT_URI)
+oAuth2Client.setCredentials({refresh_token:REFRESH_TOKEN})
+
 
 
 async function sendEmail(subject, body, to) {

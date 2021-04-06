@@ -5,12 +5,6 @@ export default function getArtistAuctions (artistId){
         axios.get(`http://localhost:3001/auctions/art/${artistId}`)
         .then(result => 
             { console.log(result)
- 
-    return dispatch =>{
-        axios.get(`http://localhost:3001/auctions/user/${artistId}`)
-        .then(r => 
-            {
-
                 dispatch({
             type: 'GET_ARTIST_AUCTIONS', payload: result.data
         })})
