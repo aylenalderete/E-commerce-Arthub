@@ -42,6 +42,10 @@
     padding: 10px 20px;
 }
 
+.btn:hover {
+    background-color: #F427EC;
+}
+
 .divTitle{
     align-items: center;
     justify-content: center;
