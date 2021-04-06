@@ -30,7 +30,7 @@ export default function AboutUsSection() {
                     </div>
                     <div className={Styles.infoContainer}>
                         <p className={Styles.name}>Santi Longueira</p>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                        <p className={Styles.desc}>Lorem ipsum dolor sit amet, consectetur adipiscing elit,
                         sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                         </p>
                     </div>
