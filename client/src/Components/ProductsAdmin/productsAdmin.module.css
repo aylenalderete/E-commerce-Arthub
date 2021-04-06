@@ -49,3 +49,7 @@ margin-left: 20px;
 .link{
     color:#F427EC
 }
+
+.link:hover {
+    color: white;
+}

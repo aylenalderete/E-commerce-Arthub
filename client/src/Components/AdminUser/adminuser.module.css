@@ -59,21 +59,30 @@
 .rol{
     font-size: 1.2rem;
 }
-
+.btnContainer {
+    display: flex;
+}
 .editProfile{
     background-color: transparent;
     border: 1px solid white;
     color:white;
     padding:10px;
     width:30%;
+    margin: 10px;
     font-size: 1rem;
     justify-content: flex-end;
     cursor:pointer;
+    font-family: inherit;
 
 }
 .editProfile:focus{
     outline:none;
 }
+
+.editProfile:hover {
+    background-color: #F427EC;
+}
+
 .categories{
     width:90%;
     display: flex;
@@ -91,6 +100,10 @@
     align-self: flex-end;
     font-size: 1.2rem;
     color:#F427EC
+}
+
+.link:hover {
+    color: white;
 }
 
 .editBtn{

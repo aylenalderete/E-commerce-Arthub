@@ -72,8 +72,15 @@
     font-size: 1rem;
     justify-content: flex-end;
     cursor:pointer;
+    font-family: inherit;
 
 }
+
+
+.editProfile:hover {
+    background-color: #F427EC;
+}
+
 .editProfile:focus{
     outline:none;
 }

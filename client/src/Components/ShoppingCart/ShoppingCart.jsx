@@ -21,6 +21,8 @@ function ShoppingCart() {
 	const [total, setTotal] = useState(0);
 	const [subTotal, setSubTotal] = useState(0);
 
+
+
 	const handlePayment = () => {
 		//toda la logica futura para un pago
 		if (!localStorage.getItem('token')) {
@@ -77,7 +79,7 @@ function ShoppingCart() {
 										<p className={style.discount}>Descuento:</p>
 										<p className={style.discount}>${subTotal - total}</p>
 									</div>
-									<hr className={style.line}/>
+									<hr className={style.line} />
 									<div className={style.priceContainer}>
 										<p className={style.total}>Total:</p>
 										<p className={style.total}>${total}</p>
@@ -99,7 +101,7 @@ function ShoppingCart() {
 						</div >
 						:
 						<div className={style.noProductsMessage}>
-							<p>No hay productos en tu carrito, elige algunos de <Link to="/coleccion"> nuestra colección</Link>
+							<p>No hay productos en tu carrito, elegí algunos de <Link to="/coleccion"> nuestra colección.</Link>
 							</p>
 						</div>
 				}
