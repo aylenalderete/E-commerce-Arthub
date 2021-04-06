@@ -4,6 +4,7 @@ import style from "./favorites.module.css";
 import { useSelector } from 'react-redux';
 import axios from 'axios';
 import ArtCard from '../../Components/Art/ArtCard';
+import { Link } from 'react-router-dom';
 
 
 export default function Favorites() {
@@ -29,24 +30,27 @@ export default function Favorites() {
                 <div className={style.cardContainer}>
 
                     {
-                        prodFav.length>0
-                        ?
-                        prodFav.map(p => (
-                            <ArtCard
-                                name={p.title}
-                                pic={p.images[0].url}
-                                artist={p.user.name + " " + p.user.lastname}
-                                idArtist={p.user.id}
-                                id={p.id_product}
-                                key={p.id_product}
-                                price={p.price}
-                                stock={p.stock}
-                                categories={p.categories}
-                            // setFlag={setFlag}
-                            />
-                        ))
-                        :
-                        <p>No hay productos en favoritos</p>
+                        prodFav.length > 0
+                            ?
+                            prodFav.map(p => (
+                                <ArtCard
+                                    name={p.title}
+                                    pic={p.images[0].url}
+                                    artist={p.user.name + " " + p.user.lastname}
+                                    idArtist={p.user.id}
+                                    id={p.id_product}
+                                    key={p.id_product}
+                                    price={p.price}
+                                    stock={p.stock}
+                                    categories={p.categories}
+                                // setFlag={setFlag}
+                                />
+                            ))
+                            :
+                            <div className={style.noProductsMessage}>
+                                <p>No hay productos en tu lista de favoritos, elegí algunos de <Link to="/coleccion"> nuestra colección.</Link>
+                                </p>
+                            </div>
                     }
                 </div>
             </div>

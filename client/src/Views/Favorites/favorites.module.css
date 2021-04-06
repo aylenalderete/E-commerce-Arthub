@@ -17,3 +17,18 @@
 .secondContainer{
     flex-grow: 1;
 }
+
+.noProductsMessage {
+    display:flex;
+    font-size: 20px;
+    margin-bottom: 20px;
+    justify-content: center;
+}
+
+.noProductsMessage a {
+    color:#F427EC;
+}
+
+.noProductsMessage a:hover {
+    color: white;
+}

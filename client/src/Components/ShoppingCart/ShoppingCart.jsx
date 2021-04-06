@@ -20,8 +20,8 @@ function ShoppingCart() {
 	const [total, setTotal] = useState(0);
 	const [newTotal, setNewTotal] = useState(0);
 
-	
-	
+
+
 	const handlePayment = () => {
 		//toda la logica futura para un pago
 		if (!localStorage.getItem('token')) {
@@ -29,15 +29,15 @@ function ShoppingCart() {
 			history.push('/ingresar');
 		} else {
 			if (cartL.length > 0) {
-				history.push('/pago');				
+				history.push('/pago');
 			}
 		}
 	}
-	
+
 	useEffect(() => {
 		setTotal(cart.reduce((acc, current) => acc += current.subTotal, 0));
 	}, [cart])
-		
+
 	return (
 		<div className={style.mainContainer}>
 			<NavBar renderTop={false} />
@@ -58,7 +58,7 @@ function ShoppingCart() {
 							<div className={style.info}>
 
 								<div>
-									
+
 									<p className={style.total}>Total: ${total}</p>
 								</div>
 
@@ -76,7 +76,7 @@ function ShoppingCart() {
 						</div >
 						:
 						<div className={style.noProductsMessage}>
-							<p>No hay productos en tu carrito, elige algunos de <Link to="/coleccion"> nuestra colección</Link>
+							<p>No hay productos en tu carrito, elegí algunos de <Link to="/coleccion"> nuestra colección.</Link>
 							</p>
 						</div>
 				}

@@ -131,13 +131,13 @@ export default function BuyUser() {
                         <h1 className={style.name} >{userData.lastname ? (userData.name + ' ' + userData.lastname) : (userData.name)}</h1>
                         <div className={style.info}>
                             {userData.birth ? <p>Cumpleaños: {userData.birth && userData.birth.slice(5, 10)} </p> : null}
-                            <p>Mail: {userData.email} </p>
+                            <p>Correo electrónico: {userData.email} </p>
                         </div>
 
-                        <p>Quieres ser artista y vender tus obras? Solicitalo <Link className={table.links} to='/solicitar'>aquí</Link></p>
+                        <p>¿Queres ser artista y vender tus obras? Solicitalo <Link className={table.links} to='/solicitar'>acá.</Link></p>
 
                         <button className={table.btnEditProfile} onClick={() => history.push(`/editarperfil/`)}>
-                            Editar perfil </button>
+                            Editar mi perfil </button>
 
                         {/* Autenticacion de dos factores */}
                         {!(userData.twoFactor) && !inputPhone.deactivate ?
@@ -155,9 +155,9 @@ export default function BuyUser() {
                                                     <span className={style.link}>{errors.number}</span>
                                                 ) : null}
                                             </div>
-                                            <div className={style.inputNumero} >ingresa cod país + código área + número </div>
-                                            <div>Ej: 54 11 34563456 </div>
-                                            <button className={style.inputNumero} onClick={onSend}>enviar</button>
+                                            <div className={style.inputNumero}>Ingresa código de país + código área + número </div>
+                                            <div>Ejemplo: 54 11 34563456 </div>
+                                            <button className={style.inputNumero} onClick={onSend}>Enviar</button>
                                         </div>
                                         : null}
                                     {inputPhone.send ?
@@ -186,7 +186,7 @@ export default function BuyUser() {
                     </div>
                     <div className={style.containerPic}>
                         <img className={style.userPic} src={!userData.profilepic ? NotFound : userData.profilepic} alt='User Pic' />
-                        <button className={style.editBtn}>
+                        <button className={style.editBtn} onClick={() => history.push(`/editarperfil/`)}>
                             <img className={style.edit} src={Edit} alt="" />
                         </button>
                     </div>
@@ -194,7 +194,7 @@ export default function BuyUser() {
                 </div>
 
                 <div className={style.containerProducts}>
-                    <h2 className={style.title}>Mis Ordenes</h2>
+                    <h2 className={style.title}>Mis órdenes</h2>
 
                     {!userOrders.message ?
                         <div className={style.divOrders}>
@@ -216,8 +216,8 @@ export default function BuyUser() {
                         </div>
                         :
                         <div className={table.notOrders} >
-                            <p className={table.infoProduct}>Aún no has realizado ninguna compra, deseas hacerlo? Visita
-                               nuestra <Link className={table.links} to='/coleccion'>colección</Link>
+                            <p className={table.infoProduct}>Aún no hiciste una compra, ¿deseas hacerlo? Visita
+                               nuestra <Link className={table.links} to='/coleccion'>colección.</Link>
                             </p>
                         </div>
                     }

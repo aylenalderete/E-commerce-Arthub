@@ -134,7 +134,7 @@ function Collection() {
           </button>
           <SearchBar></SearchBar>
           {userType && userType === "artist" ? (
-            
+
             <Link className={style.linkCreate} to="/crearproducto">
               <img
                 className={style.createProduct}
