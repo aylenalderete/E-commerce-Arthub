@@ -72,3 +72,11 @@
     top: 8px;
     right: 8px;
 }
+
+.priceDefault{
+    text-decoration: line-through;
+}
+
+.discount{
+    color: #F427EC;
+}

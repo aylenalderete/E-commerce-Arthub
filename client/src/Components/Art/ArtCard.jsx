@@ -87,7 +87,7 @@ function ArtCard({ name, pic, artist, id, idArtist, price, stock, setFlag, categ
             <h5 className={style.name}>{name}</h5>
           </Link>
           {/* <h5 className={style.text}>Precio: {"$ " + price}</h5> */}
-          <h5 className={style.text}>Precio: $ { newPrice } {isInOffer && `${currentOffer.discount}% off!`}</h5>
+          <h5 className={style.text}>Precio: $ { newPrice }</h5>
 
           {stock > 0 ? (
             <h5 className={style.text}>{`Stock: ${stock}`}</h5>
@@ -120,7 +120,9 @@ function ArtCard({ name, pic, artist, id, idArtist, price, stock, setFlag, categ
             </button>
           }
 
+
         </div>
+          <h2 className={style.offer}>{isInOffer && `${currentOffer.discount}% off!`}</h2>
       </div>
     );
   }
@@ -159,12 +161,14 @@ function ArtCard({ name, pic, artist, id, idArtist, price, stock, setFlag, categ
             {stock > 0 ? `Stock: ${stock}` : "Producto no disponible"}
           </h5>
           {/* <h5 className={style.text}>Precio: {"$ " + price}</h5> */}
-          <h5 className={style.text}>Precio: $ { newPrice } {isInOffer && `${currentOffer.discount}% off!`}</h5>
+          <h5 className={style.text}>Precio: $ { newPrice }</h5>
 
           <Link className={style.linksA} to={`/artistas/${idArtist}`}>
             <h5 className={style.text}>Artista: {artist}</h5>
           </Link>
         </div>
+        <h2 className={style.offer}>{isInOffer && `${currentOffer.discount}% off!`}</h2>
+
       </div>
     );
   }
@@ -219,6 +223,8 @@ function ArtCard({ name, pic, artist, id, idArtist, price, stock, setFlag, categ
             </Link>
           )}
         </div>
+        <h2 className={style.offer}>{isInOffer && `${currentOffer.discount}% off!`}</h2>
+
       </div>
     )
   }
