@@ -117,7 +117,7 @@ server.post("/resetpassword/:password", verifyTokenResetPw, async (req, res, nex
     try {
         const user = await User.findByPk(userId);
 
-        console.log('User a actualizar password', user)
+  
 
         if (user.dataValues) {
 

@@ -109,7 +109,6 @@ export default function BuyUser() {
                     twoToken
                 })
                 .then(result => {
-                    console.log(result)
                     if (result.data.authTwo) {
                         alert('proceso exitoso')
                         setInputPhone({ ...inputPhone, deactivate: true })

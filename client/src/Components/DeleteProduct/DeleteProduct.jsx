@@ -7,8 +7,6 @@ import close from '../../Images/cancel.svg';
 
 
 function DeleteProduct(props) {
-    const isOpenDeleteProd = useSelector((state) => state.isOpenDeleteProd);
-    
     const [theProduct, setTheProduct] = useState()
 
     const products = useSelector(state => state.products)
@@ -19,7 +17,7 @@ function DeleteProduct(props) {
     
     useEffect(() => {
         dispatch(getInitialProducts());
-        setTheProduct(products.filter((element) => element.id_product == productId)[0])
+        setTheProduct(products.filter((element) => element.id_product === productId)[0])
         return () => {dispatch(deleteproduct(false))}
     }, [])
 

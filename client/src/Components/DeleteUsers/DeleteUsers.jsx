@@ -4,6 +4,7 @@ import {useSelector, useDispatch} from 'react-redux'
 import getUsers from '../../Actions/getUsers'
 import deleteUsers from '../../Actions/deleteUsers'
 import close from '../../Images/cancel.svg'
+import axios from 'axios';
 
 function DeleteUsers(props) {
     const [theUser, setTheUser] = useState()
@@ -25,21 +26,10 @@ function DeleteUsers(props) {
     function handleSubmit() {
         
         try {
-            fetch(`http://localhost:3001/users/softdelete/${theUser.id}`, {
-                method: 'PUT',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    id: theUser.id,
-                })
-                
-            })
-                .then((res) => {
-                    console.log(res)
-                    res.json()
-                })
+            axios
+              .put(`http://localhost:3001/users/softdelete/${theUser.id}`, {
+                id: theUser.id
+              })
                 
 
         } catch (error) {
