@@ -25,6 +25,10 @@
     font-size:1.2rem
 }
 
+.link:hover {
+    color: white;
+}
+
 
 @keyframes color {
     0% {

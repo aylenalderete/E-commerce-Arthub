@@ -1,4 +1,4 @@
-import React, { useEffect ,useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import NavBar from '../NavBar/NavBar';
 import Styles from './artistUser.module.css';
 import table from '../BuyUser/buyUser.module.css';
@@ -27,92 +27,100 @@ export default function ArtistUser() {
 
     }, []);
 
-    const [inputPhone,setInputPhone] = useState({show:false,
-        number:'',
-        send:false,
-        code:'',
-        deactivate:false})
-const [errors,setErrors] = useState({number:'',
-code:''})
+    const [inputPhone, setInputPhone] = useState({
+        show: false,
+        number: '',
+        send: false,
+        code: '',
+        deactivate: false
+    })
+    const [errors, setErrors] = useState({
+        number: '',
+        code: ''
+    })
 
-async function onSend(){
-if(!inputPhone.number){
-setErrors({...errors,number:'Ingresa un número'})
-}else if(inputPhone.number.toString().length != 12){
-setErrors({...errors,number:'El número es incorrecto'})
-}else{
-await axios
-.post(`http://localhost:3001/twofactor/send/${inputPhone.number}/${userData.id}`)
-.then(result=>{
+    async function onSend() {
+        if (!inputPhone.number) {
+            setErrors({ ...errors, number: 'Ingresa un número' })
+        } else if (inputPhone.number.toString().length != 12) {
+            setErrors({ ...errors, number: 'El número es incorrecto' })
+        } else {
+            await axios
+                .post(`http://localhost:3001/twofactor/send/${inputPhone.number}/${userData.id}`)
+                .then(result => {
 
-if(result.data.authTwo){
-localStorage.setItem("twoToken",result.data.twoToken); 
-alert(`Se ha enviado un mensaje con un código de verificaion al numero ${inputPhone.number}`)
-setInputPhone({...inputPhone,show:!inputPhone.show,send:true})
-}else{
-alert(`No se pudo enviar el mensaje`)
-}
+                    if (result.data.authTwo) {
+                        localStorage.setItem("twoToken", result.data.twoToken);
+                        alert(`Se ha enviado un mensaje con un código de verificaion al numero ${inputPhone.number}`)
+                        setInputPhone({ ...inputPhone, show: !inputPhone.show, send: true })
+                    } else {
+                        alert(`No se pudo enviar el mensaje`)
+                    }
 
-})
-}
-}    
+                })
+        }
+    }
 
-function onActivate(event){
-if(event.target.checked){
-setInputPhone({...inputPhone,show:true,send:false})
-}else{
-setInputPhone({...inputPhone,show:false,send:false})
-}
-}
+    function onActivate(event) {
+        if (event.target.checked) {
+            setInputPhone({ ...inputPhone, show: true, send: false })
+        } else {
+            setInputPhone({ ...inputPhone, show: false, send: false })
+        }
+    }
 
-async function onDeactivate(event){
-if(event.target.checked){
-setInputPhone({...inputPhone,deactivate:false})
+    async function onDeactivate(event) {
+        if (event.target.checked) {
+            setInputPhone({ ...inputPhone, deactivate: false })
 
-await axios
-.post(`http://localhost:3001/twofactor/deactivate/${userData.id}`)
-.then(result=>{
-if(result.data.done){
-alert('Autenticacion de dos factores desactivada')
-}
-})
+            await axios
+                .post(`http://localhost:3001/twofactor/deactivate/${userData.id}`)
+                .then(result => {
+                    if (result.data.done) {
+                        alert('Autenticacion de dos factores desactivada')
+                    }
+                })
 
-}else{
-setInputPhone({...inputPhone,deactivate:true})
-}
+        } else {
+            setInputPhone({ ...inputPhone, deactivate: true })
+        }
 
-}
+    }
 
-function onChange(event){
-const name = event.target.name
-const value=event.target.value
+    function onChange(event) {
+        const name = event.target.name
+        const value = event.target.value
 
-setInputPhone({...inputPhone,[name]:value})
-setErrors({number:'',
-code:''})
-}
+        setInputPhone({ ...inputPhone, [name]: value })
+        setErrors({
+            number: '',
+            code: ''
+        })
+    }
 
-async function onVerify(){
-if(!inputPhone.code){
-setErrors({...errors,code:'Introduce el código de verificación'})
-}else{
-let twoToken = localStorage.getItem("twoToken")
-await axios
-.post(`http://localhost:3001/twofactor/verify`,{number:inputPhone.number,
-               code: inputPhone.code,
-               twoToken})
-.then(result=>{
-console.log(result)
-if(result.data.authTwo){
-alert('proceso exitoso')
-setInputPhone({...inputPhone,deactivate:true})
-}else{
-setErrors({...errors,code:result.data.msg})
-}
+    async function onVerify() {
+        if (!inputPhone.code) {
+            setErrors({ ...errors, code: 'Introduce el código de verificación' })
+        } else {
+            let twoToken = localStorage.getItem("twoToken")
+            await axios
+                .post(`http://localhost:3001/twofactor/verify`, {
+                    number: inputPhone.number,
+                    code: inputPhone.code,
+                    twoToken
+                })
+                .then(result => {
 
-})
-}
-}
+                    if (result.data.authTwo) {
+                        alert('proceso exitoso')
+                        setInputPhone({ ...inputPhone, deactivate: true })
+                    } else {
+                        setErrors({ ...errors, code: result.data.msg })
+                    }
+
+                })
+        }
+    }
 
     return (
         <div className={Styles.mainContainer}>
@@ -131,56 +139,56 @@ setErrors({...errors,code:result.data.msg})
                         <button className={style.editProfile} onClick={() => history.push(`/solicitarSubasta/`)}>
                             Solicitar subasta </button>
 
-                            {/* Autenticacion de dos factores */}
-            {!(userData.twoFactor) && !inputPhone.deactivate?
-              <div>
-                <div className={style.checkTwoFactor}>
-                  <input type='checkbox' onChange={onActivate} className='activate'/>
-                  <label>Activar autenticación de 2 factores</label>
-                </div>
-                <div>
-                  {inputPhone.show && !inputPhone.send?
-                  <div>
-                  <input type='number'  name='number' value={inputPhone.number} onChange={onChange}laceholder='ingresar numero telefonico' className={style.inputNumero}/>
-                  <div>
-                      {errors.number ? (
-                      <span className={style.link}>{errors.number}</span>
-                      ) : null}
-                  </div>
-                  <div className={style.inputNumero} >ingresa cod país + código área + número </div>
-                    <div>Ej: 54 11 34563456 </div>
-                    <button className={style.inputNumero} onClick={onSend}>enviar</button>
-                  </div>
-                  :null}
-                  {inputPhone.send?
-                  <div>
-                    <input type='number'  name='code' value={inputPhone.code} onChange={onChange} placeholder='ingresar código de verificación' className={style.inputNumero}/>
-                    <button className={style.inputNumero} onClick={onVerify}>verificar</button>
-                  </div>
-                  :null}
-                  <div>
-                      {errors.code ? (
-                      <span className={style.link}>{errors.code}</span>
-                      ) : null}
-                  </div>  
-                </div>
-              </div>
-              :
-              <div>
-                <div className={style.checkTwoFactor}>
-                  <input type='checkbox' onChange={onDeactivate}/>
-                  <label>Desactivar autenticación de 2 factores</label>
-                </div>   
-              </div>
-            }
-            {/* Autenticacion de dos factores (fin) */}
+                        {/* Autenticacion de dos factores */}
+                        {!(userData.twoFactor) && !inputPhone.deactivate ?
+                            <div>
+                                <div className={style.checkTwoFactor}>
+                                    <input type='checkbox' onChange={onActivate} className='activate' />
+                                    <label>Activar autenticación de 2 factores</label>
+                                </div>
+                                <div>
+                                    {inputPhone.show && !inputPhone.send ?
+                                        <div>
+                                            <input type='number' name='number' value={inputPhone.number} onChange={onChange} laceholder='ingresar numero telefonico' className={style.inputNumero} />
+                                            <div>
+                                                {errors.number ? (
+                                                    <span className={style.link}>{errors.number}</span>
+                                                ) : null}
+                                            </div>
+                                            <div className={style.inputNumero} >ingresa cod país + código área + número </div>
+                                            <div>Ej: 54 11 34563456 </div>
+                                            <button className={style.inputNumero} onClick={onSend}>enviar</button>
+                                        </div>
+                                        : null}
+                                    {inputPhone.send ?
+                                        <div>
+                                            <input type='number' name='code' value={inputPhone.code} onChange={onChange} placeholder='ingresar código de verificación' className={style.inputNumero} />
+                                            <button className={style.inputNumero} onClick={onVerify}>verificar</button>
+                                        </div>
+                                        : null}
+                                    <div>
+                                        {errors.code ? (
+                                            <span className={style.link}>{errors.code}</span>
+                                        ) : null}
+                                    </div>
+                                </div>
+                            </div>
+                            :
+                            <div>
+                                <div className={style.checkTwoFactor}>
+                                    <input type='checkbox' onChange={onDeactivate} />
+                                    <label>Desactivar autenticación de 2 factores</label>
+                                </div>
+                            </div>
+                        }
+                        {/* Autenticacion de dos factores (fin) */}
                     </div>
                     <div className={Styles.containerPic}>
                         <img className={Styles.userPic} src={userData.profilepic ? userData.profilepic : noProfPic} alt='User Pic' />
                         <button onClick={() => history.push('/editarperfil')} className={Styles.editBtn}>
                             <img className={Styles.edit} src={Edit} alt="" />
                         </button>
-                        
+
                     </div>
                 </div>
                 {/* Productos */}
@@ -197,7 +205,7 @@ setErrors({...errors,code:result.data.msg})
                 </div>
                 {/* Ordenes (compras) */}
                 <div className={style.containerProducts}>
-                    <h2 className={style.title}>Mis Ordenes</h2>
+                    <h2 className={style.title}>Mis órdenes</h2>
 
                     {!userOrders.message ?
                         <div className={style.divOrders}>
@@ -219,8 +227,8 @@ setErrors({...errors,code:result.data.msg})
                         </div>
                         :
                         <div className={table.notOrders} >
-                            <p className={table.infoProduct}>Aún no has realizado ninguna compra, deseas hacerlo? Visita
-                               nuestra <Link className={table.links} to='/coleccion'>colección</Link>
+                            <p className={table.infoProduct}>Aún no hiciste una compra, ¿deseas hacerlo? Visita
+                               nuestra <Link className={table.links} to='/coleccion'>colección.</Link>
                             </p>
                         </div>
                     }

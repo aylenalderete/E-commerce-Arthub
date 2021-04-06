@@ -69,8 +69,6 @@ function AllUsers() {
         });
     }
 
-    // console.log(users)
-    // console.log(typeof users)
 
     if(userData.id < 1 || userData.type !== 'admin'){
         return <Redirect to="/ingresar"></Redirect>;

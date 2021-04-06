@@ -183,6 +183,15 @@
     border-radius:5px;
 }
 
+.offer{
+    position: absolute;
+    bottom: -10px;
+    background-color: #F427EC;
+    width: 100%;
+    text-align: center;
+}
+
+
 @keyframes color {
     0% {
           background-color: #000000; 

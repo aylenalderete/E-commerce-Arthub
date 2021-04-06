@@ -27,10 +27,10 @@ const [input, setInput] = useState({
               },
             })
             .then(async (result) => {
-                console.log(result)
+            
                 if(!result.data.auth){
-                    console.log('No esta autorizado')
-                    /* setRedirect(true) */
+                   
+          
                     setExpired(true)
                 }
             }).catch(err=>{

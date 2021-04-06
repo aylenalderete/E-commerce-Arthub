@@ -3,6 +3,7 @@
     flex-direction: column;
     margin-left: 40px;
     margin-right: 40px;
+    
 }
 .title{
     
@@ -106,4 +107,23 @@
        
     }
   }
+
+  @media screen and (max-width: 480px){
+      .mainContainer{
+          margin-top: 120px;
+      }
+
+      .title{
+          font-size: 2rem;
+      }
+
+      .name{
+          font-size: 1.2rem;
+      }
+
+      .desc{
+          font-size: 1rem;
+      }
+  }
+
 

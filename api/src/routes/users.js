@@ -198,7 +198,7 @@ server.post("/", async function (req, res) {
 					let obj = { user: newuser, auth: true, token };
 					res.json(obj);
 				});
-				console.log("User successfully created");
+
 			} catch (err) {
 				console.log(err);
 				res.status(500).json({ message: err });
@@ -370,7 +370,6 @@ server.post("/signin/algo", async (req, res, next) => {
 								return res.json(err)
 							} else {
 								if (responseData.messages[0]['status'] === "0") {
-									console.log("Message sent successfully.");
 
 									let twoToken = jwt.sign({ id: user.id, code }, "secret_key", {
 										expiresIn: 60
@@ -384,7 +383,7 @@ server.post("/signin/algo", async (req, res, next) => {
 									})
 
 								} else {
-									console.log(`Message failed with error: ${responseData.messages[0]['error-text']}`);
+								
 									return res.json(`Message failed with error: ${responseData.messages[0]['error-text']}`)
 								}
 							}

@@ -7,18 +7,18 @@ import Styles from "./popUp.module.css";
 import searchFilters from "../../Actions/searchFilters";
 import activeFilters from "../../Actions/activeFilters";
 import close from "../../Images/cancel.svg";
-import { useSelector, useDispatch } from "react-redux";
+
 import {
   addItemPopUp,
   deleteItemPopUp,
 } from "../../Actions/dispatchCategories";
 
 import { connect } from "react-redux";
-import deleteCategory from "../../Actions/deleteproduct";
+
 
 function Filters({
   products,
-  filteredProducts,
+ 
   addItemPopUp,
   deleteItemPopUp,
   selectedCategories,
@@ -27,8 +27,6 @@ function Filters({
   setFilters,
   showFilters,
   getUsersArtists,
-  search,
-  searchFilters,
   activeFilters,
   isActiveFilters,
 }) {

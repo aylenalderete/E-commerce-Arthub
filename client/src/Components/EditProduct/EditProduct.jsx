@@ -33,7 +33,7 @@ function EditProduct({ id }) {
          setLoading(true);
 
         const file = event.target.files[0];
-        console.log(event.target.files)
+
 
         if (event.target.files.length) {
             const storageRef = firebase.storage().ref(`/images/${file.name}`)
@@ -41,7 +41,7 @@ function EditProduct({ id }) {
 
             task.on('state_changed', snapshot => {
                 let percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-                console.log(percentage)
+              
                 setUpload({
                     process: percentage
                 })
@@ -51,12 +51,8 @@ function EditProduct({ id }) {
             }, () => {
                 storageRef.getDownloadURL().then(urlImg => {
 
-                    console.log('la url es: ', urlImg)
-                    // let arrayImages = props.urlImages;
-                    // arrayImages.push(url)
-                    // props.setUrlImages(arrayImages)
-                    // console.log('termino1', props.urlImages)
-                    // setRefresh([1, 2])
+            
+                
                     setInput({
                         ...input,
                         images: [...input.images, { url: urlImg }]
@@ -105,12 +101,12 @@ function EditProduct({ id }) {
         async function cat() {
             let setCat = (await axios.get('http://localhost:3001/products/category')).data;
             setCategories(setCat);
-        }    // console.log('Estas categorias vienen de la base de datos: ', cat)
+        }    
         cat();
     }, [])
 
     function handleChangeCat(ev) {
-        // console.log(ev.target.value)
+    
         setSelectedCat(
             parseInt(ev.target.value)
         );
@@ -118,11 +114,11 @@ function EditProduct({ id }) {
     function handleSubmitCat(ev) {
         setLoading(true)
         ev.preventDefault();
-        // console.log('ENTRE AQUI');
+      
 
         if (input.categories.find(cat => cat === selectedCat)) {
             alert(`Ya se agregó como categoria`);
-            console.log('ENTRE AQUI');
+        
         } else {
             setInput({
                 ...input,
@@ -132,7 +128,7 @@ function EditProduct({ id }) {
     }
 
     function handleClickCat(ev) {
-        console.log('handleClickCat');
+   
         setInput({
             ...input,
             categories: [...input.categories.filter(cat => cat !== parseInt(ev.target.value))]

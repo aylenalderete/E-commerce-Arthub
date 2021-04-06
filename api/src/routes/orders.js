@@ -10,14 +10,10 @@ const {
     Product,
 } = require("../db.js");
 const mercadopago = require('mercadopago');
-const { TOKEN_MP } = process.env;
+const { TOKEN_MP, CLIENT_ID, CLIENT_SECRET, REDIRECT_URI, REFRESH_TOKEN } = process.env;
 
 // Configuracion para envío de mail
 
-const CLIENT_ID = '58229968491-6sjdcgkqh0uog45rabbitouniqs182ch.apps.googleusercontent.com'
-const CLIENT_SECRET = 'WqmGTBctdvzddpFsmu0_MwBV'
-const REDIRECT_URI = 'https://developers.google.com/oauthplayground'
-const REFRESH_TOKEN = '1//04VjdAu7ftOspCgYIARAAGAQSNwF-L9Irxx8NT_J7Zbe-8ahhQWzuEL5JdKgNFPc3cskLeZzmAOHquYKdxgMC0gv53CChhMqLrao'
 
 const oAuth2Client = new google.auth.OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI)
 oAuth2Client.setCredentials({ refresh_token: REFRESH_TOKEN })
@@ -65,9 +61,6 @@ server.post('/mercadopago', async (req, res) => {
     const { cart, idOrder, email, address } = req.body;
     const order = parseInt(idOrder);
 
-    console.log(address)
-
-    console.log(typeof address)
 
     var inputAndress = address.provincia + ' ' +
         address.localidad + ' ' +
@@ -254,7 +247,6 @@ server.put("/:id", async (req, res) => {
         orderToEdit.total_price = total_price;
         await orderToEdit.save();
         await orderToEdit.reload();
-        console.log(orderToEdit);
         res.json(orderToEdit);
     } catch {
         (err) => {

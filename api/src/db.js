@@ -48,6 +48,7 @@ const {
 	Lineorder,
 	Shoppingcart,
 	Review,
+	Newsletter,
 	Wishlist,
 	Request,
 	Auction,
@@ -72,7 +73,7 @@ Product.hasMany(Wishlist);
 Wishlist.belongsTo(Product);
 
 User.hasMany(Wishlist);
-Wishlist.belongsTo(User)
+Wishlist.belongsTo(User);
 
 User.hasMany(Product, {
 	foreignKey: { allowNull: false },
@@ -97,6 +98,9 @@ Review.belongsTo(Product);
 
 User.hasMany(Review);
 Review.belongsTo(User);
+
+Newsletter.belongsToMany(User, { through: "usernewsletter" });
+User.belongsToMany(Newsletter, { through: "usernewsletter" });
 
 User.hasMany(Request);
 Request.belongsTo(User);

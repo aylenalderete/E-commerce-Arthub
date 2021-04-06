@@ -7,9 +7,3 @@ export default function getArtistsProducts(id) {
         .then(resolve => dispatch({type: 'GET_ARTISTS_PRODUCTS', payload: resolve}))   
     };
 }
-
-// artistsProducts&&artistsProducts.filter((x) => x.userId === id)
-//         console.log(artistsProducts)
-//         return function(dispatch) {
-//             dispatch({type: 'GET_ARTISTS_PRODUCTS', payload: artistsProducts})
-//         }

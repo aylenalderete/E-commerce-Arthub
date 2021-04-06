@@ -8,6 +8,10 @@
     width: 100%;
 }
 
+.btnFilters:hover {
+    background-color: #F427EC;
+}
+
 .sbContainer{
    
     display: flex;

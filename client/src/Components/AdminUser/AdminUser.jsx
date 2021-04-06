@@ -98,7 +98,6 @@ function AdminUser() {
           twoToken
         })
         .then(result => {
-          console.log(result)
           if (result.data.authTwo) {
             alert('proceso exitoso')
             setInputPhone({ ...inputPhone, deactivate: true })
@@ -118,25 +117,27 @@ function AdminUser() {
 
           <div className={style.userInfo}>
             <h1 className={style.name} >{userData.name}</h1>
-            <p className={style.rol}>Rol:{userData.type} </p>
-
+            <p className={style.rol}>Rol: {userData.type} </p>
             <button className={style.editProfile} onClick={() => history.push(`/editarperfil/`)}>
               Editar perfil </button>
-            <br></br>
-            <button className={style.editProfile} onClick={() => history.push(`/ordenes/`)}>
-              Ordenes </button>
-            <br></br>
-            <button className={style.editProfile} onClick={() => history.push(`/usuarios/`)}>
-              Editar usuarios </button>
-            <br></br>
-            <button className={style.editProfile} onClick={() => history.push(`/subastas/`)}>
-              Subastas </button>
-            <br></br>
-            <button className={style.editProfile} onClick={() => history.push(`/solicitudes/`)}>
-              Solicitudes </button>
-            <br></br>
-            <button className={style.editProfile} onClick={() => history.push(`/ofertas/`)}>
-              Ofertas </button>
+            <p className={style.rol}>Administrar </p>
+            <div className={style.btnContainer}>
+              <br></br>
+              <button className={style.editProfile} onClick={() => history.push(`/ordenes/`)}>
+                Ordenes </button>
+              <br></br>
+              <button className={style.editProfile} onClick={() => history.push(`/usuarios/`)}>
+                Usuarios </button>
+              <br></br>
+              <button className={style.editProfile} onClick={() => history.push(`/subastas/`)}>
+                Subastas </button>
+              <br></br>
+              <button className={style.editProfile} onClick={() => history.push(`/solicitudes/`)}>
+                Solicitudes </button>
+              <br></br>
+              <button className={style.editProfile} onClick={() => history.push(`/ofertas/`)}>
+                Ofertas </button>
+            </div>
             {/* Autenticacion de dos factores */}
             {!(userData.twoFactor) && !inputPhone.deactivate ?
               <div>
@@ -153,9 +154,9 @@ function AdminUser() {
                           <span className={style.link}>{errors.number}</span>
                         ) : null}
                       </div>
-                      <div className={style.inputNumero} >ingresa cod país + código área + número </div>
-                      <div>Ej: 54 11 34563456 </div>
-                      <button className={style.inputNumero} onClick={onSend}>enviar</button>
+                      <div className={style.inputNumero} >Ingresa cod país + código área + número </div>
+                      <div>Ejemplo: 54 11 34563456 </div>
+                      <button className={style.inputNumero} onClick={onSend}>Enviar</button>
                     </div>
                     : null}
                   {inputPhone.send ?
