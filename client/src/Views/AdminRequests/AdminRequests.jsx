@@ -18,7 +18,8 @@ function AdminRequests() {
 
     function handleApproved(id) {
         axios.put(`http://localhost:3001/request/${id}`, { state: 'approved' })
-            .then(alert('Solicitud aprobada con éxito'))
+            .then(alert('Solicitud aprobada con éxito'),
+                window.location = 'http://localhost:3000/solicitudes/')
             .catch(err => alert(err))
     }
 
@@ -43,11 +44,14 @@ function AdminRequests() {
                                     <p>Nombre de usuario: {r.user.username}</p>
                                     <p>Nombre y apellido: {r.user.name + " " + r.user.lastname}</p>
                                     {/* <Link to={r.cv}>Ver CV</Link> */}
-                                    <button onClick={() => window.location.href = r.cv} className={style.button}>Ver CV</button>
+                                    <div className={style.cvContainer}>
+                                        <p>Currículum Vitae:</p>
+                                        <button onClick={() => window.location.href = r.cv} className={style.button}>Ver CV</button>
+                                    </div>
                                     <p>Links relevantes: {r.links}</p>
                                     <p>Fundamento: {r.fundament}</p>
                                     {r.state === "pending" ?
-                                        <div>
+                                        <div className={style.buttonsContainer}>
                                             <button className={style.button} value='approved' onClick={() => handleApproved(r.id)}>
                                                 Aceptar
                     </button>
@@ -58,7 +62,7 @@ function AdminRequests() {
                                         : <p> Esta orden ya ha sido evaluada, su estado es "{r.state}".</p>}
 
                                 </div>
-                            )) : <div>No hay solicitudes </div>
+                            )) : <div className={style.message}>No hay solicitudes </div>
                         }
                     </div>
                 </div>
