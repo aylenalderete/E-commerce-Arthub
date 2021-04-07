@@ -4,6 +4,7 @@ import deleteproduct from '../../Actions/deleteproduct'
 import {useSelector, useDispatch} from 'react-redux'
 import style from './deleteProduct.module.css'
 import close from '../../Images/cancel.svg';
+import axios from 'axios';
 
 
 function DeleteProduct(props) {
@@ -26,10 +27,7 @@ function DeleteProduct(props) {
 
     function handleSubmit() {
         try {
-            fetch(`http://localhost:3001/products/${productId}`, {
-                method: 'DELETE',
-            })
-            .then((res) => res.json())
+            axios.delete(`http://localhost:3001/products/${productId}`)
             .then(response => alert('Producto eliminado'))
 
         } catch (error) {

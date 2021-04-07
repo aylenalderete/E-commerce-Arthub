@@ -40,7 +40,7 @@ export default function SalesArtist() {
       
       const detailForArtist = ( id ) => {
         const details = detail.find(d => d.id === id)
-        console.log(details)
+       
         return details?.state
 
       }

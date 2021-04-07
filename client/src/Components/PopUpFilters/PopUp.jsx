@@ -53,7 +53,7 @@ function Filters({
     if (!selectedCategories.find((n) => n == e.target.value)) {
       addItemPopUp(e.target.value);
     }
-    console.log(typeof selectedCategories[0]);
+    
   };
 
   //handle submit
@@ -66,7 +66,6 @@ function Filters({
       arraysote = arraysote.filter((p) =>
         p.categories.find((c) => c.name == selectedCategories[i])
       );
-      console.log(arraysote);
       setFilters(arraysote);
     }
     if (selectedCategories.length > 0) {
@@ -96,7 +95,7 @@ function Filters({
     }
   };
 
-  console.log(selectedCategories);
+ 
 
   return (
     <div className={Styles.mainDivPopUp}>

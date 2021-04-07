@@ -30,7 +30,7 @@ export default function TwoFactorForm(){
             await axios
             .post(`http://localhost:3001/twofactor/login/${twoToken}/${input.code}`)
             .then(result=>{
-                console.log(result)
+           
                 if(result.data.auth){
                     localStorage.setItem("token", result.data.token);
                     localStorage.removeItem("twoToken");

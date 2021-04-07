@@ -107,7 +107,6 @@ function EditUser() {
                     console.log(error.message)
                 }, () => {
                     storageRef.getDownloadURL().then(url => {
-                        console.log(url)
                         setUpload({ picture: url })
                         setInput({ ...input, profilepic: url })
                         setLoading(false)

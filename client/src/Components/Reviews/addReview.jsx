@@ -85,7 +85,6 @@ export default function AddReview({ idproduct, idorder }) {
     function handleSubmit(e) {
         e.preventDefault();
         if (input.description && input.qualification) {
-            console.log(idproduct, input.description, input.qualification, userId)
             dispatch(addProductReview(idproduct, input.description, input.qualification, userId))
             history.push(`/coleccion/${idproduct}`)
         } else {

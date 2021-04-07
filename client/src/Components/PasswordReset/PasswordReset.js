@@ -40,7 +40,7 @@ const [input, setInput] = useState({
 
     request()
 
-    console.log('respeta el sincronismo')
+  
   
        
   },[])
@@ -69,7 +69,7 @@ function onSubmit (event){
               },
             }).then(result=>{
                 if(result.data.success)
-                console.log('SE RESETEO EL PASSWORD', result)
+              
                 alert('contraseña cambiada')
                 setRedirect(true)
             })

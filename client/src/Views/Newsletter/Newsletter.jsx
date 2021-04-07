@@ -18,7 +18,6 @@ function Newsletter() {
         axios.get(`http://localhost:3001/users`)
         .then((res) => {
             setAllUsers(res.data)
-            console.log(res.data)
         })
         .catch((error) => {
             console.log(error)
@@ -33,9 +32,7 @@ function Newsletter() {
     const sendEmail = (e) => { 
         e.preventDefault()
         let filtrados = allUsers.filter((el) => el.type === filter)
-        console.log('filtrados', filtrados)
-        // axios.post(`http://localhost:3001/`, email)
-        console.log(email)
+       
     }
 
     return (

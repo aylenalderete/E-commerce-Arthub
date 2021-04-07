@@ -80,11 +80,10 @@ function RequestAuction(props) {
                 },
                 () => {
                     storageRef.getDownloadURL().then((url) => {
-                        console.log("la url es: ", url);
+                      
                         let arrayImages = props.urlImages;
                         arrayImages.push(url);
                         props.setUrlImages(arrayImages);
-                        console.log("termino1", props.urlImages);
                         setRefresh([1, 2]);
                         setLoading(false)
                     });
@@ -96,12 +95,10 @@ function RequestAuction(props) {
 
 
     function onDelete(event) {
-        console.log("imagen tocada:", event.target.value);
         let urlImages = props.urlImages.filter(
             (value) => value != event.target.value
         );
         props.setUrlImages(urlImages);
-        console.log("restante:", urlImages);
     }
 
     const handleChange = (e) => {

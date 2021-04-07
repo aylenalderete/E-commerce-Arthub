@@ -36,8 +36,7 @@ for (var i = 0; i < Auctions.length; i++) {
 
     }
 }
-//console.log("idAuction: ",parseInt(idAuction))
-// fin de busqueda del id auction
+
 
 
 

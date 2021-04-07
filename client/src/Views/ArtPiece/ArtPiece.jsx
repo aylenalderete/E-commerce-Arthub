@@ -124,42 +124,67 @@ function ArtPiece({ artId }) {
               <img
                 className={style.img}
                 alt="artpic"
-                src={detailed.images[0].url}
+                src={
+                  detailed.images[0]
+                    ? detailed.images[0].url
+                    : "https://tse4.mm.bing.net/th/id/OIP.6Hec0K-YQL1hL-sfqyPHBwAAAA?pid=ImgDet&rs=1"
+                }
               ></img>
             </div>
             <div className={style.infoContainer}>
               <div className={style.align}>
                 <h1 className={style.title}>{detailed.title}</h1>
                 <div className={classes.root}>
-                  <Rating className={classes.stars} value={parseFloat(finalAverage)} precision={0.5} readOnly emptyIcon={<StarBorderIcon fontSize="inherit" className={classes.border} />} />
+                  <Rating
+                    className={classes.stars}
+                    value={parseFloat(finalAverage)}
+                    precision={0.5}
+                    readOnly
+                    emptyIcon={
+                      <StarBorderIcon
+                        fontSize="inherit"
+                        className={classes.border}
+                      />
+                    }
+                  />
                 </div>
               </div>
 
               <div className={style.infoSecondContainer}>
-                {detailed.stock > 0
-                  ? <h3>Stock: {detailed.stock}</h3>
-                  : <h3>Producto no disponible</h3>}
+                {detailed.stock > 0 ? (
+                  <h3>Stock: {detailed.stock}</h3>
+                ) : (
+                  <h3>Producto no disponible</h3>
+                )}
                 <h3>Categoria/s:</h3>
                 <div className={style.categoriesContainer}>
                   {detailed.categories &&
-                    detailed.categories.map((x) => <div className={style.catContainer}><p>{x.name}</p></div>)}
+                    detailed.categories.map((x) => (
+                      <div className={style.catContainer}>
+                        <p>{x.name}</p>
+                      </div>
+                    ))}
                 </div>
 
                 <h3>{`Precio: $` + `${newPrice}`}</h3>
                 <p className={style.description}>{detailed.description}</p>
               </div>
 
-
               <div className={style.containerButtons}>
                 <Link to="/carrito">
                   <button
                     onClick={() => dispatch(addItem(artId, newPrice))}
-                    className={style.button}>
+                    className={style.button}
+                  >
                     Añadir al carrito
-              </button>
+                  </button>
                 </Link>
-                <button className={style.button} onClick={() => history.push(`/coleccion/`)}>
-                  Volver a coleccion </button>
+                <button
+                  className={style.button}
+                  onClick={() => history.push(`/coleccion/`)}
+                >
+                  Volver a coleccion{" "}
+                </button>
               </div>
             </div>
           </div>

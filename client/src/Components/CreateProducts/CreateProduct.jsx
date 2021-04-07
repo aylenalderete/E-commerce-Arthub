@@ -90,7 +90,7 @@ function CreateProduct(props) {
                 (snapshot) => {
                     let percentage =
                         (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                    console.log(snapshot);
+                    
                     setUpload({
                         process: percentage,
                     });

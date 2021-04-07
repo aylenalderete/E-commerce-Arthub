@@ -12,7 +12,7 @@ function OrderDetailArtist() {
     useEffect(() => {
         axios.get(`http://localhost:3001/orders/${id}`)
         .then((res) => {
-            console.log(res.data)
+      
             setdetalles(res.data)
         })
         .catch((error) => {

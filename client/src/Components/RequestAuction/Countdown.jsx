@@ -100,12 +100,12 @@ function Countdown(props) {
     localStorage.removeItem('dia');
     localStorage.removeItem('hour');
     localStorage.removeItem('minut')
-    console.log("==> entrò")
+   
   }
 
   var email = []
   for (var i = 0; i < totalPrice.length; i++) {
-    // console.log("acaà")
+   
     if (totalPrice[i].auction_id == auctionView.id_auction) {
         email.push(totalPrice[i].users[0].email)
         var emailWinner = email[email.length-1]
