@@ -24,18 +24,20 @@ function CreateAuction(props) {
         setTheAuction(auctions.find((element) => element.id_auction === props.auctionId))
     }, [auctions])
 
-  async  function handleSubmit(ev) {
+    async function handleSubmit(ev) {
         ev.preventDefault();
         try {
-           await axios
+            await axios
                 .put(`http://localhost:3001/auctions/${theAuction.id_auction}`, {
 
                     price: theAuction.price,
                     state: 'subastando',
                     percentage: theAuction.price >= 1000 ? 100 : 50,
+                    date : theAuction.date,
+                    time:theAuction.time
                 })
 
-                
+
 
         } catch (error) {
             console.log(error);
@@ -86,6 +88,24 @@ function CreateAuction(props) {
                         <p className={style.titles}>Monto de aumento:</p>
                         <input className={style.input} name='percentage' value={theAuction?.percentage}
                             onChange={handleChange} />
+                        <input
+                            className={style.input}
+                            value={theAuction?.date}
+                            name="date"
+                            onChange={handleChange}
+                            type="date"
+                            required
+                            
+                        ></input>
+                        <input
+                            className={style.input}
+                            value={theAuction?.time}
+                            name="time"
+                            onChange={handleChange}
+                            type="time"
+                            required
+                            
+                        ></input>
 
 
                     </div>
