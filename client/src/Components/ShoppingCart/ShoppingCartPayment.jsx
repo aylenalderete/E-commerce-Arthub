@@ -118,28 +118,28 @@ function ShoppingCartPayment() {
                             </select>
 
                             <p className={style.label}>Dirección de envío: </p>
-                            <div>
+                            <div className={style.inputContainer}>
                                 <p className={style.label}>Provincia: </p>
                                 <input type='text' value={address.provincia} name='provincia' onChange={onChange} className={style.longInput}></input>
                                 {error.provincia ? (
                                     <div className={style.link}>{error.provincia}</div>
                                 ) : null}
                             </div>
-                            <div>
+                            <div className={style.inputContainer}>
                                 <p className={style.label}>Localidad: </p>
                                 <input type='text' value={address.localidad} name='localidad' onChange={onChange} className={style.longInput}></input>
                                 {error.localidad ? (
                                     <div className={style.link}>{error.localidad}</div>
                                 ) : null}
                             </div>
-                            <div>
+                            <div className={style.inputContainer}>
                                 <p className={style.label}>Calle: </p>
                                 <input type='text' value={address.calle} name='calle' onChange={onChange} className={style.longInput}></input>
                                 {error.calle ? (
                                     <div className={style.link}>{error.calle}</div>
                                 ) : null}
                             </div>
-                            <div>
+                            <div className={style.inputContainer}>
                                 <p className={style.label}>Número: </p>
                                 <input type='number' value={address.numero} name='numero' min='0' max='10000' onChange={onChange} className={style.shortInput}></input>
                                 {error.numero ? (

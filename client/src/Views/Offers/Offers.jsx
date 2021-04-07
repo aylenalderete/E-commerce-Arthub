@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import NavBar from '../../Components/NavBar/NavBar';
 import { useSelector, useDispatch } from 'react-redux';
 import style from './offers.module.css'
-import { createOffer } from '../../Actions/offers';
+import { createOffer, deleteOffer } from '../../Actions/offers';
 
 export default function Offers() {
 
     const categories = useSelector(state => state.categories);
+    const offers = useSelector(state => state.offers);
     const dispatch = useDispatch();
 
     const [offer, setOffer] = useState({
@@ -31,6 +32,10 @@ export default function Offers() {
             ...offer,
             [e.target.name]: e.target.value
         })
+    }
+
+    const handleClick = (id) => {
+        dispatch(deleteOffer(id));
     }
 
     return (
@@ -70,8 +75,22 @@ export default function Offers() {
                     </div>
                     <button className={style.btn} type='submit'>Guardar</button>
                 </form>
+                <div className={style.offersContainer}>
+                    {
+                        offers.map(o => 
+                            <div className={style.offer}>
+                                <h1>Oferta {o.id}</h1>
+                                <div>
+                                    <p>Dia: {o.day}</p>
+                                    <p>Categoria: {o.categoryId}</p>
+                                    <p>Porcentaje: {o.discount}%</p>
+                                    <button className={style.btn} onClick={()=>handleClick(o.id)}>Eliminar</button>
+                                </div>
+                            </div>
+                        )
+                    }
+                </div>
             </div>
-            {/* MAPEAR OFFERS Y PONER UN BOTON PARA ELIMINAR */}
         </div>
     )
 }

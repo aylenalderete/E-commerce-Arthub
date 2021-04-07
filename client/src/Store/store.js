@@ -501,15 +501,15 @@ const reducer = function (state = initialState, action) {
             return {
                 ...state
             }
-            
+
         case 'GET_ARTIST_AUCTIONS':
-    
-            return{
+
+            return {
                 ...state,
                 artistAuctions: action.payload
             }
-    
-        case "DELETE_AUCTION_FINISH" :
+
+        case "DELETE_AUCTION_FINISH":
             return {
                 ...state,
             }
@@ -524,12 +524,19 @@ const reducer = function (state = initialState, action) {
                 ...state,
                 auctionEmailPU: action.payload
             }
-                
+
         case 'SET_OFFER':
-            
+
             return {
                 ...state,
                 offers: action.payload
+            }
+
+        case 'DELETE_OFFER':
+
+            return {
+                ...state,
+                offers: [...state.offers.filter(o => o.id !== action.payload)]
             }
 
 

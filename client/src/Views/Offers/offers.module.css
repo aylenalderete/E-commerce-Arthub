@@ -1,9 +1,11 @@
 .mainContainer{
     display: flex;
-    
 }
 .formContainer{
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    margin: auto;
 }
 
 .formContainer form{
@@ -27,6 +29,7 @@
 
 .formContainer select, .formContainer input{
     flex-grow: 1;
+    background-color: black;
 }
 
 .formContainer button{
@@ -66,4 +69,17 @@
 
 .btn:hover{
     background-color: #F427EC;
+}
+
+.offersContainer{
+    margin-top: 30px;
+    width: 600px;
+    display: flex;
+    justify-content: space-around;
+}
+
+.offer{
+    padding: 10px 30px;
+    border: 2px solid white;
+
 }

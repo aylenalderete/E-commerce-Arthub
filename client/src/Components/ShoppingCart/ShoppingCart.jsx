@@ -64,7 +64,9 @@ function ShoppingCart() {
 							<div className={style.cards}>
 
 								{
-									cart.map(p => <LineOrder lineOrderElement={p} ></LineOrder>)
+									cart.map(p => 
+										<div className={style.card}><LineOrder lineOrderElement={p} ></LineOrder></div>
+									)
 								}
 							</div>
 							<div className={style.info}>
