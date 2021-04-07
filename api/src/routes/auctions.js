@@ -3,7 +3,7 @@ const { Auction, Image, User, Category, Auctionb } = require('../db.js');
 
 
 server.post('/', async (req, res) => {
-    const { title, description, state, price, userId, percentage, images, categories } = req.body
+    const { title, description, state, price, userId, percentage, images, categories, date, time } = req.body
     try {
         const newAuction = await Auction.create({
             title,
@@ -11,6 +11,8 @@ server.post('/', async (req, res) => {
             price,
             state,
             percentage,
+            date,
+            time
         })
         res.json(newAuction)
 
@@ -211,12 +213,14 @@ server.get('/:idAuction/:idUser', async (req, res) => {
 
 server.put('/:idAuction', async (req, res) => {
     const { idAuction } = req.params;
-    const { state, price, percentage } = req.body
+    const { state, price, percentage, date, time } = req.body
     try {
         await Auction.update({
             price,
             state,
-            percentage
+            percentage,
+            date,
+            time
         }, {
             where: {
                 id_auction: idAuction

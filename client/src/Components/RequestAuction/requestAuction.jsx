@@ -42,6 +42,8 @@ function RequestAuction(props) {
         description: "",
         price: "",
         categories: [],
+        date : "",
+        time : ""
     });
     const [errors, setErrors] = useState({});
     const [touched, setTouched] = useState({});
@@ -266,6 +268,24 @@ if(loggedUser.type !== 'artist' && loggedUser.type !== 'admin') return <Redirect
                 name="price"
                 onChange={handleChange}
                 placeholder="precio"
+                required
+                onFocus={onFocus}
+              ></input>
+              <input
+                className={Styles.input}
+                value={auction.date}
+                name="date"
+                onChange={handleChange}
+                type="date"
+                required
+                onFocus={onFocus}
+              ></input>
+              <input
+                className={Styles.input}
+                value={auction.time}
+                name="time"
+                onChange={handleChange}
+                type="time"
                 required
                 onFocus={onFocus}
               ></input>
