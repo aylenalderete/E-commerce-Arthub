@@ -8,17 +8,6 @@ import { connect, useSelector } from "react-redux";
 import NavBar from "../NavBar/NavBar.jsx";
 import {Redirect} from 'react-router-dom';
 
-// const firebaseConfig = {
-//     apiKey: "AIzaSyDJ5J7_0pkNGDhDo1mIkVB0Gyrzvyk7J5U",
-//     authDomain: "henry-art.firebaseapp.com",
-//     projectId: "henry-art",
-//     storageBucket: "henry-art.appspot.com",
-//     messagingSenderId: "780293113241",
-//     appId: "1:780293113241:web:89382d33be6a51b0cebf08",
-//     measurementId: "G-HWGTY5PZ8T",
-// };
-
-// firebase.initializeApp(firebaseConfig);
 
 const validate = (auction) => {
 

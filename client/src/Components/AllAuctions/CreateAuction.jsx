@@ -4,7 +4,7 @@ import style from './createAuction.module.css'
 import getAuctions from '../../Actions/getAuctions'
 import close from '../../Images/cancel.svg'
 import createAuctionPU from '../../Actions/createAuctionPU';
-
+import axios from "axios";
 
 
 function CreateAuction(props) {
@@ -17,31 +17,24 @@ function CreateAuction(props) {
 
     useEffect(() => {
         dispatch(getAuctions());
-        return () => {dispatch(createAuctionPU(false))}
+        return () => { dispatch(createAuctionPU(false)) }
     }, [])
 
     useEffect(() => {
-        setTheAuction(auctions.find((element) => element.id_auction === props.auctionId)) 
+        setTheAuction(auctions.find((element) => element.id_auction === props.auctionId))
     }, [auctions])
 
-    function handleSubmit(ev) {
+  async  function handleSubmit(ev) {
         ev.preventDefault();
         try {
-            fetch(`http://localhost:3001/auctions/${theAuction.id_auction}`, {
-                method: 'PUT',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
+           await axios
+                .put(`http://localhost:3001/auctions/${theAuction.id_auction}`, {
+
                     price: theAuction.price,
                     state: 'subastando',
-                    percentage: theAuction.price>= 1000 ? 100 : 50,
+                    percentage: theAuction.price >= 1000 ? 100 : 50,
                 })
-                
-            })
-                .then((res) => res.json())
-                
+
                 
 
         } catch (error) {
@@ -60,22 +53,22 @@ function CreateAuction(props) {
         });
     }
 
-    const onClose = () =>{
+    const onClose = () => {
         dispatch(createAuctionPU(false))
     }
 
     return (
         <div className={style.mainDivPopUp}>
 
-            <button onClick={()=>{onClose()}} className={style.btnCloseDiv}>
+            <button onClick={() => { onClose() }} className={style.btnCloseDiv}>
                 <img className={style.close} src={close} alt="close edit" />
             </button>
-           
+
             <div className={style.title}>
-            <h1 >Editar subasta</h1>
+                <h1 >Editar subasta</h1>
             </div>
-            
-        
+
+
             <div>
                 <div className={style.column1}>
                     <div className={style.containerPic}>
@@ -92,18 +85,18 @@ function CreateAuction(props) {
                         <input className={style.input} name='price' value={theAuction?.price} onChange={handleChange} />
                         <p className={style.titles}>Monto de aumento:</p>
                         <input className={style.input} name='percentage' value={theAuction?.percentage}
-                         onChange={handleChange}/>
+                            onChange={handleChange} />
 
 
-                        </div>
-                            <div className={style.btnSelect}>
-                                <button className={style.btn} type='submit' onClick={handleSubmit}>
-                                    Aceptar subasta
+                    </div>
+                    <div className={style.btnSelect}>
+                        <button className={style.btn} type='submit' onClick={handleSubmit}>
+                            Aceptar subasta
                                 </button>
 
-                            </div>
-                
                     </div>
+
+                </div>
 
             </div>
 

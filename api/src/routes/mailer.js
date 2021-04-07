@@ -5,14 +5,17 @@ const bcrypt = require("bcryptjs");
 const nodemailer = require("nodemailer")
 const { google } = require("googleapis")
 const { CLIENT_ID, CLIENT_SECRET, REDIRECT_URI, REFRESH_TOKEN } = process.env;
-
+const fs = require("fs");
+const Handlebars = require("handlebars");
+const hbs = require("nodemailer-express-handlebars");
+const path = require("path");
 
 const oAuth2Client = new google.auth.OAuth2(CLIENT_ID,CLIENT_SECRET,REDIRECT_URI)
 oAuth2Client.setCredentials({refresh_token:REFRESH_TOKEN})
 
 
 
-async function sendEmail(subject, body, to) {
+async function sendEmail(body, to) {
     try {
         const accessToken = await oAuth2Client.getAccessToken()
 
@@ -28,14 +31,34 @@ async function sendEmail(subject, body, to) {
             }
         })
 
+        const handlebarOptions = {
+			viewEngine: {
+				extName: ".handlebars",
+				partialsDir: __dirname + "/templates/",
+				defaultLayout: false,
+			},
+			viewPath: __dirname + "/templates/",
+			extName: ".handlebars",
+		};
+		transport.use("compile", hbs(handlebarOptions));
+		var source = fs.readFileSync(
+			path.join(__dirname, "templates/autionTemplate.handlebars"),
+			"utf8"
+		);
+		var template = Handlebars.compile(source);
+        // const mailOptions = {
+
+        //     from: 'ArtHub <andres2661991@gmail.com>',
+        //     to: to,
+        //     subject: subject,
+        //     html: body
+        // }
         const mailOptions = {
-
-            from: 'ArtHub <andres2661991@gmail.com>',
-            to: to,
-            subject: subject,
-            html: body
-        }
-
+			from: "ArtHub <andres2661991@gmail.com>",
+			to: to,
+			subject: body.title,
+			html: template({ body }), // Process template with locals - {passwordResetAddress}
+		};
         const result = await transport.sendMail(mailOptions)
         return result
 
@@ -73,13 +96,22 @@ server.post("/send/:email", async (req, res) => {
         expiresIn: 300,
     });
 
+    var body= {title:"User Request New",
+    text:"Para resetear tu contraseña:",
+    link:`http://localhost:3000/passwordreset/${token}`,
+    aviso:"Aviso: este enlace expirará en 5 minutos",
+click:"Click Aqui"}
+   
+   
+   
+   
+    // var body = `<p>Para resetear tu contraseña <a href=http://localhost:3000/passwordreset/${token}> click aquí</a></p>
+    //             <div>Aviso: este enlace expirará en 60 segundos</div>`
 
-    var body = `<p>Para resetear tu contraseña <a href=http://localhost:3000/passwordreset/${token}> click aquí</a></p>
-                <div>Aviso: este enlace expirará en 60 segundos</div>`
-
-    sendEmail('User Request New', body, email)
+    sendEmail(body, email)
         .then(async result2 => {
-
+            console.log(body)
+            console.log(email)
             if (!(result2.rejected.length)) {
 
                 try {
@@ -153,11 +185,11 @@ server.post("/resetpassword/:password", verifyTokenResetPw, async (req, res, nex
 //mailer auction
 server.post('/auction/:email', (req, res) => {
     const { email } = req.params;
+    const {info} = req.body;
     try {
-        var body = `<p>Has sido el ganador de la subasta, Felicitaciones te desea Arthub</p>
-                <div>Por favor responder a este correo con la direccion donde deseas recibir tu cuadro</div>`
+        var body = {title:"Mejor Oferta",text:info}
 
-        sendEmail('auction winner', body, email)
+        sendEmail(body, email)
             .then(() => {
                 res.json({ menssage: 'mail sent successfully' })
             })
