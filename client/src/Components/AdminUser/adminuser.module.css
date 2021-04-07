@@ -2,6 +2,7 @@
     display: flex;
     flex-direction: row;
     min-height: 100vh;
+    width: 100vw;
 }
 
 .secondContainer{
@@ -67,8 +68,8 @@
     border: 1px solid white;
     color:white;
     padding:10px;
-    width:30%;
-    margin: 10px;
+    width:50%;
+    margin-top: 10px;
     font-size: 1rem;
     justify-content: flex-end;
     cursor:pointer;
@@ -200,4 +201,40 @@
         opacity:1;
         color: #F427EC;
     }
+  }
+
+  
+  @media screen and (max-width: 480px){
+      .containerPic{
+          width: 100px;
+          height: 100px;
+      }
+      .userPic{
+          width: 100px;
+          height: 100px;
+      }
+      .mainContainer{
+          margin-top: 150px;
+      }
+
+      .name{
+          font-size: 2rem;
+      }
+
+
+      .editProfile{
+          padding: 0;
+          width:100%;
+      }
+
+      .btnContainer{
+          width: 100%;
+          display: flex;
+          flex-wrap: wrap;
+      }
+
+      .editBtn{
+          width: 100px;
+          height: 100px;
+      }
   }
