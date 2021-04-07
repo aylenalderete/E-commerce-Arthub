@@ -126,58 +126,64 @@ function Collection() {
         {isOpenFilters === true ? <PopUp></PopUp> : <></>}
 
         <div className={style.sbContainer}>
-          <button
-            type="button"
-            onClick={() => onRefresh()}
-            className={style.btnFilters}
-          >
-            actualizar
-          </button>
-          <button className={style.btnFilters} onClick={handleClick}>
-            filtrar
-          </button>
+          <div className={style.btnContainer}>
+
+            <button
+              type="button"
+              onClick={() => onRefresh()}
+              className={style.btnFilters}
+            >
+              actualizar
+            </button>
+            <button className={style.btnFilters} onClick={handleClick}>
+              filtrar
+            </button>
+          </div>
           <SearchBar></SearchBar>
-          {userType && userType === "artist" ? (
+          <div className={style.iconsCont}>
 
-            <Link className={style.linkCreate} to="/crearproducto">
-              <img
-                className={style.createProduct}
-                src={createProduct}
-                alt="create product"
-              />
-              <p className={style.addText}>Agregar producto</p>
-            </Link>
-          ) : (
-            <></>
-          )}
+            {userType && userType === "artist" ? (
 
-          {userType !== "admin" ? (
-            <Link className={style.shContainer} to="/carrito">
-              <div className={style.imgContainer}>
+              <Link className={style.linkCreate} to="/crearproducto">
                 <img
-                  className={style.shoppingCartImg}
-                  // onClick={() => handleCartClick()}
-                  src={shoppingCartImg}
-                  alt="my shopping cart"
+                  className={style.createProduct}
+                  src={createProduct}
+                  alt="create product"
                 />
-                {cart.length > 0 && <span>{cart.length < 10 ? cart.length : '9+'}</span>}
-              </div>
-            </Link>
-          ) : (
-            <></>
-          )}
+                <p className={style.addText}>Agregar producto</p>
+              </Link>
+            ) : (
+              <></>
+            )}
 
-          {userType !== "admin" ? (
-            <Link to="/favoritos" className={style.favContainer}>
-              <div className={style.imgFavContainer}>
-                <img className={style.heart} src={heart} alt="favoritos" />
-                {userData.wishlist?.length > 0 && <span>{userData.wishlist?.length < 10 ? userData.wishlist.length : '9+'}</span>}
-                {/* <p>Favoritos</p> */}
-              </div>
-            </Link>
-          ) : (
-            <></>
-          )}
+            {userType !== "admin" ? (
+              <Link className={style.shContainer} to="/carrito">
+                <div className={style.imgContainer}>
+                  <img
+                    className={style.shoppingCartImg}
+                    // onClick={() => handleCartClick()}
+                    src={shoppingCartImg}
+                    alt="my shopping cart"
+                  />
+                  {cart.length > 0 && <span>{cart.length < 10 ? cart.length : '9+'}</span>}
+                </div>
+              </Link>
+            ) : (
+              <></>
+            )}
+
+            {userType !== "admin" ? (
+              <Link to="/favoritos" className={style.favContainer}>
+                <div className={style.imgFavContainer}>
+                  <img className={style.heart} src={heart} alt="favoritos" />
+                  {userData.wishlist?.length > 0 && <span>{userData.wishlist?.length < 10 ? userData.wishlist.length : '9+'}</span>}
+                  {/* <p>Favoritos</p> */}
+                </div>
+              </Link>
+            ) : (
+              <></>
+            )}
+          </div>
 
         </div>
 

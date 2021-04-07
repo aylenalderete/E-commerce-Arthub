@@ -206,6 +206,10 @@
     outline: none;
 }
 
+.iconsCont{
+    display: flex;
+}
+
 
 /*Responsive screen*/
 @media screen and (max-width: 480px){
@@ -218,14 +222,20 @@
         
     }
 
-    
-
     .sbContainer{
         margin:0;
         width:93%;
-        justify-content: space-between;
+        flex-direction: column;
         margin-left: 15px;
         margin-right: 15px;
+    }
+
+    .iconsCont{
+        margin-top: 15px;
+    }
+
+    .btnContainer{
+        margin-bottom: 15px;
     }
 
     .btnFilters{
