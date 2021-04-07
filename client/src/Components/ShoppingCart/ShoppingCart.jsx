@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import style from "./shoppingcart.module.css";
 import { useSelector, useDispatch } from "react-redux";
 import LineOrder from "../LineOrder/LineOrder";
-import { emptyCart } from './../../Actions/shoppingCart';
+import { emptyCart, setCart } from './../../Actions/shoppingCart';
 import { useHistory, Link } from 'react-router-dom';
 import NavBar from '../NavBar/NavBar';
 
@@ -47,8 +47,8 @@ function ShoppingCart() {
 	}, [products, cart])
 
 	useEffect(() => {
-		setTotal(cart.reduce((acc, current) => acc += current.subTotal, 0));
-	}, [cart])
+		cartL && setTotal(cartL.reduce((acc, current) => acc += current.subTotal, 0));
+	}, [cartL])
 
 	return (
 		<div className={style.mainContainer}>

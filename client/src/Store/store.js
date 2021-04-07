@@ -143,12 +143,12 @@ const reducer = function (state = initialState, action) {
                 ...state,
                 search: action.payload,
             };
-         case "GET_SUGGESTIONS":
-        
-          return {
-            ...state,
-            suggestions: action.payload,
-          };
+        case "GET_SUGGESTIONS":
+
+            return {
+                ...state,
+                suggestions: action.payload,
+            };
 
         case "GET_INITIAL_PRODUCTS":
             return {
@@ -405,6 +405,12 @@ const reducer = function (state = initialState, action) {
                 }
             }
 
+        case 'SET_CART':
+            return {
+                ...state,
+                cart: action.payload
+            }
+
         case 'REDUCE_QUANTITY':
 
             let change = state.cart.map(c => {
@@ -485,14 +491,14 @@ const reducer = function (state = initialState, action) {
 
             }
 
-        case "GET_AUCTION_ACTUAL" :
+        case "GET_AUCTION_ACTUAL":
             return {
                 ...state,
-                auctionActual : action.payload
+                auctionActual: action.payload
             }
 
-        case "POST_AUCTION" :
-            return{
+        case "POST_AUCTION":
+            return {
                 ...state
             }
             
@@ -521,7 +527,7 @@ const reducer = function (state = initialState, action) {
                 
         case 'SET_OFFER':
             
-            return{
+            return {
                 ...state,
                 offers: action.payload
             }

@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export const addItem = (id,newPrice) => {
+export const addItem = (id, newPrice) => {
     let cart = JSON.parse(localStorage.getItem('cart')) || [];
     if (cart.length === 0) {
         localStorage.setItem("cart", JSON.stringify([]));
@@ -66,7 +66,13 @@ export const reduceQuantity = (id) => {
         type: 'REDUCE_QUANTITY',
         payload: id
     }
+}
 
+export const setCart = (cart) => {
+    return {
+        type: 'SET_CART',
+        payload: cart
+    }
 }
 
 // Agrega a la base de datos
@@ -74,6 +80,6 @@ export const reduceQuantity = (id) => {
 //     return async function(dispatch) {
 //         await axios.post(`http://localhost:3001/users/${userId}/cart`, {quantity, productId})
 
-        
+
 //     }
 // }
