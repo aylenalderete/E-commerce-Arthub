@@ -19,7 +19,7 @@ export default function AuctionView(props) {
     const totalPrice = useSelector(state => state.auctionActual)
     const [finished, setFinished] = useState (false)
 
-
+ 
     useEffect(() => {
         dispatch(getAuctionView(props.match.params.id))
         dispatch(getAuctionPriceTotal(auctionView.id_auction,userDataId))
@@ -62,16 +62,23 @@ export default function AuctionView(props) {
     var email = []
     var priceTotal = [];
     var participants = [];
+    var name = [];
+    var lastname = [];
     for (var i = 0; i < totalPrice.length; i++) {
         // console.log("acaà")
         if (totalPrice[i].auction_id == auctionView.id_auction) {
             // console.log("entró")
             priceTotal.push(totalPrice[i].finalPrice)
             participants.push(totalPrice[i].users[0].username)
+            name.push(totalPrice[i].users[0].name)
+            lastname.push(totalPrice[i].users[0].lastname)
             email.push(totalPrice[i].users[0].email)
             var winner = participants[participants.length-1]
             var emailWinner = email[email.length-1]
-        }
+            var nameWinner = name[name.length - 1];
+            var lastnameWinner = lastname[lastname.length - 1];
+
+        } 
     }
 
 
@@ -141,7 +148,7 @@ export default function AuctionView(props) {
                             </div>
                         </div>
                         <div >
-                            <Countdown winner={winner} idAuct={auctionView.id_auction} setFinished={setFinished} email={emailWinner}/>
+                            <Countdown winner={winner} idAuct={auctionView.id_auction} setFinished={setFinished} email={emailWinner} name={nameWinner} lastname={lastnameWinner}/>
                         </div>
                     </div> 
                 </div>

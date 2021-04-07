@@ -40,7 +40,9 @@ server.get('/', async (req, res) => {
                     model: User,
                     attributes: [
                         "id",
-                        "username"
+                        "username",
+                        "name",
+                        "lastname"
                     ]
                 },
                 {

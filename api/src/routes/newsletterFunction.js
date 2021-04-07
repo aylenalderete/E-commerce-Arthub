@@ -10,12 +10,8 @@ const fs = require("fs");
 const { google } = require("googleapis");
 const Handlebars = require("handlebars");
 const hbs = require("nodemailer-express-handlebars");
-const CLIENT_ID =
-	"58229968491-6sjdcgkqh0uog45rabbitouniqs182ch.apps.googleusercontent.com";
-const CLIENT_SECRET = "WqmGTBctdvzddpFsmu0_MwBV";
-const REDIRECT_URI = "https://developers.google.com/oauthplayground";
-const REFRESH_TOKEN =
-	"1//04fZsdreosgbrCgYIARAAGAQSNwF-L9IrqHuSDMvBIGRnXIkUilPVz99wzLB613MJ_AIIR87ry3-JOW-VXn1YrMuqnEbtPh16jA0";
+const { CLIENT_ID, CLIENT_SECRET, REDIRECT_URI, REFRESH_TOKEN} = process.env
+
 const oAuth2Client = new google.auth.OAuth2(
 	CLIENT_ID,
 	CLIENT_SECRET,
@@ -23,7 +19,7 @@ const oAuth2Client = new google.auth.OAuth2(
 );
 oAuth2Client.setCredentials({ refresh_token: REFRESH_TOKEN });
 
-async function sendEmail(subject, body, to) {
+ async function sendEmail(subject, body, to) {
 	try {
 		const accessToken = await oAuth2Client.getAccessToken();
 
@@ -118,3 +114,4 @@ const sendEmailUpdateStock = async (idProduct) => {
 };
 
 module.exports = {sendEmailUpdateStock}
+module.ex

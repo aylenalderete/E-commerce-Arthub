@@ -2,9 +2,8 @@ import React, { useEffect, useState } from "react";
 import style from './countdown.module.css'
 import { useHistory } from 'react-router-dom'
 import {useSelector, useDispatch} from 'react-redux'
-import mailingAuction from "../../Actions/mailingAuction";
 import emailInformation from '../../Actions/emailInformation'
-import informationEmail from "./informationEmail";
+import InformationEmail from "./informationEmail";
 
 
 function Countdown(props) {
@@ -56,7 +55,7 @@ function Countdown(props) {
         Segundos: ('0' + Math.floor((difference / 1000) % 60)).slice(-2)
       };
     }
-    return timeLeft;
+    return timeLeft; 
 
   }
 
@@ -77,9 +76,13 @@ function Countdown(props) {
       props.setFinished(false)
     }
 
-    auctionEmailPU === false ? dispatch(emailInformation(true)) : dispatch(emailInformation(false));
+    
     return () => clearTimeout(timer);
   }, [timeLeft]);
+
+  function handleClick(){
+    auctionEmailPU === false ? dispatch(emailInformation(true)) : dispatch(emailInformation(false));
+  }
 
 
 
@@ -92,8 +95,12 @@ function Countdown(props) {
   }
 
   function clear() {
-    localStorage.clear();
-    history.go(0);
+    localStorage.removeItem('año');
+    localStorage.removeItem('mes');
+    localStorage.removeItem('dia');
+    localStorage.removeItem('hour');
+    localStorage.removeItem('minut')
+    console.log("==> entrò")
   }
 
   var email = []
@@ -109,7 +116,7 @@ function Countdown(props) {
 
   return (
     <div className={style.mainContainer}>
-      {auctionEmailPU === true && <informationEmail email={emailWinner} />}
+      {auctionEmailPU === true && <InformationEmail email={props.email} name={props.winner}/>}
 
       {timeLeft.Segundos ?
       <div className={style.containerG}>
@@ -133,7 +140,7 @@ function Countdown(props) {
           className={style.date} /> */}
         {userData.type === 'admin' ?
         <div>
-          <button onClick={clear} className={style.btn}>Restablecer</button>
+          <button onClick={() => clear()} className={style.btn}>Restablecer</button>
         </div>
         :
         <></>
@@ -145,6 +152,7 @@ function Countdown(props) {
           <h2>La mejor oferta pertenece a :  </h2>
           <h1>{props.winner}</h1>
        </div>
+       <button onClick={() => handleClick()}>Informacion del usuario</button>
        
       <div>
         {userData.type === 'admin'?

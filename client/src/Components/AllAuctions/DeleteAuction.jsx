@@ -7,7 +7,7 @@ import close from '../../Images/cancel.svg'
 import {Link} from 'react-router-dom'
 import { useHistory } from "react-router-dom";
 import deleteAuctionFinish from '../../Actions/deleteAuctionFinish'
-
+import axios from "axios";
 
 function DeleteAuction(props) {
     const [theAuction, setTheAuction] = useState()
@@ -27,20 +27,12 @@ function DeleteAuction(props) {
         setTheAuction(auctions.find((element) => element.id_auction === props.auctionId ))
     }, [auctions])
 
-    function handleSubmit() {
+   async function handleSubmit() {
         
         try {
-            fetch(`http://localhost:3001/auctions/${theAuction.id_auction}`, {
-                method: 'DELETE',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                
-            })
-                .then((res) => {
-                    res.json()
-                })     
+
+         await   axios
+            .delete(`http://localhost:3001/auctions/${theAuction.id_auction}`)
 
 
         } catch (error) {
