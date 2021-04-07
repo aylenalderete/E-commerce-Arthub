@@ -156,3 +156,16 @@
 .address{
     width: 50%;
 }
+
+.btn{
+    padding: 5px 20px;
+    background-color: transparent;
+    color: white;
+    font-size: 15px;
+    border:1px solid white;
+    cursor: pointer;  
+    font-family: inherit; 
+}
+.btn:hover {
+    background-color: #F427EC;
+}
