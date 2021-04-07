@@ -81,16 +81,11 @@ function ShoppingCartPayment() {
 
                         axios.post(`http://localhost:3001/orders/mercadopago`, { cart, idOrder: newCart.data.id_order, email, address })
                             .then(async response => {
-                                // console.log('ESTE ES EL LINK MP',response.data.mpLink);
                                 dispatch(linkSet(response.data.mpLink));
-                                // setLink(response.data.mpLink);
                                 setRedirect(true);
-                                // window.location = response.data.mpLink;
-                                // setTimeout(() => {
                                 setLoading(!loading)
                                 localStorage.setItem('cart', JSON.stringify([]));
                                 dispatch(emptyCart());
-                                // }, 3000)
                             });
                     })
             }

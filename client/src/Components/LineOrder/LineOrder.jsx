@@ -11,7 +11,6 @@ export default function LineOrder({ lineOrderElement }) {
 
 	const [productFiltered, setProductFiltered] = useState({});
 	let offers = useSelector((state) => state.offers);
-	// const cart = JSON.parse(localStorage.getItem("cart"));
 	const [isInOffer, setIsInOffer] = useState(false);
 	const [discount, setDiscount] = useState(0);
 
@@ -55,12 +54,8 @@ export default function LineOrder({ lineOrderElement }) {
 		let cart = JSON.parse(localStorage.getItem('cart'))
 		const found = cart.find((f) => f.product.id_product === lineOrderElement.product.id_product)
 		let index = cart.indexOf(found)
-		console.log('prodredux', productFiltered)
 		cart[index].product.price = productFiltered.price
-		console.log('price', cart[index].product.price)
-		console.log('quantity', cart[index].quantity)
 		cart[index].subTotal = cart[index].product.price * cart[index].quantity
-		console.log('sub', cart[index].subTotal)
 		localStorage.setItem('cart', JSON.stringify(cart));
 		dispatch(setCart(cart));
 	}
