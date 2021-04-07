@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import style from './offers.module.css'
 import { createOffer } from '../../Actions/offers';
 
-export default function Offers(){
+export default function Offers() {
 
     const categories = useSelector(state => state.categories);
     const dispatch = useDispatch();
@@ -14,12 +14,13 @@ export default function Offers(){
         idCategory: '1',
         discount: ''
     });
-    
+
     const handleSubmit = (e) => {
         e.preventDefault();
         if (offer.discount) {
             dispatch(createOffer(offer));
-        }else{
+            alert('Oferta creada')
+        } else {
             alert('Debe ingresar un descuento')
         }
     }
@@ -34,14 +35,16 @@ export default function Offers(){
 
     return (
         <div className={style.mainContainer}>
-            <NavBar/>
+            <NavBar />
             <div className={style.formContainer}>
                 <h1>Crear oferta</h1>
                 <form onSubmit={handleSubmit}>
                     <div>
 
                         <label htmlFor="day">Dia:</label>
-                        <select name='day' id='day' onChange={handleChange}>
+                        <select className={style.select} name='day' id='day' onChange={handleChange}>
+                            {/* <option>Seleccionar dia: </option> */}
+
                             <option value='1'>Lunes</option>
                             <option value="2">Martes</option>
                             <option value="3">Miércoles</option>
@@ -55,16 +58,17 @@ export default function Offers(){
 
                         <label htmlFor="category">Categoria:</label>
 
-                        <select name='idCategory' id='category' onChange={handleChange}>
-                        {categories.map(cat => <option key={cat.id} value={cat.id}>{cat.name}</option>)}                    
+                        <select className={style.select} name='idCategory' id='category' onChange={handleChange}>
+                            {/* <option>Seleccionar categoria: </option> */}
+                            {categories.map(cat => <option key={cat.id} value={cat.id}>{cat.name}</option>)}
                         </select>
                     </div>
                     <div>
 
                         <label htmlFor="discount">Porcentaje:</label>
-                        <input name='discount' id='discount' onChange={handleChange} type="number" max='100' min='0' />
+                        <input className={style.input} name='discount' id='discount' onChange={handleChange} type="number" max='100' min='0' />
                     </div>
-                    <button type='submit'>Guardar</button>
+                    <button className={style.btn} type='submit'>Guardar</button>
                 </form>
             </div>
             {/* MAPEAR OFFERS Y PONER UN BOTON PARA ELIMINAR */}

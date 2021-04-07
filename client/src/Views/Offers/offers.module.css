@@ -32,3 +32,38 @@
 .formContainer button{
     align-self: flex-end;
 }
+
+.select{
+    background-color: transparent;
+    color: white;
+    padding: 10px 15px;
+    border: 0;
+    border: 1px solid white;
+}
+
+.input{
+    margin-bottom: 10px;
+    background-color: transparent;
+    border: none;
+    border-bottom-color: currentcolor;
+    border-bottom-style: none;
+    border-bottom-width: medium;
+    border-bottom: 1px solid white;
+    font-size: 1rem;
+    line-height: 1.9rem;
+    color: white;
+    padding: 5px 20px;
+}
+
+.btn{
+    background-color: transparent;
+    border: 1px solid white;
+    color: white;
+    font-size: 1rem;
+    padding: 10px 15px;
+    cursor: pointer;
+}
+
+.btn:hover{
+    background-color: #F427EC;
+}

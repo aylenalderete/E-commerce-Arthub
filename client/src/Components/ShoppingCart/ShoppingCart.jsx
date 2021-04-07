@@ -47,7 +47,7 @@ function ShoppingCart() {
 	}, [products, cart])
 
 	useEffect(() => {
-		setTotal(cartL.reduce((acc, current) => acc += current.subTotal, 0));
+		cartL && setTotal(cartL.reduce((acc, current) => acc += current.subTotal, 0));
 	}, [cartL])
 
 	return (
