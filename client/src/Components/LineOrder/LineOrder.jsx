@@ -73,8 +73,9 @@ export default function LineOrder({ lineOrderElement }) {
 				/>
 			</div>
 			<div className={style.info}>
-
-				<h2 className={style.title}>{lineOrderElement.product && lineOrderElement.product.title}</h2>
+				<div className={style.titleContainer}>
+					<h2 className={style.title}>{lineOrderElement.product && lineOrderElement.product.title}</h2>
+				</div>
 
 				{
 					isInOffer === true

@@ -80,3 +80,19 @@
 .discount{
     color: #F427EC;
 }
+
+@media screen and (max-width: 480px){
+    .card{
+        width: 100%;
+    }
+
+    .titleContainer{
+        width: 90%;
+    }
+
+    .title{
+
+        text-align: left;
+    }
+    
+}

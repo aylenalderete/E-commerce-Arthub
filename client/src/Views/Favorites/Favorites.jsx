@@ -33,18 +33,17 @@ export default function Favorites() {
                         prodFav.length > 0
                             ?
                             prodFav.map(p => (
-                                <ArtCard
-                                    name={p.title}
-                                    pic={p.images[0].url}
-                                    artist={p.user.name + " " + p.user.lastname}
-                                    idArtist={p.user.id}
-                                    id={p.id_product}
-                                    key={p.id_product}
-                                    price={p.price}
-                                    stock={p.stock}
-                                    categories={p.categories}
-                                // setFlag={setFlag}
-                                />
+                                    <ArtCard
+                                        name={p.title}
+                                        pic={p.images[0].url}
+                                        artist={p.user.name + " " + p.user.lastname}
+                                        idArtist={p.user.id}
+                                        id={p.id_product}
+                                        key={p.id_product}
+                                        price={p.price}
+                                        stock={p.stock}
+                                        categories={p.categories}
+                                    />
                             ))
                             :
                             <div className={style.noProductsMessage}>

@@ -221,7 +221,7 @@
 /*Responsive screen*/
 @media screen and (max-width: 480px){
     .cardContainer{
-        width:50%;
+        width: 90%;
     }
 
     

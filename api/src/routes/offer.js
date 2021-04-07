@@ -4,7 +4,11 @@ const { sendEmail } = require("./newsletterOfferFunction.js");
 
 
 server.get('/', async (req, res) => {
-    res.json(await Offer.findAll());
+    try {
+        res.json(await Offer.findAll());
+    } catch (error) {
+        res.json(error);
+    }
 })
 
 server.post('/', async (req, res) => {
@@ -39,11 +43,10 @@ server.post('/', async (req, res) => {
         })
         if(users.length === 0) continue
         for (let i = 0; i < users.length; i++) {
-            console.log('por enviar el emailll');
             const userId = users[i].dataValues.userId;
             const userData = await User.findByPk(userId)
             const emailBody = {
-                title: "Un producto de tu wishList está en oferta ahora!",
+                title: "Un producto de tu wishlist está en oferta ahora!",
                 product: {
                     title: product.title,
                     price: product.price - ((discount/100) * product.price),
@@ -52,15 +55,23 @@ server.post('/', async (req, res) => {
                     stock: product.stock,
                 },
             };
-            const emailSubject = "Whislist";
-            console.log(emailBody);
+            const emailSubject = "Wishlist";
             await sendEmail(emailSubject, emailBody, userData.dataValues.email);   
-            console.log('email enviado!!!!!');                     
         }
     }
     res.json(offer[0]);
 })
 
-// HACER DELETE
+server.delete('/:id', async (req, res) => {
+    const { id } = req.params;
+    try {
+        await Offer.destroy({
+            where: {id}
+        })
+        res.json('deleted')
+    } catch (error) {
+        res.json(error);
+    }
+})
 
 module.exports = server;

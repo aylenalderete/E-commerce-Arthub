@@ -1,11 +1,11 @@
 import axios from "axios"
 
 export function getOffer() {
-    return function (dispatch){
+    return function (dispatch) {
         return axios.get('http://localhost:3001/offer')
-        .then((r) => {
-            dispatch({ type: 'SET_OFFER', payload: r.data })
-        })
+            .then((r) => {
+                dispatch({ type: 'SET_OFFER', payload: r.data })
+            })
     }
 }
 
@@ -19,4 +19,13 @@ export function createOffer(offer) {
                     })
             })
     }
+}
+
+export function deleteOffer(id) {
+    return function (dispatch) {
+        return axios.delete(`http://localhost:3001/offer/${id}`)
+            .then(() => dispatch({ type: 'DELETE_OFFER', payload: id }))
+    }
+
+
 }
