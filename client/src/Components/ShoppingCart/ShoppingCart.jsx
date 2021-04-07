@@ -10,9 +10,6 @@ function ShoppingCart() {
 
 	let cart = useSelector((state) => state.cart);
 	const products = useSelector(state => state.products);
-	let { id } = useSelector((state) => state.userData);
-	let offers = useSelector((state) => state.offers);
-	let categories = useSelector((state) => state.categories);
 
 	const cartL = JSON.parse(localStorage.getItem("cart"));
 	const dispatch = useDispatch();
@@ -24,7 +21,6 @@ function ShoppingCart() {
 
 
 	const handlePayment = () => {
-		//toda la logica futura para un pago
 		if (!localStorage.getItem('token')) {
 			alert('Debe iniciar sesion')
 			history.push('/ingresar');
@@ -64,7 +60,7 @@ function ShoppingCart() {
 							<div className={style.cards}>
 
 								{
-									cart.map(p => 
+									cart.map(p =>
 										<div className={style.card}><LineOrder lineOrderElement={p} ></LineOrder></div>
 									)
 								}
