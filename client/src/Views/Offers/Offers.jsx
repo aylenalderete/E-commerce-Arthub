@@ -38,6 +38,33 @@ export default function Offers() {
         dispatch(deleteOffer(id));
     }
 
+    const showDay = (id) => {
+        switch (id) {
+            case 1:
+                return 'Lunes';
+
+            case 2:
+                return 'Martes';
+
+            case 3:
+                return 'Miércoles';
+            case 4:
+                return 'Jueves';
+            case 5:
+                return 'Viernes';
+            case 6:
+                return 'Sábado';
+            case 0:
+                return 'Domingo';
+            default:
+                break;
+        }
+    }
+
+    const showCategory = (id) =>{
+        return categories.find(c => c.id === id).name
+    }
+
     return (
         <div className={style.mainContainer}>
             <NavBar />
@@ -77,14 +104,14 @@ export default function Offers() {
                 </form>
                 <div className={style.offersContainer}>
                     {
-                        offers.map(o => 
+                        offers.map(o =>
                             <div className={style.offer}>
                                 <h1>Oferta {o.id}</h1>
                                 <div>
-                                    <p>Dia: {o.day}</p>
-                                    <p>Categoria: {o.categoryId}</p>
+                                    <p>Dia: {showDay(o.day)}</p>
+                                    <p>Categoria: {showCategory(o.categoryId)}</p>
                                     <p>Porcentaje: {o.discount}%</p>
-                                    <button className={style.btn} onClick={()=>handleClick(o.id)}>Eliminar</button>
+                                    <button className={style.btn} onClick={() => handleClick(o.id)}>Eliminar</button>
                                 </div>
                             </div>
                         )
