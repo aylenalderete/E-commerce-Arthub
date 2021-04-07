@@ -54,11 +54,11 @@ function SearchBar({
     e.preventDefault();
 
     if (!search[0]) {
-      console.log("entro primer if searchbar");
+     
       getProductsByName(input);
     }
     if (search[0] && !filteredProducts[0]) {
-      console.log("entro primer if searchbar");
+ 
 
       getProductsByName(input);
     }

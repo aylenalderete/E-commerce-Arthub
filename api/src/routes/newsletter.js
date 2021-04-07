@@ -103,8 +103,7 @@ const sendEmailUpdateStock = async (idProduct) => {
 	const product = await Product.findByPk(parseInt(idProduct), {
 		include: [Image],
 	});
-	console.log("-------------------------");
-	console.log("SE ENVIARAN EMAILS A :");
+	
 	if (search && search.length > 0) {
 		let emailList = await Promise.all(
 			search.map(async (user) => {
@@ -122,13 +121,13 @@ const sendEmailUpdateStock = async (idProduct) => {
 				stock: product.stock,
 			},
 		};
-		console.log(emailBody)
+		
 		const emailSubject = "Whislist";
 		emailList.forEach((email) => {
 			sendEmail(emailSubject, emailBody, email);
 		});
 	}
-	console.log("-------------------------");
+	
 };
 
 //RUTA DE PRUEBA ELIMINAR - INICIO >>>>

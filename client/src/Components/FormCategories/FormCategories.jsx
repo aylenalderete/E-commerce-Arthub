@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import style from './formCategories.module.css'
 import firebase from 'firebase';
+import axios from 'axios';
 
 
 export const validate = (input) => {
@@ -42,7 +43,7 @@ function FormCategories() {
 
             task.on('state_changed', snapshot => {
                 let percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-                console.log(percentage)
+               
                 setUpload({
                     process: percentage
                 })
@@ -63,15 +64,11 @@ function FormCategories() {
     function handleSubmit(ev) {
         ev.preventDefault();
         try {
-            fetch('http://localhost:3001/products/category', {
-                method: 'POST',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(input)
+            
+            axios.post('http://localhost:3001/products/category', {
+                name : input.name,
+                description: input.description
             })
-                .then((res) => res.json())
                 .then(response => alert('Categoria creada'))
 
         } catch (error) {

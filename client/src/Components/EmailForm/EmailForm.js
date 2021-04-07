@@ -28,7 +28,7 @@ export default function EmailForm(){
                 axios
                 .post(`http://localhost:3001/mailer/send/${input}`)
                 .then(result=>{
-                    /* console.log('repuesra de mail',result) */
+                   
                     if(!result.data.email){
                         setError('No existe ningún usuario registrado con éste mail')
                         setLoading(false)

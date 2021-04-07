@@ -101,7 +101,11 @@ function Collection() {
       return (
         <ArtCard
           name={piece.title}
-          pic={piece.images[0].url}
+          pic={
+            piece.images[0]
+              ? piece.images[0].url
+              : "https://tse4.mm.bing.net/th/id/OIP.6Hec0K-YQL1hL-sfqyPHBwAAAA?pid=ImgDet&rs=1"
+          }
           artist={piece.user.name + " " + piece.user.lastname}
           idArtist={piece.user.id}
           id={piece.id_product}

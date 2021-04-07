@@ -105,15 +105,15 @@ conn.sync({ force: true }).then(() => {
           unit_price: e.unit_price,
           quantity: e.quantity,
         }));
-        // console.log(listorder)
+        
         Lineorder.bulkCreate(listorder)
           .then(async (arrayLine) => {
-            //console.log(arrayLine)
+         
             arrayLine.map(async (m, i) => {
               const productToAdd = await Product.findByPk(
                 arrayOfShoppingcart[i].lineorder[0].productIdProduct
               );
-              // console.log(productToAdd);
+            
               await productToAdd.addLineorder(m);
             });
 

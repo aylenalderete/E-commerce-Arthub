@@ -65,9 +65,9 @@ export default function AuctionView(props) {
     var name = [];
     var lastname = [];
     for (var i = 0; i < totalPrice.length; i++) {
-        // console.log("acaà")
+      
         if (totalPrice[i].auction_id == auctionView.id_auction) {
-            // console.log("entró")
+      
             priceTotal.push(totalPrice[i].finalPrice)
             participants.push(totalPrice[i].users[0].username)
             name.push(totalPrice[i].users[0].name)

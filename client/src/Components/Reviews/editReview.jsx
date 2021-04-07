@@ -62,14 +62,14 @@ export default function EditReview({ idproduct, idorder }) {
     // inicio busqueda de idReview 
     var idReview = 0;
     for (var i = 0; i < userReviews.length; i++) {
-        console.log("acaà")
+      
         if (userReviews[i].productIdProduct == idproduct && userReviews[i].userId === userId) {
-            console.log("entró")
+            
             idReview += userReviews[i].id_review
 
         }
     }
-    console.log(parseInt(idReview))
+   
     // fin de busqueda de idReview
 
     useEffect(() => {

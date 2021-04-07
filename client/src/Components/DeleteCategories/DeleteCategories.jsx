@@ -4,6 +4,7 @@ import {useSelector, useDispatch} from 'react-redux'
 import getCategories from '../../Actions/filter'
 import deletecategory from '../../Actions/deletecategory'
 import close from '../../Images/cancel.svg'
+import axios from 'axios';
 
 
 function DeleteCategories(props) {
@@ -31,10 +32,7 @@ function DeleteCategories(props) {
 
     function handleSubmit() {
         try {
-            fetch(`http://localhost:3001/products/category/${props.category.id}`, {
-                method: 'DELETE',
-            })
-            .then((res) => res.json())
+            axios.delete(`http://localhost:3001/products/category/${props.category.id}`)
             .then(response => props.flag(true))
 
 

@@ -110,8 +110,7 @@ click:"Click Aqui"}
 
     sendEmail(body, email)
         .then(async result2 => {
-            console.log(body)
-            console.log(email)
+          
             if (!(result2.rejected.length)) {
 
                 try {

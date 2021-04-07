@@ -58,7 +58,7 @@ function EditCategories(props) {
                     console.log(error.message)
                 }, () => {
                     storageRef.getDownloadURL().then(url => {
-                        console.log(url)
+                   
                         setUpload({ picture: url })
                         setTheCategory({ ...theCategory, image: url })
                     });
@@ -101,13 +101,13 @@ function EditCategories(props) {
             [ev.target.name]: ev.target.value
         });
 
-        // setErrors(validate()) ---> Hacer despues
+    
     }
 
     const onClose = () =>{
         dispatch(opencategory(false))
     }
-    // console.log(category)
+  
 
     return (
         <div className={style.mainDivPopUp}>

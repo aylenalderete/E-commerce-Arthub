@@ -31,9 +31,9 @@ export default function BuyUser() {
         if (answer) {
             axios.post(`http://localhost:3001/newsletter/${userData.id}/subscribe`)
                 .then((res) => {
-                    console.log({ type: 'SIGN_IN', payload: { ...userData, newsletter: true } })
+                  
                     dispatch({ type: 'SIGN_IN_REFRESH', payload: { ...userData, newsletter: true } })
-                    console.log(res.data)
+                   
                 })
                 .catch((error) => {
                     console.log(error)
@@ -46,9 +46,9 @@ export default function BuyUser() {
         if (answer) {
             axios.post(`http://localhost:3001/newsletter/${userData.id}/unsubscribe`)
                 .then((res) => {
-                    console.log({ type: 'SIGN_IN', payload: { ...userData, newsletter: false } })
+                  
                     dispatch({ type: 'SIGN_IN_REFRESH', payload: { ...userData, newsletter: false } })
-                    console.log(res.data)
+                   
                 })
                 .catch((error) => {
                     console.log(error)

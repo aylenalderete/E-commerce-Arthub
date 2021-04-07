@@ -368,7 +368,7 @@ const reducer = function (state = initialState, action) {
                 var array = [...state.selectedCategories];
                 array.push(action.payload);
             } else {
-                console.log("no deberia entrar aca");
+               
                 var array = [];
             }
             return {

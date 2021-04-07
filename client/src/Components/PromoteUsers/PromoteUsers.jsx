@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import getUsers from '../../Actions/getUsers'
 import close from '../../Images/cancel.svg'
 import changeusertype from '../../Actions/changeusertype'
+import axios from 'axios';
 
 function PromoteUsers(props) {
     const users = useSelector(state => state.users)
@@ -29,14 +30,8 @@ function PromoteUsers(props) {
 
         ev.preventDefault();
         try {
-            fetch(`http://localhost:3001/users/${theUser.id}`, {
-                method: 'PUT',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    username: theUser.username,
+            axios.put(`http://localhost:3001/users/${theUser.id}`, {
+                username: theUser.username,
                     name: theUser.name,
                     lastname: theUser.lastname,
                     profilepic: theUser.profilepic,
@@ -46,11 +41,6 @@ function PromoteUsers(props) {
                     type: theType.type,
                     state: theUser.state,
                 })
-                
-            })
-                .then((res) => res.json())
-                
-
         } catch (error) {
             console.log(error);
             alert('No se pudo cambiar el tipo')
@@ -62,7 +52,7 @@ function PromoteUsers(props) {
     }
 
     function handleChange(ev) {
-        console.log(ev.target.value)
+      
         setTheType({
             type: ev.target.value
         });

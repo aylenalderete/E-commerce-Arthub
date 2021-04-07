@@ -176,16 +176,22 @@ function EditProduct({ id }) {
             alert('Debe agregar por lo menos una categoria');
         }
         else {
+          let inputSent = input
 
-            let res = await fetch(`http://localhost:3001/products/${id}`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(input) // pasar la info de esta forma categories debe ser array de numeros y images debe ser array de obj con prop url
-            })
-            console.log(res);
-            console.log(input);
+            let res = await axios.put(`http://localhost:3001/products/${id}`, {
+             categories: input.categories,
+             description: input.description,
+             id_product: input.id_product,
+             images: input.images,
+             price: input.price,
+             createdAt: input.createdAt,
+             updatedAt: input.updatedAt,
+             stock: input.stock,
+             title: input.title,
+             userId: input.userId,
+          })
+          .then(() => alert('categoría editada correctamente'))
+          
         }
 
     }

@@ -17,7 +17,7 @@ function ArtistsProducts() {
         dispatch(getArtistsProducts(userId))
     }, []);
 
-    console.log(artistsProducts)
+    
   
     return (
         <div className = {style.navContainer}>
