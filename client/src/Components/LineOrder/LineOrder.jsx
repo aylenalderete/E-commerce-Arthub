@@ -40,15 +40,6 @@ export default function LineOrder({ lineOrderElement }) {
 
 	let newPrice = isInOffer ? productFiltered.price - productFiltered.price * discount / 100 : lineOrderElement.product.price;
 
-	// productFiltered => PRECIO ORIGINAL
-	// lineOrderElement => PRECIO CON EL QUE SE GUARDÓ EN EL LOCAL STORAGE 
-
-	// LINEORDERELEMENT.PRICE === PRECIO ACTUAL? (CALCULADO EN ARTCARD)
-	// SI => LO DEJO ASÍ
-	// NO => LO ACTUALIZO: SI ESTÁ EN OFERTA, CALCULO EL NUEVO PRECIO CON EL PORCENTAJE 
-	// Y HAGO OTRO ADDITEM A LOCALSTORAGE CON EL NEWPRICE
-
-
 	if (isInOffer === true && productFiltered.price === lineOrderElement.product.price) {
 		let newPrice = isInOffer ? productFiltered.price - productFiltered.price * discount / 100 : lineOrderElement.product.price;
 		let cart = JSON.parse(localStorage.getItem('cart'))
@@ -60,22 +51,19 @@ export default function LineOrder({ lineOrderElement }) {
 		dispatch(setCart(cart));
 	}
 
-	// useEffect(() => {
-	// 	if (cart.length > 0 && isInOffer === false && productFiltered.price !== lineOrderElement.product.price) {
-	// 		console.log('lineorder element', lineOrderElement.product.price)
-	// 		console.log('producto de db', productFiltered.price)
-	// 		let newProductPrice = !isInOffer ? productFiltered.price - productFiltered.price * lineOrderElement.quantity : lineOrderElement.product.price;
-	// 		console.log('nuevo precio', newProductPrice)
-	// 		let cart = JSON.parse(localStorage.getItem('cart'))
-	// 		const found = cart.find((f) => f.product.id_product === lineOrderElement.product.id_product)
-	// 		let index = cart.indexOf(found)
-	// 		cart[index].product.price = newProductPrice
-	// 		cart[index].subTotal = cart[index].product.price * cart[index].quantity
-	// 		localStorage.setItem('cart', JSON.stringify(cart));
-	// 		// dispatch(setCart(cart));
-	// 	}
-	// }, [])
-
+	if (!isInOffer && Object.keys(productFiltered).length && productFiltered.price !== lineOrderElement.product.price) {
+		let cart = JSON.parse(localStorage.getItem('cart'))
+		const found = cart.find((f) => f.product.id_product === lineOrderElement.product.id_product)
+		let index = cart.indexOf(found)
+		console.log('prodredux', productFiltered)
+		cart[index].product.price = productFiltered.price
+		console.log('price', cart[index].product.price)
+		console.log('quantity', cart[index].quantity)
+		cart[index].subTotal = cart[index].product.price * cart[index].quantity
+		console.log('sub', cart[index].subTotal)
+		localStorage.setItem('cart', JSON.stringify(cart));
+		dispatch(setCart(cart));
+	}
 
 	return (
 		<div className={style.card}>
