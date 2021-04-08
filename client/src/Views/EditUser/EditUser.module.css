@@ -153,3 +153,21 @@
     }
   }
 
+@media screen and (max-width: 480px){
+    .mainContainer{
+        margin-top: 160px;
+    }
+
+    .secondContainer{
+        width: 90%;
+    }
+
+    .secondContainer form{
+        width: 100%;
+    }
+
+    .btn{
+        width: 100%;
+    }
+}
+
