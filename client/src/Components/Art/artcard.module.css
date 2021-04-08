@@ -39,6 +39,17 @@
     font-size: 1em;
 }
 
+.noStockAdmin{
+    justify-content: center;
+    border: 1px solid #f042ea;
+    background-color: #f042ea;
+    border-radius: 5px;
+    padding: 3px;
+    position:absolute;
+    top:30px;
+
+}
+
 .name{
     color: white;
     line-height: 1rem;   

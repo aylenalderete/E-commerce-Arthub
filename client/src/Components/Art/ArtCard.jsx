@@ -137,9 +137,10 @@ function ArtCard({ name, pic, artist, id, idArtist, price, stock, setFlag, categ
           ></DeleteProduct>
         )}
         <div className={style.imgContainer}>
-          <img className={style.cardImg} alt="artpic" src={pic}></img>
+          <Link className={style.linksA} to={`/coleccion/${id}`}>
+            <img className={style.cardImg} alt="artpic" src={pic}></img>
+          </Link>
         </div>
-
         <div className={style.linksArtCard}>
           <Link to={`/editarproducto/${id}`} className={style.btnEdit}>
             <img className={style.icon} src={editPiece} alt="edit item" />
@@ -153,23 +154,38 @@ function ArtCard({ name, pic, artist, id, idArtist, price, stock, setFlag, categ
               onClick={() => handleDeleteClick(id)}
             />
           </div>
-          <Link className={style.linksA} to={`/coleccion/${id}`}>
-            <h5 className={style.pieceName}>Pieza: {name}</h5>
+          {stock <= 0 ? (
+            <h5 className={style.noStockAdmin}>Sin stock</h5>
+          ) : (
+            null
+          )}
+          <Link className={style.linkName} to={`/coleccion/${id}`}>
+            <h5 className={style.name}>{name}</h5>
           </Link>
-          <h5 className={style.text}>
-            {stock > 0 ? `Stock: ${stock}` : "Producto no disponible"}
-          </h5>
-          {/* <h5 className={style.text}>Precio: {"$ " + price}</h5> */}
-          <h5 className={style.text}>Precio: $ {newPrice}</h5>
+          <h5 className={style.artist}>por <Link className={style.linksA} to={`/artistas/${idArtist}`}>{artist}</Link></h5>
 
-          <Link className={style.linksA} to={`/artistas/${idArtist}`}>
-            <h5 className={style.text}>Artista: {artist}</h5>
-          </Link>
+          {/* <h5 className={style.text}>Precio: {"$ " + price}</h5> */}
+          <h5 className={style.text}>$ {newPrice}</h5>
+
+          {
+            userType === "user" && !userData.wishlist.find(p => p.productIdProduct === id) &&
+            <button className={style.btnFav} onClick={() => handleAddFav(id)}>
+              <i class="far fa-heart"></i>
+            </button>
+          }
+          {
+            userType === "user" && userData.wishlist.find(p => p.productIdProduct === id) &&
+            <button className={`${style.btnFav} ${style.pink}`} onClick={() => handleRemoveFav(id)}>
+              <i class="fas fa-heart"></i>
+            </button>
+          }
+
+
         </div>
         <h2 className={style.offer}>{isInOffer && `${currentOffer.discount}% off!`}</h2>
-
       </div>
     );
+
   }
   //User type artist 
   else if (userType === 'artist') {
@@ -199,18 +215,16 @@ function ArtCard({ name, pic, artist, id, idArtist, price, stock, setFlag, categ
                 onClick={() => handleDeleteClick(id)}
               />
             </div>)}
-          <Link className={style.linksA} to={`/coleccion/${id}`}>
+          <Link className={style.linkName} to={`/coleccion/${id}`}>
             <h5 className={style.name}>{name}</h5>
           </Link>
-          <h5 className={style.text}>Precio: {"$ " + price}</h5>
-          {stock > 0 ? (
-            <h5 className={style.text}>{`Stock: ${stock}`}</h5>
-          ) : (
+          <h5 className={style.artist}>por <Link className={style.linksA} to={`/artistas/${idArtist}`}>{artist}</Link></h5>
+          <h5 className={style.text}>$ {newPrice}</h5>
+          {stock <= 0 ? (
             <h5 className={style.noStock}>Sin stock</h5>
+          ) : (
+            null
           )}
-          <Link className={style.linksA} to={`/artistas/${idArtist}`}>
-            <h5 className={style.artist}>Artista: {artist}</h5>
-          </Link>
 
           {stock > 0 && idArtist !== userData.id && (
             <Link className={style.cartCont} to="/carrito">
@@ -229,4 +243,8 @@ function ArtCard({ name, pic, artist, id, idArtist, price, stock, setFlag, categ
   }
 }
 
+
 export default ArtCard;
+
+
+
