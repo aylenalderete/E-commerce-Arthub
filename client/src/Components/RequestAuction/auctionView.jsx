@@ -36,7 +36,7 @@ export default function AuctionView(props) {
             var finalPrice = auctionView.price;
         }
 
-        await dispatch(
+        await dispatch( 
             postAuction(auctionView.id_auction, userDataId, finalPrice)
         );
         setValue(element);
@@ -122,7 +122,7 @@ export default function AuctionView(props) {
                             </div>
                         </div>
                     </div>
-                    <div>
+                    <div className={style.column2}>
                         <div className={style.title}>
                             <h1>Subasta {mounthData()} </h1>
                         </div>
@@ -174,6 +174,7 @@ export default function AuctionView(props) {
                         </div>
                         <div>
                             <Countdown
+                            className={style.coundown}
                                 winner={winner}
                                 idAuct={auctionView.id_auction}
                                 id={props.match.params.id}

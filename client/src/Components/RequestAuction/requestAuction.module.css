@@ -83,7 +83,7 @@
     outline: none;
 }
 .showCategory{
-    width: 20%;
+    width: 35%;
     color:white;
     font-size: 1rem;
     font-weight: 500;
@@ -270,5 +270,24 @@
     100% {
         background-color: #f427ed; 
         border-color:rgba(255, 255, 255, 0)
+    }
+  }
+
+  @media screen and (max-width: 670px){
+    .alignForm{
+        display: flex;
+        flex-direction: column;
+        justify-content:space-between;
+        align-items: center;
+        padding-top: 50px;
+    }
+    .btnCategory{
+        margin-top: 15px;
+    }
+    .btn{
+        width:30%;
+    }
+    .showCategory{
+        width: 70%;
     }
   }

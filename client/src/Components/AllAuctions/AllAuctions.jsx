@@ -63,7 +63,7 @@ function AllAuction() {
                 </div>
 
                 <br></br>
-                        <button className={style.editProfile} onClick={() => history.push(`/solicitarSubasta/`)}>
+                        <button className={style.btn} onClick={() => history.push(`/solicitarSubasta/`)}>
                             Solicitar subasta </button>
                 <table className={style.table}>
                     <tr className={style.head}>

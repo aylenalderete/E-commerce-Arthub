@@ -1,4 +1,4 @@
-.mainDivPopUp {
+.mainDivPopUp { 
     position: fixed;
     width: 50%;
     height: 50%;
@@ -92,3 +92,17 @@
         border-color:rgba(255, 255, 255, 0)
     }
   }
+
+  @media screen and (max-width: 375px){
+
+    .mainDivPopUp {
+        left: 0px;
+        width: 50%;
+        height: 20%;
+        top: 0;
+        right: 30%;
+        bottom: 0;
+    }
+
+ 
+ }
