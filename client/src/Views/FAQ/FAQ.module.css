@@ -20,6 +20,22 @@
 
 }
 
+.titleContainer {
+    margin-left: 40px;
+    margin-right: 40px;
+}
+
+.title{
+    
+    width: fit-content;
+    font-size: 3rem;
+    line-height: 1.5em;
+    margin:0;
+    
+    margin-top: 50px;
+    border-bottom:2px solid white;
+}
+
 .link{
     color: #F427EC;
     font-size:1.2rem
@@ -62,6 +78,15 @@
 
 @media screen and (max-width: 480px){
     .mainContainer{
-        margin-top: 180px;
+        margin-top: 120px;
+    }
+
+
+    .title{
+        font-size: 2rem;
+    }
+
+    .answer{
+        font-size: 1.2rem;
     }
 }
