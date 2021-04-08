@@ -83,3 +83,37 @@
     border: 2px solid white;
 
 }
+
+@media screen and (max-width: 480px){
+    .mainContainer{
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        overflow-x: hidden;
+        margin-top: 180px;
+        
+    }
+
+    .formContainer{
+        width: 90%;
+    }
+
+    .formContainer select{
+        margin-right: 20px;
+    }
+
+    .formContainer input{
+        margin-right: 10px;
+        width: 10%;
+    }
+
+    .offersContainer{
+        width: 100%;
+        flex-wrap: wrap;
+    }
+
+    .offer{
+        width: 100%;
+        margin-bottom: 20px;
+    }
+}
