@@ -24,10 +24,10 @@ function OrderTable() {
 
     return (
         <div className={Styles.mainContainer}>
-            <div>
+            <div className={Styles.titleContainer}>
                 <p className={Styles.p}>Ordenes</p>
             </div>
-            <div>
+            <div className={Styles.filterContainer}>
                 <form>
                 <label>Filtrar por estado</label>
                 <select onChange={ChangeState} name="filtroEstado">

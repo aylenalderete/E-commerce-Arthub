@@ -67,7 +67,7 @@ function OrderDetail() {
 
                         <div className={style.secondContainer}>
                             <h2 className={style.title}>Detalle de orden</h2>
-                            <h3> Estado: {orderDetail.state} </h3>
+                            <h3 className={style.title}>  Estado: {orderDetail.state} </h3>
                             {/* {
                                 orderDetail.state !== "fullfilled" ?
                                     <button className={style.btn} onClick={() => toLocalStorage()}> Quiero editar la orden </button>
@@ -75,19 +75,19 @@ function OrderDetail() {
                             } */}
                             {
                                 orderDetail.state !== "fullfilled" ?
-                                    <button className={style.btn} onClick={() => completePayment()}> Quiero completar el pago de mi orden </button>
+                                    <button className={style.btnPago} onClick={() => completePayment()}> Quiero completar el pago de mi orden </button>
                                     : <div></div>
                             }
                             {
                                 userType === 'admin' ?
-                                    <select value={orderDetail.state} onChange={EditStateChange}>
+                                    <select  className={style.title} value={orderDetail.state} onChange={EditStateChange}>
                                         Editar estado
                                     <option value="pending">Pendiente</option>
                                         <option value="fullfilled">Aprobada</option>
                                     </select> : null
                             }
-                            <h3> Fecha: {orderDetail.createdAt.slice(0, 10)} </h3>
-                            <h3> Precio total: $ {orderDetail.total_price} </h3>
+                            <h3 className={style.title}> Fecha: {orderDetail.createdAt.slice(0, 10)} </h3>
+                            <h3 className={style.title}> Precio total: $ {orderDetail.total_price} </h3>
 
                             {orderDetail && orderDetail.lineorders.map(l =>
 
