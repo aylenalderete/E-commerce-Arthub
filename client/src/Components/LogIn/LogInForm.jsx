@@ -114,7 +114,7 @@ if(redirect){
   return <Redirect to="coleccion"></Redirect>;
 }    
 if(redirectAuth){
-  return <Redirect to="twofactor"></Redirect>;
+  return <Redirect to="factordoble"></Redirect>;
 }
 return (
   <div className={style.mainContainer}>

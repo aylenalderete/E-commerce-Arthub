@@ -124,7 +124,7 @@ function App() {
       <Route exact path="/orden/:id" component={OrderDetailArtist} />
       <Route path="/usuarios" component={ShowAllUsers} />
       <Route exact path="/editarReseña/:idProduct" render={({ match }) => (<EditReview idproduct={match.params.idProduct} />)} />
-      <Route exact path="/passwordreset/:token" render={({ match }) => <PasswordReset token={match.params.token} />}></Route>
+      <Route exact path="/nuevacontrasena/:token" render={({ match }) => <PasswordReset token={match.params.token} />}></Route>
       <Route path="/emailform" component={EmailForm} />
       <Route exact path="/agregarReseña/:idProduct" render={({ match }) => (<AddReview idproduct={match.params.idProduct} />)} />
       <Route path="/pago" component={ShoppingCartPayment} />
@@ -140,7 +140,7 @@ function App() {
       <Route path="/subastaActual/:id" component={AuctionView}/>
       <Route path="/solicitarSubasta" component={RequestAuction} />
       <Route path="/solicitudes" component={AdminRequests} />
-      <Route path="/twofactor" component={TwoFactorForm}/>
+      <Route path="/factordoble" component={TwoFactorForm}/>
       <Route path="/ofertas" component={Offers}/>
       <Route path="/missubastas" component={MyAuctions} />
 
