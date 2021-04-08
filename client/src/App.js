@@ -13,7 +13,6 @@ import ArtistAdminDashboard from "./Views/ArtistAdmin/ArtistAdminDashboard.jsx";
 import CreateProduct from "./Components/CreateProducts/CreateProduct.jsx";
 import ArtistProfile from "./Views/ArtistProfile/ArtistProfile.jsx";
 import MyProfile from "./Views/MyProfile/myProfile";
-import ArtistsProducts from "./Views/ArtistsProducts/ArtistsProducts.jsx";
 import CreateCategory from "./Views/CreateCategory/CreateCategory.jsx";
 import EditProduct from "./Components/EditProduct/EditProduct.jsx";
 import signInUsers from "./Actions/signInUsers";
@@ -113,7 +112,6 @@ function App() {
         )}
       ></Route>
       <Route path="/miperfil" component={MyProfile}></Route>
-      <Route path="/misproductos" component={ArtistsProducts}></Route>
       <Route path="/crearcategorias" component={CreateCategory}></Route>
       <Route path="/categorias" component={AllCategories}></Route>
       <Route exact path="/carrito" render={() => <ShoppingCart />} />
