@@ -6,12 +6,10 @@
     
 }
 .title{
-    
     width: fit-content;
     font-size: 3rem;
     line-height: 1.5em;
     margin:0;
-    
     margin-top: 50px;
     border-bottom:2px solid white;
 }
@@ -24,7 +22,6 @@
     margin-top:40px;
     justify-content: space-between;
     align-items: center;
-    
 }
 
 .teamCard{
@@ -34,7 +31,6 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom:40px;
-  
 }
 
 .imgContainer{
@@ -46,7 +42,6 @@
     border: 2px solid white; 
     margin: 15px;
     align-self: flex-start;
-   
 }
 
 .img{
@@ -54,7 +49,6 @@
     height: 120px;
     object-fit: cover;
     border-radius: 50%;
-   
 }
 
 .infoContainer{
@@ -79,7 +73,6 @@
     width: 100%;
     height: 100%;
     background-color: rgba(255, 255, 255, 0.356);
-    
 }
 
 .imgContainer:hover .divHover{
