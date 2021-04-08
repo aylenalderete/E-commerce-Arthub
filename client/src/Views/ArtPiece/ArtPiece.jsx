@@ -39,9 +39,7 @@ const useStyles = makeStyles((theme) => ({
 
   }
 
-
 }));
-//---start
 
 function ArtPiece({ artId }) {
   const [detailed, setDetailed] = useState({
@@ -57,7 +55,7 @@ function ArtPiece({ artId }) {
   const userData = useSelector((state) => state.userData);
   const [currentOffer, setCurrentOffer] = useState({});
   const offers = useSelector((state) => state.offers);
-  const categories = useSelector((state)=> state.categories);
+  const categories = useSelector((state) => state.categories);
 
   const [isInOffer, setIsInOffer] = useState(false);
 
@@ -91,12 +89,7 @@ function ArtPiece({ artId }) {
   }, [offers, categories]);
 
   const dispatch = useDispatch();
-  // state for reviews 
   const reviews = useSelector(state => state.reviewsProduct.reviews);
-
-  // contar en el array la lenght para ver cuantos usuarios dejaron reviews 
-  // sumar todo y divirlo por la cantidad de usuarios 
-
 
   let average = 0;
   let finalAverage;
@@ -105,14 +98,9 @@ function ArtPiece({ artId }) {
     if (average > 0) {
       finalAverage = average / reviews.length
     }
-
   }
 
-
-
   const newPrice = isInOffer ? detailed.price - detailed.price * currentOffer.discount / 100 : detailed.price;
-
-
 
   if (detailed && detailed.description) {
     return (
