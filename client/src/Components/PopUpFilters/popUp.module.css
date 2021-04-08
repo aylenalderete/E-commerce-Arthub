@@ -57,15 +57,9 @@
     margin:2px;
 
 }
-.spanCat{
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    
-    
-    /* display: flex;
-    width: 250px;
-    flex-direction: row;
-    flex-wrap: wrap; */
+.spanCat{    
+    display: flex;
+    flex-wrap: wrap;    
 }
 .spanCat div{
     margin: 5px;
@@ -130,3 +124,10 @@
 
     }
   }
+
+@media screen and (max-width: 480px){
+    .mainDivPopUp{
+        left: 0px;
+        width: 90%;
+    }
+}

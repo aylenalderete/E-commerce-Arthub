@@ -47,7 +47,7 @@ function Collection() {
   }
 
   function handleRefresh() {
-    history.go(0);
+    history.push(0);
   }
   // function handleCartClick() {
   // }
@@ -124,6 +124,7 @@ function Collection() {
       <NavBar renderTop={false} />
       <div className={style.secondContainer}>
         {isOpenFilters === true ? <PopUp></PopUp> : <></>}
+
 
         <div className={style.sbContainer}>
           <div className={style.btnContainer}>

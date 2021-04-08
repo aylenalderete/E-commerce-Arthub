@@ -244,14 +244,13 @@
     }
 
     .shContainer{
-      width:30px;
+      width:40px;
       margin: 0;
-    
+      /* background-color: red;     */
     }
     .shContainer span{
-        top:0;
-        right: -15px;
-      
+        top:-13px;
+        right: -25px;      
       }
 
     .imgContainer{
