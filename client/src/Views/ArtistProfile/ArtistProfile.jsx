@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import NavBar from '../../Components/NavBar/NavBar.jsx';
 import style from './artistProfile.module.css'
 import ArtCard from './../../Components/Art/ArtCard';
+import { Link } from 'react-router-dom';
 
 function ArtistProfile({ artistId }) {
 
@@ -28,39 +29,34 @@ function ArtistProfile({ artistId }) {
             .then((result) => setArtistProducts(result.data));
     }, [])
 
-
-
-
-
     return (
         <div className={style.mainContainer}>
-            <div className={style.navBaralign}>
-                <NavBar renderTop={false} />
-                <div className={style.secondContainer}>
+            <NavBar renderTop={false} />
+            <div className={style.secondContainer}>
 
-                    <h1>{artistDetails.name} {artistDetails.lastname}</h1>
-                    <h3>Productos publicados</h3>
-                    <div className={style.allCardsContainer}>
-                        {
-                            (Object.entries(artistProducts).length > 1) ? artistProducts.map(piece => (
-                                <ArtCard
-                                    name={piece.title}
-                                    artist={artistDetails.name + ' ' + artistDetails.lastname}
-                                    pic={piece.images[0].url}
-                                    idArtist={piece.userId}
-                                    id={piece.id_product}
-                                    key={piece.id_product}
-                                    price={piece.price}
-                                    stock={piece.stock}
-                                    categories={piece.categories}
-                                />
-                            ))
-                                :
-                                <div className={style.secondContainer}>
-                                    <p>No hay productos publicados</p>
-                                </div>
-                        }
-                    </div>
+                <div className={style.title}>{artistDetails.name} {artistDetails.lastname}</div>
+                <div className={style.prods}>- Productos publicados -</div>
+                <div className={style.allCardsContainer}>
+                    {
+                        (Object.entries(artistProducts).length > 1) ? artistProducts.map(piece => (
+                            <ArtCard
+                                name={piece.title}
+                                artist={artistDetails.name + ' ' + artistDetails.lastname}
+                                pic={piece.images[0].url}
+                                idArtist={piece.userId}
+                                id={piece.id_product}
+                                key={piece.id_product}
+                                price={piece.price}
+                                stock={piece.stock}
+                                categories={piece.categories}
+                            />
+                        ))
+                            :
+                            <div className={style.noProductsMessage}>
+                                <p>No hay productos, intenta con otro artista. <Link to="/artistas">Volver</Link>
+                                </p>
+                            </div>
+                    }
                 </div>
             </div>
         </div>
