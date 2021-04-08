@@ -97,4 +97,23 @@
     .formContainer{
         width: 90%;
     }
+
+    .formContainer select{
+        margin-right: 20px;
+    }
+
+    .formContainer input{
+        margin-right: 10px;
+        width: 10%;
+    }
+
+    .offersContainer{
+        width: 100%;
+        flex-wrap: wrap;
+    }
+
+    .offer{
+        width: 100%;
+        margin-bottom: 20px;
+    }
 }
