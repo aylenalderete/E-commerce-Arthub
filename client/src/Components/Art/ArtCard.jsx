@@ -16,7 +16,7 @@ function ArtCard({ name, pic, artist, id, idArtist, price, stock, setFlag, categ
 
   const userType = useSelector((state) => state.userData.type);
   const userData = useSelector((state) => state.userData);
-  
+
   const offers = useSelector((state) => state.offers);
 
   const [currentOffer, setCurrentOffer] = useState({});
@@ -83,20 +83,19 @@ function ArtCard({ name, pic, artist, id, idArtist, price, stock, setFlag, categ
           </Link>
         </div>
         <div className={style.linksArtCard}>
-          <Link className={style.linksA} to={`/coleccion/${id}`}>
+          <Link className={style.linkName} to={`/coleccion/${id}`}>
             <h5 className={style.name}>{name}</h5>
           </Link>
-          {/* <h5 className={style.text}>Precio: {"$ " + price}</h5> */}
-          <h5 className={style.text}>Precio: $ { newPrice }</h5>
+          <h5 className={style.artist}>por <Link className={style.linksA} to={`/artistas/${idArtist}`}>{artist}</Link></h5>
 
-          {stock > 0 ? (
-            <h5 className={style.text}>{`Stock: ${stock}`}</h5>
-          ) : (
+          {/* <h5 className={style.text}>Precio: {"$ " + price}</h5> */}
+          <h5 className={style.text}>$ {newPrice}</h5>
+
+          {stock <= 0 ? (
             <h5 className={style.noStock}>Sin stock</h5>
+          ) : (
+            null
           )}
-          <Link className={style.linksA} to={`/artistas/${idArtist}`}>
-            <h5 className={style.artist}>Artista: {artist}</h5>
-          </Link>
 
           {stock > 0 && (
             <Link className={style.cartCont} to="/carrito">
@@ -122,7 +121,7 @@ function ArtCard({ name, pic, artist, id, idArtist, price, stock, setFlag, categ
 
 
         </div>
-          <h2 className={style.offer}>{isInOffer && `${currentOffer.discount}% off!`}</h2>
+        <h2 className={style.offer}>{isInOffer && `${currentOffer.discount}% off!`}</h2>
       </div>
     );
   }
@@ -161,7 +160,7 @@ function ArtCard({ name, pic, artist, id, idArtist, price, stock, setFlag, categ
             {stock > 0 ? `Stock: ${stock}` : "Producto no disponible"}
           </h5>
           {/* <h5 className={style.text}>Precio: {"$ " + price}</h5> */}
-          <h5 className={style.text}>Precio: $ { newPrice }</h5>
+          <h5 className={style.text}>Precio: $ {newPrice}</h5>
 
           <Link className={style.linksA} to={`/artistas/${idArtist}`}>
             <h5 className={style.text}>Artista: {artist}</h5>

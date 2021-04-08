@@ -30,16 +30,6 @@ const arrayOfProducts = [
         category: [2],
     },
     {
-        title: "Shaka de Virgo",
-        price: 1000,
-        description:
-            "Shaka de Virgo",
-        stock: 3,
-        userId: 6,
-        images: ["https://i.imgur.com/L5X7baJ.jpg"],
-        category: [3, 4, 5],
-    },
-    {
         title: "Vaca",
         price: 500,
         description:
@@ -49,45 +39,56 @@ const arrayOfProducts = [
         images: ["https://i.imgur.com/2FwZ1JJ.jpg"],
         category: [2],
     },
+
     {
-        title: "Zorro",
-        price: 800,
-        description:
-            "Un zorro de ojos azules",
-        stock: 5,
-        userId: 4,
-        images: ["https://i.imgur.com/uUd7LqQ.png"],
-        category: [3, 4],
-    },
-    {
-        title: "Guatemalita",
-        price: 800,
-        description:
-            "Una representación del personaje folklorico, la Guatemalita de Efraín Recinos.",
-        stock: 5,
-        userId: 7,
-        images: ["https://i.imgur.com/9ytzDk6.jpg"],
-        category: [1, 2],
-    },
-    {
-        title: "Home",
+        title: "Annie",
         price: 800,
         description:
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sollicitudin ut nisl nec aliquet. Aliquam ultrices quam dui, vitae rhoncus leo euismod sed.",
         stock: 5,
-        userId: 4,
-        images: ["https://i.imgur.com/cepUaj5.jpg"],
-        category: [3, 4],
+        userId: 3,
+        images: ["https://i.imgur.com/wDoTo5Z.jpg"],
+        category: [4],
     },
     {
-        title: "Charly",
-        price: 800,
+        title: "Street",
+        price: 500,
         description:
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sollicitudin ut nisl nec aliquet. Aliquam ultrices quam dui, vitae rhoncus leo euismod sed.",
         stock: 5,
-        userId: 4,
-        images: ["https://i.imgur.com/BtTo2lp.png"],
-        category: [3, 4],
+        userId: 5,
+        images: ["https://i.imgur.com/latc6gM.jpg"],
+        category: [1, 5],
+    },
+    {
+        title: "Mirror",
+        price: 650,
+        description:
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sollicitudin ut nisl nec aliquet. Aliquam ultrices quam dui, vitae rhoncus leo euismod sed.",
+        stock: 5,
+        userId: 5,
+        images: ["https://i.imgur.com/bybYFXB.jpg"],
+        category: [6, 7],
+    },
+    {
+        title: "Underwater",
+        price: 700,
+        description:
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sollicitudin ut nisl nec aliquet. Aliquam ultrices quam dui, vitae rhoncus leo euismod sed.",
+        stock: 5,
+        userId: 3,
+        images: ["https://i.imgur.com/n8hMk8v.jpg"],
+        category: [8, 9],
+    },
+    {
+        title: "Bloom",
+        price: 850,
+        description:
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sollicitudin ut nisl nec aliquet. Aliquam ultrices quam dui, vitae rhoncus leo euismod sed.",
+        stock: 5,
+        userId: 6,
+        images: ["https://i.imgur.com/qsDGbzG.jpg"],
+        category: [1, 4],
     },
     {
         title: "Platillo volante",
@@ -100,14 +101,14 @@ const arrayOfProducts = [
         category: [3, 4],
     },
     {
-        title: "Annie",
+        title: "Guatemalita",
         price: 800,
         description:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sollicitudin ut nisl nec aliquet. Aliquam ultrices quam dui, vitae rhoncus leo euismod sed.",
+            "Una representación del personaje folklorico, la Guatemalita de Efraín Recinos.",
         stock: 5,
-        userId: 3,
-        images: ["https://i.imgur.com/wDoTo5Z.jpg"],
-        category: [4, 5, 6],
+        userId: 7,
+        images: ["https://i.imgur.com/9ytzDk6.jpg"],
+        category: [1, 2],
     },
     {
         title: "Artist spotlight",
@@ -153,16 +154,6 @@ const arrayOfProducts = [
         category: [1, 5],
     },
     {
-        title: "Beauty and the beast",
-        price: 700,
-        description:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sollicitudin ut nisl nec aliquet. Aliquam ultrices quam dui, vitae rhoncus leo euismod sed.",
-        stock: 5,
-        userId: 4,
-        images: ["https://i.imgur.com/5Lf5OZ9.jpg"],
-        category: [1, 5],
-    },
-    {
         title: "Ballet",
         price: 600,
         description:
@@ -170,16 +161,6 @@ const arrayOfProducts = [
         stock: 5,
         userId: 4,
         images: ["https://i.imgur.com/xBRukvX.jpg"],
-        category: [1, 5],
-    },
-    {
-        title: "Street",
-        price: 500,
-        description:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sollicitudin ut nisl nec aliquet. Aliquam ultrices quam dui, vitae rhoncus leo euismod sed.",
-        stock: 5,
-        userId: 5,
-        images: ["https://i.imgur.com/latc6gM.jpg"],
         category: [1, 5],
     },
     {
@@ -191,16 +172,6 @@ const arrayOfProducts = [
         userId: 5,
         images: ["https://i.imgur.com/RRuPGIS.jpg"],
         category: [1, 5],
-    },
-    {
-        title: "BTS",
-        price: 1000,
-        description:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sollicitudin ut nisl nec aliquet. Aliquam ultrices quam dui, vitae rhoncus leo euismod sed.",
-        stock: 5,
-        userId: 5,
-        images: ["https://i.imgur.com/HovqW9Z.jpg"],
-        category: [9, 3],
     },
     {
         title: "Flowers",
@@ -232,16 +203,7 @@ const arrayOfProducts = [
         images: ["https://i.imgur.com/9vRprLZ.jpg"],
         category: [9, 3],
     },
-    {
-        title: "Bloom",
-        price: 850,
-        description:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sollicitudin ut nisl nec aliquet. Aliquam ultrices quam dui, vitae rhoncus leo euismod sed.",
-        stock: 5,
-        userId: 6,
-        images: ["https://i.imgur.com/qsDGbzG.jpg"],
-        category: [1, 4],
-    },
+
     {
         title: "Beach",
         price: 850,
@@ -261,6 +223,16 @@ const arrayOfProducts = [
         userId: 7,
         images: ["https://i.imgur.com/pYSOzZf.jpg"],
         category: [1, 4],
+    },
+    {
+        title: "Shaka de Virgo",
+        price: 1000,
+        description:
+            "Shaka de Virgo",
+        stock: 3,
+        userId: 6,
+        images: ["https://i.imgur.com/L5X7baJ.jpg"],
+        category: [3, 4, 5],
     },
     {
         title: "Portrait",
@@ -343,6 +315,16 @@ const arrayOfProducts = [
         category: [1, 2, 4],
     },
     {
+        title: "Home",
+        price: 800,
+        description:
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sollicitudin ut nisl nec aliquet. Aliquam ultrices quam dui, vitae rhoncus leo euismod sed.",
+        stock: 5,
+        userId: 4,
+        images: ["https://i.imgur.com/cepUaj5.jpg"],
+        category: [3, 4],
+    },
+    {
         title: "Mind bending",
         price: 860,
         description:
@@ -401,6 +383,16 @@ const arrayOfProducts = [
         userId: 5,
         images: ["https://i.imgur.com/6CioD2b.png"],
         category: [1],
+    },
+    {
+        title: "Zorro",
+        price: 800,
+        description:
+            "Un zorro de ojos azules",
+        stock: 5,
+        userId: 4,
+        images: ["https://i.imgur.com/uUd7LqQ.png"],
+        category: [3, 4],
     },
     {
         title: "Earth",
@@ -480,16 +472,6 @@ const arrayOfProducts = [
         stock: 5,
         userId: 4,
         images: ["https://i.imgur.com/oCw3s9g.jpg"],
-        category: [6, 7],
-    },
-    {
-        title: "Mirror",
-        price: 650,
-        description:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sollicitudin ut nisl nec aliquet. Aliquam ultrices quam dui, vitae rhoncus leo euismod sed.",
-        stock: 5,
-        userId: 5,
-        images: ["https://i.imgur.com/bybYFXB.jpg"],
         category: [6, 7],
     },
     {

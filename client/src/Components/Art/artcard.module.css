@@ -20,7 +20,7 @@
 .text{
     color: white;
     line-height: 1rem;   
-    font-size: 1em;
+    font-size: 1.5em;
     margin:0;
     margin-top: 20px;
     cursor:default
@@ -34,13 +34,22 @@
     color: #f042ea;
     cursor:default;
 }
+
+.noStockMsg{
+    font-size: 1em;
+}
+
 .name{
     color: white;
     line-height: 1rem;   
-    font-size: 1.2em;
+    font-size: 2em;
     margin:0;
-    text-decoration: underline;
+    text-decoration: none;
     
+}
+
+.linkName{
+    text-decoration: none;
 }
 
 .name:hover{
@@ -52,11 +61,11 @@
     font-size: 1em;
     margin:0;
     margin-top: 20px;
-    text-decoration: underline;
+    /* text-decoration: underline; */
 }
-.artist:hover{ 
+/* .artist:hover{ 
         color:#F427EC
-}
+} */
 .pieceName{
     color:white;
     line-height: 1em;
@@ -83,8 +92,12 @@
 }
 
 .linksA{
-    text-decoration: none;
+    text-decoration: underline;
     color:white;
+}
+
+.linksA:hover{
+    color: #F427EC;
 }
 
 .cardImg{
