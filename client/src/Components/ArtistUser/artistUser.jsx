@@ -201,9 +201,9 @@ export default function ArtistUser() {
                         </Link>
                     </div>
                     <CarouselCategories />
-                    <Link className={Styles.link} to='/misproductos'>Administrar todos</Link>
+                    <Link className={Styles.link} to={`/artistas/${userData.id}`}>Administrar todos</Link>
                 </div>
-                {/* Ordenes (compras) */}
+                {/* Ordenes (compras) */} 
                 <div className={style.containerProducts}>
                     <h2 className={style.title}>Mis órdenes</h2>
 

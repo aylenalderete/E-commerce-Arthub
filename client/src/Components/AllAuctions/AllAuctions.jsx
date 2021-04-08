@@ -58,7 +58,7 @@ function AllAuction() {
             {createAuction === true && <CreateAuction auctionId={auctionId} />}
             {deleteAuction === true && <DeleteAuction auctionId={auctionId} />}
             <div >
-                <div className={style.column}>
+                <div className={style.column}> 
                     <h1>Subastas:</h1>
                 </div>
 

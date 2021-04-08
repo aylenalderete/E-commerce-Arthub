@@ -5,6 +5,7 @@ import {useSelector, useDispatch} from 'react-redux'
 import style from './deleteProduct.module.css'
 import close from '../../Images/cancel.svg';
 import axios from 'axios';
+import getArtistsProducts from '../../Actions/getArtistsProducts'
 
 
 function DeleteProduct(props) {
@@ -15,6 +16,8 @@ function DeleteProduct(props) {
     const productId = useSelector(state => state.productId)
 
     const dispatch = useDispatch()
+
+    const userId = useSelector(state => state.userData.id)
     
     useEffect(() => {
         dispatch(getInitialProducts());
@@ -25,7 +28,7 @@ function DeleteProduct(props) {
 
 
 
-    function handleSubmit() {
+  async  function handleSubmit() {
         try {
             axios.delete(`http://localhost:3001/products/${productId}`)
             .then(response => alert('Producto eliminado'))
@@ -34,9 +37,10 @@ function DeleteProduct(props) {
             console.log(error);
             alert('No se pudo eliminar el producto')
         }
-
-        dispatch(deleteproduct(false));
+      await  dispatch(deleteproduct(false));
+        dispatch(getArtistsProducts(userId))
         props.setFlag(true)
+        
         
     }
 

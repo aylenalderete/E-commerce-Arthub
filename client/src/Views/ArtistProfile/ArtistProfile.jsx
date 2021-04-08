@@ -4,6 +4,8 @@ import NavBar from '../../Components/NavBar/NavBar.jsx';
 import style from './artistProfile.module.css'
 import ArtCard from './../../Components/Art/ArtCard';
 import { Link } from 'react-router-dom';
+import getArtistsProducts from '../../Actions/getArtistsProducts'
+import {useSelector, useDispatch} from 'react-redux'
 
 function ArtistProfile({ artistId }) {
 
@@ -13,9 +15,25 @@ function ArtistProfile({ artistId }) {
         lastname: '',
         profilepic: '',
         email: '',
-    });
+    }); 
 
-    const [artistProducts, setArtistProducts] = useState({})
+    const [flag, setFlag] = useState(false);
+
+    
+
+    const artistsProducts = useSelector(state => state.artistsProducts)
+
+    const userId = useSelector(state => state.userData.id);
+
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        console.log("sajhdjksa")
+        dispatch(getArtistsProducts(userId))
+        
+            setFlag(false);
+          
+    }, [flag]);
 
     useEffect(() => {
         axios
@@ -23,11 +41,7 @@ function ArtistProfile({ artistId }) {
             .then((result) => setArtistDetails(result.data[0]));
     }, [])
 
-    useEffect(() => {
-        axios
-            .get(`http://localhost:3001/products/user/${artistId}`)
-            .then((result) => setArtistProducts(result.data));
-    }, [])
+   
 
     return (
         <div className={style.mainContainer}>
@@ -38,7 +52,7 @@ function ArtistProfile({ artistId }) {
                 <div className={style.prods}>- Productos publicados -</div>
                 <div className={style.allCardsContainer}>
                     {
-                        (Object.entries(artistProducts).length > 1) ? artistProducts.map(piece => (
+                        (artistsProducts.length >= 1) ? artistsProducts.map(piece => (
                             <ArtCard
                                 name={piece.title}
                                 artist={artistDetails.name + ' ' + artistDetails.lastname}
@@ -48,6 +62,7 @@ function ArtistProfile({ artistId }) {
                                 key={piece.id_product}
                                 price={piece.price}
                                 stock={piece.stock}
+                                setFlag={setFlag}
                                 categories={piece.categories}
                             />
                         ))
