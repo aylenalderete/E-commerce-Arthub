@@ -10,16 +10,6 @@ const arrayOfProducts = [
         category: [1],
     },
     {
-        title: "Cabrita",
-        price: 500,
-        description:
-            "Parte de la colección de Granja, una pequeña cabra en acuarela.",
-        stock: 3,
-        userId: 2,
-        images: ["https://i.imgur.com/oYqOEfO.jpg"],
-        category: [1, 3, 5],
-    },
-    {
         title: "Cerdito",
         price: 500,
         description:
@@ -51,13 +41,13 @@ const arrayOfProducts = [
         category: [4],
     },
     {
-        title: "Street",
-        price: 500,
+        title: "Ballet",
+        price: 600,
         description:
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sollicitudin ut nisl nec aliquet. Aliquam ultrices quam dui, vitae rhoncus leo euismod sed.",
         stock: 5,
-        userId: 5,
-        images: ["https://i.imgur.com/latc6gM.jpg"],
+        userId: 4,
+        images: ["https://i.imgur.com/xBRukvX.jpg"],
         category: [1, 5],
     },
     {
@@ -81,36 +71,6 @@ const arrayOfProducts = [
         category: [8, 9],
     },
     {
-        title: "Bloom",
-        price: 850,
-        description:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sollicitudin ut nisl nec aliquet. Aliquam ultrices quam dui, vitae rhoncus leo euismod sed.",
-        stock: 5,
-        userId: 6,
-        images: ["https://i.imgur.com/qsDGbzG.jpg"],
-        category: [1, 4],
-    },
-    {
-        title: "Platillo volante",
-        price: 800,
-        description:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sollicitudin ut nisl nec aliquet. Aliquam ultrices quam dui, vitae rhoncus leo euismod sed.",
-        stock: 5,
-        userId: 4,
-        images: ["https://i.imgur.com/TihhO0N.png"],
-        category: [3, 4],
-    },
-    {
-        title: "Guatemalita",
-        price: 800,
-        description:
-            "Una representación del personaje folklorico, la Guatemalita de Efraín Recinos.",
-        stock: 5,
-        userId: 7,
-        images: ["https://i.imgur.com/9ytzDk6.jpg"],
-        category: [1, 2],
-    },
-    {
         title: "Artist spotlight",
         price: 1000,
         description:
@@ -119,29 +79,6 @@ const arrayOfProducts = [
         userId: 3,
         images: ["https://i.imgur.com/oAYZc6j.jpg"],
         category: [1, 5],
-    },
-    {
-        title: "Batman",
-        price: 800,
-        description:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sollicitudin ut nisl nec aliquet. Aliquam ultrices quam dui, vitae rhoncus leo euismod sed.",
-        stock: 5,
-        userId: 3,
-        images: ["https://i.imgur.com/apzNK3X.jpg"],
-        category: [1, 5],
-    },
-    {
-        title: "Astronauta",
-        price: 800,
-        description:
-            "Una representación del exitoso proyecto Apollo 11",
-        stock: 3,
-        userId: 1,
-        images: [
-            "https://i.imgur.com/HYCjNmD.png",
-            "https://i.imgur.com/HYCjNmD.png",
-        ],
-        category: [2, 3],
     },
     {
         title: "Surreal",
@@ -154,14 +91,24 @@ const arrayOfProducts = [
         category: [1, 5],
     },
     {
-        title: "Ballet",
-        price: 600,
+        title: "Bloom",
+        price: 850,
         description:
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sollicitudin ut nisl nec aliquet. Aliquam ultrices quam dui, vitae rhoncus leo euismod sed.",
         stock: 5,
-        userId: 4,
-        images: ["https://i.imgur.com/xBRukvX.jpg"],
-        category: [1, 5],
+        userId: 6,
+        images: ["https://i.imgur.com/qsDGbzG.jpg"],
+        category: [1, 4],
+    },
+    {
+        title: "Cabrita",
+        price: 500,
+        description:
+            "Parte de la colección de Granja, una pequeña cabra en acuarela.",
+        stock: 3,
+        userId: 2,
+        images: ["https://i.imgur.com/oYqOEfO.jpg"],
+        category: [1, 3, 5],
     },
     {
         title: "Bowie",
@@ -172,16 +119,6 @@ const arrayOfProducts = [
         userId: 5,
         images: ["https://i.imgur.com/RRuPGIS.jpg"],
         category: [1, 5],
-    },
-    {
-        title: "Flowers",
-        price: 400,
-        description:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sollicitudin ut nisl nec aliquet. Aliquam ultrices quam dui, vitae rhoncus leo euismod sed.",
-        stock: 5,
-        userId: 6,
-        images: ["https://i.imgur.com/QFbowwM.jpg"],
-        category: [9, 3],
     },
     {
         title: "Darth Vader",
@@ -245,6 +182,16 @@ const arrayOfProducts = [
         category: [7, 8],
     },
     {
+        title: "Guatemalita",
+        price: 800,
+        description:
+            "Una representación del personaje folklorico, la Guatemalita de Efraín Recinos.",
+        stock: 5,
+        userId: 7,
+        images: ["https://i.imgur.com/9ytzDk6.jpg"],
+        category: [1, 2],
+    },
+    {
         title: "Space",
         price: 980,
         description:
@@ -263,6 +210,16 @@ const arrayOfProducts = [
         userId: 8,
         images: ["https://i.imgur.com/JfG4u3Y.png"],
         category: [7, 8],
+    },
+    {
+        title: "Street",
+        price: 500,
+        description:
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sollicitudin ut nisl nec aliquet. Aliquam ultrices quam dui, vitae rhoncus leo euismod sed.",
+        stock: 5,
+        userId: 5,
+        images: ["https://i.imgur.com/latc6gM.jpg"],
+        category: [1, 5],
     },
     {
         title: "Illustration",
@@ -544,16 +501,6 @@ const arrayOfProducts = [
         images: ["https://i.imgur.com/uVl1rLd.jpg"],
         category: [8, 9],
     },
-    {
-        title: "Underwater",
-        price: 700,
-        description:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sollicitudin ut nisl nec aliquet. Aliquam ultrices quam dui, vitae rhoncus leo euismod sed.",
-        stock: 5,
-        userId: 3,
-        images: ["https://i.imgur.com/n8hMk8v.jpg"],
-        category: [8, 9],
-    }
 ];
 
 module.exports = arrayOfProducts;

@@ -28,20 +28,14 @@ const {
   Shoppingcart,
   Lineorder,
   Auction,
+  Review
 } = require("./src/db.js");
 
-// Categorias
 const arrayCategories = require("./src/seeders/categories.js");
-// Productos
 const arrayProducts = require("./src/seeders/products.js");
-// Usuarios
 const arrayOfUsers = require("./src/seeders/users.js");
-
-//Shopping Cart
-const arrayShopping = require("./src/seeders/shoppingcart.js");
+const arrayOfReviews = require("./src/seeders/reviews.js");
 const arrayOfShoppingcart = require("./src/seeders/shoppingcart.js");
-
-//Auctions
 const arrayAuctions = require("./src/seeders/auctions.js")
 
 // Syncing all the models at once.
@@ -49,14 +43,10 @@ conn.sync({ force: true }).then(() => {
   server.listen(3001, () => {
     console.log("%s listening at 3001"); // eslint-disable-line no-console
   });
+
   // Creacion de usuarios
   const seeder = async function () {
-    // await Auction.bulkCreate(arrayAuctions)
-    //   .then(async () => {
-    //       console.log("Auctions created");
-    //       // Creacion de categorias
-         await User.bulkCreate(arrayOfUsers)
-      // })
+    await User.bulkCreate(arrayOfUsers)
       .then(async () => {
         console.log("Users created");
         // Creacion de categorias
@@ -72,7 +62,6 @@ conn.sync({ force: true }).then(() => {
           await arrayProducts[i].category.map(async (catToAdd) => {
             await Category.findByPk(catToAdd)
               .then(async (catFound) => {
-                // Agrega categorias a los productos
                 await instance.addCategories(catFound);
               })
               .catch((err) => console.log(err));
@@ -96,7 +85,12 @@ conn.sync({ force: true }).then(() => {
         console.error(err);
       });
 
-    //-----------------------PRUEBAS Shopping Cart------------------------------------
+
+    Review.bulkCreate(arrayOfReviews)
+      .then(r => console.log("Reviews successfully created"))
+      .catch((err) => {
+        console.error(err);
+      });
 
     Shoppingcart.bulkCreate(arrayOfShoppingcart).then((result) => {
       console.log("Cart Created");
@@ -105,15 +99,15 @@ conn.sync({ force: true }).then(() => {
           unit_price: e.unit_price,
           quantity: e.quantity,
         }));
-        
+
         Lineorder.bulkCreate(listorder)
           .then(async (arrayLine) => {
-         
+
             arrayLine.map(async (m, i) => {
               const productToAdd = await Product.findByPk(
                 arrayOfShoppingcart[i].lineorder[0].productIdProduct
               );
-            
+
               await productToAdd.addLineorder(m);
             });
 
@@ -132,7 +126,6 @@ conn.sync({ force: true }).then(() => {
           });
       });
     });
-    //------------------------FIN------------------------------------
   };
   // Descomentar la siguiente linea para llenar la db por primera vez
   seeder();
