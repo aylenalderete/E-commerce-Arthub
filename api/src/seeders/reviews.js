@@ -13,13 +13,19 @@ const arrayOfReviews = [
     },
     {
         description: "Empapelaría mi casa con este cuadro",
-        qualification: 5,
+        qualification: 4,
         userId: 3,
         productIdProduct: 8
     },
     {
+        description: "El cuadro hermoso, pero tardó un poco en llegar",
+        qualification: 3,
+        userId: 6,
+        productIdProduct: 8
+    },
+    {
         description: "Muy lindo, lo compre para un regalo y quedé muy bien! :')",
-        qualification: 5,
+        qualification: 4,
         userId: 1,
         productIdProduct: 3
     },
@@ -37,13 +43,13 @@ const arrayOfReviews = [
     },
     {
         description: "Excelente atencion, la fotografía hermosa. Recomiendo los trabajos de este artista.",
-        qualification: 5,
+        qualification: 4,
         userId: 4,
         productIdProduct: 5
     },
     {
         description: "Recomiendo",
-        qualification: 5,
+        qualification: 4,
         userId: 5,
         productIdProduct: 6
     },
