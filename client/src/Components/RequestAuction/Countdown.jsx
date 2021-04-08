@@ -86,7 +86,7 @@ function Countdown(props) {
           
         </div>
       ) : (
-        <div>
+        <div className={style.countdown}>
           <div className={style.ganador}>
             <h2>La mejor oferta pertenece a : </h2>
             <h1>{props.winner}</h1>

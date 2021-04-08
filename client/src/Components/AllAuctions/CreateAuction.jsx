@@ -75,7 +75,7 @@ function CreateAuction(props) {
                 <div className={style.column1}>
                     <div className={style.containerPic}>
                         <img className={style.picture} src={theAuction?.images[0].url} />
-                    </div>
+                    </div> 
                     <div className={style.column2}>
                         <p className={style.titles}>Título:</p>
                         <input className={style.input} name='title' value={theAuction?.title} disabled />
