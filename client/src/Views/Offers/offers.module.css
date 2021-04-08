@@ -83,3 +83,18 @@
     border: 2px solid white;
 
 }
+
+@media screen and (max-width: 480px){
+    .mainContainer{
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        overflow-x: hidden;
+        margin-top: 180px;
+        
+    }
+
+    .formContainer{
+        width: 90%;
+    }
+}

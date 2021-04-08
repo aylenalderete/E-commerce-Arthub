@@ -91,3 +91,11 @@
         background-color: #F427EC;
     }
   }
+
+@media screen and (max-width: 480px){
+
+    .btnEditProfile{
+        width: 100%;
+    }
+    
+}
