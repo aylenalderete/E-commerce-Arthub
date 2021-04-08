@@ -58,6 +58,12 @@ module.exports = (sequelize) => {
         type: DataTypes.BOOLEAN,
         allowNull: true,
       },
+      twoFactor:{
+        type: DataTypes.STRING,
+      },
+      phoneNumber:{
+        type: DataTypes.STRING,
+      }
     },
     {
       timestamps: false,

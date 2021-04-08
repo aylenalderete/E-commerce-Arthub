@@ -46,13 +46,7 @@ async function sendEmail(body, to) {
 			"utf8"
 		);
 		var template = Handlebars.compile(source);
-        // const mailOptions = {
 
-        //     from: 'ArtHub <andres2661991@gmail.com>',
-        //     to: to,
-        //     subject: subject,
-        //     html: body
-        // }
         const mailOptions = {
 			from: "ArtHub <andres2661991@gmail.com>",
 			to: to,
@@ -78,8 +72,6 @@ const {
 } = require("../db.js");
 const { use } = require("./product");
 
-///Send email to password reset
-
 server.post("/send/:email", async (req, res) => {
 
     const { email } = req.params;
@@ -98,16 +90,10 @@ server.post("/send/:email", async (req, res) => {
 
     var body= {title:"User Request New",
     text:"Para resetear tu contraseña:",
-    link:`http://localhost:3000/passwordreset/${token}`,
+    link:`http://localhost:3000/nuevacontrasena/${token}`,
     aviso:"Aviso: este enlace expirará en 5 minutos",
-click:"Click Aqui"}
+    click:"Click Aqui"}
    
-   
-   
-   
-    // var body = `<p>Para resetear tu contraseña <a href=http://localhost:3000/passwordreset/${token}> click aquí</a></p>
-    //             <div>Aviso: este enlace expirará en 60 segundos</div>`
-
     sendEmail(body, email)
         .then(async result2 => {
           
