@@ -46,6 +46,7 @@ import Offers from './Views/Offers/Offers';
 import getCategories from './Actions/filter';
 import { getOffer } from './Actions/offers';
 import MyAuctions from "./Views/MyAuctions/myAuctions";
+import MyProducts from "./Views/myProducts/myProducts"
 
 function App() {
   const dispatch = useDispatch();
@@ -141,6 +142,7 @@ function App() {
       <Route path="/factordoble" component={TwoFactorForm}/>
       <Route path="/ofertas" component={Offers}/>
       <Route path="/missubastas" component={MyAuctions} />
+      <Route path="/misproductos" component={MyProducts}/>
 
 
     </div>

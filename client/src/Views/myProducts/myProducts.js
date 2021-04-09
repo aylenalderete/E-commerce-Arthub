@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import NavBar from '../../Components/NavBar/NavBar.jsx';
-import style from './artistProfile.module.css'
+import style from './myProducts.module.css'
 import ArtCard from './../../Components/Art/ArtCard';
 import { Link } from 'react-router-dom';
 import getArtistsProducts from '../../Actions/getArtistsProducts'
@@ -23,7 +23,7 @@ function ArtistProfile({ artistId }) {
 
     const artistsProducts = useSelector(state => state.artistsProducts)
 
-    const [artistProducts, setArtistProducts] = useState({})
+    
     
     const userId = useSelector(state => state.userData.id);
 
@@ -43,11 +43,7 @@ function ArtistProfile({ artistId }) {
             .then((result) => setArtistDetails(result.data[0]));
     }, [])
 
-    useEffect(() => {
-        axios
-            .get(`http://localhost:3001/products/user/${artistId}`)
-            .then((result) => setArtistProducts(result.data));
-    }, [])
+  
 
     return (
         <div className={style.mainContainer}>
@@ -58,7 +54,7 @@ function ArtistProfile({ artistId }) {
                 <div className={style.prods}>- Productos publicados -</div>
                 <div className={style.allCardsContainer}>
                     {
-                        (artistProducts.length >= 1) ? artistProducts.map(piece => (
+                        (artistsProducts.length >= 1) ? artistsProducts.map(piece => (
                             <ArtCard
                                 name={piece.title}
                                 artist={artistDetails.name + ' ' + artistDetails.lastname}
