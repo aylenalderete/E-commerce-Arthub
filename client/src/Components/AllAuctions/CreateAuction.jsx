@@ -67,7 +67,7 @@ function CreateAuction(props) {
             </button>
 
             <div className={style.title}>
-                <h1 >Editar subasta</h1>
+                <h1 >editar subasta</h1>
             </div>
 
 
@@ -77,17 +77,18 @@ function CreateAuction(props) {
                         <img className={style.picture} src={theAuction?.images[0].url} />
                     </div> 
                     <div className={style.column2}>
-                        <p className={style.titles}>Título:</p>
+                        <p className={style.titles}>título:</p>
                         <input className={style.input} name='title' value={theAuction?.title} disabled />
-                        <p className={style.titles}>Artista:</p>
+                        <p className={style.titles}>artista:</p>
                         <input className={style.input} name='username' value={theAuction?.users[0].username} disabled />
-                        <p className={style.titles}>Descripción:</p>
+                        <p className={style.titles}>descripción:</p>
                         <input className={style.input} name='description' value={theAuction?.description} disabled />
-                        <p className={style.titles}>Precio inicial:</p>
+                        <p className={style.titles}>precio inicial:</p>
                         <input className={style.input} name='price' value={theAuction?.price} onChange={handleChange} />
-                        <p className={style.titles}>Monto de aumento:</p>
+                        <p className={style.titles}>monto de aumento:</p>
                         <input className={style.input} name='percentage' value={theAuction?.percentage}
                             onChange={handleChange} />
+                        <p className={style.titles}>fecha:</p>
                         <input
                             className={style.input}
                             value={theAuction?.date}
@@ -97,6 +98,7 @@ function CreateAuction(props) {
                             required
                             
                         ></input>
+                        <p className={style.titles}>hora:</p>
                         <input
                             className={style.input}
                             value={theAuction?.time}
@@ -111,7 +113,7 @@ function CreateAuction(props) {
                     </div>
                     <div className={style.btnSelect}>
                         <button className={style.btn} type='submit' onClick={handleSubmit}>
-                            Aceptar subasta
+                            aceptar subasta
                                 </button>
 
                     </div>

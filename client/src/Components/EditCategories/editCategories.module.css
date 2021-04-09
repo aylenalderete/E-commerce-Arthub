@@ -1,11 +1,11 @@
 .mainDivPopUp {
-    position: fixed;
+    position:fixed;
     width: 60%;
     height: fit-content;
-    top: 0;
-    left: 220px;
-    right: 0;
-    bottom: 0;
+    top: 5%;
+    left: 5%;
+    right: 5%;
+    bottom: 5%;
     margin: auto;
     background-color: rgba(0, 0, 0);
     display: flex;
@@ -172,4 +172,18 @@
         background-color: #f427ed; 
         border-color:rgba(255, 255, 255, 0)
     }
+  }
+
+  @media screen and (max-width: 480px){
+    .mainDivPopUp {
+        position:absolute;
+        width: 80%;
+        height: fit-content;
+        top: 400px;
+    }
+
+    .title{
+        font-size:1.3rem;
+    }
+
   }

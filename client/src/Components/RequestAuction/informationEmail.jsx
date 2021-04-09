@@ -45,7 +45,7 @@ export default function InformationEmail(props) {
 </button>
 
 <div className={style.title}>
-<h1 >Contactar Ganador</h1>
+<h1 >contactar ganador</h1>
 <h2>{props.name} {props.lastname}</h2>
 </div>
 
@@ -56,16 +56,18 @@ export default function InformationEmail(props) {
         <div className={style.column2}>
            
            <textarea
+           rows='10'
            placeholder="Escribir aquí el mensaje y enviar link de pago"
            onChange={handleChange}
            name="body"
            value={info.body}
+           className={style.textArea}
            ></textarea>
 
             </div>
                 <div className={style.btnSelect}>
                     <button className={style.btn} onClick={() => sendEmail(props.email, info.body)}>
-                    Enviar Email
+                    enviar email
                     </button>
 
                 </div>

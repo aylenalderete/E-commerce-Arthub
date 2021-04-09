@@ -88,12 +88,12 @@ function Countdown(props) {
       ) : (
         <div className={style.countdown}>
           <div className={style.ganador}>
-            <h2>La mejor oferta pertenece a : </h2>
+            <h2>la mejor oferta pertenece a : </h2>
             <h1>{props.winner}</h1>
           </div>
           {userData.type === "admin" ? (
             <div>
-              <button className={style.btn} onClick={() => handleClick()}>Contactar al Ganador</button>
+              <button className={style.btn} onClick={() => handleClick()}>contactar al ganador</button>
             </div>
           ) : (
             <></>

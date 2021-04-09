@@ -2,8 +2,8 @@
     position: fixed;
     width: 60%;
     height: fit-content;
-    top: 0;
-    left: 220px;
+    top: 10px;
+    left: 280px;
     right: 0;
     bottom: 0;
     margin: 2vh;
@@ -14,6 +14,11 @@
     justify-content: center;
     border: 1px solid white; 
     z-index: 9999;
+}
+
+.container {
+    width: 80%;
+    height: 80%;
 }
 
 .title {
@@ -52,7 +57,7 @@
 }
 
 .titles{
-    font-size: 1.2rem;
+    font-size: 0.90rem;
 }
 
 .input{
@@ -62,7 +67,7 @@
     border-bottom: 1px solid white;
     width:100%;
     align-self: center;
-    font-size: 1.2rem;
+    font-size: 0.9rem;
 }
 
 .btnCloseDiv{
@@ -150,10 +155,11 @@
    }
  }
 
- @media screen and (max-width: 375px){
+ @media screen and (max-width: 480px){
 
     .containerPic{
         display: flex;
+        margin-top: 5px;
         order:1
     }
     .column2{
@@ -170,7 +176,13 @@
         justify-content: center;
     }
     .mainDivPopUp {
-        left: 10px;  
+        position:absolute;
+        width: 90%;
+        height: fit-content;
+        top: 150px;
+        left: 10px; 
+        margin-bottom: 10px;
+
     }
 
     .picture{
@@ -180,5 +192,6 @@
         max-height: 100px;
         min-height: 70px ;
         max-width: 100px;
+        
     }
  }

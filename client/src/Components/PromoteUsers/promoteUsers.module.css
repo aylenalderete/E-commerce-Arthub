@@ -29,6 +29,7 @@
     align-self: center;
     font-size: 1.2rem;
     margin-bottom: 10px;
+    margin-left: 10px;
 }
 
 .btnCloseDiv{
@@ -60,7 +61,8 @@
 }
 
 .label{
-    margin-right: 10vh;
+    margin-right: 5vh;
+    
 }
 
 .btnSelect{
@@ -126,3 +128,19 @@
        border-color:rgba(255, 255, 255, 0)
    }
  }
+
+ @media screen and (max-width: 480px){
+    .mainDivPopUp {
+        position:absolute;
+        width: 90%;
+        height: fit-content;
+        top: 500px;
+        left:2px;    
+    }
+
+    .input{
+        width:90%;
+
+    }
+
+  }

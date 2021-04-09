@@ -114,11 +114,11 @@ function EditCategories(props) {
             <button onClick={()=>{onClose()}} className={style.btnCloseDiv}>
                 <img className={style.close} src={close} alt="close edit"/>
             </button>
-            <h1 className={style.title}>Edita una categoría</h1>
+            <h1 className={style.title}>edita una categoría</h1>
             <form className={style.formLabel} onSubmit={handleSubmit} >
-                <p className={style.titles}>Nombre:</p>
+                <p className={style.titles}>nombre:</p>
                 <input className={style.input} onChange={handleChange} type='text' required='required' placeholder='nombre*' name='name' value={theCategory?.name} />
-                <p className={style.titles}>Descripción:</p>
+                <p className={style.titles}>descripción:</p>
                 <textarea className={style.textArea} onChange={handleChange} type='text' required='required' placeholder='descripción*' name='description' value={theCategory?.description} />
                 
 
@@ -126,7 +126,7 @@ function EditCategories(props) {
                         <label for='files' >
                             <div className={style.containerCatPic}>
                                 {upload.picture ? <img className={style.picture} src={upload.picture} /> : <div className={style.containerCatPic}>
-                                    Seleccionar imagen
+                                    seleccionar imagen
             </div>}
 
                             </div>
@@ -138,7 +138,7 @@ function EditCategories(props) {
                
                 <div className={style.btnSelect}>
                     <button className={style.btn} type='submit'>
-                        Editar
+                        editar
                     </button>
 
                 </div>

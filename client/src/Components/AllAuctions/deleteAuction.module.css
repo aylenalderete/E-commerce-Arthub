@@ -93,15 +93,13 @@
     }
   }
 
-  @media screen and (max-width: 375px){
+  @media screen and (max-width: 480px){
 
     .mainDivPopUp {
-        left: 0px;
-        width: 50%;
-        height: 20%;
-        top: 0;
-        right: 30%;
-        bottom: 0;
+        left: 8px;
+        width: 80%;
+        height: 50%;
+        top: 100px;
     }
 
  
