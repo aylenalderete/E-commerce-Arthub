@@ -56,6 +56,7 @@
     flex-direction: column;
     justify-content: flex-start;
     margin-left:15px;
+    width:100%;
 }
 
 .name{
@@ -79,6 +80,10 @@
     display: block;
     animation: fadein ease 0.5s;
     animation-fill-mode: forwards;
+}
+
+.infoContainer p{
+    margin-top:5px;
 }
 
 .logo{

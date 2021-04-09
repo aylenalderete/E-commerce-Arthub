@@ -30,8 +30,13 @@ export default function AboutUsSection() {
                     </div>
                     <div className={Styles.infoContainer}>
                         <p className={Styles.name}>Santi Longueira</p>
-                        <p className={Styles.desc}>Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                        sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                        <p className={Styles.desc}>
+                        Full Stack Developer.<br/>
+                        Apasionado por los esports y los viajes. <br/>
+                        En su tiempo libre lo podes encontrar investigando sobre el desarrollo de videojuegos, <br/>
+                        o jugando al fútbol.  <br/>
+                        Fan de Doctor Who. 
+
                         </p>
                     </div>
                 </div>
@@ -47,8 +52,10 @@ export default function AboutUsSection() {
                     </div>
                     <div className={Styles.infoContainer}>
                         <p className={Styles.name}>Liza Saravia</p>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                        sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                        <p><b>Full stack developer. </b><br />
+                            En proceso de convertirse en ingeniera aeroespacial.<br/>
+                            En su tiempo libre la podes encontrar pintando o disfrutando de la danza clásica. <br />
+                            <b>Fan de los marcadores.</b>
                         </p>
 
                     </div>
@@ -66,8 +73,11 @@ export default function AboutUsSection() {
                     </div>
                     <div className={Styles.infoContainer}>
                         <p className={Styles.name}>Flor Almada</p>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                        sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                        <p><b>Full stack developer. </b><br />
+                        Amante de la tecnología y las películas de Marvel. <br />
+                        En su tiempo libre la podes encontrar tocando la guitarra, 
+                        componiendo una canción,<br/> o tomando un curso. <br />
+                            <b>Fan de Elon Musk. </b>
                         </p>
 
                     </div>
@@ -85,6 +95,91 @@ export default function AboutUsSection() {
                     </div>
                     <div className={Styles.infoContainer}>
                         <p className={Styles.name}>Santi Molina</p>
+                        <p>Full Stack Developer. <br/>
+                          Le apasiona tocar la guitarra y las plantas. <br/>
+                          En su tiempo libre lo podes encontrar jugando con su gato Timoteo , o cocinando. <br/> 
+                          Fan de la birra. 
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <div className={Styles.teamCard}>
+                    <div className={Styles.imgContainer}>
+                        <img className={Styles.img} src={jorge} alt='Team member:Jorge Macias' />
+                        <a className={Styles.link} target="_blank" href="https://www.linkedin.com/in/macias-jorge/">
+                            <div className={Styles.divHover}>
+                                <img className={Styles.logo} src={linkedin} alt='linkedin' />
+                            </div>
+                        </a>
+                    </div>
+                    <div className={Styles.infoContainer}>
+                        <p className={Styles.name}>Jorge Macias</p>
+                        <p><b>Full Stack Developer.</b><br/>
+                        Apasionado por la robótica, inteligencia artificial y la automatización industrial. <br/>
+                        En su tiempo libre lo podes encontrar leyendo o difrutando de una película de Marvel. <br/>
+                        <b>Fan de una buena taza de café.</b>
+                        </p>
+
+                    </div>
+                </div>
+
+                <div className={Styles.teamCard}>
+                    <div className={Styles.imgContainer}>
+                        <img className={Styles.img} src={agustina} alt='Team member: Agustina Coronado' />
+                        <a className={Styles.link} target="_blank" href="https://www.linkedin.com/in/agustina-coronado/">
+                            <div className={Styles.divHover}>
+                                <img className={Styles.logo} src={linkedin} alt='linkedin' />
+                            </div>
+                        </a>
+                    </div>
+                    <div className={Styles.infoContainer}>
+                        <p className={Styles.name}>Agustina Coronado</p>
+                        <p><b>Full Stack Developer.</b> <br/>
+                        Amante de la fotografía y el diseño. <br/>
+                        En su tiempo libre la podes encontrar tomando bellas fotos. <br/>
+                        <b>Fan de Adobe.</b>
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <div className={Styles.teamCard}>
+                    <div className={Styles.imgContainer}>
+                        <img className={Styles.img} src={mati} alt='Team member: Matias Cheverry' />
+                        <a className={Styles.link} target="_blank" href="https://www.linkedin.com/in/cheverry/">
+                            <div className={Styles.divHover}>
+                                <img className={Styles.logo} src={linkedin} alt='linkedin' />
+                            </div>
+                        </a>
+                    </div>
+                    <div className={Styles.infoContainer}>
+                        <p className={Styles.name}>Matias Cheverry</p>
+                        <p>Full Stack Developer. <br/>
+                        Apasionado por los aviones y cualquier cosa que vuele. <br/>
+                        En su tiempo libre lo podes encontrar haciendo ejercicio o difrutando de la compañia de <br/>
+                        sus amigos. <br/>
+                        Fan de los ravioles.
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <div className={Styles.teamCard}>
+                    <div className={Styles.imgContainer}>
+                        <img className={Styles.img} src={andres} alt='Team member: Andres Gomez' />
+                        <a className={Styles.link} target="_blank" href="https://www.linkedin.com/in/andres-alberto-gomez-mora-react-native/">
+                            <div className={Styles.divHover}>
+                                <img className={Styles.logo} src={linkedin} alt='linkedin' />
+                            </div>
+                        </a>
+                    </div>
+                    <div className={Styles.infoContainer}>
+                        <p className={Styles.name}>Andres Gomez</p>
                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit,
                         sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                         </p>
@@ -104,81 +199,6 @@ export default function AboutUsSection() {
                     </div>
                     <div className={Styles.infoContainer}>
                         <p className={Styles.name}>Aylen Alderete</p>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                        sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                        </p>
-
-                    </div>
-
-                </div>
-
-                <div className={Styles.teamCard}>
-                    <div className={Styles.imgContainer}>
-                        <img className={Styles.img} src={jorge} alt='Team member:Jorge Macias' />
-                        <a className={Styles.link} target="_blank" href="https://www.linkedin.com/in/macias-jorge/">
-                            <div className={Styles.divHover}>
-                                <img className={Styles.logo} src={linkedin} alt='linkedin' />
-                            </div>
-                        </a>
-                    </div>
-                    <div className={Styles.infoContainer}>
-                        <p className={Styles.name}>Jorge Macias</p>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                        sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                        </p>
-
-                    </div>
-                </div>
-
-                <div className={Styles.teamCard}>
-                    <div className={Styles.imgContainer}>
-                        <img className={Styles.img} src={agustina} alt='Team member: Agustina Coronado' />
-                        <a className={Styles.link} target="_blank" href="https://www.linkedin.com/in/agustina-coronado/">
-                            <div className={Styles.divHover}>
-                                <img className={Styles.logo} src={linkedin} alt='linkedin' />
-                            </div>
-                        </a>
-                    </div>
-                    <div className={Styles.infoContainer}>
-                        <p className={Styles.name}>Agustina Coronado</p>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                        sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                        </p>
-
-                    </div>
-
-                </div>
-
-                <div className={Styles.teamCard}>
-                    <div className={Styles.imgContainer}>
-                        <img className={Styles.img} src={mati} alt='Team member: Matias Cheverry' />
-                        <a className={Styles.link} target="_blank" href="https://www.linkedin.com/in/cheverry/">
-                            <div className={Styles.divHover}>
-                                <img className={Styles.logo} src={linkedin} alt='linkedin' />
-                            </div>
-                        </a>
-                    </div>
-                    <div className={Styles.infoContainer}>
-                        <p className={Styles.name}>Matias Cheverry</p>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                        sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                        </p>
-
-                    </div>
-
-                </div>
-
-                <div className={Styles.teamCard}>
-                    <div className={Styles.imgContainer}>
-                        <img className={Styles.img} src={andres} alt='Team member: Andres Gomez' />
-                        <a className={Styles.link} target="_blank" href="https://www.linkedin.com/in/andres-alberto-gomez-mora-react-native/">
-                            <div className={Styles.divHover}>
-                                <img className={Styles.logo} src={linkedin} alt='linkedin' />
-                            </div>
-                        </a>
-                    </div>
-                    <div className={Styles.infoContainer}>
-                        <p className={Styles.name}>Andres Gomez</p>
                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit,
                         sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                         </p>
