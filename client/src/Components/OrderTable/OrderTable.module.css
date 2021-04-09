@@ -79,15 +79,6 @@
   }
 
 /* Responsive screen */
-@media only screen and (max-width: 1030px){
-
-    .mainContainer {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        padding: 20px
-    }
-}
 
 @media only screen and (max-width: 480px){ 
     .p {
