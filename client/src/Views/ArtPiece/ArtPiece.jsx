@@ -159,14 +159,18 @@ function ArtPiece({ artId }) {
               </div>
 
               <div className={style.containerButtons}>
-                <Link to="/carrito">
-                  <button
-                    onClick={() => dispatch(addItem(artId, newPrice))}
-                    className={style.button}
-                  >
-                    Añadir al carrito
+                {detailed.stock > 0 ? (
+                  <Link to="/carrito">
+                    <button
+                      onClick={() => dispatch(addItem(artId, newPrice))}
+                      className={style.button}
+                    >
+                      Añadir al carrito
                   </button>
-                </Link>
+                  </Link>
+                ) : (
+                  null
+                )}
                 <button
                   className={style.button}
                   onClick={() => history.push(`/coleccion/`)}
