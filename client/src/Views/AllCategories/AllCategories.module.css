@@ -7,6 +7,7 @@
     display: flex;
     justify-content: center;
 
+
 }
 
 .categories{
@@ -41,5 +42,20 @@
     width:20px;
     height: 20px;
     cursor: pointer;
+}
+
+@media all and (max-width:480px){
+    .description{
+        display: none;
+    }
+    .table{
+        margin:0;
+    }
+
+    .container {
+        margin-top: 180px;
+        margin-bottom: 20px;
+    
+    }
 }
 

@@ -65,7 +65,7 @@ function AllCategories() {
                         categories.map((p) => (
                         <tr className={Styles.tr}>
                             <td>{p.name}</td>
-                            <td>{p.description}</td>
+                            <td className = {Styles.description}>{p.description}</td>
                             <th className={Styles.th}>
                                 <div className={Styles.btnContainer}>
                                     <div className={Styles.btnContainer} onClick ={() => handleClick(p.id)}>

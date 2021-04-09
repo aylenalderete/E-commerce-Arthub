@@ -203,7 +203,7 @@ if(loggedUser.type !== 'artist' && loggedUser.type !== 'admin') return <Redirect
         <div className={Styles.mainContainer}>
           <div className={Styles.secondContainer}>
             <div className={Styles.divTitle}>
-              <p>Solicitar subasta</p>
+              <p>solicitar subasta</p>
             </div>
             <form className={Styles.formCategory} onSubmit={handleSubmitCat}>
               <div className={Styles.alignForm}>
@@ -226,7 +226,7 @@ if(loggedUser.type !== 'artist' && loggedUser.type !== 'admin') return <Redirect
                   ))}
                 </select>
                 <button className={Styles.btnCategory} type="submit">
-                  Agregar
+                  agregar
                 </button>
               </div>
               <div className={Styles.alignSelectedCat}>
@@ -336,7 +336,7 @@ if(loggedUser.type !== 'artist' && loggedUser.type !== 'admin') return <Redirect
             </form>
 
             <button className={Styles.btn} onClick={sendProduct}>
-              Solicitar subasta
+              solicitar subasta
             </button>
           </div>
         </div>

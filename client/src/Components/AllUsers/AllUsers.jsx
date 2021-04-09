@@ -86,23 +86,23 @@ function AllUsers() {
                 
                 <tr>
                     <th className={style.title}>
-                        Usuarios:
+                        usuarios:
                     </th>
                 </tr>
                 <tr className = {style.column}>
-                    <td>nombre</td>
-                    <td>apellido</td>
+                    <td className = {style.name}>nombre</td>
+                    <td className = {style.lastname}>apellido</td>
                     <td>usuario</td>
-                    <td>email</td>
+                    <td className = {style.lastname}>email</td>
                     <td>tipo</td>
                     <td>estado</td>
                 </tr>
                 {users.length ? users && users.map((u) => (
                     <tr key={u.id} className={style.users}>
-                        <td>{u.name}</td>
-                        <td>{u.lastname}</td>
-                        <td>{u.username}</td>
-                        <td>{u.email}</td>
+                        <td className = {style.name}>{u.name}</td>
+                        <td className = {style.lastname}>{u.lastname}</td>
+                        <td >{u.username}</td>
+                        <td className = {style.lastname}>{u.email}</td>
                         <td>{u.type}</td>
                         <td>{u.state}</td>
 
@@ -124,7 +124,7 @@ function AllUsers() {
                                 </div>
                             </th>
                     </tr>
-                )) : <div>No se encontró el usuario</div>}
+                )) : <div>no se encontró el usuario</div>}
             </table>
             </div>
         </div>

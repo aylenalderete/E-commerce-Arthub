@@ -59,19 +59,19 @@ function AllAuction() {
             {deleteAuction === true && <DeleteAuction auctionId={auctionId} />}
             <div >
                 <div className={style.column}> 
-                    <h1>Subastas:</h1>
+                    <h1>subastas:</h1>
                 </div>
 
                 <br></br>
                         <button className={style.btn} onClick={() => history.push(`/solicitarSubasta/`)}>
-                            Solicitar subasta </button>
+                            solicitar subasta </button>
                 <table className={style.table}>
-                    <tr className={style.head}>
-                        <th>imagen</th>
-                        <th>título</th>
-                        <th>artista</th>
-                        <th>estado</th>
-                    </tr>
+                <tr className = {style.column}>
+                    <td className = {style.name}>imagen</td>
+                    <td className = {style.lastname}>título</td>
+                    <td>usuario</td>
+                    <td className = {style.lastname}>estado</td>
+                </tr>
 
                     {auctions && auctions.map((a) => (
 

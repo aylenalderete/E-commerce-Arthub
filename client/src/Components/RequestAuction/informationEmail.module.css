@@ -2,8 +2,8 @@
     position: fixed;
     width: 60%;
     height: fit-content;
-    top: 0;
-    left: 220px;
+    top: 60px;
+    left: 320px;
     right: 0;
     bottom: 0;
     margin: 2vh;
@@ -28,6 +28,7 @@
 
 .column1{
     display: flex;
+    flex-direction: column;
     margin: 0 5vw;
     align-items: center;
     justify-content: center;
@@ -63,6 +64,18 @@
     width:100%;
     align-self: center;
     font-size: 1.2rem;
+}
+
+.textArea{
+    font-size: 1.2rem;
+    font-family: inherit;
+    background-color: transparent;
+    color:white;
+    width: 100%;
+    min-height:30%;
+    border:1px solid white;
+    align-self: center;
+    resize: none;
 }
 
 .btnCloseDiv{
@@ -150,17 +163,17 @@
    }
  }
 
- @media screen and (max-width: 375px){
+ @media screen and (max-width: 480px){
     .mainDivPopUp {
-       
+        position: absolute;
         width: 89%;
-        height: 50%;
+        height: fit-content;
         left: 4px;
         display: flex;
         flex-direction: column;
          align-items: center;
         justify-content: center;
-        margin-top: 50%;
+        margin-top: 200px;
         
         
     }
@@ -170,5 +183,17 @@
         margin: 0 5vw;
         align-items: center;
         justify-content: center;
+    }
+
+    .textArea{
+        font-size: 1.2rem;
+        font-family: inherit;
+        background-color: transparent;
+        color:white;
+        width: 100%;
+        min-height:30%;
+        border:1px solid white;
+        align-self: center;
+        resize: none;
     }
  }

@@ -128,16 +128,16 @@ export default function AuctionView(props) {
                         </div>
                         <div className={style.actual}>
                             <p>
-                                Oferta Actual:{" "}
+                                oferta actual:{" "}
                                 {priceTotal[priceTotal.length - 1]}{" "}
                             </p>
                         </div>
                         <div className={style.initial}>
-                            <p>Valor Inicial: {auctionView.price}</p>
+                            <p>valor inicial: {auctionView.price}</p>
                         </div>
                         <div className={style.ofert}>
                             <p>
-                                Siguiente oferta:{" "}
+                                siguiente oferta:{" "}
                                 {totalPrice &&
                                     totalPrice.length !== 0 &&
                                     totalPrice[totalPrice.length - 1].finalPrice
@@ -165,7 +165,7 @@ export default function AuctionView(props) {
                                             )
                                         }
                                     >
-                                        Ofertar
+                                        ofertar
                                     </button>
                                 ) : (
                                         <></>
@@ -197,7 +197,7 @@ export default function AuctionView(props) {
         return (
             <div className={style.mainContainer}>
                 <NavBar renderTop={false} />
-                <p>No hay subastas activas</p>
+                <p>no hay subastas activas</p>
             </div>
         );
     }

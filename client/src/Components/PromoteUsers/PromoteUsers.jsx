@@ -71,39 +71,39 @@ function PromoteUsers(props) {
                 <img className={style.close} src={close} alt="close edit"/>
             </button>
 
-            <h1 className={style.title}>Edita el tipo de usuario</h1>
+            <h1 className={style.title}>edita el tipo de usuario</h1>
             
             <form className={style.formLabel} onSubmit={handleSubmit} >
                 
-                <p className={style.titles}>Nombre:</p>
+                <p className={style.titles}>nombre:</p>
                 <input className={style.input} name='name' value={theUser?.name} disabled/>
-                <p className={style.titles}>Apellido:</p>
+                <p className={style.titles}>apellido:</p>
                 <input className={style.input} name='lastname' value={theUser?.lastname} disabled/>
-                <p className={style.titles}>Rol:</p>
+                <p className={style.titles}>rol:</p>
                 <input className={style.input} name='lastname' value={theUser?.type} disabled/>
 
                 <div className={style.containerInput}>
                     {theUser === 'admin' ? null : 
                 <div>
                 <input type = 'radio' id='admin' onChange={handleChange} name='type' value="admin" />
-                <label htmlFor="admin" className = {style.label}> Admin</label>
+                <label htmlFor="admin" className = {style.label}> admin</label>
                 </div>
                     }
                     {theUser === 'artist' ? null : 
                 <div>
                 <input type = 'radio' id='artist' onChange={handleChange} name='type' value="artist"/>
-                <label htmlFor="artist" className = {style.label}> Artist</label>
+                <label htmlFor="artist" className = {style.label}> artist</label>
                 </div>
                 }
                 {theUser === 'user' ? null :
                 <div>
                 <input type = 'radio' id='user' onChange={handleChange} name='type' value="user"/>
-                <label htmlFor="user" className = {style.label}> Usuario</label>
+                <label htmlFor="user" className = {style.label}> usuario</label>
                 </div>}
                 </div>
                 <div className={style.btnSelect}>
                     <button className={style.btn} type='submit'>
-                        Editar
+                        editar
                     </button>
 
                 </div>
