@@ -86,7 +86,7 @@ function Request() {
                                 Completa este formulario para que podamos evaluar tu solicitud</p>
                         </div>
                         <form onSubmit={handleSubmit}>
-                            <label className={Styles.alignForm}>
+                            <div className={Styles.alignForm}>
                                 <label for="files">
                                     <div>
                                         {loading ? (
@@ -127,7 +127,7 @@ function Request() {
                                         required
                                     ></input>
                                 </label>
-                            </label>
+                            </div>
                             <button type='submit' className={Styles.btn}>Enviar solicitud</button>
                         </form>
                     </div>
