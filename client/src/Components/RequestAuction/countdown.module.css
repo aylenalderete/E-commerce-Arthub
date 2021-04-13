@@ -20,6 +20,8 @@
     display: flex;
     width: fit-content;
     justify-content: center;
+    align-self: center;
+
     
 
 }

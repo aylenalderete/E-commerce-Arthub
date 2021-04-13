@@ -74,12 +74,17 @@ export default function AuctionView(props) {
     var priceTotal = [];
     var participants = [];
     var name = [];
+    var idCompetitor = 0
+    var lastOffert = [];
     var lastname = [];
     for (var i = 0; i < totalPrice.length; i++) {
       
         if (totalPrice[i].auction_id == auctionView.id_auction) {
 
-            
+            idCompetitor = totalPrice[i].buyer_id
+            if(userDataId == idCompetitor){
+                lastOffert.push(totalPrice[i].finalPrice)
+            }            
             priceTotal.push(totalPrice[i].finalPrice);
             participants.push(totalPrice[i].users[0].username);
             name.push(totalPrice[i].users[0].name);
@@ -90,6 +95,7 @@ export default function AuctionView(props) {
 
             var nameWinner = name[name.length - 1];
             var lastnameWinner = lastname[lastname.length - 1];
+            var mylastoffert = lastOffert[lastOffert.length-1];
         }
     }
 
@@ -154,6 +160,9 @@ export default function AuctionView(props) {
                             totalPrice[totalPrice.length-1].finalPrice > 1000 ?
                              totalPrice[totalPrice.length-1].finalPrice + 100 : 
                              totalPrice[totalPrice.length-1].finalPrice + 50} */}
+                            </p>
+                            <p>
+                                mi oferta actual: {mylastoffert}
                             </p>
                             <div className={style.btnSelect}>
                                 {finished === false ? (
