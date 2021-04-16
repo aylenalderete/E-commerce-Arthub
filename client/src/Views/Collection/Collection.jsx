@@ -173,7 +173,7 @@ function Collection() {
               <></>
             )}
 
-            {userType !== "admin" ? (
+            {userType !== "admin" && userType  ? (
               <Link to="/favoritos" className={style.favContainer}>
                 <div className={style.imgFavContainer}>
                   <img className={style.heart} src={heart} alt="favoritos" />
